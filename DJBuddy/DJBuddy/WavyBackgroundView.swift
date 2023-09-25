@@ -13,8 +13,14 @@ struct WavyBackgroundView: View {
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
-            WaveBackGround()
-                .frame(height: 300)
+            ZStack(alignment: .leading) {
+                WaveBackGround()
+                Image("headphones")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 250)
+            }
+            .frame(height: 300)
             Rectangle()
                 .frame(height: height - 300)
                 .ignoresSafeArea()
