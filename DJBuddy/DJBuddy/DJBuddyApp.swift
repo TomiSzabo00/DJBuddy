@@ -11,7 +11,7 @@ import SwiftUI
 struct DJBuddyApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            WavyBackgroundView(height: 500)
         }
     }
 }
