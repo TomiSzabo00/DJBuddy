@@ -12,6 +12,8 @@
 		5584D40C2AC18D9900BC61F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5584D40B2AC18D9900BC61F6 /* Assets.xcassets */; };
 		5584D40F2AC18D9900BC61F6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5584D40E2AC18D9900BC61F6 /* Preview Assets.xcassets */; };
 		5584D4162AC1A64800BC61F6 /* LandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4152AC1A64800BC61F6 /* LandingView.swift */; };
+		5584D4182AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4172AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift */; };
+		5584D41A2AC1AEB700BC61F6 /* LargeSecondaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4192AC1AEB700BC61F6 /* LargeSecondaryButtonStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,8 @@
 		5584D40B2AC18D9900BC61F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5584D40E2AC18D9900BC61F6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5584D4152AC1A64800BC61F6 /* LandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingView.swift; sourceTree = "<group>"; };
+		5584D4172AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeProminentButtonStyle.swift; sourceTree = "<group>"; };
+		5584D4192AC1AEB700BC61F6 /* LargeSecondaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeSecondaryButtonStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,8 @@
 		5584D4062AC18D9700BC61F6 /* DJBuddy */ = {
 			isa = PBXGroup;
 			children = (
+				5584D4172AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift */,
+				5584D4192AC1AEB700BC61F6 /* LargeSecondaryButtonStyle.swift */,
 				5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */,
 				5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */,
 				5584D4152AC1A64800BC61F6 /* LandingView.swift */,
@@ -141,7 +147,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5584D4162AC1A64800BC61F6 /* LandingView.swift in Sources */,
+				5584D41A2AC1AEB700BC61F6 /* LargeSecondaryButtonStyle.swift in Sources */,
 				5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */,
+				5584D4182AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift in Sources */,
 				5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

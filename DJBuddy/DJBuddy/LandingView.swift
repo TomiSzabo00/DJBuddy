@@ -9,27 +9,40 @@ import SwiftUI
 
 struct LandingView: View {
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            WavyBackgroundView(height: 550)
-                .foregroundStyle(Color.red.secondary)
+        GeometryReader { geo in
+            ZStack(alignment: .topLeading) {
+                WavyBackgroundView(height: geo.size.height / 1.5)
+                    .foregroundStyle(Color.red.secondary)
 
-            VStack(alignment: .leading) {
-                Text("Welcome\nto")
-                    .font(.system(size: 36, weight: .bold))
-                    .textCase(.uppercase)
-                Text("DJ Buddy")
-                    .font(.system(size: 64, weight: .bold))
-                    .textCase(.uppercase)
-                    .foregroundStyle(Color.red)
+                VStack(alignment: .leading) {
+                    Text("Welcome\nto")
+                        .font(.system(size: 36, weight: .bold))
+                        .textCase(.uppercase)
+                    Text("DJ Buddy")
+                        .font(.system(size: 64, weight: .bold))
+                        .textCase(.uppercase)
+                        .foregroundStyle(Color.red)
 
-                Spacer()
+                    Spacer()
 
-                Text("Button 1")
+                    VStack(spacing: 20) {
+                        Button("Sign In") {
+                            // TODO: Sign in
+                        }
+                        .buttonStyle(.largeProminent)
+
+                        Button("Sign Up") {
+                            // TODO: Sign up
+                        }
+                        .buttonStyle(.largeSecondary)
+                    }
+                }
+                .padding(.top, 20)
+                .padding()
+                .foregroundStyle(Color.white)
             }
-            .padding()
-            .foregroundStyle(Color.white)
+            .background(Color.black)
         }
-        .background(Color.black)
     }
 }
 
