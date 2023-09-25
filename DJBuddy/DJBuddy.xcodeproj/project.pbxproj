@@ -57,11 +57,9 @@
 		5584D4062AC18D9700BC61F6 /* DJBuddy */ = {
 			isa = PBXGroup;
 			children = (
-				5584D4172AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift */,
-				5584D4192AC1AEB700BC61F6 /* LargeSecondaryButtonStyle.swift */,
+				5584D41C2AC1CB6800BC61F6 /* AuthScreens */,
+				5584D41B2AC1CB5600BC61F6 /* ButtonStyles */,
 				5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */,
-				5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */,
-				5584D4152AC1A64800BC61F6 /* LandingView.swift */,
 				5584D40B2AC18D9900BC61F6 /* Assets.xcassets */,
 				5584D40D2AC18D9900BC61F6 /* Preview Content */,
 			);
@@ -74,6 +72,24 @@
 				5584D40E2AC18D9900BC61F6 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		5584D41B2AC1CB5600BC61F6 /* ButtonStyles */ = {
+			isa = PBXGroup;
+			children = (
+				5584D4172AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift */,
+				5584D4192AC1AEB700BC61F6 /* LargeSecondaryButtonStyle.swift */,
+			);
+			path = ButtonStyles;
+			sourceTree = "<group>";
+		};
+		5584D41C2AC1CB6800BC61F6 /* AuthScreens */ = {
+			isa = PBXGroup;
+			children = (
+				5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */,
+				5584D4152AC1A64800BC61F6 /* LandingView.swift */,
+			);
+			path = AuthScreens;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
