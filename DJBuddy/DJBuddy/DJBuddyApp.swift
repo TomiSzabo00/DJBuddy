@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct DJBuddyApp: App {
+    @State private var navPath = NavigationPath()
+
     var body: some Scene {
         WindowGroup {
-            WavyBackgroundView(height: 500)
+            LandingView()
         }
     }
 }

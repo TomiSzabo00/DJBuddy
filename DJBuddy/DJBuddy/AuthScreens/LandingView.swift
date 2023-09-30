@@ -8,41 +8,84 @@
 import SwiftUI
 
 struct LandingView: View {
+    @StateObject private var viewModel = AuthViewModel()
+
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .topLeading) {
-                WavyBackgroundView(height: geo.size.height / 1.5)
+                WavyBackgroundView(height: viewModel.pageState == .landingPage ? geo.size.height / 1.5 : geo.size.height)
                     .foregroundStyle(Color.red.secondary)
 
-                VStack(alignment: .leading) {
-                    Text("Welcome\nto")
-                        .font(.system(size: 36, weight: .bold))
-                        .textCase(.uppercase)
-                    Text("DJ Buddy")
-                        .font(.system(size: 64, weight: .bold))
-                        .textCase(.uppercase)
-                        .foregroundStyle(Color.red)
-
-                    Spacer()
-
-                    VStack(spacing: 20) {
-                        Button("Sign In") {
-                            // TODO: Sign in
-                        }
-                        .buttonStyle(.largeProminent)
-
-                        Button("Sign Up") {
-                            // TODO: Sign up
-                        }
-                        .buttonStyle(.largeSecondary)
-                    }
+                switch viewModel.pageState {
+                case .landingPage:
+                    landingContent
+                case .signIn:
+                    signInContent
+                case .signUp:
+                    EmptyView()
                 }
-                .padding(.top, 20)
-                .padding()
-                .foregroundStyle(Color.white)
             }
             .background(Color.black)
+            //.animation(.interpolatingSpring(stiffness: 150, damping: 10), value: viewModel.pageState)
+            .animation(.easeInOut, value: viewModel.pageState)
         }
+    }
+
+    @ViewBuilder private var landingContent: some View {
+        VStack(alignment: .leading) {
+            Text("Welcome\nto")
+                .font(.system(size: 36, weight: .bold))
+                .textCase(.uppercase)
+            Text("DJ Buddy")
+                .font(.system(size: 64, weight: .bold))
+                .textCase(.uppercase)
+                .foregroundStyle(Color.red)
+
+            Spacer()
+
+            VStack(spacing: 20) {
+                Button("Sign In") {
+                    viewModel.navigate(to: .signIn)
+                }
+                .buttonStyle(.largeProminent)
+
+                Button("Sign Up") {
+                    viewModel.navigate(to: .signUp)
+                }
+                .buttonStyle(.largeSecondary)
+            }
+        }
+        .padding(.top, 20)
+        .padding()
+        .foregroundStyle(Color.white)
+    }
+
+    @ViewBuilder private var signInContent: some View {
+        VStack(alignment: .leading) {
+            Button {
+                viewModel.navigate(to: .landingPage)
+            } label: {
+                Label("Back", systemImage: "arrow.left")
+            }
+            .padding(.vertical)
+
+            Spacer()
+
+            VStack(alignment: .leading, spacing: 20) {
+                Button("Sign In") {
+                    // TODO: Sign in
+                }
+                .buttonStyle(.largeProminent)
+
+                Button("Forgot password?") {
+                    // TODO: Sign up
+                }
+                .buttonStyle(.underlined)
+            }
+            .padding(.bottom, 50)
+        }
+        .padding()
+        .foregroundStyle(Color.white)
     }
 }
 

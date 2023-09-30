@@ -22,7 +22,7 @@ struct WavyBackgroundView: View {
             }
             .frame(height: 300)
             Rectangle()
-                .frame(height: height - 300)
+                .frame(height: abs(height - 300))
                 .ignoresSafeArea()
         }
         .ignoresSafeArea(edges: .bottom)
@@ -44,5 +44,6 @@ struct WaveBackGround: Shape {
 }
 
 #Preview {
-    WavyBackgroundView(height: 550)
+    @Namespace var namespace
+    return WavyBackgroundView(height: 550)
 }
