@@ -109,7 +109,7 @@ struct InputView: View {
 
 #Preview {
     ZStack {
-        WavyBackgroundView(height: 800)
+        WavyBackgroundView(height: 800, userType: .user)
         InputView()
     }
 }

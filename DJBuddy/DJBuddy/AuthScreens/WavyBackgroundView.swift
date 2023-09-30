@@ -9,16 +9,27 @@ import SwiftUI
 
 struct WavyBackgroundView: View {
     let height: Double
+    let userType: UserTypeEnum
 
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
             ZStack(alignment: .leading) {
                 WaveBackGround()
-                Image("headphones")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 250)
+                switch userType {
+                case .user:
+                    Image("headphones")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 250)
+                        .transition(.move(edge: .leading))
+                case .dj:
+                    Image("dj")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 250)
+                        .transition(.move(edge: .trailing))
+                }
             }
             .frame(height: 300)
             Rectangle()
@@ -26,6 +37,7 @@ struct WavyBackgroundView: View {
                 .ignoresSafeArea()
         }
         .ignoresSafeArea(edges: .bottom)
+        .animation(.default, value: userType)
     }
 }
 
@@ -44,6 +56,5 @@ struct WaveBackGround: Shape {
 }
 
 #Preview {
-    @Namespace var namespace
-    return WavyBackgroundView(height: 550)
+    WavyBackgroundView(height: 550, userType: .dj)
 }

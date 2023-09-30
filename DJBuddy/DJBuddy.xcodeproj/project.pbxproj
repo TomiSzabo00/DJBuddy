@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */; };
 		5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */; };
 		5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */; };
 		5584D40C2AC18D9900BC61F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5584D40B2AC18D9900BC61F6 /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTypeEnum.swift; sourceTree = "<group>"; };
 		5584D4042AC18D9700BC61F6 /* DJBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJBuddyApp.swift; sourceTree = "<group>"; };
 		5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavyBackgroundView.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				5584D4242AC2128800BC61F6 /* LandingPageEnum.swift */,
+				556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 				5584D41A2AC1AEB700BC61F6 /* LargeSecondaryButtonStyle.swift in Sources */,
 				5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */,
 				5584D4272AC2132600BC61F6 /* AuthViewModel.swift in Sources */,
+				556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */,
 				5584D4182AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift in Sources */,
 				5584D42A2AC21B2D00BC61F6 /* InputView.swift in Sources */,
 				5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */,
