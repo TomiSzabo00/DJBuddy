@@ -14,13 +14,25 @@ struct PlaceholderTextField: View {
     @State var isSecure: Bool = false
     let isPasswordField: Bool
 
+    @FocusState private var inFocus: Bool
+
     var body: some View {
         Group {
-            if !isPasswordField || isSecure {
+            if !isPasswordField {
                 TextField("", text: $text)
             } else {
-                SecureField("", text: $text)
+                ZStack {
+                    TextField("", text: $text)
+                        .focused($inFocus)
+                        .opacity(isSecure ? 0 : 1)
+                    SecureField("", text: $text)
+                        .focused($inFocus)
+                        .opacity(isSecure ? 1 : 0)
+                }
             }
+        }
+        .onAppear {
+            showPlaceholder = text.isEmpty
         }
         .onChange(of: text) { (_, newValue) in
             showPlaceholder = newValue.isEmpty

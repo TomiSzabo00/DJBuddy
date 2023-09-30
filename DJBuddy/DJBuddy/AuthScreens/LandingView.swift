@@ -26,8 +26,7 @@ struct LandingView: View {
                 }
             }
             .background(Color.black)
-            //.animation(.interpolatingSpring(stiffness: 150, damping: 10), value: viewModel.pageState)
-            .animation(.easeInOut, value: viewModel.pageState)
+            .animation(.interpolatingSpring(stiffness: 110, damping: 10), value: viewModel.pageState)
         }
     }
 
@@ -72,13 +71,19 @@ struct LandingView: View {
             Spacer()
 
             VStack(alignment: .leading, spacing: 20) {
+                Group {
+                    PlaceholderTextField(placeholder: "Username", text: $viewModel.usernameText)
+                    PlaceholderTextField(placeholder: "Password", text: $viewModel.passwordText, isPassword: true)
+                }
+                .foregroundStyle(Color.black)
+
                 Button("Sign In") {
                     // TODO: Sign in
                 }
                 .buttonStyle(.largeProminent)
 
                 Button("Forgot password?") {
-                    // TODO: Sign up
+                    // TODO: Forgot pw
                 }
                 .buttonStyle(.underlined)
             }
