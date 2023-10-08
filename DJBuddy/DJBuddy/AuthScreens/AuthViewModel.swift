@@ -18,4 +18,12 @@ final class AuthViewModel: ObservableObject {
     func navigate(to state: LandingPageEnum) {
         pageState = state
     }
+
+    func login() {
+
+    }
+
+    func signUp() {
+        
+    }
 }

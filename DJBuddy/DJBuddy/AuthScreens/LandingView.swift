@@ -78,7 +78,7 @@ struct LandingView: View {
                 .foregroundStyle(Color.black)
 
                 Button("Sign In") {
-                    // TODO: Sign in
+                    viewModel.login()
                 }
                 .buttonStyle(.largeProminent)
 
@@ -115,12 +115,12 @@ struct LandingView: View {
                 Group {
                     PlaceholderTextField(placeholder: "Username", text: $viewModel.usernameText)
                     PlaceholderTextField(placeholder: "Password", text: $viewModel.passwordText, isPassword: true)
-                    PlaceholderTextField(placeholder: "Confirm Password", text: $viewModel.passwordText, isPassword: true)
+                    PlaceholderTextField(placeholder: "Confirm Password", text: $viewModel.passwordAgainText, isPassword: true)
                 }
                 .foregroundStyle(Color.black)
 
                 Button("Sign Up") {
-                    // TODO: Sign up
+                    viewModel.signUp()
                 }
                 .buttonStyle(.largeProminent)
             }

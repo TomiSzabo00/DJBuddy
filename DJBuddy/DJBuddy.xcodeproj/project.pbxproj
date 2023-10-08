@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		552E85E32AD2E1FD006D5E86 /* DJMainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85E22AD2E1FD006D5E86 /* DJMainMenu.swift */; };
+		552E85E62AD2E605006D5E86 /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85E52AD2E605006D5E86 /* CustomColors.swift */; };
+		552E85E92AD2E745006D5E86 /* BackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85E82AD2E745006D5E86 /* BackgroundColor.swift */; };
 		556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */; };
 		5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */; };
 		5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */; };
@@ -22,6 +25,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		552E85E22AD2E1FD006D5E86 /* DJMainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJMainMenu.swift; sourceTree = "<group>"; };
+		552E85E52AD2E605006D5E86 /* CustomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
+		552E85E82AD2E745006D5E86 /* BackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundColor.swift; sourceTree = "<group>"; };
 		556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTypeEnum.swift; sourceTree = "<group>"; };
 		5584D4042AC18D9700BC61F6 /* DJBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJBuddyApp.swift; sourceTree = "<group>"; };
@@ -48,6 +54,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		552E85E12AD2DA3B006D5E86 /* Main menu */ = {
+			isa = PBXGroup;
+			children = (
+				552E85E22AD2E1FD006D5E86 /* DJMainMenu.swift */,
+			);
+			path = "Main menu";
+			sourceTree = "<group>";
+		};
+		552E85E42AD2E5F1006D5E86 /* Color */ = {
+			isa = PBXGroup;
+			children = (
+				552E85E52AD2E605006D5E86 /* CustomColors.swift */,
+			);
+			path = Color;
+			sourceTree = "<group>";
+		};
+		552E85E72AD2E737006D5E86 /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				552E85E82AD2E745006D5E86 /* BackgroundColor.swift */,
+			);
+			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
 		5584D3FB2AC18D9700BC61F6 = {
 			isa = PBXGroup;
 			children = (
@@ -67,6 +97,9 @@
 		5584D4062AC18D9700BC61F6 /* DJBuddy */ = {
 			isa = PBXGroup;
 			children = (
+				552E85E72AD2E737006D5E86 /* ViewModifiers */,
+				552E85E42AD2E5F1006D5E86 /* Color */,
+				552E85E12AD2DA3B006D5E86 /* Main menu */,
 				5584D4282AC21B1B00BC61F6 /* Views */,
 				5584D4232AC2127400BC61F6 /* Models */,
 				5584D41C2AC1CB6800BC61F6 /* AuthScreens */,
@@ -199,9 +232,12 @@
 				5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */,
 				5584D4272AC2132600BC61F6 /* AuthViewModel.swift in Sources */,
 				556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */,
+				552E85E32AD2E1FD006D5E86 /* DJMainMenu.swift in Sources */,
 				5584D4182AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift in Sources */,
 				5584D42A2AC21B2D00BC61F6 /* InputView.swift in Sources */,
 				5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */,
+				552E85E92AD2E745006D5E86 /* BackgroundColor.swift in Sources */,
+				552E85E62AD2E605006D5E86 /* CustomColors.swift in Sources */,
 				5584D4202AC1DA0B00BC61F6 /* UnderlinedButtonStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

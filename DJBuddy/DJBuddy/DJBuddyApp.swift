@@ -13,7 +13,10 @@ struct DJBuddyApp: App {
 
     var body: some Scene {
         WindowGroup {
-            LandingView()
+            //LandingView()
+            NavigationView {
+                DJMainMenu()
+            }
         }
     }
 }
