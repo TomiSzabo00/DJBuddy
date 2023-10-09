@@ -12,24 +12,24 @@ struct DJMainMenu: View {
 
     var body: some View {
         HomeTabView()
-        .sideMenu(isShowing: $menu)
-        .toolbarBackground(Color.black, for: .navigationBar)
-        .toolbarBackground(.visible, for: .navigationBar)
-        .toolbar(.hidden, for: .bottomBar)
-        .toolbarColorScheme(.dark, for: .navigationBar)
-        .toolbar {
-            ToolbarItem(placement: .navigation) {
-                MenuButton(isShowing: $menu) {
-                    
-                }
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                Button("Hi, DJ") {
+            .sideMenu(isShowing: $menu)
+            .toolbarBackground(Color.black, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbar(.hidden, for: .bottomBar)
+            .toolbarColorScheme(.dark, for: .navigationBar)
+            .toolbar {
+                ToolbarItem(placement: .navigation) {
+                    MenuButton(isShowing: $menu) {
 
+                    }
                 }
-                .tint(.red)
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Hi, DJ") {
+
+                    }
+                    .tint(.red)
+                }
             }
-        }
     }
 }
 
