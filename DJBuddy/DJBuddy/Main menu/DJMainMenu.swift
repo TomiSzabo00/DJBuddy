@@ -12,7 +12,7 @@ struct DJMainMenu: View {
         VStack {
             List {
                 Section("Your events") {
-                    Text("Event 1")
+                    EventListTile()
                 }
             }
             .preferredColorScheme(.dark)
