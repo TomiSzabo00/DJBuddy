@@ -43,12 +43,12 @@ struct ProfileView: View {
 
                 Spacer()
             }
-            .ignoresSafeArea(edges: .horizontal)
-            .navigationTitle("Profile")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarColor(backgroundColor: .black, titleColor: .red)
-        .backgroundColor(.asset.background)
         }
+        .ignoresSafeArea(edges: .horizontal)
+        .navigationTitle("Profile")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarColor(backgroundColor: .black, titleColor: .red)
+        .backgroundColor(.asset.background)
     }
 }
 
