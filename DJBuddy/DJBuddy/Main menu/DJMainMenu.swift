@@ -13,11 +13,22 @@ struct DJMainMenu: View {
     var body: some View {
         VStack {
             List {
-                Section("Your events") {
+                Section {
                     EventListTile()
+                    EventListTile()
+                } header: {
+                    Text("Your events")
+                        .textCase(.uppercase)
+                        .font(.subheadline)
                 }
+                .listStyle(.plain)
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
             }
             .preferredColorScheme(.dark)
+            .background(Color.asset.background)
+            .scrollContentBackground(.hidden)
         }
         .sideMenu(isShowing: $menu)
         .toolbarBackground(Color.black, for: .navigationBar)

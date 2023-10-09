@@ -37,11 +37,12 @@ struct EventListTile: View {
         }
         .listRowInsets(EdgeInsets())
         .frame(height: 100)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .padding(.bottom, 20)
     }
 }
 
 #Preview {
-    List {
-        EventListTile()
-    }
+    EventListTile()
+        .padding()
 }
