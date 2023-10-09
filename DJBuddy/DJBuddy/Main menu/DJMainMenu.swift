@@ -11,15 +11,11 @@ struct DJMainMenu: View {
     @State var menu = false
 
     var body: some View {
-        VStack {
-            EventList {
-                EventListTile()
-                EventListTile()
-            }
-        }
+        HomeTabView()
         .sideMenu(isShowing: $menu)
         .toolbarBackground(Color.black, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
+        .toolbar(.hidden, for: .bottomBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .navigation) {
