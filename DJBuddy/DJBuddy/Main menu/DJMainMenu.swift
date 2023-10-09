@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct DJMainMenu: View {
+    @State var menu = false
+
     var body: some View {
         VStack {
             List {
@@ -17,19 +19,21 @@ struct DJMainMenu: View {
             }
             .preferredColorScheme(.dark)
         }
+        .sideMenu(isShowing: $menu)
         .toolbarBackground(Color.black, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .navigation) {
-                Button(action: {}, label: {
-                    Image(systemName: "line.3.horizontal")
-                })
-                .tint(.red)
+                MenuButton(isShowing: $menu) {
+                    
+                }
             }
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Hi, DJ") {}
-                    .tint(.red)
+                Button("Hi, DJ") {
+
+                }
+                .tint(.red)
             }
         }
     }
