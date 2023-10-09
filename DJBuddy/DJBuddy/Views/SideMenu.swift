@@ -7,10 +7,11 @@
 
 import SwiftUI
 
-struct SideMenu/*<Content: View>*/: View {
+struct SideMenu: View {
     @Binding var isShowing: Bool
-    //var content: Content
+    let navigator: Navigator
     var edgeTransition: AnyTransition = .move(edge: .leading)
+
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .topLeading) {
@@ -62,12 +63,30 @@ struct SideMenu/*<Content: View>*/: View {
             }
         }()
 
+        let action = { () -> (() -> Void) in
+            switch type {
+            case .upcoming:
+                return {}
+            case .past:
+                return {}
+            case .liked:
+                return {}
+            case .profile:
+                return {
+                    navigator.show(ProfileView.self)
+                }
+            case .settings:
+                return {}
+            }
+        }()
+
         Button(title) {
             isShowing.toggle()
+            action()
         }
     }
 }
 
 #Preview {
-    SideMenu(isShowing: .constant(true))
+    SideMenu(isShowing: .constant(true), navigator: Navigator())
 }

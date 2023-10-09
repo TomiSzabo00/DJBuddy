@@ -9,16 +9,18 @@ import SwiftUI
 
 struct SideMenuModifier: ViewModifier {
     @Binding var isShowing: Bool
+    let navigator: Navigator
+
     func body(content: Content) -> some View {
         ZStack {
             content
-            SideMenu(isShowing: $isShowing)
+            SideMenu(isShowing: $isShowing, navigator: navigator)
         }
     }
 }
 
 extension View {
-    func sideMenu(isShowing: Binding<Bool>) -> some View {
-        modifier(SideMenuModifier(isShowing: isShowing))
+    func sideMenu(isShowing: Binding<Bool>, navigator: Navigator) -> some View {
+        modifier(SideMenuModifier(isShowing: isShowing, navigator: navigator))
     }
 }
