@@ -76,7 +76,6 @@
 			isa = PBXGroup;
 			children = (
 				552E85E22AD2E1FD006D5E86 /* DJMainMenu.swift */,
-				552E85F92AD4428C006D5E86 /* DJHomeView.swift */,
 			);
 			path = "Main menu";
 			sourceTree = "<group>";
@@ -107,6 +106,23 @@
 			path = TabView;
 			sourceTree = "<group>";
 		};
+		552E86002AD472CC006D5E86 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				552E86012AD47307006D5E86 /* Home */,
+				552E85E12AD2DA3B006D5E86 /* Main menu */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		552E86012AD47307006D5E86 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				552E85F92AD4428C006D5E86 /* DJHomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		5584D3FB2AC18D9700BC61F6 = {
 			isa = PBXGroup;
 			children = (
@@ -126,9 +142,9 @@
 		5584D4062AC18D9700BC61F6 /* DJBuddy */ = {
 			isa = PBXGroup;
 			children = (
+				552E86002AD472CC006D5E86 /* Screens */,
 				552E85E72AD2E737006D5E86 /* ViewModifiers */,
 				552E85E42AD2E5F1006D5E86 /* Color */,
-				552E85E12AD2DA3B006D5E86 /* Main menu */,
 				5584D4282AC21B1B00BC61F6 /* Views */,
 				5584D4232AC2127400BC61F6 /* Models */,
 				5584D41C2AC1CB6800BC61F6 /* AuthScreens */,
