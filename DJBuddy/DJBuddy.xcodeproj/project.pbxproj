@@ -15,6 +15,7 @@
 		552E85F02AD3F85C006D5E86 /* MenuButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85EF2AD3F85C006D5E86 /* MenuButtonType.swift */; };
 		552E85F22AD3FA4D006D5E86 /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85F12AD3FA4D006D5E86 /* MenuButton.swift */; };
 		552E85F42AD3FAC9006D5E86 /* SideMenuModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85F32AD3FAC9006D5E86 /* SideMenuModifier.swift */; };
+		552E85F82AD43777006D5E86 /* EventList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85F72AD43776006D5E86 /* EventList.swift */; };
 		556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */; };
 		5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */; };
 		5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */; };
@@ -38,6 +39,7 @@
 		552E85EF2AD3F85C006D5E86 /* MenuButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButtonType.swift; sourceTree = "<group>"; };
 		552E85F12AD3FA4D006D5E86 /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
 		552E85F32AD3FAC9006D5E86 /* SideMenuModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuModifier.swift; sourceTree = "<group>"; };
+		552E85F72AD43776006D5E86 /* EventList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventList.swift; sourceTree = "<group>"; };
 		556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTypeEnum.swift; sourceTree = "<group>"; };
 		5584D4042AC18D9700BC61F6 /* DJBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJBuddyApp.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				552E85EA2AD3EFF1006D5E86 /* EventListTile.swift */,
 				552E85ED2AD3F78A006D5E86 /* SideMenu.swift */,
 				552E85F12AD3FA4D006D5E86 /* MenuButton.swift */,
+				552E85F72AD43776006D5E86 /* EventList.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 				5584D4252AC2128800BC61F6 /* LandingPageEnum.swift in Sources */,
 				552E85F02AD3F85C006D5E86 /* MenuButtonType.swift in Sources */,
 				5584D41A2AC1AEB700BC61F6 /* LargeSecondaryButtonStyle.swift in Sources */,
+				552E85F82AD43777006D5E86 /* EventList.swift in Sources */,
 				5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */,
 				5584D4272AC2132600BC61F6 /* AuthViewModel.swift in Sources */,
 				556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */,
