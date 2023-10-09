@@ -47,7 +47,6 @@ struct ProfileView: View {
         .ignoresSafeArea(edges: .horizontal)
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarColor(backgroundColor: .black, titleColor: .red)
         .backgroundColor(.asset.background)
     }
 }

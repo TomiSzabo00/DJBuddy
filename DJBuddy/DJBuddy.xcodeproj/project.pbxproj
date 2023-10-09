@@ -22,6 +22,8 @@
 		552E86032AD47336006D5E86 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86022AD47336006D5E86 /* ProfileView.swift */; };
 		552E86052AD476C9006D5E86 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86042AD476C9006D5E86 /* CircleButton.swift */; };
 		552E86072AD47BD9006D5E86 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86062AD47BD9006D5E86 /* NavigationBarModifier.swift */; };
+		552E86092AD48634006D5E86 /* NavigationDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86082AD48634006D5E86 /* NavigationDestination.swift */; };
+		552E860C2AD4878A006D5E86 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E860B2AD4878A006D5E86 /* Navigator.swift */; };
 		556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */; };
 		5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */; };
 		5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */; };
@@ -52,6 +54,8 @@
 		552E86022AD47336006D5E86 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		552E86042AD476C9006D5E86 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		552E86062AD47BD9006D5E86 /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
+		552E86082AD48634006D5E86 /* NavigationDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDestination.swift; sourceTree = "<group>"; };
+		552E860B2AD4878A006D5E86 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTypeEnum.swift; sourceTree = "<group>"; };
 		5584D4042AC18D9700BC61F6 /* DJBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJBuddyApp.swift; sourceTree = "<group>"; };
@@ -131,6 +135,14 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		552E860A2AD4877B006D5E86 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				552E860B2AD4878A006D5E86 /* Navigator.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		5584D3FB2AC18D9700BC61F6 = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +162,7 @@
 		5584D4062AC18D9700BC61F6 /* DJBuddy */ = {
 			isa = PBXGroup;
 			children = (
+				552E860A2AD4877B006D5E86 /* Helpers */,
 				552E86002AD472CC006D5E86 /* Screens */,
 				552E85E72AD2E737006D5E86 /* ViewModifiers */,
 				552E85E42AD2E5F1006D5E86 /* Color */,
@@ -198,6 +211,7 @@
 				5584D4242AC2128800BC61F6 /* LandingPageEnum.swift */,
 				556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */,
 				552E85EF2AD3F85C006D5E86 /* MenuButtonType.swift */,
+				552E86082AD48634006D5E86 /* NavigationDestination.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -288,6 +302,7 @@
 			files = (
 				5584D4162AC1A64800BC61F6 /* LandingView.swift in Sources */,
 				552E85FA2AD4428C006D5E86 /* DJHomeView.swift in Sources */,
+				552E860C2AD4878A006D5E86 /* Navigator.swift in Sources */,
 				5584D4252AC2128800BC61F6 /* LandingPageEnum.swift in Sources */,
 				552E86052AD476C9006D5E86 /* CircleButton.swift in Sources */,
 				552E85F02AD3F85C006D5E86 /* MenuButtonType.swift in Sources */,
@@ -308,6 +323,7 @@
 				552E86032AD47336006D5E86 /* ProfileView.swift in Sources */,
 				552E85E92AD2E745006D5E86 /* BackgroundColor.swift in Sources */,
 				552E85EE2AD3F78A006D5E86 /* SideMenu.swift in Sources */,
+				552E86092AD48634006D5E86 /* NavigationDestination.swift in Sources */,
 				552E85FC2AD442F8006D5E86 /* HomeTabView.swift in Sources */,
 				552E85E62AD2E605006D5E86 /* CustomColors.swift in Sources */,
 				5584D4202AC1DA0B00BC61F6 /* UnderlinedButtonStyle.swift in Sources */,

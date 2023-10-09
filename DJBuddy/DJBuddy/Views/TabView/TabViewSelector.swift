@@ -70,7 +70,7 @@ struct TabViewSelector: View {
                 }
             }
             .frame(height: 70)
-            .foregroundStyle(selected == index ? Color.accentColor : Color.gray)
+            .foregroundStyle(selected == index ? Color.accent : Color.gray)
         }
     }
 }

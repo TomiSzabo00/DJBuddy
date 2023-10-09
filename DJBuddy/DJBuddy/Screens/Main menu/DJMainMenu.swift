@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DJMainMenu: View {
+    @EnvironmentObject private var navigator: Navigator
     @State var menu = false
 
     var body: some View {
@@ -24,11 +25,12 @@ struct DJMainMenu: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Hi, DJ") {
-
+                        navigator.show(ProfileView.self)
                     }
                     .tint(.red)
                 }
             }
+            .navigationBarTitleDisplayMode(.inline)
     }
 }
 
