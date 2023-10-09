@@ -19,6 +19,9 @@
 		552E85FA2AD4428C006D5E86 /* DJHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85F92AD4428C006D5E86 /* DJHomeView.swift */; };
 		552E85FC2AD442F8006D5E86 /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85FB2AD442F8006D5E86 /* HomeTabView.swift */; };
 		552E85FF2AD45D05006D5E86 /* TabViewSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85FE2AD45D05006D5E86 /* TabViewSelector.swift */; };
+		552E86032AD47336006D5E86 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86022AD47336006D5E86 /* ProfileView.swift */; };
+		552E86052AD476C9006D5E86 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86042AD476C9006D5E86 /* CircleButton.swift */; };
+		552E86072AD47BD9006D5E86 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86062AD47BD9006D5E86 /* NavigationBarModifier.swift */; };
 		556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */; };
 		5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */; };
 		5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */; };
@@ -46,6 +49,9 @@
 		552E85F92AD4428C006D5E86 /* DJHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJHomeView.swift; sourceTree = "<group>"; };
 		552E85FB2AD442F8006D5E86 /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
 		552E85FE2AD45D05006D5E86 /* TabViewSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewSelector.swift; sourceTree = "<group>"; };
+		552E86022AD47336006D5E86 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		552E86042AD476C9006D5E86 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
+		552E86062AD47BD9006D5E86 /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
 		556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTypeEnum.swift; sourceTree = "<group>"; };
 		5584D4042AC18D9700BC61F6 /* DJBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJBuddyApp.swift; sourceTree = "<group>"; };
@@ -93,6 +99,7 @@
 			children = (
 				552E85E82AD2E745006D5E86 /* BackgroundColor.swift */,
 				552E85F32AD3FAC9006D5E86 /* SideMenuModifier.swift */,
+				552E86062AD47BD9006D5E86 /* NavigationBarModifier.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -111,6 +118,7 @@
 			children = (
 				552E86012AD47307006D5E86 /* Home */,
 				552E85E12AD2DA3B006D5E86 /* Main menu */,
+				552E86022AD47336006D5E86 /* ProfileView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -203,6 +211,7 @@
 				552E85ED2AD3F78A006D5E86 /* SideMenu.swift */,
 				552E85F12AD3FA4D006D5E86 /* MenuButton.swift */,
 				552E85F72AD43776006D5E86 /* EventList.swift */,
+				552E86042AD476C9006D5E86 /* CircleButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -280,6 +289,7 @@
 				5584D4162AC1A64800BC61F6 /* LandingView.swift in Sources */,
 				552E85FA2AD4428C006D5E86 /* DJHomeView.swift in Sources */,
 				5584D4252AC2128800BC61F6 /* LandingPageEnum.swift in Sources */,
+				552E86052AD476C9006D5E86 /* CircleButton.swift in Sources */,
 				552E85F02AD3F85C006D5E86 /* MenuButtonType.swift in Sources */,
 				5584D41A2AC1AEB700BC61F6 /* LargeSecondaryButtonStyle.swift in Sources */,
 				552E85F82AD43777006D5E86 /* EventList.swift in Sources */,
@@ -291,9 +301,11 @@
 				552E85FF2AD45D05006D5E86 /* TabViewSelector.swift in Sources */,
 				552E85E32AD2E1FD006D5E86 /* DJMainMenu.swift in Sources */,
 				552E85F22AD3FA4D006D5E86 /* MenuButton.swift in Sources */,
+				552E86072AD47BD9006D5E86 /* NavigationBarModifier.swift in Sources */,
 				5584D4182AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift in Sources */,
 				5584D42A2AC21B2D00BC61F6 /* InputView.swift in Sources */,
 				5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */,
+				552E86032AD47336006D5E86 /* ProfileView.swift in Sources */,
 				552E85E92AD2E745006D5E86 /* BackgroundColor.swift in Sources */,
 				552E85EE2AD3F78A006D5E86 /* SideMenu.swift in Sources */,
 				552E85FC2AD442F8006D5E86 /* HomeTabView.swift in Sources */,

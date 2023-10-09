@@ -15,7 +15,6 @@ struct DJMainMenu: View {
             .sideMenu(isShowing: $menu)
             .toolbarBackground(Color.black, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
-            .toolbar(.hidden, for: .bottomBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigation) {

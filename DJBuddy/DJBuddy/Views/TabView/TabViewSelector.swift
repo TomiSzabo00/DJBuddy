@@ -30,19 +30,13 @@ struct TabViewSelector: View {
                     IconButton(from: buttons[1], index: 1)
                 }
 
-                Circle()
-                    .fill(.white)
-                    .frame(width: 90)
-                    .offset(y: -30)
-                    .overlay {
-                        Button {
-
-                        } label: {
-                            Image(systemName: "music.note")
-                                .font(.system(size: 48, weight: .medium))
-                        }
-                        .offset(y: -30)
-                    }
+                CircleButton(radius: 90) {
+                    //TODO: open page
+                } label: {
+                    Image(systemName: "music.note")
+                        .font(.system(size: 48, weight: .medium))
+                }
+                .offset(y: -30)
 
             }
             .padding(.horizontal, 50)
