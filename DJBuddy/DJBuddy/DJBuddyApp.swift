@@ -57,6 +57,9 @@ struct DJBuddyApp: App {
                         if id == String(describing: ProfileView.self) {
                             ProfileView()
                         }
+                        if id == String(describing: CreateEventView.self) {
+                            CreateEventView()
+                        }
                         else {
                             EmptyView()
                                 .onAppear {
