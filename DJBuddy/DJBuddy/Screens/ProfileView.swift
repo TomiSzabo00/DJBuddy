@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ProfileView: View {
+    let user: UserData
+
     var body: some View {
         GeometryReader { geo in
             VStack(spacing: 0) {
@@ -22,10 +24,10 @@ struct ProfileView: View {
                     )
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("DJ")
+                        Text(user.name.fullName)
                             .font(.system(size: 48))
                             .fontWeight(.bold)
-                        Text(verbatim: "dj@email.com")
+                        Text(verbatim: user.email)
                             .font(.callout)
                     }
                     .foregroundStyle(Color.white)
@@ -53,6 +55,10 @@ struct ProfileView: View {
 
 #Preview {
     NavigationView {
-        ProfileView()
+        ProfileView(user: UserData(username: "exampleUser",
+                                   email: "example@email.com",
+                                   firstName: "Example",
+                                   lastName: "User",
+                                   type: .user))
     }
 }

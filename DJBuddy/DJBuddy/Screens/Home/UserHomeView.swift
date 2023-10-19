@@ -9,7 +9,24 @@ import SwiftUI
 
 struct UserHomeView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        EventList {
+            Section {
+                EventListTile()
+                EventListTile()
+            } header: {
+                Text("Joined events")
+                    .textCase(.uppercase)
+                    .font(.subheadline)
+            }
+
+            Section {
+                EventListTile()
+            } header: {
+                Text("Events near you")
+                    .textCase(.uppercase)
+                    .font(.subheadline)
+            }
+        }
     }
 }
 

@@ -47,6 +47,7 @@
 		55A583A72AE15D2500438049 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583A62AE15D2500438049 /* CreateEventView.swift */; };
 		55A583A92AE1704900438049 /* CreateEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583A82AE1704900438049 /* CreateEventViewModel.swift */; };
 		55A583AB2AE18C6600438049 /* UserHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583AA2AE18C6600438049 /* UserHomeView.swift */; };
+		55A583AD2AE1937A00438049 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583AC2AE1937A00438049 /* UserData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +92,7 @@
 		55A583A62AE15D2500438049 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
 		55A583A82AE1704900438049 /* CreateEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewModel.swift; sourceTree = "<group>"; };
 		55A583AA2AE18C6600438049 /* UserHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeView.swift; sourceTree = "<group>"; };
+		55A583AC2AE1937A00438049 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +239,7 @@
 				556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */,
 				552E85EF2AD3F85C006D5E86 /* MenuButtonType.swift */,
 				552E86082AD48634006D5E86 /* NavigationDestination.swift */,
+				55A583AC2AE1937A00438049 /* UserData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55A583AD2AE1937A00438049 /* UserData.swift in Sources */,
 				5584D4162AC1A64800BC61F6 /* LandingView.swift in Sources */,
 				55A583A32AE152DE00438049 /* AddressRow.swift in Sources */,
 				552E85FA2AD4428C006D5E86 /* DJHomeView.swift in Sources */,

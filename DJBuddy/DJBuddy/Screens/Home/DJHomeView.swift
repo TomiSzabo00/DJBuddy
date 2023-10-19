@@ -10,8 +10,14 @@ import SwiftUI
 struct DJHomeView: View {
     var body: some View {
         EventList {
-            EventListTile()
-            EventListTile()
+            Section {
+                EventListTile()
+                EventListTile()
+            } header: {
+                Text("Your events")
+                    .textCase(.uppercase)
+                    .font(.subheadline)
+            }
         }
     }
 }

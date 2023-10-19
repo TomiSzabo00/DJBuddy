@@ -22,7 +22,7 @@ struct HomeTabView: View {
             Text("Map").tag(1)
         }
         .overlay(alignment: .bottom) {
-            TabViewSelector(selected: $selectedTab, navigator: navigator)
+            TabViewSelector(selected: $selectedTab, userType: userType, navigator: navigator)
         }
         .ignoresSafeArea()
     }

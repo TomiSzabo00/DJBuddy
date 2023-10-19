@@ -47,14 +47,19 @@ struct DJBuddyApp: App {
     @StateObject private var navigator = Navigator()
 
     var body: some Scene {
+        let exampleUser = UserData(username: "exampleUser",
+                                   email: "example@email.com",
+                                   firstName: "Example",
+                                   lastName: "User",
+                                   type: .user)
+
         WindowGroup {
             NavigationStack(path: $navigator.path) {
-                MainMenu()
+                MainMenu(user: exampleUser)
                     .navigationDestination(for: String.self) { id in
                         if id == String(describing: ProfileView.self) {
-                            ProfileView()
-                        }
-                        if id == String(describing: CreateEventView.self) {
+                            ProfileView(user: exampleUser)
+                        } else if id == String(describing: CreateEventView.self) {
                             CreateEventView()
                         }
                         else {

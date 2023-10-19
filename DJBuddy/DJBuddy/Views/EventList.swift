@@ -12,17 +12,11 @@ struct EventList<Content: View>: View {
 
     var body: some View {
         List {
-            Section {
-                content()
-            } header: {
-                Text("Your events")
-                    .textCase(.uppercase)
-                    .font(.subheadline)
-            }
-            .listStyle(.plain)
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color.clear)
-            .listRowInsets(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
+            content()
+                .listStyle(.plain)
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
         }
         .preferredColorScheme(.dark)
         .background(Color.asset.background)
@@ -36,7 +30,13 @@ struct EventList<Content: View>: View {
 
 #Preview {
     EventList {
-        EventListTile()
-        EventListTile()
+        Section {
+            EventListTile()
+            EventListTile()
+        } header: {
+            Text("Your events")
+                .textCase(.uppercase)
+                .font(.subheadline)
+        }
     }
 }

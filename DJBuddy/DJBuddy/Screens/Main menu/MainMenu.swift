@@ -10,10 +10,10 @@ import SwiftUI
 struct MainMenu: View {
     @EnvironmentObject private var navigator: Navigator
     @State var menu = false
-    let userType: UserTypeEnum = .user
+    let user: UserData
 
     var body: some View {
-        HomeTabView(userType: userType, navigator: navigator)
+        HomeTabView(userType: user.type, navigator: navigator)
             .sideMenu(isShowing: $menu, navigator: navigator)
             .toolbarBackground(Color.black, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
@@ -25,7 +25,7 @@ struct MainMenu: View {
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Hi, DJ") {
+                    Button("Hi, \(user.name.firstName)") {
                         navigator.show(ProfileView.self)
                     }
                     .tint(.red)
@@ -37,6 +37,10 @@ struct MainMenu: View {
 
 #Preview {
     NavigationView {
-        MainMenu()
+        MainMenu(user: UserData(username: "exampleUser",
+                                email: "example@email.com",
+                                firstName: "Example",
+                                lastName: "User",
+                                type: .user))
     }
 }
