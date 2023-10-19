@@ -36,6 +36,16 @@
 		5584D4252AC2128800BC61F6 /* LandingPageEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4242AC2128800BC61F6 /* LandingPageEnum.swift */; };
 		5584D4272AC2132600BC61F6 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4262AC2132600BC61F6 /* AuthViewModel.swift */; };
 		5584D42A2AC21B2D00BC61F6 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4292AC21B2D00BC61F6 /* InputView.swift */; };
+		55A5837D2AE12DDA00438049 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5837C2AE12DDA00438049 /* CreateEventView.swift */; };
+		55A583802AE12F8D00438049 /* PlacesViewControllerBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5837F2AE12F8D00438049 /* PlacesViewControllerBridge.swift */; };
+		55A583842AE1310500438049 /* GooglePlaces.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A583832AE1310500438049 /* GooglePlaces.xcframework */; };
+		55A583862AE1317100438049 /* GooglePlaces.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 55A583852AE1317100438049 /* GooglePlaces.bundle */; };
+		55A583882AE1319400438049 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A583872AE1319400438049 /* CoreGraphics.framework */; };
+		55A5838A2AE1319D00438049 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A583892AE1319D00438049 /* CoreLocation.framework */; };
+		55A5838C2AE131AD00438049 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A5838B2AE131AD00438049 /* libc++.tbd */; };
+		55A5838E2AE131B900438049 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A5838D2AE131B900438049 /* libz.tbd */; };
+		55A583902AE131C400438049 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A5838F2AE131C400438049 /* QuartzCore.framework */; };
+		55A583922AE131CB00438049 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A583912AE131CB00438049 /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +79,16 @@
 		5584D4242AC2128800BC61F6 /* LandingPageEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageEnum.swift; sourceTree = "<group>"; };
 		5584D4262AC2132600BC61F6 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		5584D4292AC21B2D00BC61F6 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		55A5837C2AE12DDA00438049 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
+		55A5837F2AE12F8D00438049 /* PlacesViewControllerBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesViewControllerBridge.swift; sourceTree = "<group>"; };
+		55A583832AE1310500438049 /* GooglePlaces.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GooglePlaces.xcframework; sourceTree = "<group>"; };
+		55A583852AE1317100438049 /* GooglePlaces.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GooglePlaces.bundle; path = "Frameworks/GooglePlaces.xcframework/ios-arm64/GooglePlaces.framework/Resources/GooglePlaces.bundle"; sourceTree = "<group>"; };
+		55A583872AE1319400438049 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		55A583892AE1319D00438049 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		55A5838B2AE131AD00438049 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		55A5838D2AE131B900438049 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		55A5838F2AE131C400438049 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		55A583912AE131CB00438049 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +96,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55A583882AE1319400438049 /* CoreGraphics.framework in Frameworks */,
+				55A5838A2AE1319D00438049 /* CoreLocation.framework in Frameworks */,
+				55A5838C2AE131AD00438049 /* libc++.tbd in Frameworks */,
+				55A5838E2AE131B900438049 /* libz.tbd in Frameworks */,
+				55A583902AE131C400438049 /* QuartzCore.framework in Frameworks */,
+				55A583922AE131CB00438049 /* UIKit.framework in Frameworks */,
+				55A583842AE1310500438049 /* GooglePlaces.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +147,7 @@
 		552E86002AD472CC006D5E86 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				55A5837E2AE12F5200438049 /* Event creation */,
 				552E86012AD47307006D5E86 /* Home */,
 				552E85E12AD2DA3B006D5E86 /* Main menu */,
 				552E86022AD47336006D5E86 /* ProfileView.swift */,
@@ -147,6 +175,8 @@
 			isa = PBXGroup;
 			children = (
 				5584D4062AC18D9700BC61F6 /* DJBuddy */,
+				55A583822AE130E800438049 /* Frameworks */,
+				55A583852AE1317100438049 /* GooglePlaces.bundle */,
 				5584D4052AC18D9700BC61F6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -230,6 +260,29 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		55A5837E2AE12F5200438049 /* Event creation */ = {
+			isa = PBXGroup;
+			children = (
+				55A5837C2AE12DDA00438049 /* CreateEventView.swift */,
+				55A5837F2AE12F8D00438049 /* PlacesViewControllerBridge.swift */,
+			);
+			path = "Event creation";
+			sourceTree = "<group>";
+		};
+		55A583822AE130E800438049 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				55A583912AE131CB00438049 /* UIKit.framework */,
+				55A5838F2AE131C400438049 /* QuartzCore.framework */,
+				55A5838D2AE131B900438049 /* libz.tbd */,
+				55A5838B2AE131AD00438049 /* libc++.tbd */,
+				55A583892AE1319D00438049 /* CoreLocation.framework */,
+				55A583872AE1319400438049 /* CoreGraphics.framework */,
+				55A583832AE1310500438049 /* GooglePlaces.xcframework */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -289,6 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5584D40F2AC18D9900BC61F6 /* Preview Assets.xcassets in Resources */,
+				55A583862AE1317100438049 /* GooglePlaces.bundle in Resources */,
 				5584D40C2AC18D9900BC61F6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -310,9 +364,11 @@
 				552E85F82AD43777006D5E86 /* EventList.swift in Sources */,
 				5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */,
 				5584D4272AC2132600BC61F6 /* AuthViewModel.swift in Sources */,
+				55A583802AE12F8D00438049 /* PlacesViewControllerBridge.swift in Sources */,
 				556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */,
 				552E85EB2AD3EFF1006D5E86 /* EventListTile.swift in Sources */,
 				552E85F42AD3FAC9006D5E86 /* SideMenuModifier.swift in Sources */,
+				55A5837D2AE12DDA00438049 /* CreateEventView.swift in Sources */,
 				552E85FF2AD45D05006D5E86 /* TabViewSelector.swift in Sources */,
 				552E85E32AD2E1FD006D5E86 /* DJMainMenu.swift in Sources */,
 				552E85F22AD3FA4D006D5E86 /* MenuButton.swift in Sources */,
@@ -390,6 +446,8 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-Objc";
+				"OTHER_LDFLAGS[arch=*]" = "-Objc";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -446,6 +504,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "-Objc";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
