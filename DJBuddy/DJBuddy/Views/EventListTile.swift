@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct EventListTile: View {
+    let eventData: EventData
+    
     var body: some View {
         HStack(spacing: 0) {
             // TODO: place image here
@@ -16,16 +18,16 @@ struct EventListTile: View {
                 .frame(width: 100, height: 100)
 
             VStack(alignment: .leading) {
-                Text("DJ example")
+                Text(eventData.dj.username)
                     .textCase(.uppercase)
                     .fontWeight(.heavy)
                     .font(.title3)
-                Text("Akvarium")
+                Text(eventData.location.title)
                     .fontWeight(.medium)
                 Spacer()
                 HStack {
                     Spacer()
-                    Text("2023. 10. 23.")
+                    Text(eventData.date.formatted(.dateTime.day().month().year()))
                         .font(.subheadline)
                         .foregroundStyle(Color.gray)
                 }
@@ -43,6 +45,6 @@ struct EventListTile: View {
 }
 
 #Preview {
-    EventListTile()
+    EventListTile(eventData: EventData.PreviewData)
         .padding()
 }

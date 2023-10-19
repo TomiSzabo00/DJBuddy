@@ -11,8 +11,8 @@ struct UserHomeView: View {
     var body: some View {
         EventList {
             Section {
-                EventListTile()
-                EventListTile()
+                EventListTile(eventData: EventData.PreviewData)
+                EventListTile(eventData: EventData.PreviewData)
             } header: {
                 Text("Joined events")
                     .textCase(.uppercase)
@@ -20,7 +20,7 @@ struct UserHomeView: View {
             }
 
             Section {
-                EventListTile()
+                EventListTile(eventData: EventData.PreviewData)
             } header: {
                 Text("Events near you")
                     .textCase(.uppercase)

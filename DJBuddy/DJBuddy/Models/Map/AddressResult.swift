@@ -11,4 +11,8 @@ struct AddressResult: Identifiable {
     let id = UUID()
     let title: String
     let subtitle: String
+
+    static var PreviewData: AddressResult {
+        AddressResult(title: "Place name", subtitle: "Road name 123, Hungary")
+    }
 }

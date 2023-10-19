@@ -11,8 +11,8 @@ struct DJHomeView: View {
     var body: some View {
         EventList {
             Section {
-                EventListTile()
-                EventListTile()
+                EventListTile(eventData: EventData.PreviewData)
+                EventListTile(eventData: EventData.PreviewData)
             } header: {
                 Text("Your events")
                     .textCase(.uppercase)

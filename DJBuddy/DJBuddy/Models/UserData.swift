@@ -29,7 +29,7 @@ final class UserData: Identifiable, ObservableObject {
     }
 
     static var PreviewUser: UserData {
-        UserData(username: "exampleUser",
+        UserData(username: "dj name",
                  email: "example@email.com",
                  firstName: "Example",
                  lastName: "User",

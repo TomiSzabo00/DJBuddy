@@ -22,6 +22,13 @@ struct EventData: Identifiable {
         self.date = date
         self.state = state
     }
+
+    static var PreviewData: EventData {
+        EventData(name: "Event",
+                  dj: UserData.PreviewUser,
+                  location: AddressResult.PreviewData,
+                  date: Date.now)
+    }
 }
 
 enum EventState {

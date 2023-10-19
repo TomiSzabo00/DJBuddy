@@ -31,8 +31,8 @@ struct EventList<Content: View>: View {
 #Preview {
     EventList {
         Section {
-            EventListTile()
-            EventListTile()
+            EventListTile(eventData: EventData.PreviewData)
+            EventListTile(eventData: EventData.PreviewData)
         } header: {
             Text("Your events")
                 .textCase(.uppercase)
