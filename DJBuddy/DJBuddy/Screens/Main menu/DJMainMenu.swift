@@ -12,7 +12,7 @@ struct DJMainMenu: View {
     @State var menu = false
 
     var body: some View {
-        HomeTabView(navigator: navigator)
+        HomeTabView()
             .sideMenu(isShowing: $menu, navigator: navigator)
             .toolbarBackground(Color.black, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)

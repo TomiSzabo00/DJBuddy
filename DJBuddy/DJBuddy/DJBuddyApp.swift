@@ -6,13 +6,10 @@
 //
 
 import SwiftUI
-import GooglePlaces
 
 @main
 struct DJBuddyApp: App {
     init() {
-        GMSPlacesClient.provideAPIKey("AIzaSyBJGED0Y7RMYqxFGKrfIB9gAeZPlxzPis4")
-
         let newNavBarAppearance = {
             let customNavBarAppearance = UINavigationBarAppearance()
 
@@ -59,9 +56,6 @@ struct DJBuddyApp: App {
                         }
                         if id == String(describing: ProfileView.self) {
                             ProfileView()
-                        }
-                        if id == String(describing: CreateEventView.self) {
-                            CreateEventView()
                         }
                         else {
                             EmptyView()
