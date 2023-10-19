@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
-    let user: UserData
+    @EnvironmentObject var user: UserData
 
     var body: some View {
         GeometryReader { geo in
@@ -55,10 +55,7 @@ struct ProfileView: View {
 
 #Preview {
     NavigationView {
-        ProfileView(user: UserData(username: "exampleUser",
-                                   email: "example@email.com",
-                                   firstName: "Example",
-                                   lastName: "User",
-                                   type: .user))
+        ProfileView()
+            .environmentObject(UserData.PreviewUser)
     }
 }

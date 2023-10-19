@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserData: Identifiable {
+final class UserData: Identifiable, ObservableObject {
     let id = UUID()
     let username: String
     let email: String
@@ -26,6 +26,14 @@ struct UserData: Identifiable {
         self.email = email
         self.name = NameData(firstName: firstName, lastName: lastName)
         self.type  = type
+    }
+
+    static var PreviewUser: UserData {
+        UserData(username: "exampleUser",
+                 email: "example@email.com",
+                 firstName: "Example",
+                 lastName: "User",
+                 type: .user)
     }
 }
 

@@ -12,14 +12,16 @@ struct CreateEventView: View {
     @State var isAddressSheetShowing = false
     @State var isDatePickerShowing = false
 
+    @EnvironmentObject var user: UserData
+
     var body: some View {
         VStack(spacing: 40) {
-            PlaceholderTextField(placeholder: "Name of event", text: .constant(""))
+            PlaceholderTextField(placeholder: "Name of event", text: $viewModel.eventName)
             addressSelectionButton()
             dateSelectionButton()
             Spacer()
             Button("Create event") {
-
+                viewModel.createEvent(by: user)
             }
             .buttonStyle(.largeProminent)
         }
@@ -83,4 +85,5 @@ struct CreateEventView: View {
 
 #Preview {
     CreateEventView()
+        .environmentObject(UserData.PreviewUser)
 }

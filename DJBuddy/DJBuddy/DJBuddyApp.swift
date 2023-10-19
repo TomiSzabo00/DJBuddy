@@ -45,20 +45,19 @@ struct DJBuddyApp: App {
     }
 
     @StateObject private var navigator = Navigator()
+    @StateObject private var exampleUser = UserData(username: "exampleUser",
+                                                    email: "example@email.com",
+                                                    firstName: "Example",
+                                                    lastName: "User",
+                                                    type: .dj)
 
     var body: some Scene {
-        let exampleUser = UserData(username: "exampleUser",
-                                   email: "example@email.com",
-                                   firstName: "Example",
-                                   lastName: "User",
-                                   type: .user)
-
         WindowGroup {
             NavigationStack(path: $navigator.path) {
-                MainMenu(user: exampleUser)
+                MainMenu()
                     .navigationDestination(for: String.self) { id in
                         if id == String(describing: ProfileView.self) {
-                            ProfileView(user: exampleUser)
+                            ProfileView()
                         } else if id == String(describing: CreateEventView.self) {
                             CreateEventView()
                         }
@@ -68,6 +67,7 @@ struct DJBuddyApp: App {
                     }
             }
             .environmentObject(navigator)
+            .environmentObject(exampleUser)
             .tint(.accent)
         }
     }

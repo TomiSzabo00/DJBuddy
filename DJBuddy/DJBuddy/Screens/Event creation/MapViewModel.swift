@@ -10,7 +10,6 @@ import MapKit
 import SwiftUI
 
 final class MapViewModel: ObservableObject {
-    
     @Published var region: MapCameraPosition = .automatic
     @Published private(set) var annotationItems: [AnnotationItem] = []
 

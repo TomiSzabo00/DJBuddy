@@ -9,8 +9,8 @@ import SwiftUI
 
 struct MainMenu: View {
     @EnvironmentObject private var navigator: Navigator
+    @EnvironmentObject private var user: UserData
     @State var menu = false
-    let user: UserData
 
     var body: some View {
         HomeTabView(userType: user.type, navigator: navigator)
@@ -37,10 +37,8 @@ struct MainMenu: View {
 
 #Preview {
     NavigationView {
-        MainMenu(user: UserData(username: "exampleUser",
-                                email: "example@email.com",
-                                firstName: "Example",
-                                lastName: "User",
-                                type: .user))
+        MainMenu()
+            .environmentObject(Navigator())
+            .environmentObject(UserData.PreviewUser)
     }
 }

@@ -86,6 +86,7 @@ struct FloatingTextModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.system(size: 18, weight: .semibold))
+            .foregroundStyle(.gray)
             .autocorrectionDisabled(true)
             .autocapitalization(.none)
             .background(placeholderView, alignment: .leading)
