@@ -6,34 +6,18 @@
 //
 
 import Foundation
-import MapKit
 
-final class CreateEventViewModel: NSObject, ObservableObject {
-    @Published private(set) var results: Array<AddressResult> = []
-    @Published var searchableText = ""
+final class CreateEventViewModel: ObservableObject {
+    @Published var selectedAddress: AddressResult? = nil
+    @Published var dateOfEvent: Date = .distantPast
 
-    private lazy var localSearchCompleter: MKLocalSearchCompleter = {
-        let completer = MKLocalSearchCompleter()
-        completer.delegate = self
-        return completer
-    }()
-
-    func searchAddress(_ searchableText: String) {
-        guard searchableText.isEmpty == false else { return }
-        localSearchCompleter.queryFragment = searchableText
-    }
-}
-
-extension CreateEventViewModel: MKLocalSearchCompleterDelegate {
-    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-        Task { @MainActor in
-            results = completer.results.map {
-                AddressResult(title: $0.title, subtitle: $0.subtitle)
-            }
-        }
+    var currentAddress: String? {
+        guard let selectedAddress else { return nil }
+        return selectedAddress.title
     }
 
-    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-        print(error)
+    var displayDate: String? {
+        guard dateOfEvent != .distantPast else { return nil }
+        return dateOfEvent.formatted(.dateTime.year().month().day())
     }
 }

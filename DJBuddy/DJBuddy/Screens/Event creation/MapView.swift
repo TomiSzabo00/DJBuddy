@@ -11,32 +11,37 @@ import MapKit
 struct MapView: View {
     @StateObject private var viewModel = MapViewModel()
 
-    private let address: AddressResult
-
-    init(address: AddressResult) {
-        self.address = address
-    }
+    let address: AddressResult
+    let completion: (AddressResult) -> Void
 
     var body: some View {
-        Map {
-            ForEach(viewModel.annotationItems) { item in
-                Marker("", coordinate: item.coordinate)
+        ZStack(alignment: .bottom) {
+            Map(position: $viewModel.region) {
+                ForEach(viewModel.annotationItems) { item in
+                    Marker("", coordinate: item.coordinate)
+                }
             }
+            .mapStyle(.standard(elevation: .realistic, pointsOfInterest: .all))
+            .mapControls {
+                MapCompass()
+                MapPitchToggle()
+                MapScaleView()
+            }
+            .mapControlVisibility(.visible)
+            .onAppear {
+                self.viewModel.getPlace(from: address)
+            }
+            .edgesIgnoringSafeArea(.bottom)
+
+            Button("Select this location") {
+                completion(address)
+            }
+            .buttonStyle(.largeProminent)
+            .padding()
         }
-        .mapStyle(.standard(elevation: .realistic, pointsOfInterest: .all))
-        .mapControls {
-            MapCompass()
-            MapPitchToggle()
-            MapScaleView()
-        }
-        .mapControlVisibility(.visible)
-        .onAppear {
-            self.viewModel.getPlace(from: address)
-        }
-        .edgesIgnoringSafeArea(.bottom)
     }
 }
 
 #Preview {
-    MapView(address: AddressResult(title: "Title", subtitle: "Subtitle"))
+    MapView(address: AddressResult(title: "Title", subtitle: "Subtitle")) { _ in }
 }

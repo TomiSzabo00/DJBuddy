@@ -39,12 +39,13 @@
 		55A583952AE14FEF00438049 /* AddressResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583942AE14FEF00438049 /* AddressResult.swift */; };
 		55A583972AE1500100438049 /* AnnotationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583962AE1500100438049 /* AnnotationItem.swift */; };
 		55A5839B2AE1506800438049 /* AddressSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5839A2AE1506800438049 /* AddressSelectionView.swift */; };
-		55A5839D2AE1507400438049 /* CreateEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5839C2AE1507400438049 /* CreateEventViewModel.swift */; };
+		55A5839D2AE1507400438049 /* AddressSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5839C2AE1507400438049 /* AddressSelectionViewModel.swift */; };
 		55A5839F2AE150F400438049 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5839E2AE150F400438049 /* MapViewModel.swift */; };
 		55A583A12AE1526100438049 /* ClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583A02AE1526100438049 /* ClearButton.swift */; };
 		55A583A32AE152DE00438049 /* AddressRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583A22AE152DE00438049 /* AddressRow.swift */; };
 		55A583A52AE1531E00438049 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583A42AE1531E00438049 /* MapView.swift */; };
 		55A583A72AE15D2500438049 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583A62AE15D2500438049 /* CreateEventView.swift */; };
+		55A583A92AE1704900438049 /* CreateEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583A82AE1704900438049 /* CreateEventViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,12 +82,13 @@
 		55A583942AE14FEF00438049 /* AddressResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressResult.swift; sourceTree = "<group>"; };
 		55A583962AE1500100438049 /* AnnotationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationItem.swift; sourceTree = "<group>"; };
 		55A5839A2AE1506800438049 /* AddressSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSelectionView.swift; sourceTree = "<group>"; };
-		55A5839C2AE1507400438049 /* CreateEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewModel.swift; sourceTree = "<group>"; };
+		55A5839C2AE1507400438049 /* AddressSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSelectionViewModel.swift; sourceTree = "<group>"; };
 		55A5839E2AE150F400438049 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		55A583A02AE1526100438049 /* ClearButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearButton.swift; sourceTree = "<group>"; };
 		55A583A22AE152DE00438049 /* AddressRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRow.swift; sourceTree = "<group>"; };
 		55A583A42AE1531E00438049 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		55A583A62AE15D2500438049 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
+		55A583A82AE1704900438049 /* CreateEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,10 +267,11 @@
 			isa = PBXGroup;
 			children = (
 				55A5839A2AE1506800438049 /* AddressSelectionView.swift */,
-				55A5839C2AE1507400438049 /* CreateEventViewModel.swift */,
+				55A5839C2AE1507400438049 /* AddressSelectionViewModel.swift */,
 				55A5839E2AE150F400438049 /* MapViewModel.swift */,
 				55A583A42AE1531E00438049 /* MapView.swift */,
 				55A583A62AE15D2500438049 /* CreateEventView.swift */,
+				55A583A82AE1704900438049 /* CreateEventViewModel.swift */,
 			);
 			path = "Event creation";
 			sourceTree = "<group>";
@@ -354,7 +357,7 @@
 				5584D41A2AC1AEB700BC61F6 /* LargeSecondaryButtonStyle.swift in Sources */,
 				552E85F82AD43777006D5E86 /* EventList.swift in Sources */,
 				5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */,
-				55A5839D2AE1507400438049 /* CreateEventViewModel.swift in Sources */,
+				55A5839D2AE1507400438049 /* AddressSelectionViewModel.swift in Sources */,
 				5584D4272AC2132600BC61F6 /* AuthViewModel.swift in Sources */,
 				556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */,
 				552E85EB2AD3EFF1006D5E86 /* EventListTile.swift in Sources */,
@@ -377,6 +380,7 @@
 				552E85FC2AD442F8006D5E86 /* HomeTabView.swift in Sources */,
 				55A5839B2AE1506800438049 /* AddressSelectionView.swift in Sources */,
 				55A583A72AE15D2500438049 /* CreateEventView.swift in Sources */,
+				55A583A92AE1704900438049 /* CreateEventViewModel.swift in Sources */,
 				552E85E62AD2E605006D5E86 /* CustomColors.swift in Sources */,
 				5584D4202AC1DA0B00BC61F6 /* UnderlinedButtonStyle.swift in Sources */,
 			);

@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct AddressSelectionView: View {
-    @StateObject var viewModel = CreateEventViewModel()
+    @StateObject var viewModel = AddressSelectionViewModel()
     @FocusState private var isFocusedTextField: Bool
+    var currentAddress: String? = nil
+
+    let completion: (AddressResult) -> Void
 
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 0) {
-
                 TextField("Type address", text: $viewModel.searchableText)
                     .padding()
                     .autocorrectionDisabled()
@@ -35,22 +37,30 @@ struct AddressSelectionView: View {
                             .padding(.top, 8)
                     }
                     .onAppear {
-                        isFocusedTextField = true
+                        if let currentAddress {
+                            viewModel.searchableText = currentAddress
+                            viewModel.searchAddress(currentAddress)
+                        } else {
+                            isFocusedTextField = true
+                        }
                     }
 
                 List(self.viewModel.results) { address in
-                    AddressRow(address: address)
-                        .listRowBackground(Color.asset.background)
+                    NavigationLink {
+                        MapView(address: address, completion: completion)
+                    } label: {
+                        AddressRow(address: address)
+                    }
                 }
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
             }
-            .background(Color.asset.background)
-            .edgesIgnoringSafeArea(.bottom)
+            .navigationTitle("Select location")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
 
 #Preview {
-    AddressSelectionView()
+    AddressSelectionView() { _ in }
 }

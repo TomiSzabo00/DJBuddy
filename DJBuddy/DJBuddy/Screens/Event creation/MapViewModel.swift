@@ -31,7 +31,6 @@ final class MapViewModel: ObservableObject {
                         longitude: $0.placemark.coordinate.longitude
                     )
                 }
-
                 self.region = MapCameraPosition.region(response.boundingRegion)
             }
         }
