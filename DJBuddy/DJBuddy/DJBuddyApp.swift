@@ -49,11 +49,8 @@ struct DJBuddyApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $navigator.path) {
-                DJMainMenu()
+                MainMenu()
                     .navigationDestination(for: String.self) { id in
-                        if id == String(describing: DJHomeView.self) {
-                            DJHomeView()
-                        }
                         if id == String(describing: ProfileView.self) {
                             ProfileView()
                         }
@@ -61,10 +58,7 @@ struct DJBuddyApp: App {
                             CreateEventView()
                         }
                         else {
-                            EmptyView()
-                                .onAppear {
-                                    print(id)
-                                }
+                            Text("Opened \(id), but there is no navigation set up.")
                         }
                     }
             }

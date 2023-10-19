@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		552E85E32AD2E1FD006D5E86 /* DJMainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85E22AD2E1FD006D5E86 /* DJMainMenu.swift */; };
+		552E85E32AD2E1FD006D5E86 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85E22AD2E1FD006D5E86 /* MainMenu.swift */; };
 		552E85E62AD2E605006D5E86 /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85E52AD2E605006D5E86 /* CustomColors.swift */; };
 		552E85E92AD2E745006D5E86 /* BackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85E82AD2E745006D5E86 /* BackgroundColor.swift */; };
 		552E85EB2AD3EFF1006D5E86 /* EventListTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85EA2AD3EFF1006D5E86 /* EventListTile.swift */; };
@@ -46,10 +46,11 @@
 		55A583A52AE1531E00438049 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583A42AE1531E00438049 /* MapView.swift */; };
 		55A583A72AE15D2500438049 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583A62AE15D2500438049 /* CreateEventView.swift */; };
 		55A583A92AE1704900438049 /* CreateEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583A82AE1704900438049 /* CreateEventViewModel.swift */; };
+		55A583AB2AE18C6600438049 /* UserHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583AA2AE18C6600438049 /* UserHomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		552E85E22AD2E1FD006D5E86 /* DJMainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJMainMenu.swift; sourceTree = "<group>"; };
+		552E85E22AD2E1FD006D5E86 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		552E85E52AD2E605006D5E86 /* CustomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
 		552E85E82AD2E745006D5E86 /* BackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundColor.swift; sourceTree = "<group>"; };
 		552E85EA2AD3EFF1006D5E86 /* EventListTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListTile.swift; sourceTree = "<group>"; };
@@ -89,6 +90,7 @@
 		55A583A42AE1531E00438049 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		55A583A62AE15D2500438049 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
 		55A583A82AE1704900438049 /* CreateEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewModel.swift; sourceTree = "<group>"; };
+		55A583AA2AE18C6600438049 /* UserHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +107,7 @@
 		552E85E12AD2DA3B006D5E86 /* Main menu */ = {
 			isa = PBXGroup;
 			children = (
-				552E85E22AD2E1FD006D5E86 /* DJMainMenu.swift */,
+				552E85E22AD2E1FD006D5E86 /* MainMenu.swift */,
 			);
 			path = "Main menu";
 			sourceTree = "<group>";
@@ -152,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				552E85F92AD4428C006D5E86 /* DJHomeView.swift */,
+				55A583AA2AE18C6600438049 /* UserHomeView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				55A583A52AE1531E00438049 /* MapView.swift in Sources */,
 				5584D41A2AC1AEB700BC61F6 /* LargeSecondaryButtonStyle.swift in Sources */,
 				552E85F82AD43777006D5E86 /* EventList.swift in Sources */,
+				55A583AB2AE18C6600438049 /* UserHomeView.swift in Sources */,
 				5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */,
 				55A5839D2AE1507400438049 /* AddressSelectionViewModel.swift in Sources */,
 				5584D4272AC2132600BC61F6 /* AuthViewModel.swift in Sources */,
@@ -364,7 +368,7 @@
 				55A583972AE1500100438049 /* AnnotationItem.swift in Sources */,
 				552E85F42AD3FAC9006D5E86 /* SideMenuModifier.swift in Sources */,
 				552E85FF2AD45D05006D5E86 /* TabViewSelector.swift in Sources */,
-				552E85E32AD2E1FD006D5E86 /* DJMainMenu.swift in Sources */,
+				552E85E32AD2E1FD006D5E86 /* MainMenu.swift in Sources */,
 				552E85F22AD3FA4D006D5E86 /* MenuButton.swift in Sources */,
 				552E86072AD47BD9006D5E86 /* NavigationBarModifier.swift in Sources */,
 				5584D4182AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift in Sources */,

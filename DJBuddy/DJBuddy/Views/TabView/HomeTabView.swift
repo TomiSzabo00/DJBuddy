@@ -8,12 +8,17 @@
 import SwiftUI
 
 struct HomeTabView: View {
+    let userType: UserTypeEnum
     let navigator: Navigator
     @State var selectedTab = 0
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            DJHomeView().tag(0)
+            if userType == .dj {
+                DJHomeView().tag(0)
+            } else {
+                UserHomeView().tag(0)
+            }
             Text("Map").tag(1)
         }
         .overlay(alignment: .bottom) {
@@ -24,5 +29,5 @@ struct HomeTabView: View {
 }
 
 #Preview {
-    HomeTabView(navigator: Navigator())
+    HomeTabView(userType: .dj, navigator: Navigator())
 }

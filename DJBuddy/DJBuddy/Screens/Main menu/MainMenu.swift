@@ -7,12 +7,13 @@
 
 import SwiftUI
 
-struct DJMainMenu: View {
+struct MainMenu: View {
     @EnvironmentObject private var navigator: Navigator
     @State var menu = false
+    let userType: UserTypeEnum = .user
 
     var body: some View {
-        HomeTabView(navigator: navigator)
+        HomeTabView(userType: userType, navigator: navigator)
             .sideMenu(isShowing: $menu, navigator: navigator)
             .toolbarBackground(Color.black, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
@@ -36,6 +37,6 @@ struct DJMainMenu: View {
 
 #Preview {
     NavigationView {
-        DJMainMenu()
+        MainMenu()
     }
 }
