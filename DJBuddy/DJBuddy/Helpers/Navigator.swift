@@ -23,6 +23,8 @@ class Navigator: ObservableObject {
     }
 
     func back() {
-        path.removeLast()
+        if !path.isEmpty {
+            path.removeLast()
+        }
     }
 }

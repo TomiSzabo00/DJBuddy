@@ -13,8 +13,12 @@ struct SongList: View {
     var body: some View {
         List {
             Section {
-                ForEach(Array(songs.enumerated()), id: \.offset) { idx, song in
-                    SongRow(song, index: idx)
+                if songs.isEmpty {
+                    InfoView("There aren't any songs requested. Yet.", type: .info)
+                } else {
+                    ForEach(Array(songs.enumerated()), id: \.offset) { idx, song in
+                        SongRow(song, index: idx)
+                    }
                 }
             } header: {
                 Text("Requested songs")
@@ -33,5 +37,5 @@ struct SongList: View {
 }
 
 #Preview {
-    SongList(songs: [SongData.PreviewData])
+    SongList(songs: [])//SongData.PreviewData])
 }

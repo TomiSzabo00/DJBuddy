@@ -17,8 +17,6 @@ struct InfoView: View {
     let text: String
     let type: InfoType
 
-    let eventState: EventState?
-
     var imageName: String {
         switch type {
         case .info:
@@ -45,11 +43,12 @@ struct InfoView: View {
         HStack(spacing: 20) {
             Image(systemName: imageName)
                 .font(.title2)
+                .padding(.leading, 10)
             Text(text)
         }
         .foregroundStyle(.white.opacity(0.8))
         .padding()
-        .frame(maxWidth: .infinity, minHeight: 80)
+        .frame(maxWidth: .infinity, minHeight: 80, alignment: .leading)
         .background(backgroundColor.opacity(0.5))
         .clipShape(.rect(cornerRadius: 12))
     }
@@ -57,12 +56,9 @@ struct InfoView: View {
     init(_ text: String, type: InfoType = .info) {
         self.text = text
         self.type = type
-        self.eventState = nil
     }
 
     init(from state: EventState) {
-        eventState = state
-
         text = {
             switch state {
             case .upcoming:
@@ -77,7 +73,7 @@ struct InfoView: View {
         }()
 
         type = {
-            if [.paused, .upcoming].contains(state) {
+            if [.paused, .ended].contains(state) {
                 return .warning
             }
             return .info
