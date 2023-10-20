@@ -33,7 +33,7 @@ struct SongRow: View {
 
                 VStack(alignment: .leading) {
                     Text(song.title)
-                        .font(.title)
+                        .font(.title2)
                         .fontWeight(.semibold)
                     Text(song.artist)
                         .font(.subheadline)
