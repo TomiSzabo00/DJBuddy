@@ -14,8 +14,13 @@ final class EventControlViewModel: ObservableObject {
         self.event = event
     }
 
-    func setTheme(to theme: SongTheme) {
+    func setTheme(to theme: SongTheme?) {
         event.theme = theme
+        objectWillChange.send()
+    }
+
+    func setState(to state: EventState) {
+        event.state = state
         objectWillChange.send()
     }
 }

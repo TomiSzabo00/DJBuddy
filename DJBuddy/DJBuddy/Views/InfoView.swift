@@ -64,7 +64,7 @@ struct InfoView: View {
             case .upcoming:
                 "This event hasn't started yet. Come back later!"
             case .inProgress:
-                "This event is currently in progress. Join fast!"
+                "This event is currently in progress. Request songs now!"
             case .paused:
                 "Requests for this event are paused. Wait a few minutes."
             case .ended:
@@ -73,8 +73,10 @@ struct InfoView: View {
         }()
 
         type = {
-            if [.paused, .ended].contains(state) {
+            if [.paused, .upcoming].contains(state) {
                 return .warning
+            } else if state == .ended {
+                return .error
             }
             return .info
         }()

@@ -14,9 +14,8 @@ struct EventControlView: View {
     var body: some View {
         VStack {
             VStack(spacing: 20) {
-                if [.paused, .upcoming].contains(viewModel.event.state) {
-                    InfoView(from: viewModel.event.state)
-                }
+                InfoView(from: viewModel.event.state)
+                
                 if let theme = viewModel.event.theme {
                     InfoView("The current theme for this event is \(theme.displayName.uppercased())", type: .info)
                 }
@@ -31,11 +30,17 @@ struct EventControlView: View {
                 Button("Set theme") {
                     viewModel.setTheme(to: .slow)
                 }
-                Button("Remove theme") {}
-                Button("Pause requests") {}
-                Button("Resume requests") {}
+                Button("Remove theme") {
+                    viewModel.setTheme(to: nil)
+                }
+                Button("Pause requests") {
+                    viewModel.setState(to: .paused)
+                }
+                Button("Resume requests") {
+                    viewModel.setState(to: .inProgress)
+                }
                 Button(role: .destructive) {
-
+                    viewModel.setState(to: .ended)
                 } label: {
                     Text("End event")
                 }
