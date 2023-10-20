@@ -12,13 +12,16 @@ struct EventControlView: View {
     let event: EventData
 
     var body: some View {
-        VStack(spacing: 20) {
-            InfoView("Requests for this event are paused.", type: .warning)
-            InfoView("The current theme for this event is SLOW MUSIC", type: .info)
+        VStack {
+            VStack(spacing: 20) {
+                InfoView("Requests for this event are paused.", type: .warning)
+                InfoView("The current theme for this event is SLOW MUSIC", type: .info)
 
-            SongList(songs: ["first", "second"])
+            }
+            .padding()
+
+            SongList(songs: [SongData.PreviewData, SongData.PreviewData])
         }
-        .padding()
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: event.name, navigator: navigator, leadingButton: .back, trailingButton: .options)
     }

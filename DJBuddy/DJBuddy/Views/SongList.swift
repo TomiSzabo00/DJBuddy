@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct SongList: View {
-    let songs: [String]
+    let songs: [SongData]
 
     var body: some View {
         List {
             Section {
-                ForEach(songs, id: \.self) { song in
-                    Text(song)
+                ForEach(Array(songs.enumerated()), id: \.offset) { idx, song in
+                    SongRow(song, index: idx)
                 }
             } header: {
                 Text("Requested songs")
@@ -24,7 +24,7 @@ struct SongList: View {
             .listStyle(.plain)
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
-            .listRowInsets(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
+            .listRowInsets(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
         }
         .preferredColorScheme(.dark)
         .background(Color.asset.background)
@@ -33,5 +33,5 @@ struct SongList: View {
 }
 
 #Preview {
-    SongList(songs: ["first", "second"])
+    SongList(songs: [SongData.PreviewData])
 }
