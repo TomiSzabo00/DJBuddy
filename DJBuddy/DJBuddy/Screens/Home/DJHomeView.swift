@@ -8,11 +8,17 @@
 import SwiftUI
 
 struct DJHomeView: View {
+    @EnvironmentObject var navigator: Navigator
+
     var body: some View {
         EventList {
             Section {
-                EventListTile(eventData: EventData.PreviewData)
-                EventListTile(eventData: EventData.PreviewData)
+                ForEach(0...1, id: \.self) { _ in
+                    EventListTile(eventData: EventData.PreviewData)
+                        .onTapGesture {
+                            navigator.navigate(with: EventData.PreviewData)
+                        }
+                }
             } header: {
                 Text("Your events")
                     .textCase(.uppercase)

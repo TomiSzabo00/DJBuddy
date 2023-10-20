@@ -5,7 +5,7 @@
 //  Created by Szabó Tamás on 30/09/2023.
 //
 
-enum UserTypeEnum: Identifiable, CaseIterable {
+enum UserTypeEnum: Identifiable, CaseIterable, Hashable {
     case user
     case dj
 

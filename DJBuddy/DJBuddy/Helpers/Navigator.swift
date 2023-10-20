@@ -14,7 +14,15 @@ class Navigator: ObservableObject {
         path.append(String(describing: viewType.self))
     }
 
+    func navigate(with: any Hashable) {
+        path.append(with)
+    }
+
     func popToRoot() {
         path.removeLast(path.count)
+    }
+
+    func back() {
+        path.removeLast()
     }
 }

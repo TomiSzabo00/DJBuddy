@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EventData: Identifiable {
+struct EventData: Hashable, Identifiable {
     let id = UUID()
     let name: String
     let dj: UserData
@@ -21,6 +21,14 @@ struct EventData: Identifiable {
         self.location = location
         self.date = date
         self.state = state
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+
+    static func == (lhs: EventData, rhs: EventData) -> Bool {
+        lhs.id == rhs.id
     }
 
     static var PreviewData: EventData {

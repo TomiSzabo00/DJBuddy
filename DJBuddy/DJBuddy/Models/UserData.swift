@@ -7,7 +7,11 @@
 
 import Foundation
 
-final class UserData: Identifiable, ObservableObject {
+final class UserData: Identifiable, ObservableObject, Hashable {
+    static func == (lhs: UserData, rhs: UserData) -> Bool {
+        lhs.id == rhs.id
+    }
+
     let id = UUID()
     let username: String
     let email: String
@@ -28,6 +32,10 @@ final class UserData: Identifiable, ObservableObject {
         self.type  = type
     }
 
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+
     static var PreviewUser: UserData {
         UserData(username: "dj name",
                  email: "example@email.com",
@@ -37,7 +45,7 @@ final class UserData: Identifiable, ObservableObject {
     }
 }
 
-struct NameData {
+struct NameData: Hashable {
     let firstName: String
     let lastName: String
 

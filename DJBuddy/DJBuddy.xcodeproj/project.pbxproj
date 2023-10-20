@@ -26,6 +26,8 @@
 		552E860C2AD4878A006D5E86 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E860B2AD4878A006D5E86 /* Navigator.swift */; };
 		556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */; };
 		5573DC592AE19DC50025751F /* EventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC582AE19DC50025751F /* EventData.swift */; };
+		5573DC5C2AE1D36F0025751F /* EventControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC5B2AE1D36F0025751F /* EventControlView.swift */; };
+		5573DC5E2AE280BF0025751F /* ButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC5D2AE280BF0025751F /* ButtonType.swift */; };
 		5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */; };
 		5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */; };
 		5584D40C2AC18D9900BC61F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5584D40B2AC18D9900BC61F6 /* Assets.xcassets */; };
@@ -71,6 +73,8 @@
 		552E860B2AD4878A006D5E86 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTypeEnum.swift; sourceTree = "<group>"; };
 		5573DC582AE19DC50025751F /* EventData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventData.swift; sourceTree = "<group>"; };
+		5573DC5B2AE1D36F0025751F /* EventControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventControlView.swift; sourceTree = "<group>"; };
+		5573DC5D2AE280BF0025751F /* ButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonType.swift; sourceTree = "<group>"; };
 		5584D4042AC18D9700BC61F6 /* DJBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJBuddyApp.swift; sourceTree = "<group>"; };
 		5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavyBackgroundView.swift; sourceTree = "<group>"; };
@@ -146,6 +150,7 @@
 		552E86002AD472CC006D5E86 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				5573DC5A2AE1D32A0025751F /* Event controls */,
 				55A583992AE1504E00438049 /* Event creation */,
 				552E86012AD47307006D5E86 /* Home */,
 				552E85E12AD2DA3B006D5E86 /* Main menu */,
@@ -169,6 +174,14 @@
 				552E860B2AD4878A006D5E86 /* Navigator.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		5573DC5A2AE1D32A0025751F /* Event controls */ = {
+			isa = PBXGroup;
+			children = (
+				5573DC5B2AE1D36F0025751F /* EventControlView.swift */,
+			);
+			path = "Event controls";
 			sourceTree = "<group>";
 		};
 		5584D3FB2AC18D9700BC61F6 = {
@@ -243,6 +256,7 @@
 				552E86082AD48634006D5E86 /* NavigationDestination.swift */,
 				55A583AC2AE1937A00438049 /* UserData.swift */,
 				5573DC582AE19DC50025751F /* EventData.swift */,
+				5573DC5D2AE280BF0025751F /* ButtonType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -356,6 +370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55A583AD2AE1937A00438049 /* UserData.swift in Sources */,
+				5573DC5E2AE280BF0025751F /* ButtonType.swift in Sources */,
 				5584D4162AC1A64800BC61F6 /* LandingView.swift in Sources */,
 				55A583A32AE152DE00438049 /* AddressRow.swift in Sources */,
 				552E85FA2AD4428C006D5E86 /* DJHomeView.swift in Sources */,
@@ -365,6 +380,7 @@
 				552E85F02AD3F85C006D5E86 /* MenuButtonType.swift in Sources */,
 				55A583A52AE1531E00438049 /* MapView.swift in Sources */,
 				5584D41A2AC1AEB700BC61F6 /* LargeSecondaryButtonStyle.swift in Sources */,
+				5573DC5C2AE1D36F0025751F /* EventControlView.swift in Sources */,
 				552E85F82AD43777006D5E86 /* EventList.swift in Sources */,
 				55A583AB2AE18C6600438049 /* UserHomeView.swift in Sources */,
 				5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */,

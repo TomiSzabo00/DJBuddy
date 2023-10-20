@@ -12,36 +12,31 @@ struct DJBuddyApp: App {
     init() {
         let newNavBarAppearance = {
             let customNavBarAppearance = UINavigationBarAppearance()
+            customNavBarAppearance.configureWithOpaqueBackground()
+            customNavBarAppearance.backgroundColor = .black
 
-                // Apply a red background.
-                customNavBarAppearance.configureWithOpaqueBackground()
-                customNavBarAppearance.backgroundColor = .black
+            customNavBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            customNavBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.systemRed]
 
-                // Apply white colored normal and large titles.
-                customNavBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.systemRed]
-                customNavBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.systemRed]
+            let barButtonItemAppearance = UIBarButtonItemAppearance(style: .plain)
+            barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.systemRed]
+            barButtonItemAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.systemRed]
+            barButtonItemAppearance.highlighted.titleTextAttributes = [.foregroundColor: UIColor.systemRed]
+            barButtonItemAppearance.focused.titleTextAttributes = [.foregroundColor: UIColor.systemRed]
+            customNavBarAppearance.buttonAppearance = barButtonItemAppearance
+            customNavBarAppearance.backButtonAppearance = barButtonItemAppearance
+            customNavBarAppearance.doneButtonAppearance = barButtonItemAppearance
 
-
-                // Apply white color to all the nav bar buttons.
-                let barButtonItemAppearance = UIBarButtonItemAppearance(style: .plain)
-                barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.systemRed]
-                barButtonItemAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.systemRed]
-                barButtonItemAppearance.highlighted.titleTextAttributes = [.foregroundColor: UIColor.systemRed]
-                barButtonItemAppearance.focused.titleTextAttributes = [.foregroundColor: UIColor.systemRed]
-                customNavBarAppearance.buttonAppearance = barButtonItemAppearance
-                customNavBarAppearance.backButtonAppearance = barButtonItemAppearance
-                customNavBarAppearance.doneButtonAppearance = barButtonItemAppearance
-
-                return customNavBarAppearance
+            return customNavBarAppearance
         }()
 
         let appearance = UINavigationBar.appearance()
-            appearance.scrollEdgeAppearance = newNavBarAppearance
-            appearance.compactAppearance = newNavBarAppearance
-            appearance.standardAppearance = newNavBarAppearance
-            if #available(iOS 15.0, *) {
-                appearance.compactScrollEdgeAppearance = newNavBarAppearance
-            }
+        appearance.scrollEdgeAppearance = newNavBarAppearance
+        appearance.compactAppearance = newNavBarAppearance
+        appearance.standardAppearance = newNavBarAppearance
+        if #available(iOS 15.0, *) {
+            appearance.compactScrollEdgeAppearance = newNavBarAppearance
+        }
     }
 
     @StateObject private var navigator = Navigator()
@@ -63,6 +58,13 @@ struct DJBuddyApp: App {
                         }
                         else {
                             Text("Opened \(id), but there is no navigation set up.")
+                        }
+                    }
+                    .navigationDestination(for: EventData.self) { event in
+                        if exampleUser.type == .dj {
+                            EventControlView(event: event)
+                        } else {
+                            Text("User's event screen")
                         }
                     }
             }

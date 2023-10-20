@@ -1,42 +1,74 @@
 import SwiftUI
 
 struct NavigationBarModifier: ViewModifier {
+    let title: String
+    let leadingButton: ButtonType?
+    let trailingButton: ButtonType?
+    let buttonColor: Color
+    let navigator: Navigator
 
-    var backgroundColor: UIColor?
-    var titleColor: UIColor?
+    @State var isMenuShowing = false
 
-    init(backgroundColor: UIColor?, titleColor: UIColor?) {
-        self.backgroundColor = backgroundColor
-        let coloredAppearance = UINavigationBarAppearance()
-        coloredAppearance.configureWithTransparentBackground()
-        coloredAppearance.backgroundColor = backgroundColor
-        coloredAppearance.titleTextAttributes = [.foregroundColor: titleColor ?? .white]
-        coloredAppearance.largeTitleTextAttributes = [.foregroundColor: titleColor ?? .white]
-
-        UINavigationBar.appearance().standardAppearance = coloredAppearance
-        UINavigationBar.appearance().compactAppearance = coloredAppearance
-        UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
+    init(title: String, navigator: Navigator, leadingButton: ButtonType? = nil, trailingButton: ButtonType? = nil, buttonColor: Color = .red) {
+        self.title = title
+        self.navigator = navigator
+        self.leadingButton = leadingButton
+        self.trailingButton = trailingButton
+        self.buttonColor = buttonColor
     }
 
     func body(content: Content) -> some View {
-        ZStack{
-            content
-            VStack {
-                GeometryReader { geometry in
-                    Color(self.backgroundColor ?? .clear)
-                        .frame(height: geometry.safeAreaInsets.top)
-                        .edgesIgnoringSafeArea(.top)
-                    Spacer()
+        content
+            .toolbarBackground(Color.black, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarColorScheme(.dark, for: .navigationBar)
+            .toolbar {
+                if let leadingButton {
+                    ToolbarItem(placement: .topBarLeading) {
+                        button(for: leadingButton)
+                            .tint(buttonColor)
+                    }
                 }
+                if let trailingButton {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        button(for: trailingButton)
+                            .tint(buttonColor)
+                    }
+                }
+            }
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden()
+            .sideMenu(isShowing: $isMenuShowing, navigator: navigator)
+    }
+
+    @ViewBuilder private func button(for type: ButtonType) -> some View {
+        switch type {
+        case .back:
+            Button {
+                navigator.back()
+            } label: {
+                Image(systemName: "chevron.left")
+            }
+        case .menu:
+            MenuButton(isShowing: $isMenuShowing) {}
+        case .options:
+            Button {
+                // TODO: show context menu
+            } label: {
+                Image(systemName: "gearshape.2")
+            }
+        case let .profile(name):
+            Button("Hi, \(name)") {
+                navigator.show(ProfileView.self)
             }
         }
     }
 }
 
 extension View {
-
-    func navigationBarColor(backgroundColor: UIColor?, titleColor: UIColor?) -> some View {
-        self.modifier(NavigationBarModifier(backgroundColor: backgroundColor, titleColor: titleColor))
+    func navBarWithTitle(title: String, navigator: Navigator, leadingButton: ButtonType? = nil, trailingButton: ButtonType? = nil, buttonColor: Color = .red) -> some View {
+        self.modifier(NavigationBarModifier(title: title, navigator: navigator, leadingButton: leadingButton, trailingButton: trailingButton, buttonColor: buttonColor))
     }
 
 }
