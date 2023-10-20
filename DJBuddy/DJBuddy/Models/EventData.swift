@@ -56,7 +56,7 @@ enum EventState {
     case ended
 }
 
-enum SongTheme {
+enum SongTheme: CaseIterable {
     case slow
     case pop
     case techno

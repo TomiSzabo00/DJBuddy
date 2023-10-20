@@ -11,6 +11,8 @@ struct EventControlView: View {
     @EnvironmentObject var navigator: Navigator
     @ObservedObject var viewModel: EventControlViewModel
 
+    @State var isSelectThemeShowing = false
+
     var body: some View {
         VStack {
             VStack(spacing: 20) {
@@ -28,7 +30,7 @@ struct EventControlView: View {
         .navBarWithTitle(title: viewModel.event.name, navigator: navigator, leadingButton: .back, trailingButton: .options) {
             VStack {
                 Button("Set theme") {
-                    viewModel.setTheme(to: .slow)
+                    isSelectThemeShowing.toggle()
                 }
                 Button("Remove theme") {
                     viewModel.setTheme(to: nil)
@@ -45,6 +47,16 @@ struct EventControlView: View {
                     Text("End event")
                 }
 
+            }
+        }
+        .sheet(isPresented: $isSelectThemeShowing) {
+            NavigationView {
+                SetThemeView(event: viewModel.event) { newTheme in
+                    viewModel.setTheme(to: newTheme)
+                    isSelectThemeShowing = false
+                } cancel: {
+                    isSelectThemeShowing = false
+                }
             }
         }
     }
