@@ -35,6 +35,7 @@
 		5573DC6B2AE2F4AA0025751F /* LoadingOverlayViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC6A2AE2F4AA0025751F /* LoadingOverlayViewModifier.swift */; };
 		5573DC6D2AE2FFE20025751F /* EventControlViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC6C2AE2FFE20025751F /* EventControlViewModel.swift */; };
 		5573DC6F2AE303520025751F /* SetThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC6E2AE303520025751F /* SetThemeView.swift */; };
+		5573DC722AE30B090025751F /* SongDetalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC712AE30B090025751F /* SongDetalsView.swift */; };
 		5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */; };
 		5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */; };
 		5584D40C2AC18D9900BC61F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5584D40B2AC18D9900BC61F6 /* Assets.xcassets */; };
@@ -89,6 +90,7 @@
 		5573DC6A2AE2F4AA0025751F /* LoadingOverlayViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlayViewModifier.swift; sourceTree = "<group>"; };
 		5573DC6C2AE2FFE20025751F /* EventControlViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventControlViewModel.swift; sourceTree = "<group>"; };
 		5573DC6E2AE303520025751F /* SetThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetThemeView.swift; sourceTree = "<group>"; };
+		5573DC712AE30B090025751F /* SongDetalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDetalsView.swift; sourceTree = "<group>"; };
 		5584D4042AC18D9700BC61F6 /* DJBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJBuddyApp.swift; sourceTree = "<group>"; };
 		5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavyBackgroundView.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 		552E86002AD472CC006D5E86 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				5573DC702AE30AF90025751F /* Songs */,
 				5573DC5A2AE1D32A0025751F /* Event controls */,
 				55A583992AE1504E00438049 /* Event creation */,
 				552E86012AD47307006D5E86 /* Home */,
@@ -199,6 +202,14 @@
 				5573DC6E2AE303520025751F /* SetThemeView.swift */,
 			);
 			path = "Event controls";
+			sourceTree = "<group>";
+		};
+		5573DC702AE30AF90025751F /* Songs */ = {
+			isa = PBXGroup;
+			children = (
+				5573DC712AE30B090025751F /* SongDetalsView.swift */,
+			);
+			path = Songs;
 			sourceTree = "<group>";
 		};
 		5584D3FB2AC18D9700BC61F6 = {
@@ -400,6 +411,7 @@
 				552E860C2AD4878A006D5E86 /* Navigator.swift in Sources */,
 				5584D4252AC2128800BC61F6 /* LandingPageEnum.swift in Sources */,
 				5573DC672AE2B7F30025751F /* SongRow.swift in Sources */,
+				5573DC722AE30B090025751F /* SongDetalsView.swift in Sources */,
 				552E86052AD476C9006D5E86 /* CircleButton.swift in Sources */,
 				552E85F02AD3F85C006D5E86 /* MenuButtonType.swift in Sources */,
 				55A583A52AE1531E00438049 /* MapView.swift in Sources */,

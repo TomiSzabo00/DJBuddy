@@ -41,7 +41,7 @@ final class UserData: Identifiable, ObservableObject, Hashable {
                  email: "example@email.com",
                  firstName: "Example",
                  lastName: "User",
-                 type: .user)
+                 type: .dj)
     }
 }
 
