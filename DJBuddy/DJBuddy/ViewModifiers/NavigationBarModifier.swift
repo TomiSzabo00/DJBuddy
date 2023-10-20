@@ -8,6 +8,7 @@ struct NavigationBarModifier: ViewModifier {
     let navigator: Navigator
 
     @State var isMenuShowing = false
+    @State var isOptionsShowing = false
 
     init(title: String, navigator: Navigator, leadingButton: ButtonType? = nil, trailingButton: ButtonType? = nil, buttonColor: Color = .red) {
         self.title = title
@@ -15,6 +16,8 @@ struct NavigationBarModifier: ViewModifier {
         self.leadingButton = leadingButton
         self.trailingButton = trailingButton
         self.buttonColor = buttonColor
+
+        UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .dark
     }
 
     func body(content: Content) -> some View {
@@ -40,6 +43,22 @@ struct NavigationBarModifier: ViewModifier {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden()
             .sideMenu(isShowing: $isMenuShowing, navigator: navigator)
+            .confirmationDialog("", isPresented: $isOptionsShowing) {
+                VStack {
+                    Button("Set theme") {}
+                    Button("Remove theme") {}
+                    Button("Pause requests") {}
+                    Button("Resume requests") {}
+                    Button(role: .destructive) {
+
+                    } label: {
+                        Text("End event")
+                    }
+
+                }
+                .preferredColorScheme(.dark)
+                .environment(\.colorScheme, .dark)
+            }
     }
 
     @ViewBuilder private func button(for type: ButtonType) -> some View {
@@ -54,7 +73,7 @@ struct NavigationBarModifier: ViewModifier {
             MenuButton(isShowing: $isMenuShowing) {}
         case .options:
             Button {
-                // TODO: show context menu
+                isOptionsShowing.toggle()
             } label: {
                 Image(systemName: "gearshape.2")
             }
