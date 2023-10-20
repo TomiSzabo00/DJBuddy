@@ -1,21 +1,28 @@
 import SwiftUI
 
-struct NavigationBarModifier: ViewModifier {
+struct NavigationBarModifier<MenuContent: View>: ViewModifier {
     let title: String
     let leadingButton: ButtonType?
     let trailingButton: ButtonType?
     let buttonColor: Color
     let navigator: Navigator
+    @ViewBuilder let actionSheetContent: MenuContent
 
     @State var isMenuShowing = false
     @State var isOptionsShowing = false
 
-    init(title: String, navigator: Navigator, leadingButton: ButtonType? = nil, trailingButton: ButtonType? = nil, buttonColor: Color = .red) {
+    init(title: String, 
+         navigator: Navigator,
+         leadingButton: ButtonType? = nil,
+         trailingButton: ButtonType? = nil,
+         buttonColor: Color = .red,
+         @ViewBuilder actionSheetContent: @escaping () -> MenuContent) {
         self.title = title
         self.navigator = navigator
         self.leadingButton = leadingButton
         self.trailingButton = trailingButton
         self.buttonColor = buttonColor
+        self.actionSheetContent = actionSheetContent()
 
         UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .dark
     }
@@ -44,18 +51,7 @@ struct NavigationBarModifier: ViewModifier {
             .navigationBarBackButtonHidden()
             .sideMenu(isShowing: $isMenuShowing, navigator: navigator)
             .confirmationDialog("", isPresented: $isOptionsShowing) {
-                VStack {
-                    Button("Set theme") {}
-                    Button("Remove theme") {}
-                    Button("Pause requests") {}
-                    Button("Resume requests") {}
-                    Button(role: .destructive) {
-
-                    } label: {
-                        Text("End event")
-                    }
-
-                }
+                actionSheetContent
                 .preferredColorScheme(.dark)
                 .environment(\.colorScheme, .dark)
             }
@@ -86,8 +82,8 @@ struct NavigationBarModifier: ViewModifier {
 }
 
 extension View {
-    func navBarWithTitle(title: String, navigator: Navigator, leadingButton: ButtonType? = nil, trailingButton: ButtonType? = nil, buttonColor: Color = .red) -> some View {
-        self.modifier(NavigationBarModifier(title: title, navigator: navigator, leadingButton: leadingButton, trailingButton: trailingButton, buttonColor: buttonColor))
+    func navBarWithTitle<MenuContent: View>(title: String, navigator: Navigator, leadingButton: ButtonType? = nil, trailingButton: ButtonType? = nil, buttonColor: Color = .red, @ViewBuilder actionSheetContent: @escaping () -> MenuContent = { EmptyView() }) -> some View {
+        self.modifier(NavigationBarModifier(title: title, navigator: navigator, leadingButton: leadingButton, trailingButton: trailingButton, buttonColor: buttonColor, actionSheetContent: actionSheetContent))
     }
 
 }

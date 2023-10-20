@@ -33,6 +33,7 @@
 		5573DC672AE2B7F30025751F /* SongRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC662AE2B7F30025751F /* SongRow.swift */; };
 		5573DC692AE2F2B30025751F /* MainMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC682AE2F2B30025751F /* MainMenuViewModel.swift */; };
 		5573DC6B2AE2F4AA0025751F /* LoadingOverlayViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC6A2AE2F4AA0025751F /* LoadingOverlayViewModifier.swift */; };
+		5573DC6D2AE2FFE20025751F /* EventControlViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC6C2AE2FFE20025751F /* EventControlViewModel.swift */; };
 		5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */; };
 		5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */; };
 		5584D40C2AC18D9900BC61F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5584D40B2AC18D9900BC61F6 /* Assets.xcassets */; };
@@ -85,6 +86,7 @@
 		5573DC662AE2B7F30025751F /* SongRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongRow.swift; sourceTree = "<group>"; };
 		5573DC682AE2F2B30025751F /* MainMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewModel.swift; sourceTree = "<group>"; };
 		5573DC6A2AE2F4AA0025751F /* LoadingOverlayViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlayViewModifier.swift; sourceTree = "<group>"; };
+		5573DC6C2AE2FFE20025751F /* EventControlViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventControlViewModel.swift; sourceTree = "<group>"; };
 		5584D4042AC18D9700BC61F6 /* DJBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJBuddyApp.swift; sourceTree = "<group>"; };
 		5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavyBackgroundView.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				5573DC5B2AE1D36F0025751F /* EventControlView.swift */,
+				5573DC6C2AE2FFE20025751F /* EventControlViewModel.swift */,
 			);
 			path = "Event controls";
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 				5584D4162AC1A64800BC61F6 /* LandingView.swift in Sources */,
 				55A583A32AE152DE00438049 /* AddressRow.swift in Sources */,
 				552E85FA2AD4428C006D5E86 /* DJHomeView.swift in Sources */,
+				5573DC6D2AE2FFE20025751F /* EventControlViewModel.swift in Sources */,
 				552E860C2AD4878A006D5E86 /* Navigator.swift in Sources */,
 				5584D4252AC2128800BC61F6 /* LandingPageEnum.swift in Sources */,
 				5573DC672AE2B7F30025751F /* SongRow.swift in Sources */,

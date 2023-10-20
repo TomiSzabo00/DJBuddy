@@ -9,30 +9,43 @@ import SwiftUI
 
 struct EventControlView: View {
     @EnvironmentObject var navigator: Navigator
-    let event: EventData
+    @ObservedObject var viewModel: EventControlViewModel
 
     var body: some View {
         VStack {
             VStack(spacing: 20) {
-                Group {
-                    if [.paused, .upcoming].contains(event.state) {
-                        InfoView(from: event.state)
-                    }
-                    if let theme = event.theme {
-                        InfoView("The current theme for this event is \(theme.displayName.uppercased())", type: .info)
-                    }
+                if [.paused, .upcoming].contains(viewModel.event.state) {
+                    InfoView(from: viewModel.event.state)
                 }
-                .padding()
+                if let theme = viewModel.event.theme {
+                    InfoView("The current theme for this event is \(theme.displayName.uppercased())", type: .info)
+                }
             }
+            .padding()
 
-            SongList(songs: event.requestedSongs)
+            SongList(songs: viewModel.event.requestedSongs)
         }
         .backgroundColor(.asset.background)
-        .navBarWithTitle(title: event.name, navigator: navigator, leadingButton: .back, trailingButton: .options)
+        .navBarWithTitle(title: viewModel.event.name, navigator: navigator, leadingButton: .back, trailingButton: .options) {
+            VStack {
+                Button("Set theme") {
+                    viewModel.setTheme(to: .slow)
+                }
+                Button("Remove theme") {}
+                Button("Pause requests") {}
+                Button("Resume requests") {}
+                Button(role: .destructive) {
+
+                } label: {
+                    Text("End event")
+                }
+
+            }
+        }
     }
 
     init(event: EventData) {
-        self.event = event
+        viewModel = .init(event: event)
 
         UINavigationBar.appearance().tintColor = .red
     }

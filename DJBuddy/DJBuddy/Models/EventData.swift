@@ -7,15 +7,19 @@
 
 import Foundation
 
-struct EventData: Hashable, Identifiable {
+class EventData: Hashable, Identifiable, ObservableObject {
     let id = UUID()
     let name: String
     let dj: UserData
     let location: AddressResult
     let date: Date
-    let state: EventState
+    var state: EventState
     var requestedSongs: [SongData]
-    var theme: SongTheme?
+    var theme: SongTheme? {
+        didSet {
+            print("Theme changed to: \(String(describing: theme))")
+        }
+    }
 
     init(name: String, dj: UserData, location: AddressResult, date: Date, state: EventState = .upcoming, requestedSongs: [SongData] = [], theme: SongTheme? = nil) {
         self.name = name
