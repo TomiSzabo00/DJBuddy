@@ -82,7 +82,7 @@ struct NavigationBarModifier<MenuContent: View>: ViewModifier {
 }
 
 extension View {
-    func navBarWithTitle<MenuContent: View>(title: String, navigator: Navigator, leadingButton: ButtonType? = nil, trailingButton: ButtonType? = nil, buttonColor: Color = .red, @ViewBuilder actionSheetContent: @escaping () -> MenuContent = { EmptyView() }) -> some View {
+    func navBarWithTitle<MenuContent: View>(title: String, navigator: Navigator = Navigator(), leadingButton: ButtonType? = nil, trailingButton: ButtonType? = nil, buttonColor: Color = .red, @ViewBuilder actionSheetContent: @escaping () -> MenuContent = { EmptyView() }) -> some View {
         self.modifier(NavigationBarModifier(title: title, navigator: navigator, leadingButton: leadingButton, trailingButton: trailingButton, buttonColor: buttonColor, actionSheetContent: actionSheetContent))
     }
 

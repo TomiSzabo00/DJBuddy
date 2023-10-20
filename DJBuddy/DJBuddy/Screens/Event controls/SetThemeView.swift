@@ -44,8 +44,7 @@ struct SetThemeView: View {
         .foregroundStyle(.white)
         .padding()
         .backgroundColor(.asset.background)
-        .navigationTitle("Theme")
-        .navigationBarTitleDisplayMode(.inline)
+        .navBarWithTitle(title: "Theme")
     }
 
     @ViewBuilder private func pickerLabel(for theme: SongTheme) -> some View {
