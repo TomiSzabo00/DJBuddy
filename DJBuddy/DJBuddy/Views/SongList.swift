@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SongList: View {
+    @EnvironmentObject var navigator: Navigator
+
     let songs: [SongData]
 
     var body: some View {
@@ -18,6 +20,9 @@ struct SongList: View {
                 } else {
                     ForEach(Array(songs.enumerated()), id: \.offset) { idx, song in
                         SongRow(song, index: idx)
+                            .onTapGesture {
+                                navigator.navigate(with: song)
+                            }
                     }
                 }
             } header: {

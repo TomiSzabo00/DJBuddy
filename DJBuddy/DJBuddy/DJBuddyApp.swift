@@ -67,6 +67,9 @@ struct DJBuddyApp: App {
                             Text("User's event screen")
                         }
                     }
+                    .navigationDestination(for: SongData.self) { song in
+                        SongDetalsView(song: song)
+                    }
             }
             .environmentObject(navigator)
             .environmentObject(exampleUser)

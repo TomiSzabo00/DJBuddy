@@ -25,6 +25,7 @@ struct EventControlView: View {
             .padding()
 
             SongList(songs: viewModel.event.requestedSongs)
+                .environmentObject(navigator)
         }
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: viewModel.event.name, navigator: navigator, leadingButton: .back, trailingButton: .options) {
