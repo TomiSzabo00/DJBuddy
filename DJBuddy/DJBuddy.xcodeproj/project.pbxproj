@@ -32,6 +32,7 @@
 		5573DC652AE2AF3B0025751F /* SongData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC642AE2AF3B0025751F /* SongData.swift */; };
 		5573DC672AE2B7F30025751F /* SongRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC662AE2B7F30025751F /* SongRow.swift */; };
 		5573DC692AE2F2B30025751F /* MainMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC682AE2F2B30025751F /* MainMenuViewModel.swift */; };
+		5573DC6B2AE2F4AA0025751F /* LoadingOverlayViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC6A2AE2F4AA0025751F /* LoadingOverlayViewModifier.swift */; };
 		5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */; };
 		5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */; };
 		5584D40C2AC18D9900BC61F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5584D40B2AC18D9900BC61F6 /* Assets.xcassets */; };
@@ -83,6 +84,7 @@
 		5573DC642AE2AF3B0025751F /* SongData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongData.swift; sourceTree = "<group>"; };
 		5573DC662AE2B7F30025751F /* SongRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongRow.swift; sourceTree = "<group>"; };
 		5573DC682AE2F2B30025751F /* MainMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewModel.swift; sourceTree = "<group>"; };
+		5573DC6A2AE2F4AA0025751F /* LoadingOverlayViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlayViewModifier.swift; sourceTree = "<group>"; };
 		5584D4042AC18D9700BC61F6 /* DJBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJBuddyApp.swift; sourceTree = "<group>"; };
 		5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavyBackgroundView.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				552E85E82AD2E745006D5E86 /* BackgroundColor.swift */,
 				552E85F32AD3FAC9006D5E86 /* SideMenuModifier.swift */,
 				552E86062AD47BD9006D5E86 /* NavigationBarModifier.swift */,
+				5573DC6A2AE2F4AA0025751F /* LoadingOverlayViewModifier.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 				556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */,
 				552E85EB2AD3EFF1006D5E86 /* EventListTile.swift in Sources */,
 				55A583972AE1500100438049 /* AnnotationItem.swift in Sources */,
+				5573DC6B2AE2F4AA0025751F /* LoadingOverlayViewModifier.swift in Sources */,
 				552E85F42AD3FAC9006D5E86 /* SideMenuModifier.swift in Sources */,
 				552E85FF2AD45D05006D5E86 /* TabViewSelector.swift in Sources */,
 				552E85E32AD2E1FD006D5E86 /* MainMenu.swift in Sources */,

@@ -24,13 +24,16 @@ struct MainMenu: View {
             Text("Map").tag(1)
         }
         .onAppear {
-            viewModel.fetchEvents(for: user)
+            if viewModel.yourEvents.isEmpty {
+                viewModel.fetchEvents(for: user)
+            }
         }
         .overlay(alignment: .bottom) {
             TabViewSelector(selected: $selectedTab, userType: user.type, navigator: navigator)
         }
         .ignoresSafeArea()
         .navBarWithTitle(title: "", navigator: navigator, leadingButton: .menu, trailingButton: .profile(user.name.firstName))
+        .loadingOverlay(isLoading: $viewModel.isLoading)
     }
 }
 

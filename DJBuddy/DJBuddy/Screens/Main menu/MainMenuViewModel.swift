@@ -9,7 +9,7 @@ import Foundation
 
 final class MainMenuViewModel: ObservableObject {
     @Published private(set) var yourEvents: [EventData] = []
-    @Published private(set) var isLoading = false
+    @Published var isLoading = false
 
     func fetchEvents(for user: UserData) {
         isLoading = true
