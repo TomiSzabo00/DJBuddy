@@ -14,13 +14,18 @@ struct EventControlView: View {
     var body: some View {
         VStack {
             VStack(spacing: 20) {
-                InfoView("Requests for this event are paused.", type: .warning)
-                InfoView("The current theme for this event is SLOW MUSIC", type: .info)
-
+                Group {
+                    if [.paused, .upcoming].contains(event.state) {
+                        InfoView(from: event.state)
+                    }
+                    if let theme = event.theme {
+                        InfoView("The current theme for this event is \(theme.displayName.uppercased())", type: .info)
+                    }
+                }
+                .padding()
             }
-            .padding()
 
-            SongList(songs: [SongData.PreviewData, SongData.PreviewData])
+            SongList(songs: event.requestedSongs)
         }
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: event.name, navigator: navigator, leadingButton: .back, trailingButton: .options)

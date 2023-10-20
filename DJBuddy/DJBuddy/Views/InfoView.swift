@@ -17,6 +17,8 @@ struct InfoView: View {
     let text: String
     let type: InfoType
 
+    let eventState: EventState?
+
     var imageName: String {
         switch type {
         case .info:
@@ -55,6 +57,31 @@ struct InfoView: View {
     init(_ text: String, type: InfoType = .info) {
         self.text = text
         self.type = type
+        self.eventState = nil
+    }
+
+    init(from state: EventState) {
+        eventState = state
+
+        text = {
+            switch state {
+            case .upcoming:
+                "This event hasn't started yet. Come back later!"
+            case .inProgress:
+                "This event is currently in progress. Join fast!"
+            case .paused:
+                "Requests for this event are paused. Wait a few minutes."
+            case .ended:
+                "This event has ended. Hope you had a great time!"
+            }
+        }()
+
+        type = {
+            if [.paused, .upcoming].contains(state) {
+                return .warning
+            }
+            return .info
+        }()
     }
 }
 

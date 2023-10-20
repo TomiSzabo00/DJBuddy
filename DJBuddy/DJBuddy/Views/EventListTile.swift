@@ -47,4 +47,5 @@ struct EventListTile: View {
 #Preview {
     EventListTile(eventData: EventData.PreviewData)
         .padding()
+        .backgroundColor(.asset.background)
 }

@@ -14,13 +14,17 @@ struct EventData: Hashable, Identifiable {
     let location: AddressResult
     let date: Date
     let state: EventState
+    var requestedSongs: [SongData]
+    var theme: SongTheme?
 
-    init(name: String, dj: UserData, location: AddressResult, date: Date, state: EventState = .upcoming) {
+    init(name: String, dj: UserData, location: AddressResult, date: Date, state: EventState = .upcoming, requestedSongs: [SongData] = [], theme: SongTheme? = nil) {
         self.name = name
         self.dj = dj
         self.location = location
         self.date = date
         self.state = state
+        self.requestedSongs = requestedSongs
+        self.theme = theme
     }
 
     func hash(into hasher: inout Hasher) {
@@ -35,12 +39,32 @@ struct EventData: Hashable, Identifiable {
         EventData(name: "Event",
                   dj: UserData.PreviewUser,
                   location: AddressResult.PreviewData,
-                  date: Date.now)
+                  date: Date.now,
+                  requestedSongs: [SongData.PreviewData, SongData.PreviewData]
+        )
     }
 }
 
 enum EventState {
     case upcoming
     case inProgress
+    case paused
     case ended
+}
+
+enum SongTheme {
+    case slow
+    case pop
+    case techno
+
+    var displayName: String {
+        switch self {
+        case .slow:
+            "Slow music"
+        case .pop:
+            "Pop"
+        case .techno:
+            "Techno"
+        }
+    }
 }
