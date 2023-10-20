@@ -12,9 +12,14 @@ struct EventControlView: View {
     let event: EventData
 
     var body: some View {
-        VStack {
-            Text(event.location.title)
+        VStack(spacing: 20) {
+            InfoView("Requests for this event are paused.", type: .warning)
+            InfoView("The current theme for this event is SLOW MUSIC", type: .info)
+
+            SongList(songs: ["first", "second"])
         }
+        .padding()
+        .backgroundColor(.asset.background)
         .navBarWithTitle(title: event.name, navigator: navigator, leadingButton: .back, trailingButton: .options)
     }
 

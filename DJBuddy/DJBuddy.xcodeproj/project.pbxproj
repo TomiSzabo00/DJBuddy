@@ -28,6 +28,8 @@
 		5573DC592AE19DC50025751F /* EventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC582AE19DC50025751F /* EventData.swift */; };
 		5573DC5C2AE1D36F0025751F /* EventControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC5B2AE1D36F0025751F /* EventControlView.swift */; };
 		5573DC5E2AE280BF0025751F /* ButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC5D2AE280BF0025751F /* ButtonType.swift */; };
+		5573DC612AE2AAE50025751F /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC602AE2AAE50025751F /* InfoView.swift */; };
+		5573DC632AE2ACCE0025751F /* SongList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC622AE2ACCE0025751F /* SongList.swift */; };
 		5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */; };
 		5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */; };
 		5584D40C2AC18D9900BC61F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5584D40B2AC18D9900BC61F6 /* Assets.xcassets */; };
@@ -75,6 +77,8 @@
 		5573DC582AE19DC50025751F /* EventData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventData.swift; sourceTree = "<group>"; };
 		5573DC5B2AE1D36F0025751F /* EventControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventControlView.swift; sourceTree = "<group>"; };
 		5573DC5D2AE280BF0025751F /* ButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonType.swift; sourceTree = "<group>"; };
+		5573DC602AE2AAE50025751F /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		5573DC622AE2ACCE0025751F /* SongList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongList.swift; sourceTree = "<group>"; };
 		5584D4042AC18D9700BC61F6 /* DJBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJBuddyApp.swift; sourceTree = "<group>"; };
 		5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavyBackgroundView.swift; sourceTree = "<group>"; };
@@ -270,9 +274,11 @@
 				552E85ED2AD3F78A006D5E86 /* SideMenu.swift */,
 				552E85F12AD3FA4D006D5E86 /* MenuButton.swift */,
 				552E85F72AD43776006D5E86 /* EventList.swift */,
+				5573DC622AE2ACCE0025751F /* SongList.swift */,
 				552E86042AD476C9006D5E86 /* CircleButton.swift */,
 				55A583A02AE1526100438049 /* ClearButton.swift */,
 				55A583A22AE152DE00438049 /* AddressRow.swift */,
+				5573DC602AE2AAE50025751F /* InfoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -395,7 +401,9 @@
 				552E85F22AD3FA4D006D5E86 /* MenuButton.swift in Sources */,
 				5573DC592AE19DC50025751F /* EventData.swift in Sources */,
 				552E86072AD47BD9006D5E86 /* NavigationBarModifier.swift in Sources */,
+				5573DC612AE2AAE50025751F /* InfoView.swift in Sources */,
 				5584D4182AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift in Sources */,
+				5573DC632AE2ACCE0025751F /* SongList.swift in Sources */,
 				5584D42A2AC21B2D00BC61F6 /* InputView.swift in Sources */,
 				55A583952AE14FEF00438049 /* AddressResult.swift in Sources */,
 				5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */,
