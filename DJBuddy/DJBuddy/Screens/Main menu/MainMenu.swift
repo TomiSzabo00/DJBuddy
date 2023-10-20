@@ -10,10 +10,22 @@ import SwiftUI
 struct MainMenu: View {
     @EnvironmentObject private var navigator: Navigator
     @EnvironmentObject private var user: UserData
-    @State var menu = false
+
+    @State var selectedTab = 0
 
     var body: some View {
-        HomeTabView(userType: user.type, navigator: navigator)
+        TabView(selection: $selectedTab) {
+            if user.type == .dj {
+                DJHomeView().tag(0)
+            } else {
+                UserHomeView().tag(0)
+            }
+            Text("Map").tag(1)
+        }
+        .overlay(alignment: .bottom) {
+            TabViewSelector(selected: $selectedTab, userType: user.type, navigator: navigator)
+        }
+        .ignoresSafeArea()
             .navBarWithTitle(title: "", navigator: navigator, leadingButton: .menu, trailingButton: .profile(user.name.firstName))
     }
 }

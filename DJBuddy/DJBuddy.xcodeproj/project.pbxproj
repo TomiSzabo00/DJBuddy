@@ -17,7 +17,6 @@
 		552E85F42AD3FAC9006D5E86 /* SideMenuModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85F32AD3FAC9006D5E86 /* SideMenuModifier.swift */; };
 		552E85F82AD43777006D5E86 /* EventList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85F72AD43776006D5E86 /* EventList.swift */; };
 		552E85FA2AD4428C006D5E86 /* DJHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85F92AD4428C006D5E86 /* DJHomeView.swift */; };
-		552E85FC2AD442F8006D5E86 /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85FB2AD442F8006D5E86 /* HomeTabView.swift */; };
 		552E85FF2AD45D05006D5E86 /* TabViewSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85FE2AD45D05006D5E86 /* TabViewSelector.swift */; };
 		552E86032AD47336006D5E86 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86022AD47336006D5E86 /* ProfileView.swift */; };
 		552E86052AD476C9006D5E86 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86042AD476C9006D5E86 /* CircleButton.swift */; };
@@ -68,7 +67,6 @@
 		552E85F32AD3FAC9006D5E86 /* SideMenuModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuModifier.swift; sourceTree = "<group>"; };
 		552E85F72AD43776006D5E86 /* EventList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventList.swift; sourceTree = "<group>"; };
 		552E85F92AD4428C006D5E86 /* DJHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJHomeView.swift; sourceTree = "<group>"; };
-		552E85FB2AD442F8006D5E86 /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
 		552E85FE2AD45D05006D5E86 /* TabViewSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewSelector.swift; sourceTree = "<group>"; };
 		552E86022AD47336006D5E86 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		552E86042AD476C9006D5E86 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
@@ -149,7 +147,6 @@
 		552E85FD2AD45CF1006D5E86 /* TabView */ = {
 			isa = PBXGroup;
 			children = (
-				552E85FB2AD442F8006D5E86 /* HomeTabView.swift */,
 				552E85FE2AD45D05006D5E86 /* TabViewSelector.swift */,
 			);
 			path = TabView;
@@ -421,7 +418,6 @@
 				552E85EE2AD3F78A006D5E86 /* SideMenu.swift in Sources */,
 				552E86092AD48634006D5E86 /* NavigationDestination.swift in Sources */,
 				55A583A12AE1526100438049 /* ClearButton.swift in Sources */,
-				552E85FC2AD442F8006D5E86 /* HomeTabView.swift in Sources */,
 				55A5839B2AE1506800438049 /* AddressSelectionView.swift in Sources */,
 				55A583A72AE15D2500438049 /* CreateEventView.swift in Sources */,
 				55A583A92AE1704900438049 /* CreateEventViewModel.swift in Sources */,
