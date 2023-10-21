@@ -56,6 +56,7 @@ struct DJBuddyApp: App {
                         } else if id == String(describing: CreateEventView.self) {
                             CreateEventView()
                         } else if id == String(describing: SelectEventView.self) {
+                            // This shouldn't be used.
                             SelectEventView(yourEvents: [])
                         }
                         else {
@@ -66,7 +67,7 @@ struct DJBuddyApp: App {
                         if exampleUser.type == .dj {
                             EventControlView(event: event)
                         } else {
-                            Text("User's event screen")
+                            UserEventView(viewModel: EventControlViewModel(event: event))
                         }
                     }
                     .navigationDestination(for: SongData.self) { song in
