@@ -76,6 +76,14 @@ struct DJBuddyApp: App {
                     .navigationDestination(for: [EventData].self) { eventList in
                         SelectEventView(yourEvents: eventList)
                     }
+                    .navigationDestination(for: NavigationDestination.self) { destination in
+                        switch destination {
+                        case let .requestSong(eventData):
+                            RequestSongView(viewModel: EventControlViewModel(event: eventData))
+                        default:
+                            Text("No destination set up for \(String(describing: destination))")
+                        }
+                    }
             }
             .environmentObject(navigator)
             .environmentObject(exampleUser)

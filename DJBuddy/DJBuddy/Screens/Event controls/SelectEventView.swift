@@ -22,13 +22,13 @@ struct SelectEventView: View {
                         }
                 }
             } header: {
-                Text("Joined events")
+                Text("Choose an event")
                     .textCase(.uppercase)
                     .font(.subheadline)
             }
 
         }
-        .navBarWithTitle(title: "Choose event", navigator: navigator, leadingButton: .back)
+        .navBarWithTitle(title: "Request a song", navigator: navigator, leadingButton: .back)
     }
 }
 

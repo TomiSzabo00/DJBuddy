@@ -14,11 +14,9 @@ struct UserEventView: View {
     var body: some View {
         VStack {
             VStack(spacing: 20) {
-                InfoView(from: viewModel.event.state)
+                InfoView("Choose a song from the list or request a new one.", type: .info)
 
-                if let theme = viewModel.event.theme {
-                    InfoView("The current theme for this event is \(theme.displayName.uppercased())", type: .info)
-                }
+                InfoView(from: viewModel.event.state)
             }
             .padding()
 
@@ -26,7 +24,7 @@ struct UserEventView: View {
                 .environmentObject(navigator)
 
             Button("Request a new song") {
-                // TODO: request song view
+                navigator.navigate(to: .requestSong(viewModel.event))
             }
             .buttonStyle(.largeProminent)
             .padding(.horizontal)

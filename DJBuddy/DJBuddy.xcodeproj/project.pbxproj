@@ -21,7 +21,6 @@
 		552E86032AD47336006D5E86 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86022AD47336006D5E86 /* ProfileView.swift */; };
 		552E86052AD476C9006D5E86 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86042AD476C9006D5E86 /* CircleButton.swift */; };
 		552E86072AD47BD9006D5E86 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86062AD47BD9006D5E86 /* NavigationBarModifier.swift */; };
-		552E86092AD48634006D5E86 /* NavigationDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86082AD48634006D5E86 /* NavigationDestination.swift */; };
 		552E860C2AD4878A006D5E86 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E860B2AD4878A006D5E86 /* Navigator.swift */; };
 		556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */; };
 		5573DC592AE19DC50025751F /* EventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC582AE19DC50025751F /* EventData.swift */; };
@@ -39,6 +38,7 @@
 		5573DC742AE41CCC0025751F /* SelectEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC732AE41CCC0025751F /* SelectEventView.swift */; };
 		5573DC762AE423F10025751F /* UserEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC752AE423F10025751F /* UserEventView.swift */; };
 		5573DC782AE427800025751F /* RequestSongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC772AE427800025751F /* RequestSongView.swift */; };
+		5573DC7A2AE42D750025751F /* CheckmarkButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC792AE42D750025751F /* CheckmarkButtonStyle.swift */; };
 		5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */; };
 		5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */; };
 		5584D40C2AC18D9900BC61F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5584D40B2AC18D9900BC61F6 /* Assets.xcassets */; };
@@ -79,7 +79,6 @@
 		552E86022AD47336006D5E86 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		552E86042AD476C9006D5E86 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		552E86062AD47BD9006D5E86 /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
-		552E86082AD48634006D5E86 /* NavigationDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDestination.swift; sourceTree = "<group>"; };
 		552E860B2AD4878A006D5E86 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTypeEnum.swift; sourceTree = "<group>"; };
 		5573DC582AE19DC50025751F /* EventData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventData.swift; sourceTree = "<group>"; };
@@ -97,6 +96,7 @@
 		5573DC732AE41CCC0025751F /* SelectEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectEventView.swift; sourceTree = "<group>"; };
 		5573DC752AE423F10025751F /* UserEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEventView.swift; sourceTree = "<group>"; };
 		5573DC772AE427800025751F /* RequestSongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSongView.swift; sourceTree = "<group>"; };
+		5573DC792AE42D750025751F /* CheckmarkButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkButtonStyle.swift; sourceTree = "<group>"; };
 		5584D4042AC18D9700BC61F6 /* DJBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJBuddyApp.swift; sourceTree = "<group>"; };
 		5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavyBackgroundView.swift; sourceTree = "<group>"; };
@@ -269,6 +269,7 @@
 				5584D4172AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift */,
 				5584D4192AC1AEB700BC61F6 /* LargeSecondaryButtonStyle.swift */,
 				5584D41F2AC1DA0B00BC61F6 /* UnderlinedButtonStyle.swift */,
+				5573DC792AE42D750025751F /* CheckmarkButtonStyle.swift */,
 			);
 			path = ButtonStyles;
 			sourceTree = "<group>";
@@ -290,7 +291,6 @@
 				5584D4242AC2128800BC61F6 /* LandingPageEnum.swift */,
 				556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */,
 				552E85EF2AD3F85C006D5E86 /* MenuButtonType.swift */,
-				552E86082AD48634006D5E86 /* NavigationDestination.swift */,
 				55A583AC2AE1937A00438049 /* UserData.swift */,
 				5573DC582AE19DC50025751F /* EventData.swift */,
 				5573DC5D2AE280BF0025751F /* ButtonType.swift */,
@@ -445,6 +445,7 @@
 				5573DC592AE19DC50025751F /* EventData.swift in Sources */,
 				552E86072AD47BD9006D5E86 /* NavigationBarModifier.swift in Sources */,
 				5573DC692AE2F2B30025751F /* MainMenuViewModel.swift in Sources */,
+				5573DC7A2AE42D750025751F /* CheckmarkButtonStyle.swift in Sources */,
 				5573DC612AE2AAE50025751F /* InfoView.swift in Sources */,
 				5584D4182AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift in Sources */,
 				5573DC632AE2ACCE0025751F /* SongList.swift in Sources */,
@@ -456,7 +457,6 @@
 				552E85E92AD2E745006D5E86 /* BackgroundColor.swift in Sources */,
 				552E85EE2AD3F78A006D5E86 /* SideMenu.swift in Sources */,
 				5573DC782AE427800025751F /* RequestSongView.swift in Sources */,
-				552E86092AD48634006D5E86 /* NavigationDestination.swift in Sources */,
 				55A583A12AE1526100438049 /* ClearButton.swift in Sources */,
 				55A5839B2AE1506800438049 /* AddressSelectionView.swift in Sources */,
 				55A583A72AE15D2500438049 /* CreateEventView.swift in Sources */,

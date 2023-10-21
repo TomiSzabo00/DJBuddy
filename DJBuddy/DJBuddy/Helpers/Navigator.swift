@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+enum NavigationDestination: Hashable {
+    case home
+    case profile(UserData)
+    case requestSong(EventData)
+}
+
 class Navigator: ObservableObject {
     @Published var path = NavigationPath()
 
@@ -26,5 +32,9 @@ class Navigator: ObservableObject {
         if !path.isEmpty {
             path.removeLast()
         }
+    }
+
+    func navigate(to dest: NavigationDestination) {
+        path.append(dest)
     }
 }
