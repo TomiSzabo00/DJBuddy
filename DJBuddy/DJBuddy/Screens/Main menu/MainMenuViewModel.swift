@@ -34,4 +34,22 @@ final class MainMenuViewModel: ObservableObject {
             self?.isLoading = false
         }
     }
+
+    func join(event: EventData) {
+        guard !(yourEvents[.yourEvents] ?? []).contains(event) else { return }
+
+        if (yourEvents[.nearYou] ?? []).contains(event) {
+            yourEvents[.nearYou]?.removeAll(where: { $0 == event})
+        }
+
+        if yourEvents[.yourEvents] != nil {
+            yourEvents[.yourEvents]!.append(event)
+        } else {
+            yourEvents[.yourEvents] = [event]
+        }
+    }
+
+    func leave(event: EventData) {
+        yourEvents[.yourEvents]?.removeAll(where: { $0 == event})
+    }
 }
