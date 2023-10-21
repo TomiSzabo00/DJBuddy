@@ -29,7 +29,13 @@ struct MainMenu: View {
             }
         }
         .overlay(alignment: .bottom) {
-            TabViewSelector(selected: $selectedTab, userType: user.type, navigator: navigator)
+            TabViewSelector(selected: $selectedTab) {
+                if user.type == .dj {
+                    navigator.show(CreateEventView.self)
+                } else if user.type == .user {
+                    navigator.navigate(with: viewModel.yourEvents[.yourEvents] ?? [])
+                }
+            }
         }
         .ignoresSafeArea()
         .navBarWithTitle(title: "", navigator: navigator, leadingButton: .menu, trailingButton: .profile(user.name.firstName))

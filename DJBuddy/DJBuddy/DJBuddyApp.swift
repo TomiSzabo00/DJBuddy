@@ -55,6 +55,8 @@ struct DJBuddyApp: App {
                             ProfileView()
                         } else if id == String(describing: CreateEventView.self) {
                             CreateEventView()
+                        } else if id == String(describing: SelectEventView.self) {
+                            SelectEventView(yourEvents: [])
                         }
                         else {
                             Text("Opened \(id), but there is no navigation set up.")
@@ -69,6 +71,9 @@ struct DJBuddyApp: App {
                     }
                     .navigationDestination(for: SongData.self) { song in
                         SongDetalsView(song: song)
+                    }
+                    .navigationDestination(for: [EventData].self) { eventList in
+                        SelectEventView(yourEvents: eventList)
                     }
             }
             .environmentObject(navigator)

@@ -9,8 +9,7 @@ import SwiftUI
 
 struct TabViewSelector: View {
     @Binding var selected: Int
-    let userType: UserTypeEnum
-    let navigator: Navigator
+    let middleButtonAction: () -> Void
 
     @Namespace private var animationNamespace
 
@@ -33,9 +32,7 @@ struct TabViewSelector: View {
                 }
 
                 CircleButton(radius: 90) {
-                    if userType == .dj {
-                        navigator.show(CreateEventView.self)
-                    }
+                    middleButtonAction()
                 } label: {
                     Image(systemName: "music.note")
                         .font(.system(size: 48, weight: .medium))
@@ -80,5 +77,5 @@ struct TabViewSelector: View {
 }
 
 #Preview {
-    TabViewSelector(selected: .constant(0), userType: .dj, navigator: Navigator())
+    TabViewSelector(selected: .constant(0)) {}
 }
