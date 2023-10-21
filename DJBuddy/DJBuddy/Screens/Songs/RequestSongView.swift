@@ -13,6 +13,7 @@ struct RequestSongView: View {
 
     @State var songText = ""
     @State var didAgree = false
+    @State var selectedPrice: Double = 1
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -24,7 +25,7 @@ struct RequestSongView: View {
             PlaceholderTextField(placeholder: "Artist or title", text: $songText)
 
             Text("Set a price")
-            // TODO: price view
+            PriceSelectionView(amounts: [1, 3, 5], selectedAmount: $selectedPrice)
 
             Button("I agree to the [Terms and Conditions](https://en.wikipedia.org/wiki/Terms_of_service) and understand that by pressing this button i will be charged.") {
 
