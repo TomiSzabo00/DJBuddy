@@ -31,9 +31,9 @@ struct MainMenu: View {
         .overlay(alignment: .bottom) {
             TabViewSelector(selected: $selectedTab) {
                 if user.type == .dj {
-                    navigator.show(CreateEventView.self)
+                    navigator.navigate(to: .createEvent)
                 } else if user.type == .user {
-                    navigator.navigate(with: viewModel.yourEvents[.yourEvents] ?? [])
+                    navigator.navigate(to: .selectEvent(viewModel.yourEvents[.yourEvents] ?? []))
                 }
             }
         }

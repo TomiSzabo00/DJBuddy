@@ -21,7 +21,7 @@ struct SongList: View {
                     ForEach(Array(songs.enumerated()), id: \.offset) { idx, song in
                         SongRow(song, index: idx)
                             .onTapGesture {
-                                navigator.navigate(with: song)
+                                navigator.navigate(to: .songDetails(song))
                             }
                     }
                 }

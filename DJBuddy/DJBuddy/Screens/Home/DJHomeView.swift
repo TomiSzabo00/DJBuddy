@@ -18,7 +18,7 @@ struct DJHomeView: View {
                 ForEach(yourEvents) { event in
                     EventListTile(eventData: event)
                         .onTapGesture {
-                            navigator.navigate(with: event)
+                            navigator.navigate(to: .eventControl(event))
                         }
                 }
             } header: {

@@ -18,7 +18,7 @@ struct SelectEventView: View {
                 ForEach(yourEvents) { event in
                     EventListTile(eventData: event)
                         .onTapGesture {
-                            navigator.navigate(with: event)
+                            navigator.navigate(to: .userEventView(event))
                         }
                 }
             } header: {

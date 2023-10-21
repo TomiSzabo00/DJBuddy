@@ -73,7 +73,7 @@ struct SideMenu: View {
                 return {}
             case .profile:
                 return {
-                    navigator.show(ProfileView.self)
+                    navigator.navigate(to: .profile)
                 }
             case .settings:
                 return {}

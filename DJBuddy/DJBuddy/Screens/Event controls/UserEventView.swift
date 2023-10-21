@@ -32,9 +32,13 @@ struct UserEventView: View {
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: viewModel.event.name, navigator: navigator, leadingButton: .back)
     }
+
+    init(event: EventData) {
+        viewModel = .init(event: event)
+    }
 }
 
 #Preview {
-    UserEventView(viewModel: EventControlViewModel(event: EventData.PreviewData))
+    UserEventView(event: EventData.PreviewData)
         .environmentObject(Navigator())
 }

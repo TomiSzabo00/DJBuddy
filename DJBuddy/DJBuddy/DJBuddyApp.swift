@@ -50,38 +50,22 @@ struct DJBuddyApp: App {
         WindowGroup {
             NavigationStack(path: $navigator.path) {
                 MainMenu()
-                    .navigationDestination(for: String.self) { id in
-                        if id == String(describing: ProfileView.self) {
-                            ProfileView()
-                        } else if id == String(describing: CreateEventView.self) {
-                            CreateEventView()
-                        } else if id == String(describing: SelectEventView.self) {
-                            // This shouldn't be used.
-                            SelectEventView(yourEvents: [])
-                        }
-                        else {
-                            Text("Opened \(id), but there is no navigation set up.")
-                        }
-                    }
-                    .navigationDestination(for: EventData.self) { event in
-                        if exampleUser.type == .dj {
-                            EventControlView(event: event)
-                        } else {
-                            UserEventView(viewModel: EventControlViewModel(event: event))
-                        }
-                    }
-                    .navigationDestination(for: SongData.self) { song in
-                        SongDetalsView(song: song)
-                    }
-                    .navigationDestination(for: [EventData].self) { eventList in
-                        SelectEventView(yourEvents: eventList)
-                    }
                     .navigationDestination(for: NavigationDestination.self) { destination in
                         switch destination {
                         case let .requestSong(eventData):
                             RequestSongView(viewModel: EventControlViewModel(event: eventData))
-                        default:
-                            Text("No destination set up for \(String(describing: destination))")
+                        case .profile:
+                            ProfileView()
+                        case .createEvent:
+                            CreateEventView()
+                        case let .selectEvent(eventList):
+                            SelectEventView(yourEvents: eventList)
+                        case let .eventControl(event):
+                            EventControlView(event: event)
+                        case let .userEventView(event):
+                            UserEventView(event: event)
+                        case let .songDetails(song):
+                            SongDetalsView(song: song)
                         }
                     }
             }

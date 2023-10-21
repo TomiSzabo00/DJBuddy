@@ -75,7 +75,7 @@ struct NavigationBarModifier<MenuContent: View>: ViewModifier {
             }
         case let .profile(name):
             Button("Hi, \(name)") {
-                navigator.show(ProfileView.self)
+                navigator.navigate(to: .profile)
             }
         }
     }
