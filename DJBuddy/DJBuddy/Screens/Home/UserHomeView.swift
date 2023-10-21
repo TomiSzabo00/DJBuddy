@@ -18,8 +18,8 @@ struct UserHomeView: View {
                 Section {
                     ForEach(events[eventType] ?? []) { event in
                         EventListTile(eventData: event)
-                            .onTapGesture {
-                                navigator.navigate(with: event)
+                            .contextMenu {
+                                menuButtons(for: eventType)
                             }
                     }
                 } header: {
@@ -30,9 +30,33 @@ struct UserHomeView: View {
             }
         }
     }
+
+    @ViewBuilder private func menuButtons(for eventType: EventDataType) -> some View {
+        VStack {
+            if eventType == .yourEvents {
+                Button {
+                    // TODO: un-join event
+                } label: {
+                    Label("Leave event", systemImage: "rectangle.portrait.and.arrow.forward")
+                }
+            } else if eventType == .nearYou {
+                Button {
+                    // TODO: join event
+                } label: {
+                    Label("Join event", systemImage: "person.badge.plus")
+                }
+            }
+
+            Button {
+                // TODO: show on map
+            } label: {
+                Label("Show on map", systemImage: "mappin.and.ellipse")
+            }
+        }
+    }
 }
 
 #Preview {
-    UserHomeView(events: [:])
+    UserHomeView(events: [.yourEvents : [EventData.PreviewData, EventData.PreviewData], .nearYou : [EventData.PreviewData]])
         .environmentObject(Navigator())
 }
