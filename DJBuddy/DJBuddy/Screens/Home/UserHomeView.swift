@@ -8,28 +8,31 @@
 import SwiftUI
 
 struct UserHomeView: View {
+    @EnvironmentObject var navigator: Navigator
+
+    let events: [EventDataType: [EventData]]
+    
     var body: some View {
         EventList {
-            Section {
-                EventListTile(eventData: EventData.PreviewData)
-                EventListTile(eventData: EventData.PreviewData)
-            } header: {
-                Text("Joined events")
-                    .textCase(.uppercase)
-                    .font(.subheadline)
-            }
-
-            Section {
-                EventListTile(eventData: EventData.PreviewData)
-            } header: {
-                Text("Events near you")
-                    .textCase(.uppercase)
-                    .font(.subheadline)
+            ForEach(Array(events.keys).sorted(by: { $0.rawValue > $1.rawValue }), id: \.rawValue) { eventType in
+                Section {
+                    ForEach(events[eventType] ?? []) { event in
+                        EventListTile(eventData: event)
+                            .onTapGesture {
+                                navigator.navigate(with: event)
+                            }
+                    }
+                } header: {
+                    Text(eventType.title(for: .user))
+                        .textCase(.uppercase)
+                        .font(.subheadline)
+                }
             }
         }
     }
 }
 
 #Preview {
-    UserHomeView()
+    UserHomeView(events: [:])
+        .environmentObject(Navigator())
 }

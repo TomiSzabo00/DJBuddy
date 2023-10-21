@@ -17,9 +17,9 @@ struct MainMenu: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             if user.type == .dj {
-                DJHomeView(events: viewModel.yourEvents).tag(0)
+                DJHomeView(yourEvents: viewModel.yourEvents[.yourEvents] ?? []).tag(0)
             } else {
-                UserHomeView().tag(0)
+                UserHomeView(events: viewModel.yourEvents).tag(0)
             }
             Text("Map").tag(1)
         }

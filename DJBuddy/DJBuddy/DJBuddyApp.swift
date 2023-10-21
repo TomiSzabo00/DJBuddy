@@ -44,7 +44,7 @@ struct DJBuddyApp: App {
                                                     email: "example@email.com",
                                                     firstName: "Example",
                                                     lastName: "User",
-                                                    type: .dj)
+                                                    type: .user)
 
     var body: some Scene {
         WindowGroup {

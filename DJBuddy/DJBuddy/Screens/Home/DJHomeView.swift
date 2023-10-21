@@ -10,12 +10,12 @@ import SwiftUI
 struct DJHomeView: View {
     @EnvironmentObject var navigator: Navigator
 
-    let events: [EventData]
+    let yourEvents: [EventData]
 
     var body: some View {
         EventList {
             Section {
-                ForEach(events) { event in
+                ForEach(yourEvents) { event in
                     EventListTile(eventData: event)
                         .onTapGesture {
                             navigator.navigate(with: event)
@@ -31,5 +31,5 @@ struct DJHomeView: View {
 }
 
 #Preview {
-    DJHomeView(events: [EventData.PreviewData])
+    DJHomeView(yourEvents: [EventData.PreviewData])
 }
