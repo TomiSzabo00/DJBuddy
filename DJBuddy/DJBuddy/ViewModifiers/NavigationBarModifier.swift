@@ -77,6 +77,12 @@ struct NavigationBarModifier<MenuContent: View>: ViewModifier {
             Button("Hi, \(name)") {
                 navigator.navigate(to: .profile)
             }
+        case var .close(isShowing):
+            Button {
+                isShowing.wrappedValue = false
+            } label: {
+                Image(systemName: "multiply")
+            }
         }
     }
 }

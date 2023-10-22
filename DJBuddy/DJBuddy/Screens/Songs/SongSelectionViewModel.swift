@@ -13,6 +13,11 @@ struct MyGenresResponse: Decodable {
 }
 
 final class SongSelectionViewModel: ObservableObject {
+    @Published var searchableText = ""
+    @Published var searchResults: [SongData] = []
+    @Published var isSearching = false
+    private var searchTask: Task<Void, Never>? = nil
+
     func getAllGenres() {
         Task {
             do {
@@ -43,6 +48,25 @@ final class SongSelectionViewModel: ObservableObject {
                 let response = try await request.response()
                 for song in response.songs {
                     print("\(song.title) - \(song.genreNames)")
+                }
+            } catch {
+                print("Error searching for music: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    func searchSong(_ text: String) {
+        searchTask?.cancel()
+        isSearching = true
+        searchTask = Task { [weak self] in
+            do {
+                let request = MusicKit.MusicCatalogSearchRequest(term: text, types: [Song.self])
+                let response = try await request.response()
+                DispatchQueue.main.async { [weak self] in
+                    self?.searchResults = response.songs.map { song in
+                        SongData(song: song)
+                    }
+                    self?.isSearching = false
                 }
             } catch {
                 print("Error searching for music: \(error.localizedDescription)")

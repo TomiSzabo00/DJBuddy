@@ -44,7 +44,10 @@ struct RequestSongView: View {
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: "Request a song", navigator: navigator, leadingButton: .back)
         .sheet(isPresented: $isSongSelectionShowing) {
-            SongSelectionView()
+            SongSelectionView(isShowing: $isSongSelectionShowing) { selectedSong in
+                viewModel.selectedSong = selectedSong
+                isSongSelectionShowing = false
+            }
         }
     }
 
@@ -57,7 +60,7 @@ struct RequestSongView: View {
     @ViewBuilder private func songSelectionButton() -> some View {
         ZStack(alignment: .leading) {
             if let song = viewModel.selectedSong {
-                selectedSongView(song)
+                SimpleSongRow(song: song)
             } else {
                 HStack {
                     Image(systemName: "magnifyingglass")
@@ -74,32 +77,6 @@ struct RequestSongView: View {
         .onTapGesture {
             isSongSelectionShowing.toggle()
         }
-    }
-
-    @ViewBuilder private func selectedSongView(_ song: SongData) -> some View {
-        let height = 66.0
-        HStack {
-            AsyncImage(url: URL(string: song.albumArtUrl)) { image in
-                image.resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: height)
-            } placeholder: {
-                Image("default")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: height)
-            }
-
-            VStack(alignment: .leading) {
-                Text(song.title)
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                Text(song.artist)
-                    .font(.subheadline)
-            }
-            .padding(.vertical)
-        }
-        .foregroundStyle(.black)
     }
 }
 

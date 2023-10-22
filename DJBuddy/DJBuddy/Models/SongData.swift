@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MusicKit
 
 struct SongData: Identifiable, Hashable {
     let id = UUID()
@@ -23,5 +24,19 @@ struct SongData: Identifiable, Hashable {
                  artist: "ABBA",
                  amount: 23,
                  albumArtUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a5/ABBA_-_Gimme%21_Gimme%21_Gimme%21_%28A_Man_After_Midnight%29.png/220px-ABBA_-_Gimme%21_Gimme%21_Gimme%21_%28A_Man_After_Midnight%29.png")
+    }
+
+    init(title: String, artist: String, amount: Double, albumArtUrl: String) {
+        self.title = title
+        self.artist = artist
+        self.amount = amount
+        self.albumArtUrl = albumArtUrl
+    }
+
+    init(song: Song) {
+        self.title = song.title
+        self.artist = song.artistName
+        self.amount = 0
+        self.albumArtUrl = song.artwork?.url(width: 66, height: 66)?.absoluteString ?? ""
     }
 }
