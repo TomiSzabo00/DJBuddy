@@ -9,6 +9,7 @@ import Foundation
 
 final class EventControlViewModel: ObservableObject {
     @Published var event: EventData
+    @Published var selectedSong: SongData? = nil
 
     init(event: EventData) {
         self.event = event
