@@ -44,7 +44,7 @@ struct RequestSongView: View {
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: "Request a song", navigator: navigator, leadingButton: .back)
         .sheet(isPresented: $isSongSelectionShowing) {
-            
+            SongSelectionView()
         }
     }
 
