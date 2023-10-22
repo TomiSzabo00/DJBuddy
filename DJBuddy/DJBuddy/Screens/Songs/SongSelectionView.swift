@@ -13,6 +13,7 @@ struct SongSelectionView: View {
     @FocusState private var isFocusedTextField: Bool
     @Binding var isShowing: Bool
 
+    var theme: SongTheme? = nil
     let selectAction: (SongData) -> Void
 
     var body: some View {
@@ -30,7 +31,7 @@ struct SongSelectionView: View {
                         )
                     ) {
                         if $0.count > 3 {
-                            viewModel.searchSong($0)
+                            viewModel.searchSong($0, theme: theme)
                         }
                         if $0.isEmpty {
                             viewModel.searchResults.removeAll()

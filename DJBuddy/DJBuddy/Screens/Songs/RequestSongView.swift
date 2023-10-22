@@ -44,7 +44,7 @@ struct RequestSongView: View {
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: "Request a song", navigator: navigator, leadingButton: .back)
         .sheet(isPresented: $isSongSelectionShowing) {
-            SongSelectionView(isShowing: $isSongSelectionShowing) { selectedSong in
+            SongSelectionView(isShowing: $isSongSelectionShowing, theme: viewModel.event.theme) { selectedSong in
                 viewModel.selectedSong = selectedSong
                 isSongSelectionShowing = false
             }

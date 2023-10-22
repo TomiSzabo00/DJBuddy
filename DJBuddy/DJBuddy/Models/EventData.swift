@@ -57,18 +57,39 @@ enum EventState {
 }
 
 enum SongTheme: CaseIterable {
-    case slow
+    case alternative
+    case classical
+    case dance
+    case electronic
+    case hipHop
+    case jazz
+    case metal
     case pop
-    case techno
+    case reggae
+    case rock
 
     var displayName: String {
         switch self {
-        case .slow:
-            "Slow music"
+        case .alternative:
+            "Alternative"
+        case .classical:
+            "Classical"
+        case .dance:
+            "Dance"
+        case .electronic:
+            "Electronic"
+        case .hipHop:
+            "Hip-Hop/Rap"
+        case .jazz:
+            "Jazz"
+        case .metal:
+            "Metal"
         case .pop:
             "Pop"
-        case .techno:
-            "Techno"
+        case .reggae:
+            "Reggae"
+        case .rock:
+            "Rock"
         }
     }
 }
