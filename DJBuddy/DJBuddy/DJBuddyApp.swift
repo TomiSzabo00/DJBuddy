@@ -64,8 +64,8 @@ struct DJBuddyApp: App {
                             EventControlView(event: event)
                         case let .userEventView(event):
                             UserEventView(event: event)
-                        case let .songDetails(song):
-                            SongDetalsView(song: song)
+                        case let .songDetails(song, vm):
+                            SongDetalsView(song: song, viewModel: vm)
                         }
                     }
             }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SongList: View {
     @EnvironmentObject var navigator: Navigator
+    @EnvironmentObject var viewModel: EventControlViewModel
 
     let songs: [SongData]
 
@@ -21,7 +22,7 @@ struct SongList: View {
                     ForEach(Array(songs.enumerated()), id: \.offset) { idx, song in
                         SongRow(song, index: idx)
                             .onTapGesture {
-                                navigator.navigate(to: .songDetails(song))
+                                navigator.navigate(to: .songDetails(song, viewModel))
                             }
                     }
                 }

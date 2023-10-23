@@ -11,6 +11,9 @@ struct SongDetalsView: View {
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var user: UserData
     let song: SongData
+    let viewModel: EventControlViewModel
+
+    @State var isIncPriceShowing = false
 
     var body: some View {
         GeometryReader { geo in
@@ -55,7 +58,7 @@ struct SongDetalsView: View {
                             .buttonStyle(.largeSecondary)
                         } else {
                             Button("Increase price") {
-
+                                isIncPriceShowing.toggle()
                             }
                             .buttonStyle(.largeProminent)
                         }
@@ -70,12 +73,15 @@ struct SongDetalsView: View {
         }
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: "Song", navigator: navigator, leadingButton: .back)
+        .sheet(isPresented: $isIncPriceShowing) {
+            IncreasePriceView(viewModel: viewModel, isShowing: $isIncPriceShowing)
+        }
     }
 }
 
 #Preview {
     NavigationView {
-        SongDetalsView(song: SongData.PreviewData)
+        SongDetalsView(song: SongData.PreviewData, viewModel: EventControlViewModel(event: EventData.PreviewData))
             .environmentObject(Navigator())
             .environmentObject(UserData.PreviewUser)
     }

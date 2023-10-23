@@ -7,7 +7,15 @@
 
 import Foundation
 
-final class EventControlViewModel: ObservableObject {
+final class EventControlViewModel: ObservableObject, Hashable {
+    static func == (lhs: EventControlViewModel, rhs: EventControlViewModel) -> Bool {
+        lhs.event == rhs.event
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(event)
+    }
+
     @Published var event: EventData
     @Published var selectedSong: SongData? = nil
     @Published var didAgree = false

@@ -22,6 +22,7 @@ struct UserEventView: View {
 
             SongList(songs: viewModel.event.requestedSongs)
                 .environmentObject(navigator)
+                .environmentObject(viewModel)
 
             Button("Request a new song") {
                 navigator.navigate(to: .requestSong(viewModel.event))

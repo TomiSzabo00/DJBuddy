@@ -43,6 +43,7 @@
 		5573DC7E2AE542CB0025751F /* SongSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC7D2AE542CB0025751F /* SongSelectionView.swift */; };
 		5573DC802AE544300025751F /* SongSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC7F2AE544300025751F /* SongSelectionViewModel.swift */; };
 		5573DC822AE54F410025751F /* SimpleSongRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC812AE54F410025751F /* SimpleSongRow.swift */; };
+		5573DC842AE65D940025751F /* IncreasePriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC832AE65D940025751F /* IncreasePriceView.swift */; };
 		5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */; };
 		5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */; };
 		5584D40C2AC18D9900BC61F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5584D40B2AC18D9900BC61F6 /* Assets.xcassets */; };
@@ -105,6 +106,7 @@
 		5573DC7D2AE542CB0025751F /* SongSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSelectionView.swift; sourceTree = "<group>"; };
 		5573DC7F2AE544300025751F /* SongSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSelectionViewModel.swift; sourceTree = "<group>"; };
 		5573DC812AE54F410025751F /* SimpleSongRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSongRow.swift; sourceTree = "<group>"; };
+		5573DC832AE65D940025751F /* IncreasePriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncreasePriceView.swift; sourceTree = "<group>"; };
 		5584D4042AC18D9700BC61F6 /* DJBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJBuddyApp.swift; sourceTree = "<group>"; };
 		5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavyBackgroundView.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				5573DC7B2AE46AFC0025751F /* PriceSelectionView.swift */,
 				5573DC7D2AE542CB0025751F /* SongSelectionView.swift */,
 				5573DC7F2AE544300025751F /* SongSelectionViewModel.swift */,
+				5573DC832AE65D940025751F /* IncreasePriceView.swift */,
 			);
 			path = Songs;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5573DC842AE65D940025751F /* IncreasePriceView.swift in Sources */,
 				5573DC802AE544300025751F /* SongSelectionViewModel.swift in Sources */,
 				55A583AD2AE1937A00438049 /* UserData.swift in Sources */,
 				5573DC5E2AE280BF0025751F /* ButtonType.swift in Sources */,
