@@ -78,6 +78,30 @@ final class EventControlViewModel: ObservableObject, Hashable {
         }
     }
 
+    func removeSongFromList(_ song: SongData) {
+        event.requestedSongs.removeAll(where: { $0 == song })
+    }
+
+    func decline(song: SongData, completion: @escaping (Result<Void, Never>) -> Void) {
+        isLoading = true
+        // TODO: remove song from BE
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) { [weak self] in
+            self?.removeSongFromList(song)
+            completion(.success(()))
+            self?.isLoading = false
+        }
+    }
+
+    func accept(song: SongData, completion: @escaping (Result<Void, Never>) -> Void) {
+        isLoading = true
+        // TODO: give money to DJ
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) { [weak self] in
+            self?.removeSongFromList(song)
+            completion(.success(()))
+            self?.isLoading = false
+        }
+    }
+
     static func == (lhs: EventControlViewModel, rhs: EventControlViewModel) -> Bool {
         lhs.event == rhs.event
     }

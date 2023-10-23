@@ -49,7 +49,7 @@ class EventData: Hashable, Identifiable, ObservableObject {
                   dj: UserData.PreviewUser,
                   location: AddressResult.PreviewData,
                   date: date,
-                  requestedSongs: [/*SongData.PreviewData, SongData.PreviewData*/]
+                  requestedSongs: [SongData.PreviewData, SongData.PreviewData2]
         )
     }
 }

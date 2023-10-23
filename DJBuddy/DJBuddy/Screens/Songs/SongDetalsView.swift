@@ -11,7 +11,7 @@ struct SongDetalsView: View {
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var user: UserData
     let song: SongData
-    let viewModel: EventControlViewModel
+    @StateObject var viewModel: EventControlViewModel
 
     @State var isIncPriceShowing = false
 
@@ -47,13 +47,29 @@ struct SongDetalsView: View {
 
                         if user.type == .dj {
                             Button("Accept") {
-
+                                viewModel.accept(song: song) { result in
+                                    switch result {
+                                    case .success(_):
+                                        navigator.back()
+                                    case .failure(_):
+                                        // TODO: handle error
+                                        break
+                                    }
+                                }
                             }
                             .buttonStyle(.largeProminent)
                             .padding(.vertical)
 
                             Button("Decline") {
-
+                                viewModel.decline(song: song) { result in
+                                    switch result {
+                                    case .success(_):
+                                        navigator.back()
+                                    case .failure(_):
+                                        // TODO: handle error
+                                        break
+                                    }
+                                }
                             }
                             .buttonStyle(.largeSecondary)
                         } else {
@@ -79,6 +95,7 @@ struct SongDetalsView: View {
         .sheet(isPresented: $isIncPriceShowing) {
             IncreasePriceView(song: song, viewModel: viewModel, isShowing: $isIncPriceShowing)
         }
+        .loadingOverlay(isLoading: $viewModel.isLoading)
     }
 }
 
