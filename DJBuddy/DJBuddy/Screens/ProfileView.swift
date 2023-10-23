@@ -13,15 +13,21 @@ struct ProfileView: View {
     var body: some View {
         GeometryReader { geo in
             VStack(spacing: 0) {
-                Image("default")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: geo.size.width, height: geo.size.width)
-                    .overlay(
-                        LinearGradient(gradient: Gradient(colors: [.clear, .asset.background]),
-                                       startPoint: .top,
-                                       endPoint: .bottom)
-                    )
+                AsyncImage(url: URL(string: user.profilePicUrl)) { image in
+                    image.resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: geo.size.width)
+                } placeholder: {
+                    Image("default")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: geo.size.width)
+                }
+                .overlay(
+                    LinearGradient(gradient: Gradient(colors: [.clear, .asset.background]),
+                                   startPoint: .top,
+                                   endPoint: .bottom)
+                )
                 HStack {
                     VStack(alignment: .leading) {
                         Text(user.name.fullName)

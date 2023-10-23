@@ -17,19 +17,22 @@ final class UserData: Identifiable, ObservableObject, Hashable {
     let email: String
     let name: NameData
     let type: UserTypeEnum
+    var profilePicUrl: String
 
-    init(username: String, email: String, name: NameData, type: UserTypeEnum) {
+    init(username: String, email: String, name: NameData, type: UserTypeEnum, profilePicUrl: String = "") {
         self.username = username
         self.email = email
         self.name = name
         self.type = type
+        self.profilePicUrl = profilePicUrl
     }
 
-    init(username: String, email: String, firstName: String, lastName: String, type: UserTypeEnum) {
+    init(username: String, email: String, firstName: String, lastName: String, type: UserTypeEnum, profilePicUrl: String = "") {
         self.username = username
         self.email = email
         self.name = NameData(firstName: firstName, lastName: lastName)
         self.type  = type
+        self.profilePicUrl = profilePicUrl
     }
 
     func hash(into hasher: inout Hasher) {

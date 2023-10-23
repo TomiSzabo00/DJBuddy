@@ -12,10 +12,16 @@ struct EventListTile: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            // TODO: place image here
-            Rectangle()
-                .fill(Color.blue)
-                .frame(width: 100, height: 100)
+            AsyncImage(url: URL(string: eventData.dj.profilePicUrl)) { image in
+                image.resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 100)
+            } placeholder: {
+                Image("default")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 100)
+            }
 
             VStack(alignment: .leading) {
                 Text(eventData.dj.username)
