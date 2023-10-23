@@ -35,7 +35,7 @@ struct IncreasePriceView: View {
                 .buttonStyle(.largeSecondary)
             }
             .padding()
-            .navBarWithTitle(title: "Inc. price", leadingButton: .close($isShowing))
+            .navBarWithTitle(title: "Increase price", leadingButton: .close($isShowing))
             .backgroundColor(.asset.background)
         }
     }
