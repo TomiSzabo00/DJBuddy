@@ -33,7 +33,15 @@ struct RequestSongView: View {
             .buttonStyle(.checkmark(isOn: $viewModel.didAgree))
 
             Button("Request") {
-                viewModel.requestSong()
+                viewModel.requestSong() { result in
+                    switch result {
+                    case .success(_):
+                        navigator.back()
+                    case .failure(_):
+                        // TODO: handle error
+                        break
+                    }
+                }
             }
             .buttonStyle(.largeProminent)
         }
@@ -47,6 +55,7 @@ struct RequestSongView: View {
                 isSongSelectionShowing = false
             }
         }
+        .loadingOverlay(isLoading: $viewModel.isLoading)
     }
 
     @ViewBuilder private func agreePrivacyPolicy(_ checkbox: Binding<Bool>) -> some View {

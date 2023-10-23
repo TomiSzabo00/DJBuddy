@@ -12,8 +12,12 @@ struct SongData: Identifiable, Hashable {
     let id = UUID()
     let title: String
     let artist: String
-    let amount: Double
+    var amount: Double
     let albumArtUrl: String
+
+    static func == (lhs: SongData, rhs: SongData) -> Bool {
+        lhs.title == rhs.title && lhs.artist == rhs.artist
+    }
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
@@ -37,6 +41,6 @@ struct SongData: Identifiable, Hashable {
         self.title = song.title
         self.artist = song.artistName
         self.amount = 0
-        self.albumArtUrl = song.artwork?.url(width: 66, height: 66)?.absoluteString ?? ""
+        self.albumArtUrl = song.artwork?.url(width: 200, height: 200)?.absoluteString ?? ""
     }
 }

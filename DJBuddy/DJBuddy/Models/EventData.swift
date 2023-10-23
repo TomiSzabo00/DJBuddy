@@ -14,7 +14,11 @@ class EventData: Hashable, Identifiable, ObservableObject {
     let location: AddressResult
     let date: Date
     var state: EventState
-    var requestedSongs: [SongData]
+    var requestedSongs: [SongData] {
+        didSet {
+            requestedSongs.sort(by: { $0.amount > $1.amount })
+        }
+    }
     var theme: SongTheme? {
         didSet {
             print("Theme changed to: \(String(describing: theme))")

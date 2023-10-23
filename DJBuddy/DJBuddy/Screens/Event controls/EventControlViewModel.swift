@@ -12,6 +12,7 @@ final class EventControlViewModel: ObservableObject {
     @Published var selectedSong: SongData? = nil
     @Published var didAgree = false
     @Published var selectedPrice: Double = 1
+    @Published var isLoading = false
 
     init(event: EventData) {
         self.event = event
@@ -27,8 +28,8 @@ final class EventControlViewModel: ObservableObject {
         objectWillChange.send()
     }
 
-    func requestSong() {
-        guard let selectedSong else {
+    func requestSong(completion: @escaping (Result<Void, Never>) -> Void) {
+        guard var selectedSong else {
             // TODO: song error
             return
         }
@@ -43,6 +44,19 @@ final class EventControlViewModel: ObservableObject {
             return
         }
 
-        // TODO: request song
+        isLoading = true
+
+        // TODO: request song from API
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) { [ weak self] in
+            self?.isLoading = false
+            completion(.success(()))
+        }
+
+        if let idx = event.requestedSongs.firstIndex(of: selectedSong) {
+            event.requestedSongs[idx].amount += selectedPrice
+        } else {
+            selectedSong.amount = selectedPrice
+            event.requestedSongs.append(selectedSong)
+        }
     }
 }
