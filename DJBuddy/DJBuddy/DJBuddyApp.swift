@@ -44,12 +44,13 @@ struct DJBuddyApp: App {
                                                     email: "example@email.com",
                                                     firstName: "Example",
                                                     lastName: "User",
-                                                    type: .user)
+                                                    type: .dj)
+    @StateObject private var mainMenuViewModel = MainMenuViewModel()
 
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $navigator.path) {
-                MainMenu()
+                MainMenu(viewModel: mainMenuViewModel)
                     .navigationDestination(for: NavigationDestination.self) { destination in
                         switch destination {
                         case let .requestSong(eventData):
@@ -57,7 +58,9 @@ struct DJBuddyApp: App {
                         case .profile:
                             ProfileView()
                         case .createEvent:
-                            CreateEventView()
+                            CreateEventView() { newEvent in
+                                mainMenuViewModel.join(event: newEvent)
+                            }
                         case let .selectEvent(eventList):
                             SelectEventView(yourEvents: eventList)
                         case let .eventControl(event):

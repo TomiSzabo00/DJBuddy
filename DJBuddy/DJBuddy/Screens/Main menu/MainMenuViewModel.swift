@@ -53,6 +53,8 @@ final class MainMenuViewModel: ObservableObject {
         } else {
             yourEvents[.yourEvents] = [event]
         }
+
+        sortEventsByDate(&yourEvents[.yourEvents]!)
     }
 
     func leave(event: EventData) {

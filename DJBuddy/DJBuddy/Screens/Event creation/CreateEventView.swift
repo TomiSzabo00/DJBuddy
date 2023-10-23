@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct CreateEventView: View {
+    @EnvironmentObject var navigator: Navigator
+    @EnvironmentObject var user: UserData
+
     @StateObject var viewModel = CreateEventViewModel()
     @State var isAddressSheetShowing = false
     @State var isDatePickerShowing = false
 
-    @EnvironmentObject var user: UserData
+    let completion: (EventData) -> Void
 
     var body: some View {
         VStack(spacing: 40) {
@@ -21,7 +24,16 @@ struct CreateEventView: View {
             dateSelectionButton()
             Spacer()
             Button("Create event") {
-                viewModel.createEvent(by: user)
+                viewModel.createEvent(by: user) { result in
+                    switch result {
+                    case let .success(newEvent):
+                        completion(newEvent)
+                        navigator.back()
+                    case .failure(_):
+                        break
+                        // TODO: handle error
+                    }
+                }
             }
             .buttonStyle(.largeProminent)
         }
@@ -39,7 +51,8 @@ struct CreateEventView: View {
                 .presentationDetents([.medium])
         }
         .backgroundColor(.asset.background)
-        .navigationTitle("Create new event")
+        .navBarWithTitle(title: "Create new event", navigator: navigator, leadingButton: .back)
+        .loadingOverlay(isLoading: $viewModel.isLoading)
     }
 
     @ViewBuilder private func addressSelectionButton() -> some View {
@@ -84,6 +97,6 @@ struct CreateEventView: View {
 }
 
 #Preview {
-    CreateEventView()
+    CreateEventView() { _ in }
         .environmentObject(UserData.PreviewUser)
 }

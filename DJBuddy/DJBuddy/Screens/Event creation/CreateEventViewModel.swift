@@ -11,6 +11,7 @@ final class CreateEventViewModel: ObservableObject {
     @Published var eventName = ""
     @Published var selectedAddress: AddressResult? = nil
     @Published var dateOfEvent: Date = .distantPast
+    @Published var isLoading = false
 
     var currentAddress: String? {
         guard let selectedAddress else { return nil }
@@ -22,7 +23,7 @@ final class CreateEventViewModel: ObservableObject {
         return dateOfEvent.formatted(.dateTime.year().month().day())
     }
 
-    func createEvent(by user: UserData) {
+    func createEvent(by user: UserData, completion: @escaping (Result<EventData, Never>) -> Void) {
         guard let selectedAddress else {
             // TODO: address error
             return
@@ -33,12 +34,17 @@ final class CreateEventViewModel: ObservableObject {
             return
         }
 
+        isLoading = true
+
         let newEvent = EventData(name: eventName,
                                  dj: user,
                                  location: selectedAddress,
                                  date: dateOfEvent)
-        print(newEvent)
-        // TODO: send event to BE
 
+        // TODO: send event to BE
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) { [weak self] in
+            completion(.success(newEvent))
+            self?.isLoading = false
+        }
     }
 }

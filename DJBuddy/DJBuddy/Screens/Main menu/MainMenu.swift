@@ -11,7 +11,7 @@ struct MainMenu: View {
     @EnvironmentObject private var navigator: Navigator
     @EnvironmentObject private var user: UserData
 
-    @StateObject private var viewModel = MainMenuViewModel()
+    @StateObject var viewModel: MainMenuViewModel
     @State var selectedTab = 0
 
     var body: some View {
@@ -45,7 +45,7 @@ struct MainMenu: View {
 
 #Preview {
     NavigationView {
-        MainMenu()
+        MainMenu(viewModel: MainMenuViewModel())
             .environmentObject(Navigator())
             .environmentObject(UserData.PreviewUser)
     }
