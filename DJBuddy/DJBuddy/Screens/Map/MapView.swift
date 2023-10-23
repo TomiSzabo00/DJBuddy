@@ -12,24 +12,45 @@ struct MapView: View {
     @StateObject var viewModel = MapViewModel()
     
     var body: some View {
-        Map(position: $viewModel.region) {
-            ForEach(viewModel.annotationItems) { event in
-                Annotation("", coordinate: event.location.coordinate) {
-                    EventAnnotation(event: event)
+        ZStack(alignment: .topLeading) {
+            Map(position: $viewModel.region) {
+                ForEach(viewModel.annotationItems) { event in
+                    Annotation("", coordinate: event.location.coordinate) {
+                        EventAnnotation(event: event)
+                    }
                 }
+                UserAnnotation()
             }
-            UserAnnotation()
-        }
-        .mapStyle(.standard(elevation: .realistic, pointsOfInterest: .all))
-        .mapControls {
-            MapCompass()
-            MapPitchToggle()
-            MapScaleView()
-        }
-        .mapControlVisibility(.visible)
-        .edgesIgnoringSafeArea(.bottom)
-        .onAppear {
-            viewModel.checkLocationServices()
+            .mapStyle(.standard(elevation: .realistic, pointsOfInterest: .all))
+            .mapControls {
+                MapCompass()
+                MapPitchToggle()
+                MapScaleView()
+            }
+            .mapControlVisibility(.visible)
+            .edgesIgnoringSafeArea(.bottom)
+            .onAppear {
+                viewModel.checkLocationServices()
+                viewModel.getEvents()
+            }
+
+            Button {
+                viewModel.getEvents()
+            } label: {
+                Group {
+                    if viewModel.isLoading {
+                        ProgressView()
+                    } else {
+                        Image(systemName: "arrow.counterclockwise")
+                    }
+                }
+                .padding(12)
+                .background(.thickMaterial)
+                .clipShape(.rect(cornerRadius: 12))
+            }
+            .padding(8)
+            .padding(.top, 40)
+            .disabled(viewModel.isLoading)
         }
     }
 }

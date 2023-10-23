@@ -11,7 +11,8 @@ import SwiftUI
 
 final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var region: MapCameraPosition = .automatic
-    @Published private(set) var annotationItems: [EventData] = [EventData.MapPreviewData, EventData.MapPreviewData2]
+    @Published private(set) var annotationItems: [EventData] = []
+    @Published var isLoading = false
 
     var locationManager: CLLocationManager?
 
@@ -35,5 +36,13 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkLocationAuthorization()
+    }
+
+    func getEvents() {
+        isLoading = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
+            self?.annotationItems = [EventData.MapPreviewData, EventData.MapPreviewData2]
+            self?.isLoading = false
+        }
     }
 }
