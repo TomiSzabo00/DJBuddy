@@ -13,6 +13,7 @@ struct PriceSelectionView: View {
     @State var customAmount: Double? = nil
     @State var isCustomAmountAlertShowing = false
     @State var customAmountText = ""
+    var amountToNext: Double? = nil
 
     var body: some View {
         LazyVGrid(columns: [GridItem(.fixed(110)), GridItem(.fixed(110)), GridItem(.fixed(110))]) {
@@ -20,6 +21,9 @@ struct PriceSelectionView: View {
                 priceRect(amount: amount, isSelected: amount == selectedAmount)
             }
             customPriceRect(amount: customAmount, isSelected: selectedAmount == customAmount)
+            if let amountToNext, !amounts.contains(amountToNext) {
+                priceRect(amount: amountToNext, isSelected: selectedAmount == amountToNext)
+            }
         }
         .animation(.default, value: selectedAmount)
         .alert("Enter amount", isPresented: $isCustomAmountAlertShowing) {

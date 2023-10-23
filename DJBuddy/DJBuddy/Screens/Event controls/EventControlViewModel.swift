@@ -16,16 +16,20 @@ final class EventControlViewModel: ObservableObject, Hashable {
     var currentSong: SongData? = nil
 
     var shouldSHowPriceWarining: Bool {
+        guard let amountToNextSong else { return false }
+        return selectedPrice < amountToNextSong
+    }
+
+    var amountToNextSong: Double? {
         guard let song = currentSong,
               let idx = event.requestedSongs.firstIndex(of: song),
-              idx > 0
-        else { return false }
+              idx > 0,
+              event.requestedSongs[idx - 1].amount > song.amount
+        else { return nil }
 //        guard let song = currentSong else { print("guard 1"); return false }
 //        guard let idx = event.requestedSongs.firstIndex(of: song) else { print("guard 2"); return false }
 //        guard idx > 0 else { print("guard 3"); return false }
-        let nextAmount = event.requestedSongs[idx - 1].amount
-//        print("\(song.amount) + \(selectedPrice) >? \(nextAmount)")
-        return song.amount + selectedPrice < nextAmount
+        return event.requestedSongs[idx - 1].amount - song.amount + 1.0
     }
 
     init(event: EventData) {

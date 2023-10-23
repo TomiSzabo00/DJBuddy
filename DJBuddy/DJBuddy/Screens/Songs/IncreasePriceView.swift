@@ -16,7 +16,7 @@ struct IncreasePriceView: View {
         NavigationView {
             VStack(alignment: .leading, spacing: 20) {
                 Text("Increase price by")
-                PriceSelectionView(amounts: [1, 3, 5], selectedAmount: $viewModel.selectedPrice)
+                PriceSelectionView(amounts: [1, 3, 5], selectedAmount: $viewModel.selectedPrice, amountToNext: viewModel.amountToNextSong)
 
                 if viewModel.shouldSHowPriceWarining {
                     InfoView("This amount won’t change the position of this song in the list. If you want to move it up, choose a bigger amount.", type: .warning)
