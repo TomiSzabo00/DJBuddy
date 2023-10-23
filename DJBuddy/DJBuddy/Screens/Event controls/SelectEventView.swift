@@ -12,21 +12,37 @@ struct SelectEventView: View {
 
     let yourEvents: [EventData]
 
-    var body: some View {
-        EventList {
-            Section {
-                ForEach(yourEvents) { event in
-                    EventListTile(eventData: event)
-                        .onTapGesture {
-                            navigator.navigate(to: .userEventView(event))
-                        }
-                }
-            } header: {
-                Text("Choose an event")
-                    .textCase(.uppercase)
-                    .font(.subheadline)
-            }
+    var showableEvents: [EventData] {
+        yourEvents.filter { event in
+            [.inProgress, .paused].contains(event.state)
+        }
+    }
 
+    var body: some View {
+        Group {
+            if showableEvents.isEmpty {
+                VStack {
+                    InfoView("There aren't any ongoing events among your joined ones.", type: .info)
+                    Spacer()
+                }
+                .padding()
+                .backgroundColor(.asset.background)
+            } else {
+                EventList {
+                    Section {
+                        ForEach(showableEvents) { event in
+                            EventListTile(eventData: event)
+                                .onTapGesture {
+                                    navigator.navigate(to: .userEventView(event))
+                                }
+                        }
+                    } header: {
+                        Text("Choose an event")
+                            .textCase(.uppercase)
+                            .font(.subheadline)
+                    }
+                }
+            }
         }
         .navBarWithTitle(title: "Request a song", navigator: navigator, leadingButton: .back)
     }

@@ -29,6 +29,7 @@ struct UserEventView: View {
             }
             .buttonStyle(.largeProminent)
             .padding(.horizontal)
+            .disabled([.paused, .ended, .upcoming].contains(viewModel.event.state))
         }
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: viewModel.event.name, navigator: navigator, leadingButton: .back)
