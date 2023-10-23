@@ -15,10 +15,8 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
     var locationManager: CLLocationManager?
 
     func checkLocationServices() {
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager = CLLocationManager()
-            locationManager?.delegate = self
-        }
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
     }
 
     private func checkLocationAuthorization() {
