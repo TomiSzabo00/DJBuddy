@@ -11,7 +11,7 @@ import MapKit
 struct MapView: View {
     @StateObject private var viewModel = MapViewModel()
 
-    let address: AddressResult
+    @State var address: AddressResult
     let completion: (AddressResult) -> Void
 
     var body: some View {
@@ -29,7 +29,9 @@ struct MapView: View {
             }
             .mapControlVisibility(.visible)
             .onAppear {
-                self.viewModel.getPlace(from: address)
+                self.viewModel.getPlace(from: address) { addressWithCoords in
+                    address = addressWithCoords
+                }
             }
             .edgesIgnoringSafeArea(.bottom)
 

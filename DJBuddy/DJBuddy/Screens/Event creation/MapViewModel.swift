@@ -11,9 +11,9 @@ import SwiftUI
 
 final class MapViewModel: ObservableObject {
     @Published var region: MapCameraPosition = .automatic
-    @Published private(set) var annotationItems: [AnnotationItem] = []
+    @Published private(set) var annotationItems: [AddressResult] = []
 
-    func getPlace(from address: AddressResult) {
+    func getPlace(from address: AddressResult, completion: @escaping (AddressResult) -> Void) {
         let request = MKLocalSearch.Request()
         let title = address.title
         let subTitle = address.subtitle
@@ -25,11 +25,13 @@ final class MapViewModel: ObservableObject {
             let response = try await MKLocalSearch(request: request).start()
             await MainActor.run {
                 self.annotationItems = response.mapItems.map {
-                    AnnotationItem(
+                    AddressResult(
+                        address: address,
                         latitude: $0.placemark.coordinate.latitude,
                         longitude: $0.placemark.coordinate.longitude
                     )
                 }
+                completion(annotationItems.first!)
                 self.region = MapCameraPosition.region(response.boundingRegion)
             }
         }

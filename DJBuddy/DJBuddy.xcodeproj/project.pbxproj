@@ -58,7 +58,6 @@
 		5584D4272AC2132600BC61F6 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4262AC2132600BC61F6 /* AuthViewModel.swift */; };
 		5584D42A2AC21B2D00BC61F6 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4292AC21B2D00BC61F6 /* InputView.swift */; };
 		55A583952AE14FEF00438049 /* AddressResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583942AE14FEF00438049 /* AddressResult.swift */; };
-		55A583972AE1500100438049 /* AnnotationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583962AE1500100438049 /* AnnotationItem.swift */; };
 		55A5839B2AE1506800438049 /* AddressSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5839A2AE1506800438049 /* AddressSelectionView.swift */; };
 		55A5839D2AE1507400438049 /* AddressSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5839C2AE1507400438049 /* AddressSelectionViewModel.swift */; };
 		55A5839F2AE150F400438049 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5839E2AE150F400438049 /* MapViewModel.swift */; };
@@ -124,7 +123,6 @@
 		5584D4262AC2132600BC61F6 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		5584D4292AC21B2D00BC61F6 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		55A583942AE14FEF00438049 /* AddressResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressResult.swift; sourceTree = "<group>"; };
-		55A583962AE1500100438049 /* AnnotationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationItem.swift; sourceTree = "<group>"; };
 		55A5839A2AE1506800438049 /* AddressSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSelectionView.swift; sourceTree = "<group>"; };
 		55A5839C2AE1507400438049 /* AddressSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSelectionViewModel.swift; sourceTree = "<group>"; };
 		55A5839E2AE150F400438049 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
@@ -343,7 +341,6 @@
 			isa = PBXGroup;
 			children = (
 				55A583942AE14FEF00438049 /* AddressResult.swift */,
-				55A583962AE1500100438049 /* AnnotationItem.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -460,7 +457,6 @@
 				556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */,
 				5573DC7C2AE46AFC0025751F /* PriceSelectionView.swift in Sources */,
 				552E85EB2AD3EFF1006D5E86 /* EventListTile.swift in Sources */,
-				55A583972AE1500100438049 /* AnnotationItem.swift in Sources */,
 				5573DC6B2AE2F4AA0025751F /* LoadingOverlayViewModifier.swift in Sources */,
 				552E85F42AD3FAC9006D5E86 /* SideMenuModifier.swift in Sources */,
 				552E85FF2AD45D05006D5E86 /* TabViewSelector.swift in Sources */,
