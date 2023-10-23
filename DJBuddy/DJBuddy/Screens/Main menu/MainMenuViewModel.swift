@@ -29,10 +29,16 @@ final class MainMenuViewModel: ObservableObject {
         isLoading = true
 
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) { [weak self] in
-            self?.yourEvents[.yourEvents] = [EventData.PreviewData, EventData.PreviewData]
-            self?.yourEvents[.nearYou] = [EventData.PreviewData]
-            self?.isLoading = false
+            guard let self else { return }
+            yourEvents[.yourEvents] = [EventData.PreviewData, EventData.PreviewData]
+            sortEventsByDate(&yourEvents[.yourEvents]!)
+            yourEvents[.nearYou] = [EventData.PreviewData]
+            isLoading = false
         }
+    }
+
+    func sortEventsByDate(_ events: inout [EventData]) {
+        events.sort(by: { $0.date < $1.date })
     }
 
     func join(event: EventData) {
