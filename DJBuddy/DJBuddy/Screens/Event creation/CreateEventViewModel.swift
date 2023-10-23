@@ -12,6 +12,7 @@ final class CreateEventViewModel: ObservableObject {
     @Published var selectedAddress: AddressResult? = nil
     @Published var dateOfEvent: Date = .distantPast
     @Published var isLoading = false
+    @Published var formError: Error? = nil
 
     var currentAddress: String? {
         guard let selectedAddress else { return nil }
@@ -25,12 +26,12 @@ final class CreateEventViewModel: ObservableObject {
 
     func createEvent(by user: UserData, completion: @escaping (Result<EventData, APIError>) -> Void) {
         guard let selectedAddress else {
-            // TODO: address error
+            formError = FormError.addressMissing
             return
         }
 
         guard dateOfEvent != .distantPast else {
-            // TODO: date error
+            formError = FormError.dateMissing
             return
         }
 

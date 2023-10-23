@@ -37,6 +37,8 @@ struct DJBuddyApp: App {
         if #available(iOS 15.0, *) {
             appearance.compactScrollEdgeAppearance = newNavBarAppearance
         }
+
+        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = .systemRed
     }
 
     @StateObject private var navigator = Navigator()

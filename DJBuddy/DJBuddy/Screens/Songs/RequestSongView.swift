@@ -57,6 +57,7 @@ struct RequestSongView: View {
         }
         .loadingOverlay(isLoading: $viewModel.isLoading)
         .errorAlert(error: $error)
+        .errorAlert(error: $viewModel.formError)
     }
 
     @ViewBuilder private func agreePrivacyPolicy(_ checkbox: Binding<Bool>) -> some View {

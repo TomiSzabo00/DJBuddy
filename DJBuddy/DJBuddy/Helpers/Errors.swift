@@ -24,3 +24,45 @@ enum APIError: LocalizedError {
         }
     }
 }
+
+enum FormError: LocalizedError {
+    case nameMissing
+    case acceptMissing
+    case priceMissing
+    case dateMissing
+    case addressMissing
+    case songMissing
+
+    var errorDescription: String? {
+        guard self != .acceptMissing else {
+            return "Terms and Conditions"
+        }
+        let prefix = {
+            switch self {
+            case .nameMissing:
+                return "Name"
+            case .acceptMissing:
+                return ""
+            case .priceMissing:
+                return "Price"
+            case .dateMissing:
+                return "Date"
+            case .addressMissing:
+                return "Address"
+            case .songMissing:
+                return "Song"
+            }
+        }()
+
+        return prefix + " is missing"
+    }
+
+    var recoverySuggestion: String? {
+        switch self {
+        case .acceptMissing:
+            "You have to accept our Terms and Conditions."
+        default:
+            "Please provide it."
+        }
+    }
+}

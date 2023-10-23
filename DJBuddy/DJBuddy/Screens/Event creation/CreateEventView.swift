@@ -54,6 +54,7 @@ struct CreateEventView: View {
         .navBarWithTitle(title: "Create new event", navigator: navigator, leadingButton: .back)
         .loadingOverlay(isLoading: $viewModel.isLoading)
         .errorAlert(error: $error)
+        .errorAlert(error: $viewModel.formError)
     }
 
     @ViewBuilder private func addressSelectionButton() -> some View {

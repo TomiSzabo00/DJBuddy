@@ -13,6 +13,7 @@ final class EventControlViewModel: ObservableObject, Hashable {
     @Published var didAgree = false
     @Published var selectedPrice: Double = 1
     @Published var isLoading = false
+    @Published var formError: Error? = nil
     var currentSong: SongData? = nil
 
     var shouldSHowPriceWarining: Bool {
@@ -61,17 +62,17 @@ final class EventControlViewModel: ObservableObject, Hashable {
 
     func requestSong(completion: @escaping (Result<Void, APIError>) -> Void) {
         guard let selectedSong else {
-            // TODO: song error
+            formError = FormError.songMissing
             return
         }
 
         guard didAgree else {
-            // TODO: agree error
+            formError = FormError.acceptMissing
             return
         }
 
         guard selectedPrice >= 1 else {
-            // TODO: price error
+            formError = FormError.priceMissing
             return
         }
 
