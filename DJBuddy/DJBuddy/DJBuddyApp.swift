@@ -44,7 +44,7 @@ struct DJBuddyApp: App {
                                                     email: "example@email.com",
                                                     firstName: "Example",
                                                     lastName: "User",
-                                                    type: .user)
+                                                    type: .dj)
     @StateObject private var mainMenuViewModel = MainMenuViewModel()
 
     var body: some Scene {

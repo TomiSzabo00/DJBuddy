@@ -15,6 +15,8 @@ struct SongDetalsView: View {
 
     @State var isIncPriceShowing = false
 
+    @State var error: Error? = nil
+
     var body: some View {
         GeometryReader { geo in
             ScrollView {
@@ -51,9 +53,8 @@ struct SongDetalsView: View {
                                     switch result {
                                     case .success(_):
                                         navigator.back()
-                                    case .failure(_):
-                                        // TODO: handle error
-                                        break
+                                    case .failure(let error):
+                                        self.error = error
                                     }
                                 }
                             }
@@ -65,9 +66,8 @@ struct SongDetalsView: View {
                                     switch result {
                                     case .success(_):
                                         navigator.back()
-                                    case .failure(_):
-                                        // TODO: handle error
-                                        break
+                                    case .failure(let error):
+                                        self.error = error
                                     }
                                 }
                             }
@@ -96,6 +96,7 @@ struct SongDetalsView: View {
             IncreasePriceView(song: song, viewModel: viewModel, isShowing: $isIncPriceShowing)
         }
         .loadingOverlay(isLoading: $viewModel.isLoading)
+        .errorAlert(error: $error)
     }
 }
 

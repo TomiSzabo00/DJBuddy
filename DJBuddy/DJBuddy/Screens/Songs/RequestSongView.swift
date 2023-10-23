@@ -12,6 +12,7 @@ struct RequestSongView: View {
     @ObservedObject var viewModel: EventControlViewModel
 
     @State var isSongSelectionShowing = false
+    @State var error: Error? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -37,9 +38,8 @@ struct RequestSongView: View {
                     switch result {
                     case .success(_):
                         navigator.back()
-                    case .failure(_):
-                        // TODO: handle error
-                        break
+                    case .failure(let error):
+                        self.error = error
                     }
                 }
             }
@@ -56,6 +56,7 @@ struct RequestSongView: View {
             }
         }
         .loadingOverlay(isLoading: $viewModel.isLoading)
+        .errorAlert(error: $error)
     }
 
     @ViewBuilder private func agreePrivacyPolicy(_ checkbox: Binding<Bool>) -> some View {

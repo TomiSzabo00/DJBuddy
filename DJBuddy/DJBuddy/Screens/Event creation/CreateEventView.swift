@@ -14,6 +14,7 @@ struct CreateEventView: View {
     @StateObject var viewModel = CreateEventViewModel()
     @State var isAddressSheetShowing = false
     @State var isDatePickerShowing = false
+    @State var error: Error? = nil
 
     let completion: (EventData) -> Void
 
@@ -29,9 +30,8 @@ struct CreateEventView: View {
                     case let .success(newEvent):
                         completion(newEvent)
                         navigator.back()
-                    case .failure(_):
-                        break
-                        // TODO: handle error
+                    case .failure(let error):
+                        self.error = error
                     }
                 }
             }
@@ -53,6 +53,7 @@ struct CreateEventView: View {
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: "Create new event", navigator: navigator, leadingButton: .back)
         .loadingOverlay(isLoading: $viewModel.isLoading)
+        .errorAlert(error: $error)
     }
 
     @ViewBuilder private func addressSelectionButton() -> some View {

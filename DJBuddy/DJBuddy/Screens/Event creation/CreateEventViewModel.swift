@@ -23,7 +23,7 @@ final class CreateEventViewModel: ObservableObject {
         return dateOfEvent.formatted(.dateTime.year().month().day())
     }
 
-    func createEvent(by user: UserData, completion: @escaping (Result<EventData, Never>) -> Void) {
+    func createEvent(by user: UserData, completion: @escaping (Result<EventData, APIError>) -> Void) {
         guard let selectedAddress else {
             // TODO: address error
             return

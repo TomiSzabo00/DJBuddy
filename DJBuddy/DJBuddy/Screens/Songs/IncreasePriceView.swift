@@ -12,6 +12,8 @@ struct IncreasePriceView: View {
     @StateObject var viewModel: EventControlViewModel
     @Binding var isShowing: Bool
 
+    @State var error: Error? = nil
+
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 20) {
@@ -30,9 +32,8 @@ struct IncreasePriceView: View {
                         switch result {
                         case .success(_):
                             break
-                        case .failure(_):
-                            // TODO: handle error
-                            break
+                        case .failure(let error):
+                            self.error = error
                         }
                     }
                 }
@@ -46,6 +47,7 @@ struct IncreasePriceView: View {
             .padding()
             .navBarWithTitle(title: "Increase price", leadingButton: .close($isShowing))
             .backgroundColor(.asset.background)
+            .errorAlert(error: $error)
         }
     }
 }

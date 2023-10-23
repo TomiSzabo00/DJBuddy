@@ -12,6 +12,7 @@ struct EventControlView: View {
     @ObservedObject var viewModel: EventControlViewModel
 
     @State var isSelectThemeShowing = false
+    @State var error: Error? = nil
 
     var body: some View {
         VStack {
@@ -39,9 +40,8 @@ struct EventControlView: View {
                         switch result {
                         case .success(_):
                             break
-                        case .failure(_):
-                            // TODO: handle error
-                            break
+                        case .failure(let error):
+                            self.error = error
                         }
                     }
                 }
@@ -50,9 +50,8 @@ struct EventControlView: View {
                         switch result {
                         case .success(_):
                             break
-                        case .failure(_):
-                            // TODO: handle error
-                            break
+                        case .failure(let error):
+                            self.error = error
                         }
                     }
                 }
@@ -61,9 +60,8 @@ struct EventControlView: View {
                         switch result {
                         case .success(_):
                             break
-                        case .failure(_):
-                            // TODO: handle error
-                            break
+                        case .failure(let error):
+                            self.error = error
                         }
                     }
                 }
@@ -72,9 +70,8 @@ struct EventControlView: View {
                         switch result {
                         case .success(_):
                             break
-                        case .failure(_):
-                            // TODO: handle error
-                            break
+                        case .failure(let error):
+                            self.error = error
                         }
                     }
                 } label: {
@@ -83,6 +80,7 @@ struct EventControlView: View {
 
             }
         }
+        .errorAlert(error: $error)
         .sheet(isPresented: $isSelectThemeShowing) {
             NavigationView {
                 SetThemeView(event: viewModel.event) { newTheme in
@@ -91,14 +89,14 @@ struct EventControlView: View {
                         switch result {
                         case .success(_):
                             break
-                        case .failure(_):
-                            // TODO: handle error
-                            break
+                        case .failure(let error):
+                            self.error = error
                         }
                     }
                 } cancel: {
                     isSelectThemeShowing = false
                 }
+                .errorAlert(error: $error)
             }
         }
         .loadingOverlay(isLoading: $viewModel.isLoading)

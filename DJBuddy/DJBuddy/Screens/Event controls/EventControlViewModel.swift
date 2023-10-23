@@ -36,18 +36,19 @@ final class EventControlViewModel: ObservableObject, Hashable {
         self.event = event
     }
 
-    func setTheme(to theme: SongTheme?, completion: @escaping (Result<Void, Never>) -> Void) {
+    func setTheme(to theme: SongTheme?, completion: @escaping (Result<Void, APIError>) -> Void) {
         isLoading = true
         // TODO: BE action
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
             self?.event.theme = theme
             self?.objectWillChange.send()
             completion(.success(()))
+//            completion(.failure(.unreachable))
             self?.isLoading = false
         }
     }
 
-    func setState(to state: EventState, completion: @escaping (Result<Void, Never>) -> Void) {
+    func setState(to state: EventState, completion: @escaping (Result<Void, APIError>) -> Void) {
         isLoading = true
         // TODO: BE action
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
@@ -58,7 +59,7 @@ final class EventControlViewModel: ObservableObject, Hashable {
         }
     }
 
-    func requestSong(completion: @escaping (Result<Void, Never>) -> Void) {
+    func requestSong(completion: @escaping (Result<Void, APIError>) -> Void) {
         guard let selectedSong else {
             // TODO: song error
             return
@@ -94,7 +95,7 @@ final class EventControlViewModel: ObservableObject, Hashable {
         event.requestedSongs.removeAll(where: { $0 == song })
     }
 
-    func decline(song: SongData, completion: @escaping (Result<Void, Never>) -> Void) {
+    func decline(song: SongData, completion: @escaping (Result<Void, APIError>) -> Void) {
         isLoading = true
         // TODO: remove song from BE
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
@@ -104,17 +105,18 @@ final class EventControlViewModel: ObservableObject, Hashable {
         }
     }
 
-    func accept(song: SongData, completion: @escaping (Result<Void, Never>) -> Void) {
+    func accept(song: SongData, completion: @escaping (Result<Void, APIError>) -> Void) {
         isLoading = true
         // TODO: give money to DJ
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) { [weak self] in
             self?.removeSongFromList(song)
-            completion(.success(()))
+            //completion(.success(()))
+            completion(.failure(.unreachable))
             self?.isLoading = false
         }
     }
 
-    func increasePrice(completion: @escaping (Result<Void, Never>) -> Void) {
+    func increasePrice(completion: @escaping (Result<Void, APIError>) -> Void) {
         guard let currentSong,
         let idx = event.requestedSongs.firstIndex(of: currentSong)
         else { return }
