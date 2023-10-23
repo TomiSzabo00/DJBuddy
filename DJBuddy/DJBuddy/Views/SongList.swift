@@ -11,15 +11,13 @@ struct SongList: View {
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var viewModel: EventControlViewModel
 
-    let songs: [SongData]
-
     var body: some View {
         List {
             Section {
-                if songs.isEmpty {
+                if viewModel.event.requestedSongs.isEmpty {
                     InfoView("There aren't any songs requested. Yet.", type: .info)
                 } else {
-                    ForEach(Array(songs.enumerated()), id: \.offset) { idx, song in
+                    ForEach(Array(viewModel.event.requestedSongs.enumerated()), id: \.offset) { idx, song in
                         SongRow(song, index: idx)
                             .onTapGesture {
                                 navigator.navigate(to: .songDetails(song, viewModel))
@@ -43,5 +41,5 @@ struct SongList: View {
 }
 
 #Preview {
-    SongList(songs: [])//SongData.PreviewData])
+    SongList()//SongData.PreviewData])
 }

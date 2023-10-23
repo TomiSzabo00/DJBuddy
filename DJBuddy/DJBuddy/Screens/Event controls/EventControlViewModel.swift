@@ -59,7 +59,7 @@ final class EventControlViewModel: ObservableObject, Hashable {
     }
 
     func requestSong(completion: @escaping (Result<Void, Never>) -> Void) {
-        guard var selectedSong else {
+        guard let selectedSong else {
             // TODO: song error
             return
         }
@@ -111,6 +111,23 @@ final class EventControlViewModel: ObservableObject, Hashable {
             self?.removeSongFromList(song)
             completion(.success(()))
             self?.isLoading = false
+        }
+    }
+
+    func increasePrice(completion: @escaping (Result<Void, Never>) -> Void) {
+        guard let currentSong,
+        let idx = event.requestedSongs.firstIndex(of: currentSong)
+        else { return }
+
+        isLoading = true
+
+        // TODO: BE action
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) { [weak self] in
+            guard let self else { return }
+            event.requestedSongs[idx].amount += selectedPrice
+            objectWillChange.send()
+            completion(.success(()))
+            isLoading = false
         }
     }
 

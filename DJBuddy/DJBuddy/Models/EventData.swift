@@ -46,10 +46,11 @@ class EventData: Hashable, Identifiable, ObservableObject {
     static var PreviewData: EventData {
         let date = Calendar.current.date(byAdding: .day, value: Int.random(in: 1...10), to: Date.now)!
         return EventData(name: "Event",
-                  dj: UserData.PreviewUser,
-                  location: AddressResult.PreviewData,
-                  date: date,
-                  requestedSongs: [SongData.PreviewData, SongData.PreviewData2]
+                         dj: UserData.PreviewUser,
+                         location: AddressResult.PreviewData,
+                         date: date,
+                         state: .inProgress,
+                         requestedSongs: [SongData.PreviewData, SongData.PreviewData2]
         )
     }
 }

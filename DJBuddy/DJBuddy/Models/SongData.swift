@@ -8,7 +8,7 @@
 import Foundation
 import MusicKit
 
-struct SongData: Identifiable, Hashable {
+class SongData: Identifiable, Hashable {
     let id = UUID()
     let title: String
     let artist: String

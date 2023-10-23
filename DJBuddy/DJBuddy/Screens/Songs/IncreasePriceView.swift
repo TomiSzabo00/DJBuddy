@@ -25,7 +25,16 @@ struct IncreasePriceView: View {
                 Spacer()
 
                 Button("Increase") {
-                    // TODO: increase
+                    isShowing = false
+                    viewModel.increasePrice { result in
+                        switch result {
+                        case .success(_):
+                            break
+                        case .failure(_):
+                            // TODO: handle error
+                            break
+                        }
+                    }
                 }
                 .buttonStyle(.largeProminent)
 

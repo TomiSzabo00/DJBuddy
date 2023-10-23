@@ -10,7 +10,7 @@ import SwiftUI
 struct SelectEventView: View {
     @EnvironmentObject var navigator: Navigator
 
-    let yourEvents: [EventData]
+    @State var yourEvents: [EventData]
 
     var showableEvents: [EventData] {
         yourEvents.filter { event in
