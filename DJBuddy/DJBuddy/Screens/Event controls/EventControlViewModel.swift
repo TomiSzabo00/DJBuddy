@@ -10,6 +10,8 @@ import Foundation
 final class EventControlViewModel: ObservableObject {
     @Published var event: EventData
     @Published var selectedSong: SongData? = nil
+    @Published var didAgree = false
+    @Published var selectedPrice: Double = 1
 
     init(event: EventData) {
         self.event = event
@@ -23,5 +25,24 @@ final class EventControlViewModel: ObservableObject {
     func setState(to state: EventState) {
         event.state = state
         objectWillChange.send()
+    }
+
+    func requestSong() {
+        guard let selectedSong else {
+            // TODO: song error
+            return
+        }
+
+        guard didAgree else {
+            // TODO: agree error
+            return
+        }
+
+        guard selectedPrice >= 1 else {
+            // TODO: price error
+            return
+        }
+
+        // TODO: request song
     }
 }
