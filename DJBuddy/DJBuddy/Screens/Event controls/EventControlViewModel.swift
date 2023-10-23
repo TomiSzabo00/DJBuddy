@@ -36,14 +36,26 @@ final class EventControlViewModel: ObservableObject, Hashable {
         self.event = event
     }
 
-    func setTheme(to theme: SongTheme?) {
-        event.theme = theme
-        objectWillChange.send()
+    func setTheme(to theme: SongTheme?, completion: @escaping (Result<Void, Never>) -> Void) {
+        isLoading = true
+        // TODO: BE action
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
+            self?.event.theme = theme
+            self?.objectWillChange.send()
+            completion(.success(()))
+            self?.isLoading = false
+        }
     }
 
-    func setState(to state: EventState) {
-        event.state = state
-        objectWillChange.send()
+    func setState(to state: EventState, completion: @escaping (Result<Void, Never>) -> Void) {
+        isLoading = true
+        // TODO: BE action
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
+            self?.event.state = state
+            self?.objectWillChange.send()
+            completion(.success(()))
+            self?.isLoading = false
+        }
     }
 
     func requestSong(completion: @escaping (Result<Void, Never>) -> Void) {
@@ -85,7 +97,7 @@ final class EventControlViewModel: ObservableObject, Hashable {
     func decline(song: SongData, completion: @escaping (Result<Void, Never>) -> Void) {
         isLoading = true
         // TODO: remove song from BE
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
             self?.removeSongFromList(song)
             completion(.success(()))
             self?.isLoading = false

@@ -35,16 +35,48 @@ struct EventControlView: View {
                     isSelectThemeShowing.toggle()
                 }
                 Button("Remove theme") {
-                    viewModel.setTheme(to: nil)
+                    viewModel.setTheme(to: nil) { result in
+                        switch result {
+                        case .success(_):
+                            break
+                        case .failure(_):
+                            // TODO: handle error
+                            break
+                        }
+                    }
                 }
                 Button("Pause requests") {
-                    viewModel.setState(to: .paused)
+                    viewModel.setState(to: .paused) { result in
+                        switch result {
+                        case .success(_):
+                            break
+                        case .failure(_):
+                            // TODO: handle error
+                            break
+                        }
+                    }
                 }
                 Button("Resume requests") {
-                    viewModel.setState(to: .inProgress)
+                    viewModel.setState(to: .inProgress) { result in
+                        switch result {
+                        case .success(_):
+                            break
+                        case .failure(_):
+                            // TODO: handle error
+                            break
+                        }
+                    }
                 }
                 Button(role: .destructive) {
-                    viewModel.setState(to: .ended)
+                    viewModel.setState(to: .ended) { result in
+                        switch result {
+                        case .success(_):
+                            break
+                        case .failure(_):
+                            // TODO: handle error
+                            break
+                        }
+                    }
                 } label: {
                     Text("End event")
                 }
@@ -54,13 +86,22 @@ struct EventControlView: View {
         .sheet(isPresented: $isSelectThemeShowing) {
             NavigationView {
                 SetThemeView(event: viewModel.event) { newTheme in
-                    viewModel.setTheme(to: newTheme)
                     isSelectThemeShowing = false
+                    viewModel.setTheme(to: newTheme) { result in
+                        switch result {
+                        case .success(_):
+                            break
+                        case .failure(_):
+                            // TODO: handle error
+                            break
+                        }
+                    }
                 } cancel: {
                     isSelectThemeShowing = false
                 }
             }
         }
+        .loadingOverlay(isLoading: $viewModel.isLoading)
     }
 
     init(event: EventData) {
