@@ -8,8 +8,8 @@
 import SwiftUI
 import MapKit
 
-struct MapView: View {
-    @StateObject private var viewModel = MapViewModel()
+struct MapSelectionView: View {
+    @StateObject private var viewModel = MapSelectionViewModel()
 
     @State var address: AddressResult
     let completion: (AddressResult) -> Void
@@ -45,5 +45,5 @@ struct MapView: View {
 }
 
 #Preview {
-    MapView(address: AddressResult(title: "Title", subtitle: "Subtitle")) { _ in }
+    MapSelectionView(address: AddressResult(title: "Title", subtitle: "Subtitle")) { _ in }
 }

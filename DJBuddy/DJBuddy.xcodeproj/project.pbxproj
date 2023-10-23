@@ -46,6 +46,8 @@
 		5573DC842AE65D940025751F /* IncreasePriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC832AE65D940025751F /* IncreasePriceView.swift */; };
 		5573DC862AE6CA350025751F /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC852AE6CA350025751F /* ErrorAlert.swift */; };
 		5573DC882AE6CB9C0025751F /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC872AE6CB9C0025751F /* Errors.swift */; };
+		5573DC8B2AE7040B0025751F /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC8A2AE7040B0025751F /* MapView.swift */; };
+		5573DC8F2AE70D840025751F /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC8E2AE70D840025751F /* MapViewModel.swift */; };
 		5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */; };
 		5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */; };
 		5584D40C2AC18D9900BC61F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5584D40B2AC18D9900BC61F6 /* Assets.xcassets */; };
@@ -60,10 +62,10 @@
 		55A583952AE14FEF00438049 /* AddressResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583942AE14FEF00438049 /* AddressResult.swift */; };
 		55A5839B2AE1506800438049 /* AddressSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5839A2AE1506800438049 /* AddressSelectionView.swift */; };
 		55A5839D2AE1507400438049 /* AddressSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5839C2AE1507400438049 /* AddressSelectionViewModel.swift */; };
-		55A5839F2AE150F400438049 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5839E2AE150F400438049 /* MapViewModel.swift */; };
+		55A5839F2AE150F400438049 /* MapSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5839E2AE150F400438049 /* MapSelectionViewModel.swift */; };
 		55A583A12AE1526100438049 /* ClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583A02AE1526100438049 /* ClearButton.swift */; };
 		55A583A32AE152DE00438049 /* AddressRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583A22AE152DE00438049 /* AddressRow.swift */; };
-		55A583A52AE1531E00438049 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583A42AE1531E00438049 /* MapView.swift */; };
+		55A583A52AE1531E00438049 /* MapSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583A42AE1531E00438049 /* MapSelectionView.swift */; };
 		55A583A72AE15D2500438049 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583A62AE15D2500438049 /* CreateEventView.swift */; };
 		55A583A92AE1704900438049 /* CreateEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583A82AE1704900438049 /* CreateEventViewModel.swift */; };
 		55A583AB2AE18C6600438049 /* UserHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583AA2AE18C6600438049 /* UserHomeView.swift */; };
@@ -110,6 +112,8 @@
 		5573DC832AE65D940025751F /* IncreasePriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncreasePriceView.swift; sourceTree = "<group>"; };
 		5573DC852AE6CA350025751F /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
 		5573DC872AE6CB9C0025751F /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		5573DC8A2AE7040B0025751F /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		5573DC8E2AE70D840025751F /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		5584D4042AC18D9700BC61F6 /* DJBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJBuddyApp.swift; sourceTree = "<group>"; };
 		5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavyBackgroundView.swift; sourceTree = "<group>"; };
@@ -125,10 +129,10 @@
 		55A583942AE14FEF00438049 /* AddressResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressResult.swift; sourceTree = "<group>"; };
 		55A5839A2AE1506800438049 /* AddressSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSelectionView.swift; sourceTree = "<group>"; };
 		55A5839C2AE1507400438049 /* AddressSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSelectionViewModel.swift; sourceTree = "<group>"; };
-		55A5839E2AE150F400438049 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		55A5839E2AE150F400438049 /* MapSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSelectionViewModel.swift; sourceTree = "<group>"; };
 		55A583A02AE1526100438049 /* ClearButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearButton.swift; sourceTree = "<group>"; };
 		55A583A22AE152DE00438049 /* AddressRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRow.swift; sourceTree = "<group>"; };
-		55A583A42AE1531E00438049 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		55A583A42AE1531E00438049 /* MapSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSelectionView.swift; sourceTree = "<group>"; };
 		55A583A62AE15D2500438049 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
 		55A583A82AE1704900438049 /* CreateEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewModel.swift; sourceTree = "<group>"; };
 		55A583AA2AE18C6600438049 /* UserHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeView.swift; sourceTree = "<group>"; };
@@ -186,6 +190,7 @@
 		552E86002AD472CC006D5E86 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				5573DC892AE703FC0025751F /* Map */,
 				5573DC702AE30AF90025751F /* Songs */,
 				5573DC5A2AE1D32A0025751F /* Event controls */,
 				55A583992AE1504E00438049 /* Event creation */,
@@ -237,6 +242,15 @@
 				5573DC832AE65D940025751F /* IncreasePriceView.swift */,
 			);
 			path = Songs;
+			sourceTree = "<group>";
+		};
+		5573DC892AE703FC0025751F /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				5573DC8A2AE7040B0025751F /* MapView.swift */,
+				5573DC8E2AE70D840025751F /* MapViewModel.swift */,
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 		5584D3FB2AC18D9700BC61F6 = {
@@ -350,8 +364,8 @@
 			children = (
 				55A5839A2AE1506800438049 /* AddressSelectionView.swift */,
 				55A5839C2AE1507400438049 /* AddressSelectionViewModel.swift */,
-				55A5839E2AE150F400438049 /* MapViewModel.swift */,
-				55A583A42AE1531E00438049 /* MapView.swift */,
+				55A5839E2AE150F400438049 /* MapSelectionViewModel.swift */,
+				55A583A42AE1531E00438049 /* MapSelectionView.swift */,
 				55A583A62AE15D2500438049 /* CreateEventView.swift */,
 				55A583A82AE1704900438049 /* CreateEventViewModel.swift */,
 			);
@@ -445,7 +459,7 @@
 				552E86052AD476C9006D5E86 /* CircleButton.swift in Sources */,
 				552E85F02AD3F85C006D5E86 /* MenuButtonType.swift in Sources */,
 				5573DC882AE6CB9C0025751F /* Errors.swift in Sources */,
-				55A583A52AE1531E00438049 /* MapView.swift in Sources */,
+				55A583A52AE1531E00438049 /* MapSelectionView.swift in Sources */,
 				5584D41A2AC1AEB700BC61F6 /* LargeSecondaryButtonStyle.swift in Sources */,
 				5573DC5C2AE1D36F0025751F /* EventControlView.swift in Sources */,
 				552E85F82AD43777006D5E86 /* EventList.swift in Sources */,
@@ -465,6 +479,7 @@
 				5573DC652AE2AF3B0025751F /* SongData.swift in Sources */,
 				5573DC762AE423F10025751F /* UserEventView.swift in Sources */,
 				552E85F22AD3FA4D006D5E86 /* MenuButton.swift in Sources */,
+				5573DC8B2AE7040B0025751F /* MapView.swift in Sources */,
 				5573DC592AE19DC50025751F /* EventData.swift in Sources */,
 				552E86072AD47BD9006D5E86 /* NavigationBarModifier.swift in Sources */,
 				5573DC692AE2F2B30025751F /* MainMenuViewModel.swift in Sources */,
@@ -475,12 +490,13 @@
 				5584D42A2AC21B2D00BC61F6 /* InputView.swift in Sources */,
 				55A583952AE14FEF00438049 /* AddressResult.swift in Sources */,
 				5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */,
-				55A5839F2AE150F400438049 /* MapViewModel.swift in Sources */,
+				55A5839F2AE150F400438049 /* MapSelectionViewModel.swift in Sources */,
 				552E86032AD47336006D5E86 /* ProfileView.swift in Sources */,
 				552E85E92AD2E745006D5E86 /* BackgroundColor.swift in Sources */,
 				552E85EE2AD3F78A006D5E86 /* SideMenu.swift in Sources */,
 				5573DC782AE427800025751F /* RequestSongView.swift in Sources */,
 				55A583A12AE1526100438049 /* ClearButton.swift in Sources */,
+				5573DC8F2AE70D840025751F /* MapViewModel.swift in Sources */,
 				55A5839B2AE1506800438049 /* AddressSelectionView.swift in Sources */,
 				5573DC822AE54F410025751F /* SimpleSongRow.swift in Sources */,
 				55A583A72AE15D2500438049 /* CreateEventView.swift in Sources */,
@@ -624,6 +640,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = Please.;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "To display on the map.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To display on the map.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -654,6 +672,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = Please.;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "To display on the map.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To display on the map.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

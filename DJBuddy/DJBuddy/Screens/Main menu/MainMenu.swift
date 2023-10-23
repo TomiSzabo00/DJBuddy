@@ -21,7 +21,8 @@ struct MainMenu: View {
             } else {
                 UserHomeView(events: viewModel.yourEvents, joinAction: viewModel.join(event:), leaveAction: viewModel.leave(event:)).tag(0)
             }
-            Text("Map").tag(1)
+
+            MapView().tag(1)
         }
         .onAppear {
             if viewModel.yourEvents.isEmpty {

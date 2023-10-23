@@ -47,7 +47,7 @@ struct AddressSelectionView: View {
 
                 List(self.viewModel.results) { address in
                     NavigationLink {
-                        MapView(address: address, completion: completion)
+                        MapSelectionView(address: address, completion: completion)
                     } label: {
                         AddressRow(address: address)
                     }

@@ -9,7 +9,7 @@ import Foundation
 import MapKit
 import SwiftUI
 
-final class MapViewModel: ObservableObject {
+final class MapSelectionViewModel: ObservableObject {
     @Published var region: MapCameraPosition = .automatic
     @Published private(set) var annotationItems: [AddressResult] = []
 
