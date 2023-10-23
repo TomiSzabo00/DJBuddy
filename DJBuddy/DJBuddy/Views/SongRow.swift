@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SongRow: View {
-    let song: SongData
+    @StateObject var song: SongData
     let index: Int
     let height: CGFloat
 
@@ -54,7 +54,7 @@ struct SongRow: View {
     }
 
     init(_ song: SongData, index: Int, height: CGFloat = 70) {
-        self.song = song
+        self._song = StateObject(wrappedValue: song)
         self.index = index
         self.height = height
     }

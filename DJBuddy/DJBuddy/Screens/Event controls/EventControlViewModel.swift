@@ -125,10 +125,15 @@ final class EventControlViewModel: ObservableObject, Hashable {
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) { [weak self] in
             guard let self else { return }
             event.requestedSongs[idx].amount += selectedPrice
+            sortSongs(&event.requestedSongs)
             objectWillChange.send()
             completion(.success(()))
             isLoading = false
         }
+    }
+
+    func sortSongs(_ songs: inout [SongData]) {
+        songs.sort(by: { $0.amount > $1.amount })
     }
 
     static func == (lhs: EventControlViewModel, rhs: EventControlViewModel) -> Bool {

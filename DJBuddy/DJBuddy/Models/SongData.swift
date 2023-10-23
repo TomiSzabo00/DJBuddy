@@ -8,11 +8,10 @@
 import Foundation
 import MusicKit
 
-class SongData: Identifiable, Hashable {
-    let id = UUID()
+class SongData: Identifiable, Hashable, ObservableObject {
     let title: String
     let artist: String
-    var amount: Double
+    @Published var amount: Double
     let albumArtUrl: String
 
     static func == (lhs: SongData, rhs: SongData) -> Bool {

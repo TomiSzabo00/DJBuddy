@@ -20,7 +20,7 @@ struct UserEventView: View {
             }
             .padding()
 
-            SongList()
+            SongList(songs: viewModel.event.requestedSongs)
                 .environmentObject(navigator)
                 .environmentObject(viewModel)
 

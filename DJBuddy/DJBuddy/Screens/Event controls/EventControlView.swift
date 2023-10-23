@@ -24,7 +24,7 @@ struct EventControlView: View {
             }
             .padding()
 
-            SongList()
+            SongList(songs: viewModel.event.requestedSongs)
                 .environmentObject(navigator)
                 .environmentObject(viewModel)
         }
