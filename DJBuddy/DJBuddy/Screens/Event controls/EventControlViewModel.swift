@@ -8,19 +8,25 @@
 import Foundation
 
 final class EventControlViewModel: ObservableObject, Hashable {
-    static func == (lhs: EventControlViewModel, rhs: EventControlViewModel) -> Bool {
-        lhs.event == rhs.event
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(event)
-    }
-
     @Published var event: EventData
     @Published var selectedSong: SongData? = nil
     @Published var didAgree = false
     @Published var selectedPrice: Double = 1
     @Published var isLoading = false
+    var currentSong: SongData? = nil
+
+    var shouldSHowPriceWarining: Bool {
+        guard let song = currentSong,
+              let idx = event.requestedSongs.firstIndex(of: song),
+              idx > 0
+        else { return false }
+//        guard let song = currentSong else { print("guard 1"); return false }
+//        guard let idx = event.requestedSongs.firstIndex(of: song) else { print("guard 2"); return false }
+//        guard idx > 0 else { print("guard 3"); return false }
+        let nextAmount = event.requestedSongs[idx - 1].amount
+//        print("\(song.amount) + \(selectedPrice) >? \(nextAmount)")
+        return song.amount + selectedPrice < nextAmount
+    }
 
     init(event: EventData) {
         self.event = event
@@ -66,5 +72,13 @@ final class EventControlViewModel: ObservableObject, Hashable {
             selectedSong.amount = selectedPrice
             event.requestedSongs.append(selectedSong)
         }
+    }
+
+    static func == (lhs: EventControlViewModel, rhs: EventControlViewModel) -> Bool {
+        lhs.event == rhs.event
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(event)
     }
 }

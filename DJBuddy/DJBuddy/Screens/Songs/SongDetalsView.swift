@@ -71,10 +71,13 @@ struct SongDetalsView: View {
                 }
             }
         }
+        .onAppear {
+            viewModel.currentSong = song
+        }
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: "Song", navigator: navigator, leadingButton: .back)
         .sheet(isPresented: $isIncPriceShowing) {
-            IncreasePriceView(viewModel: viewModel, isShowing: $isIncPriceShowing)
+            IncreasePriceView(song: song, viewModel: viewModel, isShowing: $isIncPriceShowing)
         }
     }
 }
