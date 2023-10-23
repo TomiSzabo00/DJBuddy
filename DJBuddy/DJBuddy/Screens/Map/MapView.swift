@@ -13,6 +13,11 @@ struct MapView: View {
     
     var body: some View {
         Map(position: $viewModel.region) {
+            ForEach(viewModel.annotationItems) { event in
+                Annotation("", coordinate: event.location.coordinate) {
+                    EventAnnotation(event: event)
+                }
+            }
             UserAnnotation()
         }
         .mapStyle(.standard(elevation: .realistic, pointsOfInterest: .all))

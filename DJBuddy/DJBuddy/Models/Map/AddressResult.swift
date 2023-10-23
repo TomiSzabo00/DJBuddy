@@ -35,4 +35,12 @@ struct AddressResult: Identifiable {
     static var PreviewData: AddressResult {
         AddressResult(title: "Place name", subtitle: "Road name 123, Hungary")
     }
+
+    static var MapPreviewData: AddressResult {
+        AddressResult(title: "Stifler Bar", subtitle: "Budapest, Erzsébet krt. 19, 1073", latitude: 47.500031, longitude: 19.069441)
+    }
+
+    static var MapPreviewData2: AddressResult {
+        AddressResult(title: "Akvarium Klub", subtitle: "Budapest, Erzsébet tér 12, 1051", latitude: 47.498058, longitude: 19.054211)
+    }
 }

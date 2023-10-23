@@ -48,6 +48,7 @@
 		5573DC882AE6CB9C0025751F /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC872AE6CB9C0025751F /* Errors.swift */; };
 		5573DC8B2AE7040B0025751F /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC8A2AE7040B0025751F /* MapView.swift */; };
 		5573DC8F2AE70D840025751F /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC8E2AE70D840025751F /* MapViewModel.swift */; };
+		5573DC912AE71C380025751F /* EventAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC902AE71C380025751F /* EventAnnotation.swift */; };
 		5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */; };
 		5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */; };
 		5584D40C2AC18D9900BC61F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5584D40B2AC18D9900BC61F6 /* Assets.xcassets */; };
@@ -114,6 +115,7 @@
 		5573DC872AE6CB9C0025751F /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		5573DC8A2AE7040B0025751F /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		5573DC8E2AE70D840025751F /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		5573DC902AE71C380025751F /* EventAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventAnnotation.swift; sourceTree = "<group>"; };
 		5584D4042AC18D9700BC61F6 /* DJBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5584D4072AC18D9700BC61F6 /* DJBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJBuddyApp.swift; sourceTree = "<group>"; };
 		5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavyBackgroundView.swift; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 				5573DC602AE2AAE50025751F /* InfoView.swift */,
 				5573DC662AE2B7F30025751F /* SongRow.swift */,
 				5573DC812AE54F410025751F /* SimpleSongRow.swift */,
+				5573DC902AE71C380025751F /* EventAnnotation.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				5573DC8F2AE70D840025751F /* MapViewModel.swift in Sources */,
 				55A5839B2AE1506800438049 /* AddressSelectionView.swift in Sources */,
 				5573DC822AE54F410025751F /* SimpleSongRow.swift in Sources */,
+				5573DC912AE71C380025751F /* EventAnnotation.swift in Sources */,
 				55A583A72AE15D2500438049 /* CreateEventView.swift in Sources */,
 				55A583A92AE1704900438049 /* CreateEventViewModel.swift in Sources */,
 				552E85E62AD2E605006D5E86 /* CustomColors.swift in Sources */,

@@ -53,6 +53,28 @@ class EventData: Hashable, Identifiable, ObservableObject {
                          requestedSongs: [SongData.PreviewData, SongData.PreviewData2]
         )
     }
+
+    static var MapPreviewData: EventData {
+        let date = Calendar.current.date(byAdding: .day, value: Int.random(in: 1...10), to: Date.now)!
+        return EventData(name: "Event",
+                         dj: UserData.PreviewUser,
+                         location: AddressResult.MapPreviewData,
+                         date: date,
+                         state: .inProgress,
+                         requestedSongs: [SongData.PreviewData, SongData.PreviewData2]
+        )
+    }
+
+    static var MapPreviewData2: EventData {
+        let date = Calendar.current.date(byAdding: .day, value: Int.random(in: 1...10), to: Date.now)!
+        return EventData(name: "Event",
+                         dj: UserData.PreviewUser,
+                         location: AddressResult.MapPreviewData2,
+                         date: date,
+                         state: .inProgress,
+                         requestedSongs: [SongData.PreviewData, SongData.PreviewData2]
+        )
+    }
 }
 
 enum EventState {

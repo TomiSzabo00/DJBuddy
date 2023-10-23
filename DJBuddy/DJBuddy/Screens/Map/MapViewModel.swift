@@ -11,6 +11,7 @@ import SwiftUI
 
 final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var region: MapCameraPosition = .automatic
+    @Published private(set) var annotationItems: [EventData] = [EventData.MapPreviewData, EventData.MapPreviewData2]
 
     var locationManager: CLLocationManager?
 
