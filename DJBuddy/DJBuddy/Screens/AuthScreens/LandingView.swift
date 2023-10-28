@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LandingView: View {
-    @StateObject private var viewModel = AuthViewModel()
+    @EnvironmentObject private var viewModel: AuthViewModel
 
     var body: some View {
         GeometryReader { geo in
@@ -28,6 +28,7 @@ struct LandingView: View {
             .background(Color.black)
             .animation(.interpolatingSpring(stiffness: 110, damping: 10), value: viewModel.pageState)
         }
+        .errorAlert(error: $viewModel.error)
     }
 
     @ViewBuilder private var landingContent: some View {

@@ -10,11 +10,6 @@ import SwiftUI
 struct StateManager: View {
     @StateObject private var viewModel = AuthViewModel()
     @StateObject private var navigator = Navigator()
-    @StateObject private var exampleUser = UserData(username: "exampleUser",
-                                                    email: "example@email.com",
-                                                    firstName: "Example",
-                                                    lastName: "User",
-                                                    type: .user)
     @StateObject private var mainMenuViewModel = MainMenuViewModel()
 
     var body: some View {
@@ -43,11 +38,7 @@ struct StateManager: View {
                     }
             } else {
                 LandingView()
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
-                            self.viewModel.currentUser = exampleUser
-                        }
-                    }
+                    .environmentObject(viewModel)
             }
         }
         .environmentObject(navigator)

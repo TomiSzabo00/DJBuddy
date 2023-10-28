@@ -15,14 +15,23 @@ final class AuthViewModel: ObservableObject {
     @Published var passwordText: String = ""
     @Published var passwordAgainText: String = ""
     @Published var artistNameText: String = ""
+
     @Published var currentUser: UserData? = nil
+    @Published var error: Error? = nil
 
     func navigate(to state: LandingPageEnum) {
         pageState = state
     }
 
     func login() {
-
+        API.login(with: usernameText, and: passwordText) { [weak self] response in
+            switch response {
+            case .success(let user):
+                self?.currentUser = user
+            case .failure(let error):
+                self?.error = error
+            }
+        }
     }
 
     func signUp() {

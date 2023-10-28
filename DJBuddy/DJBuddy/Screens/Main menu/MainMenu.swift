@@ -16,7 +16,7 @@ struct MainMenu: View {
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            if user.type == .dj {
+            if user.userType == .dj {
                 DJHomeView(yourEvents: viewModel.yourEvents[.yourEvents] ?? []).tag(0)
             } else {
                 UserHomeView(events: viewModel.yourEvents, joinAction: viewModel.join(event:), leaveAction: viewModel.leave(event:)).tag(0)
@@ -31,15 +31,15 @@ struct MainMenu: View {
         }
         .overlay(alignment: .bottom) {
             TabViewSelector(selected: $selectedTab) {
-                if user.type == .dj {
+                if user.userType == .dj {
                     navigator.navigate(to: .createEvent)
-                } else if user.type == .user {
+                } else if user.userType == .user {
                     navigator.navigate(to: .selectEvent(viewModel.yourEvents[.yourEvents] ?? []))
                 }
             }
         }
         .ignoresSafeArea()
-        .navBarWithTitle(title: "", navigator: navigator, leadingButton: .menu, trailingButton: .profile(user.name.firstName))
+        .navBarWithTitle(title: "", navigator: navigator, leadingButton: .menu, trailingButton: .profile(user.firstName))
         .loadingOverlay(isLoading: $viewModel.isLoading)
     }
 }

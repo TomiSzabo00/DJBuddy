@@ -9,11 +9,14 @@ import Foundation
 
 enum APIError: LocalizedError {
     case unreachable
+    case wrongEmailOrPassword
 
     var errorDescription: String? {
         switch self {
         case .unreachable:
             return "Unreachable"
+        case .wrongEmailOrPassword:
+            return "Incorrect login"
         }
     }
 
@@ -21,6 +24,8 @@ enum APIError: LocalizedError {
         switch self {
         case .unreachable:
             return "Couldn't reach the server. Try again later."
+        case .wrongEmailOrPassword:
+            return "The email and password combination was incorrect."
         }
     }
 }

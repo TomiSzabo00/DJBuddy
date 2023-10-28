@@ -30,7 +30,7 @@ struct ProfileView: View {
                 )
                 HStack {
                     VStack(alignment: .leading) {
-                        Text(user.name.fullName)
+                        Text(user.fullName)
                             .font(.system(size: 48))
                             .fontWeight(.bold)
                         Text(verbatim: user.email)

@@ -7,31 +7,35 @@
 
 import Foundation
 
-final class UserData: Identifiable, ObservableObject, Hashable {
-    static func == (lhs: UserData, rhs: UserData) -> Bool {
-        lhs.id == rhs.id
-    }
-
-    let id = UUID()
+final class UserData: Identifiable, ObservableObject, Hashable, Decodable {
+    let id: String
     let username: String
     let email: String
-    let name: NameData
-    let type: UserTypeEnum
+    let firstName: String
+    let lastName: String
+    let type: String
     var profilePicUrl: String
 
-    init(username: String, email: String, name: NameData, type: UserTypeEnum, profilePicUrl: String = "") {
-        self.username = username
-        self.email = email
-        self.name = name
-        self.type = type
-        self.profilePicUrl = profilePicUrl
+    var fullName: String {
+        "\(firstName) \(lastName)"
     }
 
-    init(username: String, email: String, firstName: String, lastName: String, type: UserTypeEnum, profilePicUrl: String = "") {
+    var userType: UserTypeEnum {
+        UserTypeEnum(rawValue: type) ?? .user
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case id = "uuid"
+        case username, email, firstName, lastName, type, profilePicUrl
+    }
+
+    init(id: String, username: String, email: String, firstName: String, lastName: String, type: UserTypeEnum, profilePicUrl: String = "") {
+        self.id = id
         self.username = username
         self.email = email
-        self.name = NameData(firstName: firstName, lastName: lastName)
-        self.type  = type
+        self.firstName = firstName
+        self.lastName = lastName
+        self.type = type.rawValue
         self.profilePicUrl = profilePicUrl
     }
 
@@ -39,8 +43,13 @@ final class UserData: Identifiable, ObservableObject, Hashable {
         hasher.combine(id)
     }
 
+    static func == (lhs: UserData, rhs: UserData) -> Bool {
+        lhs.id == rhs.id
+    }
+
     static var PreviewUser: UserData {
-        UserData(username: "dj name",
+        UserData(id: "example",
+                 username: "dj name",
                  email: "example@email.com",
                  firstName: "Example",
                  lastName: "User",
@@ -48,19 +57,11 @@ final class UserData: Identifiable, ObservableObject, Hashable {
     }
 
     static var EmptyUser: UserData {
-        UserData(username: "",
+        UserData(id: "",
+                 username: "",
                  email: "",
                  firstName: "",
                  lastName: "",
                  type: .user)
-    }
-}
-
-struct NameData: Hashable {
-    let firstName: String
-    let lastName: String
-
-    var fullName: String {
-        "\(firstName) \(lastName)"
     }
 }
