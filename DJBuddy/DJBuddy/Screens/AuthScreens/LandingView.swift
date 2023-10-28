@@ -29,6 +29,7 @@ struct LandingView: View {
             .animation(.interpolatingSpring(stiffness: 110, damping: 10), value: viewModel.pageState)
         }
         .errorAlert(error: $viewModel.error)
+        .loadingOverlay(isLoading: $viewModel.isLoading)
     }
 
     @ViewBuilder private var landingContent: some View {
@@ -73,7 +74,7 @@ struct LandingView: View {
 
             VStack(alignment: .leading, spacing: 20) {
                 Group {
-                    PlaceholderTextField(placeholder: "Email", text: $viewModel.usernameText)
+                    PlaceholderTextField(placeholder: "Email", text: $viewModel.emailText)
                     PlaceholderTextField(placeholder: "Password", text: $viewModel.passwordText, isPassword: true)
                 }
                 .foregroundStyle(Color.black)
@@ -118,7 +119,9 @@ struct LandingView: View {
                         if viewModel.userType == .dj {
                             PlaceholderTextField(placeholder: "Artist name", text: $viewModel.artistNameText)
                         }
-                        PlaceholderTextField(placeholder: "Email", text: $viewModel.usernameText)
+                        PlaceholderTextField(placeholder: "First name", text: $viewModel.firstNameText)
+                        PlaceholderTextField(placeholder: "Last name", text: $viewModel.lastNameText)
+                        PlaceholderTextField(placeholder: "Email", text: $viewModel.emailText)
                         PlaceholderTextField(placeholder: "Password", text: $viewModel.passwordText, isPassword: true)
                         PlaceholderTextField(placeholder: "Confirm Password", text: $viewModel.passwordAgainText, isPassword: true)
                     }

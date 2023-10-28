@@ -41,6 +41,7 @@ struct StateManager: View {
                     .environmentObject(viewModel)
             }
         }
+        .animation(.default, value: viewModel.currentUser)
         .environmentObject(navigator)
         .environmentObject(viewModel.currentUser ?? UserData.EmptyUser)
         .tint(.accent)

@@ -37,10 +37,18 @@ enum FormError: LocalizedError {
     case dateMissing
     case addressMissing
     case songMissing
+    case emailMissing
+    case passwordsDontMatch
+    case passwordMissing
+    case artistNameMissing
+    case firstNameMissing
+    case lastNameMissing
 
     var errorDescription: String? {
-        guard self != .acceptMissing else {
+        if self == .acceptMissing {
             return "Terms and Conditions"
+        } else if self == .passwordsDontMatch {
+            return "Passwords don't match"
         }
         let prefix = {
             switch self {
@@ -56,6 +64,18 @@ enum FormError: LocalizedError {
                 return "Address"
             case .songMissing:
                 return "Song"
+            case .emailMissing:
+                return "Email address"
+            case .passwordsDontMatch:
+                return ""
+            case .passwordMissing:
+                return "Password"
+            case .artistNameMissing:
+                return "Artist (DJ) name"
+            case .firstNameMissing:
+                return "First name"
+            case .lastNameMissing:
+                return "Last name"
             }
         }()
 
@@ -66,6 +86,8 @@ enum FormError: LocalizedError {
         switch self {
         case .acceptMissing:
             "You have to accept our Terms and Conditions."
+        case .passwordsDontMatch:
+            "The two passwords don't match. Please correct them."
         default:
             "Please provide it."
         }

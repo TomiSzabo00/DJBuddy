@@ -11,25 +11,34 @@ import SwiftUI
 final class AuthViewModel: ObservableObject {
     @Published private(set) var pageState: LandingPageEnum = .landingPage
     @Published var userType: UserTypeEnum = .user
-    @Published var usernameText: String = ""
+    @Published var emailText: String = ""
     @Published var passwordText: String = ""
     @Published var passwordAgainText: String = ""
     @Published var artistNameText: String = ""
+    @Published var firstNameText: String = ""
+    @Published var lastNameText: String = ""
 
     @Published var currentUser: UserData? = nil
     @Published var error: Error? = nil
+    @Published var isLoading = false
 
     func navigate(to state: LandingPageEnum) {
         pageState = state
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-        usernameText.removeAll()
+        emailText.removeAll()
         passwordText.removeAll()
         passwordAgainText.removeAll()
         artistNameText.removeAll()
     }
 
     func login() {
-        API.login(with: usernameText, and: passwordText) { [weak self] response in
+        guard checkAllLoginFieldsAreValid() else { return }
+
+        isLoading = true
+
+        API.login(with: emailText, and: passwordText) { [weak self] response in
+            self?.isLoading = false
+
             switch response {
             case .success(let user):
                 self?.currentUser = user
@@ -40,6 +49,74 @@ final class AuthViewModel: ObservableObject {
     }
 
     func signUp() {
-        
+        guard checkAllRegisterFieldsAreValid() else { return }
+
+        isLoading = true
+
+        API.register(email: emailText,
+                     password: passwordText,
+                     firstName: firstNameText,
+                     lastName: lastNameText,
+                     artistName: artistNameText,
+                     type: userType.rawValue) { [weak self] response in
+            self?.isLoading = false
+
+            switch response {
+            case .success(let user):
+                self?.currentUser = user
+            case .failure(let error):
+                self?.error = error
+            }
+        }
+    }
+
+    func checkAllLoginFieldsAreValid() -> Bool {
+        guard !emailText.isEmpty else {
+            error = FormError.emailMissing
+            return false
+        }
+
+        guard !passwordText.isEmpty else {
+            error = FormError.passwordMissing
+            return false
+        }
+
+        return true
+    }
+
+    func checkAllRegisterFieldsAreValid() -> Bool {
+        if userType == .dj {
+            guard !artistNameText.isEmpty else {
+                error = FormError.artistNameMissing
+                return false
+            }
+        }
+
+        guard !emailText.isEmpty else {
+            error = FormError.emailMissing
+            return false
+        }
+
+        guard !firstNameText.isEmpty else {
+            error = FormError.firstNameMissing
+            return false
+        }
+
+        guard !lastNameText.isEmpty else {
+            error = FormError.lastNameMissing
+            return false
+        }
+
+        guard !passwordText.isEmpty else {
+            error = FormError.passwordMissing
+            return false
+        }
+
+        guard passwordText == passwordAgainText else {
+            error = FormError.passwordsDontMatch
+            return false
+        }
+
+        return true
     }
 }
