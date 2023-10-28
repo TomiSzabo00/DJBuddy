@@ -72,7 +72,7 @@ struct LandingView: View {
 
             VStack(alignment: .leading, spacing: 20) {
                 Group {
-                    PlaceholderTextField(placeholder: "Username", text: $viewModel.usernameText)
+                    PlaceholderTextField(placeholder: "Email", text: $viewModel.usernameText)
                     PlaceholderTextField(placeholder: "Password", text: $viewModel.passwordText, isPassword: true)
                 }
                 .foregroundStyle(Color.black)
@@ -111,23 +111,31 @@ struct LandingView: View {
 
             Spacer()
 
-            VStack(alignment: .leading, spacing: 20) {
-                Group {
-                    PlaceholderTextField(placeholder: "Username", text: $viewModel.usernameText)
-                    PlaceholderTextField(placeholder: "Password", text: $viewModel.passwordText, isPassword: true)
-                    PlaceholderTextField(placeholder: "Confirm Password", text: $viewModel.passwordAgainText, isPassword: true)
-                }
-                .foregroundStyle(Color.black)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    Group {
+                        if viewModel.userType == .dj {
+                            PlaceholderTextField(placeholder: "Artist name", text: $viewModel.artistNameText)
+                        }
+                        PlaceholderTextField(placeholder: "Email", text: $viewModel.usernameText)
+                        PlaceholderTextField(placeholder: "Password", text: $viewModel.passwordText, isPassword: true)
+                        PlaceholderTextField(placeholder: "Confirm Password", text: $viewModel.passwordAgainText, isPassword: true)
+                    }
+                    .foregroundStyle(Color.black)
 
-                Button("Sign Up") {
-                    viewModel.signUp()
+                    Button("Sign Up") {
+                        viewModel.signUp()
+                    }
+                    .buttonStyle(.largeProminent)
                 }
-                .buttonStyle(.largeProminent)
+                .padding(.bottom, 50)
             }
-            .padding(.bottom, 50)
+            .frame(maxHeight: 400)
+            .scrollIndicators(.hidden)
         }
         .padding()
         .foregroundStyle(Color.white)
+        .edgesIgnoringSafeArea(.bottom)
     }
 
     init() {

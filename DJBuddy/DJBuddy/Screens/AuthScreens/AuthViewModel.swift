@@ -14,6 +14,7 @@ final class AuthViewModel: ObservableObject {
     @Published var usernameText: String = ""
     @Published var passwordText: String = ""
     @Published var passwordAgainText: String = ""
+    @Published var artistNameText: String = ""
 
     func navigate(to state: LandingPageEnum) {
         pageState = state
