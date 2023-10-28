@@ -11,7 +11,7 @@ struct PlaceholderTextField: View {
     let placeholder: String
     @Binding var text: String
     @State var showPlaceholder: Bool = true
-    @State var isSecure: Bool = false
+    @State var isSecure: Bool = true
     let isPasswordField: Bool
 
     @FocusState private var inFocus: Bool

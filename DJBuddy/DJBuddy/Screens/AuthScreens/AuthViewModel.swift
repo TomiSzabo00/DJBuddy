@@ -21,6 +21,11 @@ final class AuthViewModel: ObservableObject {
 
     func navigate(to state: LandingPageEnum) {
         pageState = state
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        usernameText.removeAll()
+        passwordText.removeAll()
+        passwordAgainText.removeAll()
+        artistNameText.removeAll()
     }
 
     func login() {
