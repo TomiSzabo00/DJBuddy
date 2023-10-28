@@ -46,6 +46,14 @@ final class UserData: Identifiable, ObservableObject, Hashable {
                  lastName: "User",
                  type: .dj)
     }
+
+    static var EmptyUser: UserData {
+        UserData(username: "",
+                 email: "",
+                 firstName: "",
+                 lastName: "",
+                 type: .user)
+    }
 }
 
 struct NameData: Hashable {

@@ -41,42 +41,9 @@ struct DJBuddyApp: App {
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = .systemRed
     }
 
-    @StateObject private var navigator = Navigator()
-    @StateObject private var exampleUser = UserData(username: "exampleUser",
-                                                    email: "example@email.com",
-                                                    firstName: "Example",
-                                                    lastName: "User",
-                                                    type: .user)
-    @StateObject private var mainMenuViewModel = MainMenuViewModel()
-
     var body: some Scene {
         WindowGroup {
-            NavigationStack(path: $navigator.path) {
-                MainMenu(viewModel: mainMenuViewModel)
-                    .navigationDestination(for: NavigationDestination.self) { destination in
-                        switch destination {
-                        case let .requestSong(eventData):
-                            RequestSongView(viewModel: EventControlViewModel(event: eventData))
-                        case .profile:
-                            ProfileView()
-                        case .createEvent:
-                            CreateEventView() { newEvent in
-                                mainMenuViewModel.join(event: newEvent)
-                            }
-                        case let .selectEvent(eventList):
-                            SelectEventView(yourEvents: eventList)
-                        case let .eventControl(event):
-                            EventControlView(event: event)
-                        case let .userEventView(event):
-                            UserEventView(event: event)
-                        case let .songDetails(song, vm):
-                            SongDetalsView(song: song, viewModel: vm)
-                        }
-                    }
-            }
-            .environmentObject(navigator)
-            .environmentObject(exampleUser)
-            .tint(.accent)
+            StateManager()
         }
     }
 }
