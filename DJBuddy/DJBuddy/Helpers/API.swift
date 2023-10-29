@@ -190,7 +190,7 @@ final class API {
 
             do {
                 let responseObject = try JSONDecoder().decode([EventData_Database].self, from: data)
-                let events = [EventData]() // TODO: fill this array
+                let events = responseObject.map { EventData(decodable: $0) }
                 DispatchQueue.main.async {
                     completion(.success(events))
                 }

@@ -13,6 +13,8 @@ class EventData_Database: Decodable {
     let dj: UserData_Database
     let latitude: CGFloat
     let longitude: CGFloat
+    let address_title: String
+    let address_subtitle: String
     let date: String
     let state: String
     let theme: String
@@ -24,6 +26,8 @@ class EventData_Database: Decodable {
         case dj
         case latitude
         case longitude
+        case address_title
+        case address_subtitle
         case date
         case state
         case theme
@@ -57,6 +61,16 @@ class EventData: Hashable, Identifiable, ObservableObject {
         self.state = state
         self.requestedSongs = requestedSongs
         self.theme = theme
+    }
+
+    init(decodable: EventData_Database) {
+        self.name = decodable.name
+        self.dj = UserData(decodable: decodable.dj)
+        self.location = AddressResult(title: decodable.address_title, subtitle: decodable.address_subtitle, latitude: decodable.latitude, longitude: decodable.longitude)
+        self.date = Date.fromIsoString(decodable.date)
+        self.state = EventState(rawValue: decodable.state) ?? .upcoming
+        self.theme = SongTheme(rawValue: decodable.theme)
+        self.requestedSongs = decodable.songs
     }
 
     func hash(into hasher: inout Hasher) {
@@ -101,14 +115,14 @@ class EventData: Hashable, Identifiable, ObservableObject {
     }
 }
 
-enum EventState {
+enum EventState: String {
     case upcoming
     case inProgress
     case paused
     case ended
 }
 
-enum SongTheme: CaseIterable {
+enum SongTheme: String, CaseIterable {
     case alternative
     case classical
     case dance
@@ -143,5 +157,16 @@ enum SongTheme: CaseIterable {
         case .rock:
             "Rock"
         }
+    }
+}
+
+extension Date {
+    /// Returns a `Date` decoded from the standard `ISO` format.
+    /// Example input: "2023-10-29 20:28:56 +0000"
+    static func fromIsoString(_ string: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssZ"
+        return dateFormatter.date(from: string) ?? .now
     }
 }
