@@ -14,6 +14,8 @@ struct MainMenu: View {
     @StateObject var viewModel: MainMenuViewModel
     @State var selectedTab = 0
 
+    let signOutAction: () -> Void
+
     var body: some View {
         TabView(selection: $selectedTab) {
             if user.userType == .dj {
@@ -39,14 +41,14 @@ struct MainMenu: View {
             }
         }
         .ignoresSafeArea()
-        .navBarWithTitle(title: "", navigator: navigator, leadingButton: .menu, trailingButton: .profile(user.firstName))
+        .navBarWithTitle(title: "", navigator: navigator, leadingButton: .menu(signOutAction), trailingButton: .profile(user.firstName))
         .loadingOverlay(isLoading: $viewModel.isLoading)
     }
 }
 
 #Preview {
     NavigationView {
-        MainMenu(viewModel: MainMenuViewModel())
+        MainMenu(viewModel: MainMenuViewModel()) {}
             .environmentObject(Navigator())
             .environmentObject(UserData.PreviewUser)
     }

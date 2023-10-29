@@ -12,6 +12,8 @@ struct SideMenu: View {
     let navigator: Navigator
     var edgeTransition: AnyTransition = .move(edge: .leading)
 
+    let signOutAction: () -> Void
+
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .topLeading) {
@@ -76,7 +78,9 @@ struct SideMenu: View {
                     navigator.navigate(to: .profile)
                 }
             case .signOut:
-                return {}
+                return {
+                    signOutAction()
+                }
             }
         }()
 
@@ -88,5 +92,5 @@ struct SideMenu: View {
 }
 
 #Preview {
-    SideMenu(isShowing: .constant(true), navigator: Navigator())
+    SideMenu(isShowing: .constant(true), navigator: Navigator()) {}
 }

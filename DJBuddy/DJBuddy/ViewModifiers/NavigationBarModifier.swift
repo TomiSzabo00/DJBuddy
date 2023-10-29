@@ -11,6 +11,8 @@ struct NavigationBarModifier<MenuContent: View>: ViewModifier {
     @State var isMenuShowing = false
     @State var isOptionsShowing = false
 
+    @State private var signOutAction: () -> Void = {}
+
     init(title: String, 
          navigator: Navigator,
          leadingButton: ButtonType? = nil,
@@ -49,7 +51,7 @@ struct NavigationBarModifier<MenuContent: View>: ViewModifier {
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden()
-            .sideMenu(isShowing: $isMenuShowing, navigator: navigator)
+            .sideMenu(isShowing: $isMenuShowing, navigator: navigator, signOutAction: signOutAction)
             .confirmationDialog("", isPresented: $isOptionsShowing) {
                 actionSheetContent
                 .preferredColorScheme(.dark)
@@ -65,8 +67,11 @@ struct NavigationBarModifier<MenuContent: View>: ViewModifier {
             } label: {
                 Image(systemName: "chevron.left")
             }
-        case .menu:
+        case let .menu(signOutAction):
             MenuButton(isShowing: $isMenuShowing) {}
+                .onAppear {
+                    self.signOutAction = signOutAction
+                }
         case .options:
             Button {
                 isOptionsShowing.toggle()

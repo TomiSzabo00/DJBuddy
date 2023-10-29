@@ -11,16 +11,18 @@ struct SideMenuModifier: ViewModifier {
     @Binding var isShowing: Bool
     let navigator: Navigator
 
+    let signOutAction: () -> Void
+
     func body(content: Content) -> some View {
         ZStack {
             content
-            SideMenu(isShowing: $isShowing, navigator: navigator)
+            SideMenu(isShowing: $isShowing, navigator: navigator, signOutAction: signOutAction)
         }
     }
 }
 
 extension View {
-    func sideMenu(isShowing: Binding<Bool>, navigator: Navigator) -> some View {
-        modifier(SideMenuModifier(isShowing: isShowing, navigator: navigator))
+    func sideMenu(isShowing: Binding<Bool>, navigator: Navigator, signOutAction: @escaping () -> Void) -> some View {
+        modifier(SideMenuModifier(isShowing: isShowing, navigator: navigator, signOutAction: signOutAction))
     }
 }

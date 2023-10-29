@@ -17,7 +17,7 @@ struct StateManager: View {
     var body: some View {
         NavigationStack(path: $navigator.path) {
             if viewModel.currentUser != nil {
-                MainMenu(viewModel: mainMenuViewModel)
+                MainMenu(viewModel: mainMenuViewModel, signOutAction: viewModel.signOut)
                     .navigationDestination(for: NavigationDestination.self) { destination in
                         switch destination {
                         case let .requestSong(eventData):
