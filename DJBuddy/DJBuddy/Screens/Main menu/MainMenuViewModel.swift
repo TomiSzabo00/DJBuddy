@@ -28,13 +28,20 @@ final class MainMenuViewModel: ObservableObject {
     func fetchEvents(for user: UserData) {
         isLoading = true
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) { [weak self] in
+        API.getEvents(from: user) { [weak self] result in
             guard let self else { return }
-            yourEvents[.yourEvents] = [EventData.PreviewData, EventData.PreviewData]
-            sortEventsByDate(&yourEvents[.yourEvents]!)
-            yourEvents[.nearYou] = [EventData.PreviewData]
             isLoading = false
+            switch result {
+            case .success(let events):
+                yourEvents[.yourEvents] = events
+                sortEventsByDate(&yourEvents[.yourEvents]!)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
+
+        // TODO: near you events logic
+        // yourEvents[.nearYou] = [EventData.PreviewData]
     }
 
     func sortEventsByDate(_ events: inout [EventData]) {

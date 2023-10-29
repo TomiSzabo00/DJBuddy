@@ -10,6 +10,7 @@ import Foundation
 final class API {
     private static let apiAddress = "http://127.0.0.1:9000"
 
+    // MARK: Login
     static func login(with email: String, and password: String, completion: @escaping (Result<UserData, APIError>) -> Void) {
         let url = URL(string: "\(apiAddress)/login")!
         
@@ -34,7 +35,7 @@ final class API {
                 let data = data,
                 let response = response as? HTTPURLResponse,
                 error == nil
-            else {                                                               // check for fundamental networking error
+            else {
                 if let error {
                     if (error as NSError).code == -1004 {
                         DispatchQueue.main.async {
@@ -80,6 +81,7 @@ final class API {
         task.resume()
     }
 
+    // MARK: Register
     static func register(email: String, password: String, firstName: String, lastName: String, artistName: String, type: String, completion: @escaping (Result<UserData, APIError>) -> Void) {
         let url = URL(string: "\(apiAddress)/users")!
 
@@ -109,7 +111,7 @@ final class API {
                 let data = data,
                 let response = response as? HTTPURLResponse,
                 error == nil
-            else {                                                               // check for fundamental networking error
+            else {
                 if let error {
                     if (error as NSError).code == -1004 {
                         DispatchQueue.main.async {
@@ -144,6 +146,53 @@ final class API {
                 let userData = UserData(decodable: responseObject)
                 DispatchQueue.main.async {
                     completion(.success(userData))
+                }
+            } catch {
+                print(error) // parsing error
+
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("responseString = \(responseString)")
+                } else {
+                    print("unable to parse error response as string")
+                }
+            }
+        }
+
+        task.resume()
+    }
+
+    // MARK: Get events
+    static func getEvents(from user: UserData, completion: @escaping (Result<[EventData], APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/users/\(user.id)/events")!
+
+        var request = URLRequest(url: url)
+        // request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "GET"
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard
+                let data = data,
+                error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        print("Some unhandled error: \(error.localizedDescription)")
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            do {
+                let responseObject = try JSONDecoder().decode([EventData_Database].self, from: data)
+                let events = [EventData]() // TODO: fill this array
+                DispatchQueue.main.async {
+                    completion(.success(events))
                 }
             } catch {
                 print(error) // parsing error
