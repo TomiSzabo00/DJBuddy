@@ -10,6 +10,7 @@ import Foundation
 enum APIError: LocalizedError {
     case unreachable
     case wrongEmailOrPassword
+    case userAlreadyExists
 
     var errorDescription: String? {
         switch self {
@@ -17,6 +18,8 @@ enum APIError: LocalizedError {
             return "Unreachable"
         case .wrongEmailOrPassword:
             return "Incorrect login"
+        case .userAlreadyExists:
+            return "Email in use"
         }
     }
 
@@ -26,6 +29,8 @@ enum APIError: LocalizedError {
             return "Couldn't reach the server. Try again later."
         case .wrongEmailOrPassword:
             return "The email and password combination was incorrect."
+        case .userAlreadyExists:
+            return "This email has been registered already. Try logging in."
         }
     }
 }

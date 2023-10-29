@@ -130,6 +130,10 @@ final class API {
                     DispatchQueue.main.async {
                         completion(.failure(.wrongEmailOrPassword))
                     }
+                } else if response.statusCode == 400 {
+                    DispatchQueue.main.async {
+                        completion(.failure(.userAlreadyExists))
+                    }
                 }
                 return
             }
