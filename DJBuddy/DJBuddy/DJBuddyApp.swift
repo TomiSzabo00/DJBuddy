@@ -43,12 +43,12 @@ struct DJBuddyApp: App {
     }
 
     var body: some Scene {
-        let container = try! ModelContainer(for: UserData.self)
+        //let container = try! ModelContainer(for: UserData.self)
 
         WindowGroup {
             StateManager()
         }
-        .modelContainer(container)
+        //.modelContainer(container)
     }
 }
 

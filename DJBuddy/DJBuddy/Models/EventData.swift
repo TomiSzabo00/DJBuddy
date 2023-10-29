@@ -7,6 +7,30 @@
 
 import Foundation
 
+class EventData_Database: Decodable {
+    let id: String
+    let name: String
+    let dj: UserData_Database
+    let latitude: CGFloat
+    let longitude: CGFloat
+    let date: String
+    let state: String
+    let theme: String
+    let songs: [SongData]
+
+    enum CodingKeys: String, CodingKey {
+        case id = "uuid"
+        case name
+        case dj
+        case latitude
+        case longitude
+        case date
+        case state
+        case theme
+        case songs
+    }
+}
+
 class EventData: Hashable, Identifiable, ObservableObject {
     let id = UUID()
     let name: String
@@ -46,7 +70,7 @@ class EventData: Hashable, Identifiable, ObservableObject {
     static var PreviewData: EventData {
         let date = Calendar.current.date(byAdding: .day, value: Int.random(in: 1...10), to: Date.now)!
         return EventData(name: "Event",
-                         dj: UserData.PreviewUser,
+                         dj: UserData.EmptyUser,
                          location: AddressResult.PreviewData,
                          date: date,
                          state: .inProgress,
@@ -57,7 +81,7 @@ class EventData: Hashable, Identifiable, ObservableObject {
     static var MapPreviewData: EventData {
         let date = Calendar.current.date(byAdding: .day, value: Int.random(in: 1...10), to: Date.now)!
         return EventData(name: "Event",
-                         dj: UserData.PreviewUser,
+                         dj: UserData.EmptyUser,
                          location: AddressResult.MapPreviewData,
                          date: date,
                          state: .inProgress,
@@ -68,7 +92,7 @@ class EventData: Hashable, Identifiable, ObservableObject {
     static var MapPreviewData2: EventData {
         let date = Calendar.current.date(byAdding: .day, value: Int.random(in: 1...10), to: Date.now)!
         return EventData(name: "Event",
-                         dj: UserData.PreviewUser,
+                         dj: UserData.EmptyUser,
                          location: AddressResult.MapPreviewData2,
                          date: date,
                          state: .inProgress,

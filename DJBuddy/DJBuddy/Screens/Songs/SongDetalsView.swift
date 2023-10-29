@@ -47,7 +47,7 @@ struct SongDetalsView: View {
                         Text("Current price: **\(song.amount.formatted(.currency(code: "USD")))**")
                             .padding(.vertical, 30)
 
-                        if user.userType == .dj {
+                        if user.type == .dj {
                             Button("Accept") {
                                 viewModel.accept(song: song) { result in
                                     switch result {
@@ -104,6 +104,6 @@ struct SongDetalsView: View {
     NavigationView {
         SongDetalsView(song: SongData.PreviewData, viewModel: EventControlViewModel(event: EventData.PreviewData))
             .environmentObject(Navigator())
-            .environmentObject(UserData.PreviewUser)
+            .environmentObject(UserData.EmptyUser)
     }
 }

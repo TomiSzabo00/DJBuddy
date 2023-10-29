@@ -61,9 +61,10 @@ final class API {
             }
 
             do {
-                let responseObject = try JSONDecoder().decode(UserData.self, from: data)
+                let responseObject = try JSONDecoder().decode(UserData_Database.self, from: data)
+                let userData = UserData(decodable: responseObject)
                 DispatchQueue.main.async {
-                    completion(.success(responseObject))
+                    completion(.success(userData))
                 }
             } catch {
                 print(error) // parsing error
@@ -139,9 +140,10 @@ final class API {
             }
 
             do {
-                let responseObject = try JSONDecoder().decode(UserData.self, from: data)
+                let responseObject = try JSONDecoder().decode(UserData_Database.self, from: data)
+                let userData = UserData(decodable: responseObject)
                 DispatchQueue.main.async {
-                    completion(.success(responseObject))
+                    completion(.success(userData))
                 }
             } catch {
                 print(error) // parsing error

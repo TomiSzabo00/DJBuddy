@@ -12,7 +12,7 @@ struct StateManager: View {
     @StateObject private var navigator = Navigator()
     @StateObject private var mainMenuViewModel = MainMenuViewModel()
 
-    @Environment(\.modelContext) private var context
+    //@Environment(\.modelContext) private var context
 
     var body: some View {
         NavigationStack(path: $navigator.path) {
@@ -42,7 +42,7 @@ struct StateManager: View {
                 LandingView()
                     .environmentObject(viewModel)
                     .onAppear {
-                        viewModel.fetchStoredUser(context: context)
+                        //viewModel.fetchStoredUser(context: context)
                     }
             }
         }

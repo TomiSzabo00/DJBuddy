@@ -62,6 +62,6 @@ struct ProfileView: View {
 #Preview {
     NavigationView {
         ProfileView()
-            .environmentObject(UserData.PreviewUser)
+            .environmentObject(UserData.EmptyUser)
     }
 }

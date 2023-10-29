@@ -8,11 +8,26 @@
 import Foundation
 import MusicKit
 
-class SongData: Identifiable, Hashable, ObservableObject {
+class SongData: Identifiable, Hashable, ObservableObject, Decodable {
     let title: String
     let artist: String
     @Published var amount: Double
     let albumArtUrl: String
+
+    enum CodingKeys: CodingKey {
+        case title
+        case artist
+        case amount
+        case albumArtUrl
+    }
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.artist = try container.decode(String.self, forKey: .artist)
+        self.amount = try container.decode(Double.self, forKey: .amount)
+        self.albumArtUrl = try container.decode(String.self, forKey: .albumArtUrl)
+    }
 
     static func == (lhs: SongData, rhs: SongData) -> Bool {
         lhs.title == rhs.title && lhs.artist == rhs.artist

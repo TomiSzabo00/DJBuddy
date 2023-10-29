@@ -25,43 +25,47 @@ final class AuthViewModel: ObservableObject {
 
     private var context: ModelContext!
 
-    func fetchStoredUser(context: ModelContext) {
-        self.context = context
-        do {
-            let descriptor = FetchDescriptor<UserData>()
-            currentUser = try context.fetch(descriptor).first
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-
-    private func saveUserToPersistentData() {
-        guard let currentUser else { return }
-        removeUserFromPresistentData()
-        context.insert(currentUser)
-        print("User saved as persistent!")
-    }
-
-    private func removeUserFromPresistentData() {
-        guard let currentUser else { return }
-        context.delete(currentUser)
-        print("User removed from persistent!")
-    }
-
-    private func removePreviousUsersFromPersistentData() {
-        do {
-            let descriptor = FetchDescriptor<UserData>()
-            let users = try context.fetch(descriptor)
-            for user in users {
-                context.delete(user)
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
+//    func fetchStoredUser(context: ModelContext) {
+//        self.context = context
+//        do {
+//            let descriptor = FetchDescriptor<UserData>()
+//            currentUser = try context.fetch(descriptor).first
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//    }
+//
+//    private func saveUserToPersistentData() {
+//        guard let currentUser else { return }
+//        removeUserFromPresistentData()
+//        context.insert(currentUser)
+//        print("User saved as persistent!")
+//    }
+//
+//    private func removeUserFromPresistentData() {
+//        guard let currentUser else { return }
+//        context.delete(currentUser)
+//        print("User removed from persistent!")
+//    }
+//
+//    private func removePreviousUsersFromPersistentData() {
+//        do {
+//            let descriptor = FetchDescriptor<UserData>()
+//            let users = try context.fetch(descriptor)
+//            for user in users {
+//                context.delete(user)
+//            }
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//    }
 
     func navigate(to state: LandingPageEnum) {
         pageState = state
+        resetTextFields()
+    }
+
+    private func resetTextFields() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         emailText.removeAll()
         passwordText.removeAll()
@@ -80,7 +84,7 @@ final class AuthViewModel: ObservableObject {
             switch response {
             case .success(let user):
                 self?.currentUser = user
-                self?.saveUserToPersistentData()
+//                self?.saveUserToPersistentData()
             case .failure(let error):
                 self?.error = error
             }
@@ -103,7 +107,7 @@ final class AuthViewModel: ObservableObject {
             switch response {
             case .success(let user):
                 self?.currentUser = user
-                self?.saveUserToPersistentData()
+//                self?.saveUserToPersistentData()
             case .failure(let error):
                 self?.error = error
             }
@@ -111,8 +115,9 @@ final class AuthViewModel: ObservableObject {
     }
 
     func signOut() {
-        removeUserFromPresistentData()
+//        removeUserFromPresistentData()
         currentUser = nil
+        resetTextFields()
     }
 
     func checkAllLoginFieldsAreValid() -> Bool {

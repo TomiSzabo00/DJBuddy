@@ -100,5 +100,5 @@ struct CreateEventView: View {
 
 #Preview {
     CreateEventView() { _ in }
-        .environmentObject(UserData.PreviewUser)
+        .environmentObject(UserData.EmptyUser)
 }
