@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct DJBuddyApp: App {
@@ -42,9 +43,12 @@ struct DJBuddyApp: App {
     }
 
     var body: some Scene {
+        let container = try! ModelContainer(for: UserData.self)
+
         WindowGroup {
             StateManager()
         }
+        .modelContainer(container)
     }
 }
 

@@ -50,8 +50,8 @@ struct SideMenu: View {
     @ViewBuilder private func menuButton(type: MenuButtonType) -> some View {
         let title = { () -> String in
             switch type {
-            case .settings:
-                return "Settings"
+            case .signOut:
+                return "Sign out"
             case .upcoming:
                 return "Upcoming events"
             case .past:
@@ -75,7 +75,7 @@ struct SideMenu: View {
                 return {
                     navigator.navigate(to: .profile)
                 }
-            case .settings:
+            case .signOut:
                 return {}
             }
         }()

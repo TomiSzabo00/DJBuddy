@@ -14,5 +14,5 @@ enum MenuButtonType: Identifiable, CaseIterable {
     case past
     case liked
     case profile
-    case settings
+    case signOut
 }

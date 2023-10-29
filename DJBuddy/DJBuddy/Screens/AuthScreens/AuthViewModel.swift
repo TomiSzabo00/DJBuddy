@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 final class AuthViewModel: ObservableObject {
     @Published private(set) var pageState: LandingPageEnum = .landingPage
@@ -21,6 +22,43 @@ final class AuthViewModel: ObservableObject {
     @Published var currentUser: UserData? = nil
     @Published var error: Error? = nil
     @Published var isLoading = false
+
+    private var context: ModelContext!
+
+    func fetchStoredUser(context: ModelContext) {
+        self.context = context
+        do {
+            let descriptor = FetchDescriptor<UserData>()
+            currentUser = try context.fetch(descriptor).first
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    private func saveUserToPersistentData() {
+        guard let currentUser else { return }
+        removeUserFromPresistentData()
+        context.insert(currentUser)
+        print("User saved as persistent!")
+    }
+
+    private func removeUserFromPresistentData() {
+        guard let currentUser else { return }
+        context.delete(currentUser)
+        print("User removed from persistent!")
+    }
+
+    private func removePreviousUsersFromPersistentData() {
+        do {
+            let descriptor = FetchDescriptor<UserData>()
+            let users = try context.fetch(descriptor)
+            for user in users {
+                context.delete(user)
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 
     func navigate(to state: LandingPageEnum) {
         pageState = state
@@ -42,6 +80,7 @@ final class AuthViewModel: ObservableObject {
             switch response {
             case .success(let user):
                 self?.currentUser = user
+                self?.saveUserToPersistentData()
             case .failure(let error):
                 self?.error = error
             }
@@ -64,10 +103,16 @@ final class AuthViewModel: ObservableObject {
             switch response {
             case .success(let user):
                 self?.currentUser = user
+                self?.saveUserToPersistentData()
             case .failure(let error):
                 self?.error = error
             }
         }
+    }
+
+    func signOut() {
+        removeUserFromPresistentData()
+        currentUser = nil
     }
 
     func checkAllLoginFieldsAreValid() -> Bool {

@@ -12,6 +12,8 @@ struct StateManager: View {
     @StateObject private var navigator = Navigator()
     @StateObject private var mainMenuViewModel = MainMenuViewModel()
 
+    @Environment(\.modelContext) private var context
+
     var body: some View {
         NavigationStack(path: $navigator.path) {
             if viewModel.currentUser != nil {
@@ -39,6 +41,9 @@ struct StateManager: View {
             } else {
                 LandingView()
                     .environmentObject(viewModel)
+                    .onAppear {
+                        viewModel.fetchStoredUser(context: context)
+                    }
             }
         }
         .animation(.default, value: viewModel.currentUser)
