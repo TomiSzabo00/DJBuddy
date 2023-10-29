@@ -166,7 +166,6 @@ final class API {
         let url = URL(string: "\(apiAddress)/users/\(user.id)/events")!
 
         var request = URLRequest(url: url)
-        // request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "GET"
 
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
