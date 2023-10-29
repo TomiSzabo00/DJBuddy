@@ -44,6 +44,16 @@ final class MainMenuViewModel: ObservableObject {
         // yourEvents[.nearYou] = [EventData.PreviewData]
     }
 
+    func refreshEvents(for user: UserData) async {
+        let newEvents = await API.getEventsAsync(from: user)
+        print("Events refreshed")
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            yourEvents[.yourEvents] = newEvents
+            sortEventsByDate(&yourEvents[.yourEvents]!)
+        }
+    }
+
     func sortEventsByDate(_ events: inout [EventData]) {
         events.sort(by: { $0.date < $1.date })
     }

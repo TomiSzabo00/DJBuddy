@@ -206,4 +206,21 @@ final class API {
 
         task.resume()
     }
+
+    static func getEventsAsync(from user: UserData) async -> [EventData] {
+        let url = URL(string: "\(apiAddress)/users/\(user.id)/events")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+
+        do {
+            let (data, _) = try await URLSession.shared.data(for: request)
+            let responseObject = try JSONDecoder().decode([EventData_Database].self, from: data)
+            let events = responseObject.map { EventData(decodable: $0) }
+            return events
+        } catch {
+            print(error.localizedDescription)
+            return []
+        }
+    }
 }

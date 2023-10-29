@@ -21,7 +21,7 @@ struct MainMenu: View {
             if user.type == .dj {
                 DJHomeView(yourEvents: viewModel.yourEvents[.yourEvents] ?? []).tag(0)
             } else {
-                UserHomeView(events: viewModel.yourEvents, joinAction: viewModel.join(event:), leaveAction: viewModel.leave(event:)).tag(0)
+                UserHomeView(viewModel: viewModel).tag(0)
             }
 
             MapView().tag(1)

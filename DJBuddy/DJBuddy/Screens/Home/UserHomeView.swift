@@ -9,11 +9,13 @@ import SwiftUI
 
 struct UserHomeView: View {
     @EnvironmentObject var navigator: Navigator
+    @EnvironmentObject private var user: UserData
 
-    let events: [EventDataType: [EventData]]
+    @StateObject var viewModel: MainMenuViewModel
 
-    let joinAction: (EventData) -> Void
-    let leaveAction: (EventData) -> Void
+    var events: [EventDataType: [EventData]] {
+        viewModel.yourEvents
+    }
 
     var body: some View {
         EventList {
@@ -34,6 +36,9 @@ struct UserHomeView: View {
                 }
             }
         }
+        .refreshable {
+            await viewModel.refreshEvents(for: user)
+        }
         .animation(.default, value: events)
     }
 
@@ -41,13 +46,13 @@ struct UserHomeView: View {
         VStack {
             if eventType == .yourEvents {
                 Button {
-                    leaveAction(event)
+                    viewModel.leave(event: event)
                 } label: {
                     Label("Leave event", systemImage: "rectangle.portrait.and.arrow.forward")
                 }
             } else if eventType == .nearYou {
                 Button {
-                    joinAction(event)
+                    viewModel.join(event: event)
                 } label: {
                     Label("Join event", systemImage: "person.badge.plus")
                 }
@@ -63,6 +68,6 @@ struct UserHomeView: View {
 }
 
 #Preview {
-    UserHomeView(events: [.yourEvents : [EventData.PreviewData, EventData.PreviewData], .nearYou : [EventData.PreviewData]]) { _ in} leaveAction: { _ in }
+    UserHomeView(viewModel: MainMenuViewModel())
         .environmentObject(Navigator())
 }
