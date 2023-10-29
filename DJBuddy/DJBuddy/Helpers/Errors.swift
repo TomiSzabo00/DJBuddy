@@ -11,6 +11,7 @@ enum APIError: LocalizedError {
     case unreachable
     case wrongEmailOrPassword
     case userAlreadyExists
+    case sessionExpired
 
     var errorDescription: String? {
         switch self {
@@ -20,6 +21,8 @@ enum APIError: LocalizedError {
             return "Incorrect login"
         case .userAlreadyExists:
             return "Email in use"
+        case .sessionExpired:
+            return "Session expired"
         }
     }
 
@@ -31,6 +34,8 @@ enum APIError: LocalizedError {
             return "The email and password combination was incorrect."
         case .userAlreadyExists:
             return "This email has been registered already. Try logging in."
+        case .sessionExpired:
+            return "The previous login session has expired. Please log in again."
         }
     }
 }

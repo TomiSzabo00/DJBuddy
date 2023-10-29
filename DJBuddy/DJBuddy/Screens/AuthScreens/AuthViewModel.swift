@@ -25,40 +25,54 @@ final class AuthViewModel: ObservableObject {
 
     private var context: ModelContext!
 
-//    func fetchStoredUser(context: ModelContext) {
-//        self.context = context
-//        do {
-//            let descriptor = FetchDescriptor<UserData>()
-//            currentUser = try context.fetch(descriptor).first
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//    }
-//
-//    private func saveUserToPersistentData() {
-//        guard let currentUser else { return }
-//        removeUserFromPresistentData()
-//        context.insert(currentUser)
-//        print("User saved as persistent!")
-//    }
-//
-//    private func removeUserFromPresistentData() {
-//        guard let currentUser else { return }
-//        context.delete(currentUser)
-//        print("User removed from persistent!")
-//    }
-//
-//    private func removePreviousUsersFromPersistentData() {
-//        do {
-//            let descriptor = FetchDescriptor<UserData>()
-//            let users = try context.fetch(descriptor)
-//            for user in users {
-//                context.delete(user)
-//            }
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//    }
+    func tryLoginFromStoredData(context: ModelContext) {
+        self.context = context
+        guard let loginData = fetchStoredLoginData() else { print("No previous login data found."); return }
+        
+        isLoading = true
+
+        API.login(with: loginData.email, and: loginData.password) { [weak self] response in
+            guard let self else { return }
+            isLoading = false
+
+            switch response {
+            case .success(let user):
+                currentUser = user
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.error = APIError.sessionExpired
+            }
+        }
+    }
+
+    private func fetchStoredLoginData() -> LoginData? {
+        do {
+            let descriptor = FetchDescriptor<LoginData>()
+            return try context.fetch(descriptor).first
+        } catch {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+
+    private func saveLoginDataToPersistentData(email: String, password: String) {
+        removeLoginDataFromPresistentData()
+        context.insert(LoginData(email: email, password: password))
+        print("User saved as persistent!")
+    }
+
+    private func removeLoginDataFromPresistentData() {
+        do {
+            let descriptor = FetchDescriptor<LoginData>()
+            let datas = try context.fetch(descriptor)
+            for data in datas {
+                context.delete(data)
+            }
+            print("User removed from persistent!")
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 
     func navigate(to state: LandingPageEnum) {
         pageState = state
@@ -79,14 +93,15 @@ final class AuthViewModel: ObservableObject {
         isLoading = true
 
         API.login(with: emailText, and: passwordText) { [weak self] response in
-            self?.isLoading = false
+            guard let self else { return }
+            isLoading = false
 
             switch response {
             case .success(let user):
-                self?.currentUser = user
-//                self?.saveUserToPersistentData()
+                currentUser = user
+                saveLoginDataToPersistentData(email: emailText, password: passwordText)
             case .failure(let error):
-                self?.error = error
+                self.error = error
             }
         }
     }
@@ -102,20 +117,21 @@ final class AuthViewModel: ObservableObject {
                      lastName: lastNameText,
                      artistName: artistNameText,
                      type: userType.rawValue) { [weak self] response in
-            self?.isLoading = false
+            guard let self else { return }
+            isLoading = false
 
             switch response {
             case .success(let user):
-                self?.currentUser = user
-//                self?.saveUserToPersistentData()
+                currentUser = user
+                saveLoginDataToPersistentData(email: emailText, password: passwordText)
             case .failure(let error):
-                self?.error = error
+                self.error = error
             }
         }
     }
 
     func signOut() {
-//        removeUserFromPresistentData()
+        removeLoginDataFromPresistentData()
         currentUser = nil
         resetTextFields()
     }

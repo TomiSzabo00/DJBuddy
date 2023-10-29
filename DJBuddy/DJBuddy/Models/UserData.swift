@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 class UserData_Database: Decodable {
     let id: String
@@ -72,5 +73,17 @@ final class UserData: Identifiable, ObservableObject, Hashable {
                  type: .user,
                  profilePicUrl: ""
         )
+    }
+}
+
+@Model
+class LoginData {
+    let email: String
+    @Attribute(.allowsCloudEncryption)
+    let password: String
+
+    init(email: String, password: String) {
+        self.email = email
+        self.password = password
     }
 }
