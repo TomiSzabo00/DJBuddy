@@ -12,8 +12,8 @@ final class API {
 
     // MARK: Login
     static func login(with email: String, and password: String, completion: @escaping (Result<UserData, APIError>) -> Void) {
-        let url = URL(string: "\(apiAddress)/login")!
-        
+        let url = URL(string: "\(apiAddress)/users/login")!
+
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -83,7 +83,7 @@ final class API {
 
     // MARK: Register
     static func register(email: String, password: String, firstName: String, lastName: String, artistName: String, type: String, completion: @escaping (Result<UserData, APIError>) -> Void) {
-        let url = URL(string: "\(apiAddress)/users")!
+        let url = URL(string: "\(apiAddress)/users/register")!
 
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
