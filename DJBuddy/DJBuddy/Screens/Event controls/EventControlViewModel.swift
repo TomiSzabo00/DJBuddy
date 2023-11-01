@@ -269,14 +269,18 @@ final class EventControlViewModel: ObservableObject, Hashable {
 
         isLoading = true
 
-        // TODO: BE action
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) { [weak self] in
-            guard let self else { return }
-            event.requestedSongs[idx].amount += selectedPrice
-            sortSongs(&event.requestedSongs)
-            objectWillChange.send()
-            completion(.success(()))
-            isLoading = false
+        API.increasePrice(of: currentSong, by: selectedPrice) { [weak self] result in
+            self?.isLoading = false
+            switch result {
+            case .success(let newAmount):
+                DispatchQueue.main.async {
+                    self?.event.requestedSongs[idx].amount = newAmount
+                    self?.objectWillChange.send()
+                    completion(.success(()))
+                }
+            case .failure(let failure):
+                completion(.failure(failure))
+            }
         }
     }
 

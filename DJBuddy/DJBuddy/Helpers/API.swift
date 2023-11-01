@@ -422,6 +422,55 @@ final class API {
         task.resume()
     }
 
+    static func increasePrice(of song: SongData, by amount: Double, completion: @escaping (Result<Double, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/songs/\(song.id)/amount/increase_by/\(amount)")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard
+                let data = data,
+                error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            do {
+                let newAmount = try JSONDecoder().decode(Double.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(newAmount))
+                }
+            } catch {
+                print(error) // parsing error
+
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("responseString = \(responseString)")
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: responseString)))
+                    }
+                } else {
+                    print("unable to parse error response as string")
+                }
+            }
+        }
+
+        task.resume()
+    }
+
     // MARK: WebSockets
 
     private static func connectToWebSocket(on urlString: String) -> URLSessionWebSocketTask? {
