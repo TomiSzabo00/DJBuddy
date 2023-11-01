@@ -68,7 +68,7 @@ class EventData: Hashable, Identifiable, ObservableObject {
         self.date = Date.fromIsoString(decodable.date)
         self.state = EventState(rawValue: decodable.state) ?? .upcoming
         self.theme = SongTheme(rawValue: decodable.theme)
-        self.requestedSongs = decodable.songs
+        self.requestedSongs = decodable.songs.sorted(by: { $0.amount > $1.amount })
     }
 
     func hash(into hasher: inout Hasher) {

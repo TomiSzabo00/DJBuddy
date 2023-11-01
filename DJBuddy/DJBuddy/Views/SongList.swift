@@ -11,15 +11,13 @@ struct SongList: View {
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var viewModel: EventControlViewModel
 
-    @State var songs: [SongData]
-
     var body: some View {
         List {
             Section {
-                if songs.isEmpty {
+                if viewModel.event.requestedSongs.isEmpty {
                     InfoView("There aren't any songs requested. Yet.", type: .info)
                 } else {
-                    ForEach(Array(songs.enumerated()), id: \.offset) { idx, song in
+                    ForEach(Array(viewModel.event.requestedSongs.enumerated()), id: \.offset) { idx, song in
                         SongRow(song, index: idx)
                             .onTapGesture {
                                 navigator.navigate(to: .songDetails(song, viewModel))
@@ -42,11 +40,11 @@ struct SongList: View {
         .scrollContentBackground(.hidden)
         .onAppear {
             // Workaround to update list order after price increase
-            viewModel.sortSongs(&songs)
+            viewModel.sortSongs(&viewModel.event.requestedSongs)
         }
     }
 }
 
 #Preview {
-    SongList(songs: [])//SongData.PreviewData])
+    SongList()//SongData.PreviewData])
 }

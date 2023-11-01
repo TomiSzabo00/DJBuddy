@@ -81,6 +81,7 @@ final class EventControlViewModel: ObservableObject, Hashable {
                     DispatchQueue.main.async {
                         if let newEvent = self.decodeEventData(data) {
                             self.event = newEvent
+                            self.objectWillChange.send()
                         }
                     }
                 case .string(let string):
@@ -88,6 +89,7 @@ final class EventControlViewModel: ObservableObject, Hashable {
                         if let data = string.data(using: .utf8, allowLossyConversion: false),
                            let newEvent = self.decodeEventData(data) {
                             self.event = newEvent
+                            self.objectWillChange.send()
                         }
                     }
                 default:
