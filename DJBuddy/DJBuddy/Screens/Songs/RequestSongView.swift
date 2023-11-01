@@ -59,6 +59,7 @@ struct RequestSongView: View {
         .errorAlert(error: $error)
         .errorAlert(error: $viewModel.formError)
         .onAppear {
+            viewModel.getCurrentTheme()
             viewModel.initWebSocketForEventThemeChanges()
         }
         .onDisappear {

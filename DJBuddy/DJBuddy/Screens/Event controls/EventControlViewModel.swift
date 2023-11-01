@@ -121,6 +121,25 @@ final class EventControlViewModel: ObservableObject, Hashable {
         }
     }
 
+    func getCurrentTheme() {
+        isLoading = true
+
+        API.getEventTheme(for: event) { [weak self] result in
+            self?.isLoading = false
+            switch result {
+            case .success(let newTheme):
+                DispatchQueue.main.async {
+                    self?.event.theme = newTheme
+                    self?.objectWillChange.send()
+                }
+            case .failure(let failure):
+                DispatchQueue.main.async {
+                    self?.formError = failure
+                }
+            }
+        }
+    }
+
     var shouldSHowPriceWarining: Bool {
         guard let amountToNextSong else { return false }
         return selectedPrice < amountToNextSong
