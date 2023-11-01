@@ -16,18 +16,15 @@ struct EventControlView: View {
 
     var body: some View {
         VStack {
-            VStack(spacing: 20) {
+            SongList() {
                 InfoView(from: viewModel.event.state)
-                
+
                 if let theme = viewModel.event.theme {
                     InfoView("The current theme for this event is \(theme.displayName.uppercased())", type: .info)
                 }
             }
-            .padding()
-
-            SongList()
-                .environmentObject(navigator)
-                .environmentObject(viewModel)
+            .environmentObject(navigator)
+            .environmentObject(viewModel)
         }
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: viewModel.event.name, navigator: navigator, leadingButton: .back, trailingButton: .options) {

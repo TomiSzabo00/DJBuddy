@@ -13,16 +13,14 @@ struct UserEventView: View {
 
     var body: some View {
         VStack {
-            VStack(spacing: 20) {
+            SongList() {
                 InfoView("Choose a song from the list or request a new one.", type: .info)
-
-                InfoView(from: viewModel.event.state)
+                if viewModel.event.state != .inProgress {
+                    InfoView(from: viewModel.event.state)
+                }
             }
-            .padding()
-
-            SongList()
-                .environmentObject(navigator)
-                .environmentObject(viewModel)
+            .environmentObject(navigator)
+            .environmentObject(viewModel)
 
             Button("Request a new song") {
                 navigator.navigate(to: .requestSong(viewModel.event))

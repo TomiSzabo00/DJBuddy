@@ -7,12 +7,20 @@
 
 import SwiftUI
 
-struct SongList: View {
+struct SongList<Header: View>: View {
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var viewModel: EventControlViewModel
 
+    @ViewBuilder var header: Header
+
     var body: some View {
         List {
+            header
+            .listStyle(.plain)
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
+            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
+
             Section {
                 if viewModel.event.requestedSongs.isEmpty {
                     InfoView("There aren't any songs requested. Yet.", type: .info)
@@ -42,6 +50,10 @@ struct SongList: View {
             // Workaround to update list order after price increase
             viewModel.sortSongs(&viewModel.event.requestedSongs)
         }
+    }
+
+    init(@ViewBuilder header: @escaping () -> Header = { EmptyView() }) {
+        self.header = header()
     }
 }
 
