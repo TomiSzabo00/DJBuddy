@@ -45,7 +45,9 @@ final class API {
                             completion(.failure(.unreachable))
                         }
                     } else {
-                        print("Some unhandled error: \(error.localizedDescription)")
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
                     }
                 } else {
                     print("Error occured but it is nil")
@@ -59,6 +61,10 @@ final class API {
                 if response.statusCode == 401 {
                     DispatchQueue.main.async {
                         completion(.failure(.wrongEmailOrPassword))
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: response.debugDescription)))
                     }
                 }
                 return
@@ -75,6 +81,9 @@ final class API {
 
                 if let responseString = String(data: data, encoding: .utf8) {
                     print("responseString = \(responseString)")
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: responseString)))
+                    }
                 } else {
                     print("unable to parse error response as string")
                 }
@@ -121,7 +130,9 @@ final class API {
                             completion(.failure(.unreachable))
                         }
                     } else {
-                        print("Some unhandled error: \(error.localizedDescription)")
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
                     }
                 } else {
                     print("Error occured but it is nil")
@@ -140,6 +151,10 @@ final class API {
                     DispatchQueue.main.async {
                         completion(.failure(.userAlreadyExists))
                     }
+                } else {
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: response.debugDescription)))
+                    }
                 }
                 return
             }
@@ -155,6 +170,9 @@ final class API {
 
                 if let responseString = String(data: data, encoding: .utf8) {
                     print("responseString = \(responseString)")
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: responseString)))
+                    }
                 } else {
                     print("unable to parse error response as string")
                 }
@@ -182,7 +200,9 @@ final class API {
                             completion(.failure(.unreachable))
                         }
                     } else {
-                        print("Some unhandled error: \(error.localizedDescription)")
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
                     }
                 } else {
                     print("Error occured but it is nil")
@@ -201,6 +221,9 @@ final class API {
 
                 if let responseString = String(data: data, encoding: .utf8) {
                     print("responseString = \(responseString)")
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: responseString)))
+                    }
                 } else {
                     print("unable to parse error response as string")
                 }
@@ -244,7 +267,9 @@ final class API {
                             completion(.failure(.unreachable))
                         }
                     } else {
-                        print("Some unhandled error: \(error.localizedDescription)")
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
                     }
                 } else {
                     print("Error occured but it is nil")
@@ -263,6 +288,9 @@ final class API {
 
                 if let responseString = String(data: data, encoding: .utf8) {
                     print("responseString = \(responseString)")
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: responseString)))
+                    }
                 } else {
                     print("unable to parse error response as string")
                 }
