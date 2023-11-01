@@ -33,6 +33,12 @@ struct UserEventView: View {
         }
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: viewModel.event.name, navigator: navigator, leadingButton: .back)
+        .onAppear {
+            viewModel.initWebSocketForGeneralEventChanges()
+        }
+        .onDisappear {
+            viewModel.closeWebSockets()
+        }
     }
 
     init(event: EventData) {

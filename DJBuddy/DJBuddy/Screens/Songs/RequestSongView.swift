@@ -58,6 +58,12 @@ struct RequestSongView: View {
         .loadingOverlay(isLoading: $viewModel.isLoading)
         .errorAlert(error: $error)
         .errorAlert(error: $viewModel.formError)
+        .onAppear {
+            viewModel.initWebSocketForEventThemeChanges()
+        }
+        .onDisappear {
+            viewModel.closeWebSockets()
+        }
     }
 
     @ViewBuilder private func agreePrivacyPolicy(_ checkbox: Binding<Bool>) -> some View {

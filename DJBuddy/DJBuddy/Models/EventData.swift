@@ -36,24 +36,21 @@ class EventData_Database: Decodable {
 }
 
 class EventData: Hashable, Identifiable, ObservableObject {
-    let id = UUID()
+    let id: String
     let name: String
     let dj: UserData
     let location: AddressResult
     let date: Date
     var state: EventState
+    var theme: SongTheme?
     var requestedSongs: [SongData] {
         didSet {
             requestedSongs.sort(by: { $0.amount > $1.amount })
         }
     }
-    var theme: SongTheme? {
-        didSet {
-            print("Theme changed to: \(String(describing: theme))")
-        }
-    }
 
     init(name: String, dj: UserData, location: AddressResult, date: Date, state: EventState = .upcoming, requestedSongs: [SongData] = [], theme: SongTheme? = nil) {
+        self.id = UUID().uuidString
         self.name = name
         self.dj = dj
         self.location = location
@@ -64,6 +61,7 @@ class EventData: Hashable, Identifiable, ObservableObject {
     }
 
     init(decodable: EventData_Database) {
+        self.id = decodable.id
         self.name = decodable.name
         self.dj = UserData(decodable: decodable.dj)
         self.location = AddressResult(title: decodable.address_title, subtitle: decodable.address_subtitle, latitude: decodable.latitude, longitude: decodable.longitude)

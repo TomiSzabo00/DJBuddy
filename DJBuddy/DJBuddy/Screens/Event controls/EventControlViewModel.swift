@@ -16,6 +16,111 @@ final class EventControlViewModel: ObservableObject, Hashable {
     @Published var formError: Error? = nil
     var currentSong: SongData? = nil
 
+    private var webSocketTasks = Set<URLSessionWebSocketTask?>()
+
+    func initWebSocketForGeneralEventChanges() {
+        print("Opening websocket for general event changes...")
+        let task = API.connectToEventWebSocket(id: event.id)
+        task?.resume()
+        listenForEventChanges(in: task)
+
+        webSocketTasks.insert(task)
+    }
+
+    func initWebSocketForEventThemeChanges() {
+        print("Opening websocket for event theme changes...")
+        let task = API.connectToEventWebSocket(id: event.id, pathSuffix: "themes")
+        task?.resume()
+        listenForThemeChanges(in: task)
+
+        webSocketTasks.insert(task)
+    }
+
+    private func listenForThemeChanges(in task: URLSessionWebSocketTask?) {
+        task?.receive { [weak self] result in
+            guard let self else { return }
+
+            switch result {
+            case .success(let success):
+                print("Got new theme data from websocket. Decoding...")
+                switch success {
+                case .data(let data):
+                    DispatchQueue.main.async {
+                        let str = String(decoding: data, as: UTF8.self)
+                        self.event.theme = SongTheme(rawValue: str)
+                        print("Theme changed to \(self.event.theme?.displayName ?? "nil")")
+                        self.objectWillChange.send()
+                    }
+                case .string(let string):
+                    DispatchQueue.main.async {
+                        self.event.theme = SongTheme(rawValue: string)
+                        print("Theme changed to \(self.event.theme?.displayName ?? "nil")")
+                        self.objectWillChange.send()
+                    }
+                default:
+                    print("Unhandled websocket result.")
+                }
+                self.listenForThemeChanges(in: task)
+            case .failure(let failure):
+                DispatchQueue.main.async {
+                    self.formError = failure
+                }
+            }
+        }
+    }
+
+    private func listenForEventChanges(in task: URLSessionWebSocketTask?) {
+        task?.receive { [weak self] result in
+            guard let self else { return }
+
+            switch result {
+            case .success(let success):
+                print("Got new data from websocket. Decoding...")
+                switch success {
+                case .data(let data):
+                    DispatchQueue.main.async {
+                        if let newEvent = self.decodeEventData(data) {
+                            self.event = newEvent
+                        }
+                    }
+                case .string(let string):
+                    DispatchQueue.main.async {
+                        if let data = string.data(using: .utf8, allowLossyConversion: false),
+                           let newEvent = self.decodeEventData(data) {
+                            self.event = newEvent
+                        }
+                    }
+                default:
+                    print("Unhandled websocket result.")
+                }
+                self.listenForEventChanges(in: task)
+            case .failure(let failure):
+                DispatchQueue.main.async {
+                    self.formError = failure
+                }
+            }
+        }
+    }
+
+    func closeWebSockets() {
+        print("Closing all websockets:")
+        for task in webSocketTasks {
+            task?.cancel(with: .goingAway, reason: nil)
+            print("\t- WebSocket closed")
+        }
+    }
+
+    private func decodeEventData(_ data: Data) -> EventData? {
+        do {
+            let responseObject = try JSONDecoder().decode(EventData_Database.self, from: data)
+            print("EventData decoded.")
+            return EventData(decodable: responseObject)
+        } catch {
+            print("EventData couldn't be decoded...")
+            return nil
+        }
+    }
+
     var shouldSHowPriceWarining: Bool {
         guard let amountToNextSong else { return false }
         return selectedPrice < amountToNextSong

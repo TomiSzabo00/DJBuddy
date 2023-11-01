@@ -8,7 +8,10 @@
 import Foundation
 
 final class API {
+    // MARK: Constants
     private static let apiAddress = "http://127.0.0.1:9000"
+    private static let apiWebSocketAddress = "ws://127.0.0.1:9000"
+    private static let eventWebSocketUrl = "\(apiWebSocketAddress)/ws/events"
 
     // MARK: Login
     static func login(with email: String, and password: String, completion: @escaping (Result<UserData, APIError>) -> Void) {
@@ -222,5 +225,22 @@ final class API {
             print(error.localizedDescription)
             return []
         }
+    }
+
+    // MARK: WebSockets
+
+    private static func connectToWebSocket(on urlString: String) -> URLSessionWebSocketTask? {
+        guard let url = URL(string: urlString) else { return nil }
+        let request = URLRequest(url: url)
+        return URLSession.shared.webSocketTask(with: request)
+    }
+
+    static func connectToEventWebSocket(id: String, pathSuffix: String? = nil) -> URLSessionWebSocketTask? {
+        var concreteUrl = "\(eventWebSocketUrl)/\(id)"
+        if let pathSuffix {
+            concreteUrl += "/\(pathSuffix)"
+        }
+        let task = connectToWebSocket(on: concreteUrl)
+        return task
     }
 }
