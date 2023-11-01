@@ -26,7 +26,7 @@ struct SongSelectionView: View {
                     .font(.title)
                     .onReceive(
                         viewModel.$searchableText.debounce(
-                            for: .seconds(1),
+                            for: .seconds(0.5),
                             scheduler: DispatchQueue.main
                         )
                     ) {

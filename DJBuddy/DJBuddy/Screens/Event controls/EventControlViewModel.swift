@@ -142,6 +142,26 @@ final class EventControlViewModel: ObservableObject, Hashable {
         }
     }
 
+    func getCurrentEvent() {
+        isLoading = true
+
+        API.getEvent(id: event.id) { [weak self] result in
+            self?.isLoading = false
+
+            switch result {
+            case .success(let newEvent):
+                DispatchQueue.main.async {
+                    self?.event = newEvent
+                    self?.objectWillChange.send()
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.formError = error
+                }
+            }
+        }
+    }
+
     var shouldSHowPriceWarining: Bool {
         guard let amountToNextSong else { return false }
         return selectedPrice < amountToNextSong
@@ -204,17 +224,16 @@ final class EventControlViewModel: ObservableObject, Hashable {
 
         isLoading = true
 
-        // TODO: request song from API
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) { [ weak self] in
+        selectedSong.amount = selectedPrice
+        API.requestSong(selectedSong, for: event) { [weak self] result in
             self?.isLoading = false
-            completion(.success(()))
-        }
-
-        if let idx = event.requestedSongs.firstIndex(of: selectedSong) {
-            event.requestedSongs[idx].amount += selectedPrice
-        } else {
-            selectedSong.amount = selectedPrice
-            event.requestedSongs.append(selectedSong)
+            switch result {
+            case .success(let id):
+                selectedSong.id = id
+                completion(.success(()))
+            case .failure(let failure):
+                completion(.failure(failure))
+            }
         }
     }
 

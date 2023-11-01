@@ -23,21 +23,26 @@ final class SongSelectionViewModel: ObservableObject {
         isSearching = true
         searchTask = Task { [weak self] in
             do {
-                let request = MusicKit.MusicCatalogSearchRequest(term: text, types: [Song.self])
-                let response = try await request.response()
-                DispatchQueue.main.async { [weak self] in
-                    self?.searchResults = response.songs
-                        .filter { song in
-                            if let theme {
-                                guard let songTheme = song.genreNames.first,
-                                      songTheme == theme.displayName else { return false }
+                let musicAuthorizationStatus = await MusicAuthorization.request()
+                if musicAuthorizationStatus == .authorized {
+                    let request = MusicKit.MusicCatalogSearchRequest(term: text, types: [Song.self])
+                    let response = try await request.response()
+                    DispatchQueue.main.async { [weak self] in
+                        self?.searchResults = response.songs
+                            .filter { song in
+                                if let theme {
+                                    guard let songTheme = song.genreNames.first,
+                                          songTheme == theme.displayName else { return false }
+                                }
+                                return true
                             }
-                            return true
-                        }
-                        .map { song in
-                            SongData(song: song)
-                        }
-                    self?.isSearching = false
+                            .map { song in
+                                SongData(song: song)
+                            }
+                        self?.isSearching = false
+                    }
+                } else {
+                    print(musicAuthorizationStatus)
                 }
             } catch {
                 print("Error searching for music: \(error.localizedDescription)")

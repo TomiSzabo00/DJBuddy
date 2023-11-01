@@ -33,6 +33,7 @@ struct UserEventView: View {
         .navBarWithTitle(title: viewModel.event.name, navigator: navigator, leadingButton: .back)
         .onAppear {
             viewModel.initWebSocketForGeneralEventChanges()
+            viewModel.getCurrentEvent()
         }
         .onDisappear {
             viewModel.closeWebSockets()
