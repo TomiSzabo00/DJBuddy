@@ -181,6 +181,7 @@ final class EventControlViewModel: ObservableObject, Hashable {
     }
 
     func setTheme(to theme: SongTheme?, completion: @escaping (Result<Void, APIError>) -> Void) {
+        guard event.theme != theme else { completion(.success(())); return }
         isLoading = true
 
         API.setEventTheme(to: theme, in: event) { [weak self] result in
@@ -190,13 +191,13 @@ final class EventControlViewModel: ObservableObject, Hashable {
     }
 
     func setState(to state: EventState, completion: @escaping (Result<Void, APIError>) -> Void) {
+        guard event.state != state else { completion(.success(())); return }
+
         isLoading = true
-        // TODO: BE action
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
-            self?.event.state = state
-            self?.objectWillChange.send()
-            completion(.success(()))
+
+        API.setEventState(to: state, in: event) { [weak self] result in
             self?.isLoading = false
+            completion(result)
         }
     }
 
