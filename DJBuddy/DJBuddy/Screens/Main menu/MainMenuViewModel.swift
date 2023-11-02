@@ -51,6 +51,7 @@ final class MainMenuViewModel: ObservableObject {
             guard let self else { return }
             yourEvents[.yourEvents] = newEvents
             sortEventsByDate(&yourEvents[.yourEvents]!)
+            self.objectWillChange.send()
         }
     }
 

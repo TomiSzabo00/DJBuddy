@@ -9,8 +9,13 @@ import SwiftUI
 
 struct DJHomeView: View {
     @EnvironmentObject var navigator: Navigator
+    @EnvironmentObject private var user: UserData
 
-    let yourEvents: [EventData]
+    @StateObject var viewModel: MainMenuViewModel
+
+    var yourEvents: [EventData] {
+        viewModel.yourEvents[.yourEvents] ?? []
+    }
 
     var body: some View {
         EventList {
@@ -27,9 +32,12 @@ struct DJHomeView: View {
                     .font(.subheadline)
             }
         }
+        .refreshable {
+            await viewModel.refreshEvents(for: user)
+        }
     }
 }
 
 #Preview {
-    DJHomeView(yourEvents: [EventData.PreviewData])
+    DJHomeView(viewModel: MainMenuViewModel())
 }

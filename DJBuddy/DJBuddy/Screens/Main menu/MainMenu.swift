@@ -19,7 +19,7 @@ struct MainMenu: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             if user.type == .dj {
-                DJHomeView(yourEvents: viewModel.yourEvents[.yourEvents] ?? []).tag(0)
+                DJHomeView(viewModel: viewModel).tag(0)
             } else {
                 UserHomeView(viewModel: viewModel).tag(0)
             }

@@ -97,6 +97,14 @@ struct EventControlView: View {
             }
         }
         .loadingOverlay(isLoading: $viewModel.isLoading)
+        .onAppear {
+            viewModel.initWebSocketForGeneralEventChanges()
+            viewModel.initWebSocketForEventThemeChanges()
+            viewModel.getCurrentEvent()
+        }
+        .onDisappear {
+            viewModel.closeWebSockets()
+        }
     }
 
     init(event: EventData) {

@@ -173,9 +173,6 @@ final class EventControlViewModel: ObservableObject, Hashable {
               idx > 0,
               event.requestedSongs[idx - 1].amount > song.amount
         else { return nil }
-//        guard let song = currentSong else { print("guard 1"); return false }
-//        guard let idx = event.requestedSongs.firstIndex(of: song) else { print("guard 2"); return false }
-//        guard idx > 0 else { print("guard 3"); return false }
         return event.requestedSongs[idx - 1].amount - song.amount + 1.0
     }
 
@@ -185,13 +182,10 @@ final class EventControlViewModel: ObservableObject, Hashable {
 
     func setTheme(to theme: SongTheme?, completion: @escaping (Result<Void, APIError>) -> Void) {
         isLoading = true
-        // TODO: BE action
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
-            self?.event.theme = theme
-            self?.objectWillChange.send()
-            completion(.success(()))
-//            completion(.failure(.unreachable))
+
+        API.setEventTheme(to: theme, in: event) { [weak self] result in
             self?.isLoading = false
+            completion(result)
         }
     }
 
