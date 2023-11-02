@@ -13,6 +13,8 @@ struct UserHomeView: View {
 
     @StateObject var viewModel: MainMenuViewModel
 
+    let showOnMapAction: (AddressResult) -> Void
+
     var events: [EventDataType: [EventData]] {
         viewModel.yourEvents
     }
@@ -60,7 +62,7 @@ struct UserHomeView: View {
             }
 
             Button {
-                // TODO: show on map
+                showOnMapAction(event.location)
             } label: {
                 Label("Show on map", systemImage: "mappin.and.ellipse")
             }
@@ -69,6 +71,6 @@ struct UserHomeView: View {
 }
 
 #Preview {
-    UserHomeView(viewModel: MainMenuViewModel())
+    UserHomeView(viewModel: MainMenuViewModel()) { _ in }
         .environmentObject(Navigator())
 }

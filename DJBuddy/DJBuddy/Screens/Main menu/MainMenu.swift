@@ -25,20 +25,26 @@ struct MainMenu: View {
             if user.type == .dj {
                 DJHomeView(viewModel: viewModel).tag(0)
             } else {
-                UserHomeView(viewModel: viewModel).tag(0)
-                    .onAppear {
-                        // Create a custom publisher that uses the throttle operator
-                        let throttledPublisher = mapViewModel.$currentLocation
-                            .compactMap { $0 }
-                            .throttle(for: .seconds(600), scheduler: RunLoop.main, latest: true)
+                UserHomeView(viewModel: viewModel) { address in
+                    // navigate to map
+                    selectedTab = 1
+                    // set map region to selected event
+                    mapViewModel.region = mapViewModel.regionFrom(coordinates: address.coordinate)
+                }
+                .tag(0)
+                .onAppear {
+                    // Create a custom publisher that uses the throttle operator
+                    let throttledPublisher = mapViewModel.$currentLocation
+                        .compactMap { $0 }
+                        .throttle(for: .seconds(600), scheduler: RunLoop.main, latest: true)
 
-                        // Subscribe to the custom publisher
-                        self.cancellable = throttledPublisher
-                            .sink { newValue in
-                                viewModel.currentLocation = newValue
-                                viewModel.fetchNearEvents(for: user)
-                            }
-                    }
+                    // Subscribe to the custom publisher
+                    self.cancellable = throttledPublisher
+                        .sink { newValue in
+                            viewModel.currentLocation = newValue
+                            viewModel.fetchNearEvents(for: user)
+                        }
+                }
             }
 
             MapView(viewModel: mapViewModel,

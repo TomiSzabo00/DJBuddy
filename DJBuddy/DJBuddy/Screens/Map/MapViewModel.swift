@@ -27,10 +27,14 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         case .authorizedAlways, .authorizedWhenInUse, .authorized:
-            region = MapCameraPosition.region(MKCoordinateRegion(center: locationManager.location!.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03)))
+            region = regionFrom(coordinates: locationManager.location!.coordinate)
         default:
             break
         }
+    }
+
+    func regionFrom(coordinates: CLLocationCoordinate2D) -> MapCameraPosition {
+        MapCameraPosition.region(MKCoordinateRegion(center: coordinates, span: MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03)))
     }
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
