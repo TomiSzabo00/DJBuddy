@@ -13,6 +13,7 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
     @Published var region: MapCameraPosition = .automatic
     @Published private(set) var annotationItems: [EventData] = []
     @Published var isLoading = false
+    @Published var currentLocation: CLLocationCoordinate2D? = nil
 
     var locationManager: CLLocationManager?
 
@@ -44,5 +45,17 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
             self?.annotationItems = [EventData.MapPreviewData, EventData.MapPreviewData2]
             self?.isLoading = false
         }
+    }
+
+    func getLocation() {
+        locationManager?.requestLocation()
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        currentLocation = locations.first?.coordinate
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
     }
 }

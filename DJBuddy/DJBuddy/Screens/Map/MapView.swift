@@ -9,8 +9,8 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
-    @StateObject var viewModel = MapViewModel()
-    
+    @StateObject var viewModel: MapViewModel
+
     var body: some View {
         ZStack(alignment: .topLeading) {
             Map(position: $viewModel.region) {
@@ -29,10 +29,6 @@ struct MapView: View {
             }
             .mapControlVisibility(.visible)
             .edgesIgnoringSafeArea(.bottom)
-            .onAppear {
-                viewModel.checkLocationServices()
-                viewModel.getEvents()
-            }
 
             Button {
                 viewModel.getEvents()
@@ -56,5 +52,5 @@ struct MapView: View {
 }
 
 #Preview {
-    MapView()
+    MapView(viewModel: MapViewModel())
 }

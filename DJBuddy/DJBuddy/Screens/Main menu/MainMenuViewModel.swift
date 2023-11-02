@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 enum EventDataType: String {
     case yourEvents = "your events"
@@ -38,12 +39,29 @@ final class MainMenuViewModel: ObservableObject {
                 yourEvents[.yourEvents] = events
                 sortEventsByDate(&yourEvents[.yourEvents]!)
             case .failure(let error):
-                print(error.localizedDescription)
+                self.error = error
             }
         }
+    }
 
-        // TODO: near you events logic
-        // yourEvents[.nearYou] = [EventData.PreviewData]
+    func fetchNearEvents(to location: CLLocationCoordinate2D, for user: UserData) {
+        isLoading = true
+
+        API.getAllEvents(nearTo: location) { [weak self] result in
+            guard let self else { return }
+            isLoading = false
+            switch result {
+            case .success(let events):
+                var nearYou = events
+                if let joined = yourEvents[.yourEvents] {
+                    nearYou = events.filter { !joined.contains($0) }
+                }
+                yourEvents[.nearYou] = nearYou
+                sortEventsByDate(&yourEvents[.nearYou]!)
+            case .failure(let failure):
+                self.error = failure
+            }
+        }
     }
 
     func fetchEventsQuietly(for user: UserData) {

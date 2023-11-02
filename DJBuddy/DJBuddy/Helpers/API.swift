@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 final class API {
     // MARK: Constants
@@ -237,6 +238,141 @@ final class API {
 
             DispatchQueue.main.async {
                 completion(.success(()))
+            }
+        }
+
+        task.resume()
+    }
+
+    static func getAllEvents(limit: Int? = nil, completion: @escaping (Result<[EventData], APIError>) -> Void) {
+        var components = URLComponents(string: "\(apiAddress)/events/all/")!
+
+        if let limit {
+            components.queryItems = [
+                URLQueryItem(name: "limit", value: "\(limit)")
+            ]
+        }
+
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "GET"
+
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard
+                let data = data,
+                let response = response as? HTTPURLResponse,
+                error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            guard response.statusCode == 200 else {
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: response.debugDescription)))
+                }
+                return
+            }
+
+            do {
+                let responseObject = try JSONDecoder().decode([EventData_Database].self, from: data)
+                let events = responseObject.map { EventData(decodable: $0) }
+                DispatchQueue.main.async {
+                    completion(.success(events))
+                }
+            } catch {
+                print(error) // parsing error
+
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("responseString = \(responseString)")
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: responseString)))
+                    }
+                } else {
+                    print("unable to parse error response as string")
+                }
+            }
+        }
+
+        task.resume()
+    }
+
+    static func getAllEvents(nearTo location: CLLocationCoordinate2D, maxDistance: Double? = nil, completion: @escaping (Result<[EventData], APIError>) -> Void) {
+        var components = URLComponents(string: "\(apiAddress)/events/near_me/")!
+
+        components.queryItems = [
+            URLQueryItem(name: "latitude", value: "\(location.latitude)"),
+            URLQueryItem(name: "longitude", value: "\(location.longitude)")
+        ]
+
+        if let maxDistance {
+            components.queryItems?.append(
+                URLQueryItem(name: "distance", value: "\(maxDistance)")
+            )
+        }
+
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "GET"
+
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard
+                let data = data,
+                let response = response as? HTTPURLResponse,
+                error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            guard response.statusCode == 200 else {
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: response.debugDescription)))
+                }
+                return
+            }
+
+            do {
+                let responseObject = try JSONDecoder().decode([EventData_Database].self, from: data)
+                let events = responseObject.map { EventData(decodable: $0) }
+                DispatchQueue.main.async {
+                    completion(.success(events))
+                }
+            } catch {
+                print(error) // parsing error
+
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("responseString = \(responseString)")
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: responseString)))
+                    }
+                } else {
+                    print("unable to parse error response as string")
+                }
             }
         }
 
