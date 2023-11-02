@@ -29,6 +29,8 @@ struct MainMenu: View {
         .onAppear {
             if viewModel.yourEvents.isEmpty {
                 viewModel.fetchEvents(for: user)
+            } else {
+                viewModel.fetchEventsQuietly(for: user)
             }
         }
         .overlay(alignment: .bottom) {

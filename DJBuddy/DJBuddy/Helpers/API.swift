@@ -182,7 +182,67 @@ final class API {
         task.resume()
     }
 
-    // MARK: Get events
+    // MARK: Events
+
+    static func createEvent(_ event: EventData, by dj: UserData? = nil, completion: @escaping (Result<Void, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/events/create")!
+
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+
+        let parameters: [String: Any] = [
+            "name": event.name,
+            "dj_id": dj?.id ?? event.dj.id,
+            "latitude": event.location.latitude,
+            "longitude": event.location.longitude,
+            "address_title": event.location.title,
+            "address_subtitle": event.location.subtitle,
+            "date": event.date.toIsoString(),
+            "state": event.state.rawValue,
+            "theme": event.theme?.rawValue ?? "none"
+        ]
+
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        } catch let error {
+            print(error.localizedDescription)
+            return
+        }
+
+        let task = URLSession.shared.dataTask(with: request) { _, response, error in
+            guard let response = response as? HTTPURLResponse,
+                  error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
+                    }
+                }
+                return
+            }
+
+            guard response.statusCode == 201 else {
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: response.debugDescription)))
+                }
+                return
+            }
+
+            DispatchQueue.main.async {
+                completion(.success(()))
+            }
+        }
+
+        task.resume()
+    }
+
     static func getEvents(from user: UserData, completion: @escaping (Result<[EventData], APIError>) -> Void) {
         let url = URL(string: "\(apiAddress)/users/\(user.id)/events")!
 

@@ -25,9 +25,7 @@ struct StateManager: View {
                         case .profile:
                             ProfileView()
                         case .createEvent:
-                            CreateEventView() { newEvent in
-                                mainMenuViewModel.join(event: newEvent)
-                            }
+                            CreateEventView()
                         case let .selectEvent(eventList):
                             SelectEventView(yourEvents: eventList)
                         case let .eventControl(event):

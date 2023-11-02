@@ -24,6 +24,7 @@ enum EventDataType: String {
 final class MainMenuViewModel: ObservableObject {
     @Published private(set) var yourEvents: [EventDataType : [EventData]] = [:]
     @Published var isLoading = false
+    private var isLoadingQuietly = false
 
     func fetchEvents(for user: UserData) {
         isLoading = true
@@ -35,6 +36,28 @@ final class MainMenuViewModel: ObservableObject {
             case .success(let events):
                 yourEvents[.yourEvents] = events
                 sortEventsByDate(&yourEvents[.yourEvents]!)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+
+        // TODO: near you events logic
+        // yourEvents[.nearYou] = [EventData.PreviewData]
+    }
+
+    func fetchEventsQuietly(for user: UserData) {
+        guard !isLoading, !isLoadingQuietly else { return }
+
+        isLoadingQuietly = true
+
+        API.getEvents(from: user) { [weak self] result in
+            guard let self else { return }
+            isLoadingQuietly = false
+            switch result {
+            case .success(let events):
+                yourEvents[.yourEvents] = events
+                sortEventsByDate(&yourEvents[.yourEvents]!)
+                objectWillChange.send()
             case .failure(let error):
                 print(error.localizedDescription)
             }

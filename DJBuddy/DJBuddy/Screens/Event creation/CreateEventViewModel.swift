@@ -24,7 +24,7 @@ final class CreateEventViewModel: ObservableObject {
         return dateOfEvent.formatted(.dateTime.year().month().day())
     }
 
-    func createEvent(by user: UserData, completion: @escaping (Result<EventData, APIError>) -> Void) {
+    func createEvent(by user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
         guard let selectedAddress else {
             formError = FormError.addressMissing
             return
@@ -42,10 +42,9 @@ final class CreateEventViewModel: ObservableObject {
                                  location: selectedAddress,
                                  date: dateOfEvent)
 
-        // TODO: send event to BE
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) { [weak self] in
-            completion(.success(newEvent))
+        API.createEvent(newEvent) { [weak self] result in
             self?.isLoading = false
+            completion(result)
         }
     }
 }

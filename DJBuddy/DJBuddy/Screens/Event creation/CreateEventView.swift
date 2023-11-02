@@ -16,8 +16,6 @@ struct CreateEventView: View {
     @State var isDatePickerShowing = false
     @State var error: Error? = nil
 
-    let completion: (EventData) -> Void
-
     var body: some View {
         VStack(spacing: 40) {
             PlaceholderTextField(placeholder: "Name of event", text: $viewModel.eventName)
@@ -27,8 +25,7 @@ struct CreateEventView: View {
             Button("Create event") {
                 viewModel.createEvent(by: user) { result in
                     switch result {
-                    case let .success(newEvent):
-                        completion(newEvent)
+                    case .success():
                         navigator.back()
                     case .failure(let error):
                         self.error = error
@@ -99,6 +96,6 @@ struct CreateEventView: View {
 }
 
 #Preview {
-    CreateEventView() { _ in }
+    CreateEventView()
         .environmentObject(UserData.EmptyUser)
 }

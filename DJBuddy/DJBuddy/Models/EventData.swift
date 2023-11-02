@@ -167,4 +167,11 @@ extension Date {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssZ"
         return dateFormatter.date(from: string) ?? .now
     }
+
+    func toIsoString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssZ"
+        return dateFormatter.string(from: self).appending("Z")
+    }
 }
