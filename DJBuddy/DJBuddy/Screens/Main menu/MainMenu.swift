@@ -45,7 +45,16 @@ struct MainMenu: View {
                     }
             }
 
-            MapView(viewModel: mapViewModel).tag(1)
+            MapView(viewModel: mapViewModel,
+                    isLoading: $viewModel.isLoading,
+                    annotationItems: (viewModel.yourEvents[.yourEvents] ?? []) + (viewModel.yourEvents[.nearYou] ?? [])
+            ) {
+                viewModel.fetchEvents(for: user)
+                if let currentLocation = mapViewModel.currentLocation {
+                    viewModel.fetchNearEvents(to: currentLocation, for: user)
+                }
+            }
+            .tag(1)
         }
         .onAppear {
             mapViewModel.checkLocationServices()

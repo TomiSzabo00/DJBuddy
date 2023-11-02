@@ -10,11 +10,15 @@ import MapKit
 
 struct MapView: View {
     @StateObject var viewModel: MapViewModel
+    
+    @Binding var isLoading: Bool
+    @State var annotationItems: [EventData]
+    let fetchEvents: () -> Void
 
     var body: some View {
         ZStack(alignment: .topLeading) {
             Map(position: $viewModel.region) {
-                ForEach(viewModel.annotationItems) { event in
+                ForEach(annotationItems) { event in
                     Annotation("", coordinate: event.location.coordinate) {
                         EventAnnotation(event: event)
                     }
@@ -31,10 +35,10 @@ struct MapView: View {
             .edgesIgnoringSafeArea(.bottom)
 
             Button {
-                viewModel.getEvents()
+                fetchEvents()
             } label: {
                 Group {
-                    if viewModel.isLoading {
+                    if isLoading {
                         ProgressView()
                     } else {
                         Image(systemName: "arrow.counterclockwise")
@@ -46,11 +50,11 @@ struct MapView: View {
             }
             .padding(8)
             .padding(.top, 40)
-            .disabled(viewModel.isLoading)
+            .disabled(isLoading)
         }
     }
 }
 
 #Preview {
-    MapView(viewModel: MapViewModel())
+    MapView(viewModel: MapViewModel(), isLoading: .constant(false), annotationItems: []) {}
 }
