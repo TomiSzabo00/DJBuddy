@@ -110,6 +110,7 @@ final class EventControlViewModel: ObservableObject, Hashable {
             task?.cancel(with: .goingAway, reason: nil)
             print("\t- WebSocket closed")
         }
+        webSocketTasks.removeAll()
     }
 
     private func decodeEventData(_ data: Data) -> EventData? {
