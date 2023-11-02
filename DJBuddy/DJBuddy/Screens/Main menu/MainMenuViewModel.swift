@@ -23,6 +23,7 @@ enum EventDataType: String {
 
 final class MainMenuViewModel: ObservableObject {
     @Published private(set) var yourEvents: [EventDataType : [EventData]] = [:]
+    @Published var error: Error? = nil
     @Published var isLoading = false
     private var isLoadingQuietly = false
 
@@ -82,23 +83,37 @@ final class MainMenuViewModel: ObservableObject {
         events.sort(by: { $0.date < $1.date })
     }
 
-    func join(event: EventData) {
+    func join(event: EventData, user: UserData) {
         guard !(yourEvents[.yourEvents] ?? []).contains(event) else { return }
 
-        if (yourEvents[.nearYou] ?? []).contains(event) {
-            yourEvents[.nearYou]?.removeAll(where: { $0 == event})
-        }
+        isLoading = true
 
-        if yourEvents[.yourEvents] != nil {
-            yourEvents[.yourEvents]!.append(event)
-        } else {
-            yourEvents[.yourEvents] = [event]
+        API.joinEvent(event, user: user) { [weak self] result in
+            self?.isLoading = false
+            switch result {
+            case .success():
+                self?.fetchEvents(for: user)
+            case .failure(let failure):
+                DispatchQueue.main.async {
+                    self?.error = failure
+                }
+            }
         }
-
-        sortEventsByDate(&yourEvents[.yourEvents]!)
     }
 
-    func leave(event: EventData) {
-        yourEvents[.yourEvents]?.removeAll(where: { $0 == event})
+    func leave(event: EventData, user: UserData) {
+        isLoading = true
+
+        API.leaveEvent(event, user: user) { [weak self] result in
+            self?.isLoading = false
+            switch result {
+            case .success():
+                self?.fetchEvents(for: user)
+            case .failure(let failure):
+                DispatchQueue.main.async {
+                    self?.error = failure
+                }
+            }
+        }
     }
 }

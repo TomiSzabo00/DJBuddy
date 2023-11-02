@@ -40,19 +40,20 @@ struct UserHomeView: View {
             await viewModel.refreshEvents(for: user)
         }
         .animation(.default, value: events)
+        .errorAlert(error: $viewModel.error)
     }
 
     @ViewBuilder private func menuButtons(for event: EventData, with eventType: EventDataType) -> some View {
         VStack {
             if eventType == .yourEvents {
                 Button {
-                    viewModel.leave(event: event)
+                    viewModel.leave(event: event, user: user)
                 } label: {
                     Label("Leave event", systemImage: "rectangle.portrait.and.arrow.forward")
                 }
             } else if eventType == .nearYou {
                 Button {
-                    viewModel.join(event: event)
+                    viewModel.join(event: event, user: user)
                 } label: {
                     Label("Join event", systemImage: "person.badge.plus")
                 }

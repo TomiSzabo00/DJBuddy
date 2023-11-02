@@ -494,6 +494,90 @@ final class API {
         task.resume()
     }
 
+    static func joinEvent(_ event: EventData, user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/events/\(event.id)/join/\(user.id)")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+
+        let task = URLSession.shared.dataTask(with: request) { _, response, error in
+            guard
+                let response = response as? HTTPURLResponse,
+                error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            guard response.statusCode == 200 else {
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: response.debugDescription)))
+                }
+                return
+            }
+
+            DispatchQueue.main.async {
+                completion(.success(()))
+            }
+        }
+
+        task.resume()
+    }
+
+    static func leaveEvent(_ event: EventData, user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/events/\(event.id)/leave/\(user.id)")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+
+        let task = URLSession.shared.dataTask(with: request) { _, response, error in
+            guard
+                let response = response as? HTTPURLResponse,
+                error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            guard response.statusCode == 200 else {
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: response.debugDescription)))
+                }
+                return
+            }
+
+            DispatchQueue.main.async {
+                completion(.success(()))
+            }
+        }
+
+        task.resume()
+    }
+
     // MARK: Song functions
 
     static func requestSong(_ song: SongData, for event: EventData, completion: @escaping (Result<Int, APIError>) -> Void) {
