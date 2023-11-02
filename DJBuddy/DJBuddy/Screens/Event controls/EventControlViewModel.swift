@@ -232,28 +232,25 @@ final class EventControlViewModel: ObservableObject, Hashable {
         }
     }
 
-    func removeSongFromList(_ song: SongData) {
-        event.requestedSongs.removeAll(where: { $0 == song })
+    func removeSong(_ song: SongData, completion: @escaping (Result<Void, APIError>) -> Void) {
+        isLoading = true
+        API.removeSong(song) { [weak self] result in
+            self?.isLoading = false
+            completion(result)
+        }
     }
 
     func decline(song: SongData, completion: @escaping (Result<Void, APIError>) -> Void) {
-        isLoading = true
-        // TODO: remove song from BE
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
-            self?.removeSongFromList(song)
-            completion(.success(()))
-            self?.isLoading = false
+        removeSong(song) { result in
+            completion(result)
         }
     }
 
     func accept(song: SongData, completion: @escaping (Result<Void, APIError>) -> Void) {
-        isLoading = true
         // TODO: give money to DJ
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) { [weak self] in
-            self?.removeSongFromList(song)
-            //completion(.success(()))
-            completion(.failure(.unreachable))
-            self?.isLoading = false
+        
+        removeSong(song) { result in
+            completion(result)
         }
     }
 
