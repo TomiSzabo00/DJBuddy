@@ -231,6 +231,8 @@ final class EventControlViewModel: ObservableObject, Hashable {
                 completion(.failure(failure))
             }
         }
+
+        // TODO: take money from user
     }
 
     func removeSong(_ song: SongData, completion: @escaping (Result<Void, APIError>) -> Void) {
