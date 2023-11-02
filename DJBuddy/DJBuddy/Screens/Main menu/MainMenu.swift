@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Combine
-import CoreLocation
 
 struct MainMenu: View {
     @EnvironmentObject private var navigator: Navigator
@@ -28,13 +27,9 @@ struct MainMenu: View {
             } else {
                 UserHomeView(viewModel: viewModel).tag(0)
                     .onAppear {
-                        // Create a custom publisher that starts with an initial value (0)
-                        let initialPublisher = Just(CLLocationCoordinate2D())
-
                         // Create a custom publisher that uses the throttle operator
                         let throttledPublisher = mapViewModel.$currentLocation
                             .compactMap { $0 }
-                            .merge(with: initialPublisher)
                             .throttle(for: .seconds(600), scheduler: RunLoop.main, latest: true)
 
                         // Subscribe to the custom publisher
