@@ -35,7 +35,8 @@ struct MainMenu: View {
                         // Subscribe to the custom publisher
                         self.cancellable = throttledPublisher
                             .sink { newValue in
-                                viewModel.fetchNearEvents(to: newValue, for: user)
+                                viewModel.currentLocation = newValue
+                                viewModel.fetchNearEvents(for: user)
                             }
                     }
             }
@@ -46,7 +47,8 @@ struct MainMenu: View {
             ) {
                 viewModel.fetchEvents(for: user)
                 if let currentLocation = mapViewModel.currentLocation {
-                    viewModel.fetchNearEvents(to: currentLocation, for: user)
+                    viewModel.currentLocation = currentLocation
+                    viewModel.fetchNearEvents(for: user)
                 }
             }
             .tag(1)

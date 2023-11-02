@@ -26,6 +26,7 @@ final class MainMenuViewModel: ObservableObject {
     @Published private(set) var yourEvents: [EventDataType : [EventData]] = [:]
     @Published var error: Error? = nil
     @Published var isLoading = false
+    @Published var currentLocation: CLLocationCoordinate2D? = nil
     private var isLoadingQuietly = false
 
     func fetchEvents(for user: UserData) {
@@ -44,7 +45,8 @@ final class MainMenuViewModel: ObservableObject {
         }
     }
 
-    func fetchNearEvents(to location: CLLocationCoordinate2D, for user: UserData) {
+    func fetchNearEvents(for user: UserData) {
+        guard let location = currentLocation else { return }
         isLoading = true
 
         API.getAllEvents(nearTo: location) { [weak self] result in
@@ -81,9 +83,6 @@ final class MainMenuViewModel: ObservableObject {
                 print(error.localizedDescription)
             }
         }
-
-        // TODO: near you events logic
-        // yourEvents[.nearYou] = [EventData.PreviewData]
     }
 
     func refreshEvents(for user: UserData) async {
@@ -111,6 +110,7 @@ final class MainMenuViewModel: ObservableObject {
             switch result {
             case .success():
                 self?.fetchEvents(for: user)
+                self?.fetchNearEvents(for: user)
             case .failure(let failure):
                 DispatchQueue.main.async {
                     self?.error = failure
@@ -127,6 +127,7 @@ final class MainMenuViewModel: ObservableObject {
             switch result {
             case .success():
                 self?.fetchEvents(for: user)
+                self?.fetchNearEvents(for: user)
             case .failure(let failure):
                 DispatchQueue.main.async {
                     self?.error = failure
