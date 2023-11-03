@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import StripePaymentSheet
 
 final class EventControlViewModel: ObservableObject, Hashable {
     @Published var event: EventData
@@ -17,6 +18,10 @@ final class EventControlViewModel: ObservableObject, Hashable {
     var currentSong: SongData? = nil
 
     private var webSocketTasks = Set<URLSessionWebSocketTask?>()
+
+    // MARK: Payment
+    @Published var paymentSheet: PaymentSheet?
+    @Published var paymentResult: Result<Void, APIError>?
 
     func initWebSocketForGeneralEventChanges() {
         print("Opening websocket for general event changes...")
@@ -282,7 +287,44 @@ final class EventControlViewModel: ObservableObject, Hashable {
     func sortSongs(_ songs: inout [SongData]) {
         songs.sort(by: { $0.amount > $1.amount })
     }
+}
 
+/// Payment extension
+extension EventControlViewModel {
+    func preparePaymentSheet(price: Double) {
+        paymentSheet = nil
+        API.preparePayment(forAmount: price) { [weak self] result in
+            switch result {
+            case .success(let paymentSheet):
+                DispatchQueue.main.async {
+                    self?.paymentSheet = paymentSheet
+                }
+            case .failure(let failure):
+                DispatchQueue.main.async {
+                    self?.formError = failure
+                }
+            }
+        }
+    }
+
+    func onPaymentCompletion(result: PaymentSheetResult) {
+        switch result {
+        case .completed:
+            requestSong { requestResult in
+                DispatchQueue.main.async {
+                    self.paymentResult = requestResult
+                }
+            }
+        case .canceled:
+            self.formError = APIError.general(desc: "Payment cancelled.")
+        case .failed(let error):
+            self.formError = APIError.general(desc: error.localizedDescription)
+        }
+    }
+}
+
+/// Hashable extension
+extension EventControlViewModel {
     static func == (lhs: EventControlViewModel, rhs: EventControlViewModel) -> Bool {
         lhs.event == rhs.event
     }

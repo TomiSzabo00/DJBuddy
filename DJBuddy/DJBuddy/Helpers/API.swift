@@ -7,6 +7,8 @@
 
 import Foundation
 import CoreLocation
+import StripeCore
+import StripePaymentSheet
 
 final class API {
     // MARK: Constants
@@ -892,5 +894,51 @@ final class API {
         }
         let task = connectToWebSocket(on: concreteUrl)
         return task
+    }
+
+    // MARK: Payment
+
+    static func preparePayment(forAmount amount: Double, completion: @escaping (Result<PaymentSheet, APIError>) -> Void) {
+        var components = URLComponents(string: "\(apiAddress)/payment/create/")!
+
+        components.queryItems = [
+            URLQueryItem(name: "amount", value: "\(amount)")
+        ]
+
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "GET"
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data, error == nil
+            else {
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: error!.localizedDescription)))
+                }
+                return
+            }
+
+            do {
+                let response = try JSONDecoder().decode(PaymentResponse.self, from: data)
+
+                STPAPIClient.shared.publishableKey = response.publishableKey
+
+                // Create a PaymentSheet instance
+                var configuration = PaymentSheet.Configuration()
+                configuration.merchantDisplayName = "DJBuddy, Inc."
+                configuration.customer = .init(id: response.customer, ephemeralKeySecret: response.ephemeralKey)
+
+                let paymentSheet = PaymentSheet(paymentIntentClientSecret: response.paymentIntent, configuration: configuration)
+                DispatchQueue.main.async {
+                    completion(.success(paymentSheet))
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: error.localizedDescription)))
+                    print(String.init(data: data, encoding: .utf8) ?? "")
+                }
+            }
+        }
+
+        task.resume()
     }
 }
