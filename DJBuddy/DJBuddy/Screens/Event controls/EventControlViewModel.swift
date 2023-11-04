@@ -204,7 +204,7 @@ final class EventControlViewModel: ObservableObject, Hashable {
         }
     }
 
-    func requestSong(completion: @escaping (Result<Void, APIError>) -> Void) {
+    func requestSong(by user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
         guard let selectedSong else {
             formError = FormError.songMissing
             return
@@ -223,18 +223,26 @@ final class EventControlViewModel: ObservableObject, Hashable {
         isLoading = true
 
         selectedSong.amount = selectedPrice
-        API.requestSong(selectedSong, for: event) { [weak self] result in
-            self?.isLoading = false
+
+        API.removeFromUserBalance(amount: selectedPrice, user: user) { [weak self] result in
+            guard let self else { return }
             switch result {
-            case .success(let id):
-                selectedSong.id = id
-                completion(.success(()))
+            case .success():
+                API.requestSong(selectedSong, for: self.event) { result in
+                    self.isLoading = false
+                    switch result {
+                    case .success(let id):
+                        selectedSong.id = id
+                        completion(.success(()))
+                    case .failure(let failure):
+                        completion(.failure(failure))
+                    }
+                }
             case .failure(let failure):
+                self.isLoading = false
                 completion(.failure(failure))
             }
         }
-
-        // TODO: take money from user
     }
 
     func removeSong(_ song: SongData, completion: @escaping (Result<Void, APIError>) -> Void) {
