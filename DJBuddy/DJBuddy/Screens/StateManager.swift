@@ -23,7 +23,8 @@ struct StateManager: View {
                         case let .requestSong(eventData):
                             RequestSongView(viewModel: EventControlViewModel(event: eventData))
                         case .profile:
-                            ProfileView()
+                            ProfileView(user: viewModel.currentUser ?? UserData.EmptyUser)
+                                .environmentObject(viewModel)
                         case .createEvent:
                             CreateEventView()
                         case let .selectEvent(eventList):
@@ -34,6 +35,8 @@ struct StateManager: View {
                             UserEventView(event: event)
                         case let .songDetails(song, vm):
                             SongDetalsView(song: song, viewModel: vm)
+                        case .balanceTopUp:
+                            BalanceTopUpView()
                         }
                     }
             } else {

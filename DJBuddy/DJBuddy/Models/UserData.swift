@@ -16,10 +16,11 @@ class UserData_Database: Decodable {
     let lastName: String
     let type: String
     var profilePicUrl: String
+    let balance: Double
 
     enum CodingKeys: String, CodingKey {
         case id = "uuid"
-        case username, email, firstName, lastName, type, profilePicUrl
+        case username, email, firstName, lastName, type, profilePicUrl, balance
     }
 }
 
@@ -31,12 +32,13 @@ final class UserData: Identifiable, ObservableObject, Hashable {
     let lastName: String
     let type: UserTypeEnum
     var profilePicUrl: String
+    var balance: Double
 
     var fullName: String {
         "\(firstName) \(lastName)"
     }
 
-    init(id: String, username: String, email: String, firstName: String, lastName: String, type: UserTypeEnum, profilePicUrl: String) {
+    init(id: String, username: String, email: String, firstName: String, lastName: String, type: UserTypeEnum, profilePicUrl: String, balance: Double) {
         self.id = id
         self.username = username
         self.email = email
@@ -44,6 +46,7 @@ final class UserData: Identifiable, ObservableObject, Hashable {
         self.lastName = lastName
         self.type = type
         self.profilePicUrl = profilePicUrl
+        self.balance = balance
     }
 
     init(decodable: UserData_Database) {
@@ -54,6 +57,7 @@ final class UserData: Identifiable, ObservableObject, Hashable {
         self.lastName = decodable.lastName
         self.type = UserTypeEnum(rawValue: decodable.type) ?? .user
         self.profilePicUrl = decodable.profilePicUrl
+        self.balance = decodable.balance
     }
 
     func hash(into hasher: inout Hasher) {
@@ -71,7 +75,8 @@ final class UserData: Identifiable, ObservableObject, Hashable {
                  firstName: "",
                  lastName: "",
                  type: .user,
-                 profilePicUrl: ""
+                 profilePicUrl: "",
+                 balance: -1
         )
     }
 }

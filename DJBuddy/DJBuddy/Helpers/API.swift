@@ -185,6 +185,98 @@ final class API {
         task.resume()
     }
 
+    // MARK: User
+
+    static func getUserData(_ user: UserData, completion: @escaping (Result<UserData, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/users/\(user.id)")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard
+                let data = data,
+                error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            do {
+                let responseObject = try JSONDecoder().decode(UserData_Database.self, from: data)
+                let user = UserData(decodable: responseObject)
+                DispatchQueue.main.async {
+                    completion(.success(user))
+                }
+            } catch {
+                print(error) // parsing error
+
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("responseString = \(responseString)")
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: responseString)))
+                    }
+                } else {
+                    print("unable to parse error response as string")
+                }
+            }
+        }
+
+        task.resume()
+    }
+
+    static func addToUserBalance(amount: Double, user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/users/\(user.id)/balance/\(amount)")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard error == nil, let response = response as? HTTPURLResponse
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            guard response.statusCode == 200 else {
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: response.debugDescription)))
+                }
+                return
+            }
+
+            DispatchQueue.main.async {
+                completion(.success(()))
+            }
+        }
+
+        task.resume()
+    }
+
     // MARK: Events
 
     static func createEvent(_ event: EventData, by dj: UserData? = nil, completion: @escaping (Result<Void, APIError>) -> Void) {
@@ -926,6 +1018,17 @@ final class API {
                 var configuration = PaymentSheet.Configuration()
                 configuration.merchantDisplayName = "DJBuddy, Inc."
                 configuration.customer = .init(id: response.customer, ephemeralKeySecret: response.ephemeralKey)
+                configuration.style = .alwaysDark
+                configuration.defaultBillingDetails.address.country = "HU"
+
+                var appearance = PaymentSheet.Appearance()
+                appearance.cornerRadius = 12
+                appearance.colors.primary = .systemRed
+                appearance.colors.textSecondary = .white
+                appearance.colors.componentText = .white
+                appearance.colors.componentPlaceholderText = .white
+
+                configuration.appearance = appearance
 
                 let paymentSheet = PaymentSheet(paymentIntentClientSecret: response.paymentIntent, configuration: configuration)
                 DispatchQueue.main.async {

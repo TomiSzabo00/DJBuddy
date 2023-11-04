@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import StripePaymentSheet
 
 struct RequestSongView: View {
     @EnvironmentObject var navigator: Navigator
@@ -29,46 +28,22 @@ struct RequestSongView: View {
 
             Spacer()
 
-            Button("I agree to the [Terms and Conditions](https://en.wikipedia.org/wiki/Terms_of_service) and want to continue with the payment.") {
+            Button("I agree to the [Terms and Conditions](https://en.wikipedia.org/wiki/Terms_of_service) and understand that by pressing this button i will be charged.") {
 
             }
             .buttonStyle(.checkmark(isOn: $viewModel.didAgree))
 
-            if let paymentSheet = viewModel.paymentSheet {
-                PaymentSheet.PaymentButton(
-                    paymentSheet: paymentSheet,
-                    onCompletion: viewModel.onPaymentCompletion
-                ) {
-                    Text("Go to payment")
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundColor(.white)
-                        .frame(height: 60)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.red)
-                        .cornerRadius(12)
+            Button("Request") {
+                viewModel.requestSong() { result in
+                    switch result {
+                    case .success(_):
+                        navigator.back()
+                    case .failure(let error):
+                        self.error = error
+                    }
                 }
-            } else {
-                Button {
-
-                } label: {
-                    ProgressView()
-                }
-                .buttonStyle(.largeProminent)
-                .disabled(true)
             }
-        }
-        .onReceive(viewModel.$selectedPrice) { newPrice in
-            viewModel.preparePaymentSheet(price: newPrice)
-        }
-        .onReceive(viewModel.$paymentResult) { result in
-            switch result {
-            case .success(_):
-                navigator.back()
-            case .failure(let error):
-                self.error = error
-            case .none:
-                break
-            }
+            .buttonStyle(.largeProminent)
         }
         .foregroundStyle(.white)
         .padding()
