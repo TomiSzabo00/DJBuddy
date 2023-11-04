@@ -259,31 +259,45 @@ final class EventControlViewModel: ObservableObject, Hashable {
         }
     }
 
-    func accept(song: SongData, completion: @escaping (Result<Void, APIError>) -> Void) {
-        // TODO: give money to DJ
-        
-        removeSong(song) { result in
-            completion(result)
+    func accept(song: SongData, dj: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
+        API.addToUserBalance(amount: song.amount, user: dj) { [weak self] result in
+            switch result {
+            case .success():
+                self?.removeSong(song) { result in
+                    completion(result)
+                }
+            case .failure(let failure):
+                completion(.failure(failure))
+            }
         }
     }
 
-    func increasePrice(completion: @escaping (Result<Void, APIError>) -> Void) {
+    func increasePrice(by user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
         guard let currentSong,
         let idx = event.requestedSongs.firstIndex(of: currentSong)
         else { return }
 
         isLoading = true
 
-        API.increasePrice(of: currentSong, by: selectedPrice) { [weak self] result in
-            self?.isLoading = false
+        API.removeFromUserBalance(amount: selectedPrice, user: user) { [weak self] result in
+            guard let self else { return }
             switch result {
-            case .success(let newAmount):
-                DispatchQueue.main.async {
-                    self?.event.requestedSongs[idx].amount = newAmount
-                    self?.objectWillChange.send()
-                    completion(.success(()))
+            case .success():
+                API.increasePrice(of: currentSong, by: selectedPrice) { [weak self] result in
+                    self?.isLoading = false
+                    switch result {
+                    case .success(let newAmount):
+                        DispatchQueue.main.async {
+                            self?.event.requestedSongs[idx].amount = newAmount
+                            self?.objectWillChange.send()
+                            completion(.success(()))
+                        }
+                    case .failure(let failure):
+                        completion(.failure(failure))
+                    }
                 }
             case .failure(let failure):
+                self.isLoading = false
                 completion(.failure(failure))
             }
         }
