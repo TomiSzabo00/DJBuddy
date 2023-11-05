@@ -389,6 +389,57 @@ final class API {
         task.resume()
     }
 
+    static func withdrawFromBalance(of user: UserData, amount: Double? = nil, completion: @escaping (Result<Void, APIError>) -> Void) {
+        var components = URLComponents(string: "\(apiAddress)/users/\(user.id)/withdraw/")!
+
+        if let amount {
+            components.queryItems = [
+                URLQueryItem(name: "amount", value: "\(amount)")
+            ]
+        }
+
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "PUT"
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data, error == nil, let response = response as? HTTPURLResponse
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            guard response.statusCode == 200 else {
+                if didDecodeCustomResponse(from: data, completion: completion) {
+                    return
+                }
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: response.debugDescription)))
+                }
+                return
+            }
+
+//            let amountStr = String(data: data, encoding: .utf8) ?? ""
+//            let amount = Double(amountStr) ?? -1
+            DispatchQueue.main.async {
+                completion(.success(()))
+            }
+        }
+
+        task.resume()
+    }
+
     // MARK: Events
 
     static func createEvent(_ event: EventData, by dj: UserData? = nil, completion: @escaping (Result<Void, APIError>) -> Void) {

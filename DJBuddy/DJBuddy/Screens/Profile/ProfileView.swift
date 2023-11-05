@@ -76,26 +76,26 @@ struct ProfileView: View {
             Spacer()
 
             Button(user.type == .user ? "Top up balance" : "Withdraw balance") {
-                navigator.navigate(to: .balanceTopUp)
+                if user.type == .user {
+                    navigator.navigate(to: .balanceTopUp)
+                } else {
+                    isLoading = true
+                    API.withdrawFromBalance(of: user) { result in
+                        isLoading = false
+                        switch result {
+                        case .success():
+                            refreshUser()
+                        case .failure(let error):
+                            self.error = error
+                        }
+                    }
+                }
             }
             .buttonStyle(.largeProminent)
             .padding()
         }
         .onAppear {
-            isLoading = true
-            viewModel.refreshUser { result in
-                isLoading = false
-                switch result {
-                case .success():
-                    if let currentUser = viewModel.currentUser {
-                        // Workaround to refresh user datas
-                        user = UserData.EmptyUser
-                        user = currentUser
-                    }
-                case .failure(let failure):
-                    error = failure
-                }
-            }
+            refreshUser()
         }
         .loadingOverlay(isLoading: $isLoading)
         .errorAlert(error: $error)
@@ -103,6 +103,23 @@ struct ProfileView: View {
         .ignoresSafeArea(edges: .horizontal)
         .navBarWithTitle(title: "Profile", navigator: navigator, leadingButton: .back)
         .backgroundColor(.asset.background)
+    }
+
+    private func refreshUser() {
+        isLoading = true
+        viewModel.refreshUser { result in
+            isLoading = false
+            switch result {
+            case .success():
+                if let currentUser = viewModel.currentUser {
+                    // Workaround to refresh user datas
+                    user = UserData.EmptyUser
+                    user = currentUser
+                }
+            case .failure(let failure):
+                error = failure
+            }
+        }
     }
 }
 
