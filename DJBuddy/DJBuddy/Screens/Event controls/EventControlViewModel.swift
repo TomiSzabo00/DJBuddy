@@ -248,8 +248,6 @@ final class EventControlViewModel: ObservableObject, Hashable {
         removeSong(song) { result in
             completion(result)
         }
-
-        // TODO: refund users balances ???
     }
 
     func accept(song: SongData, dj: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
