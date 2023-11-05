@@ -16,21 +16,26 @@ struct ProfileView: View {
     @State private var height: CGFloat = 0
     @State private var error: Error?
     @State private var isLoading = false
+    @State private var isPhotoSelectShowing = false
+
+    @State private var id = UUID()
 
     var body: some View {
         VStack {
             GeometryReader { geo in
                 VStack(spacing: 0) {
-                    AsyncImage(url: URL(string: user.profilePicUrl)) { image in
+                    AsyncImage(url: URL(string: "\(API.apiAddress)/\(user.profilePicUrl)")) { image in
                         image.resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: geo.size.width)
+                            .scaledToFill()
+                            .frame(width: geo.size.width, height: geo.size.width, alignment: .center)
+                            .clipped()
                     } placeholder: {
                         Image("default")
                             .resizable()
                             .scaledToFit()
                             .frame(height: geo.size.width)
                     }
+                    .id(id)
                     .overlay(
                         LinearGradient(gradient: Gradient(colors: [.clear, .asset.background]),
                                        startPoint: .top,
@@ -48,8 +53,7 @@ struct ProfileView: View {
                         Spacer()
 
                         CircleButton {
-                            // TODO: change profile pic
-                            print("Profile pic change action")
+                            isPhotoSelectShowing.toggle()
                         } label: {
                             Image(systemName: "photo.on.rectangle.angled")
                                 .font(.title3)
@@ -97,6 +101,13 @@ struct ProfileView: View {
         .onAppear {
             refreshUser()
         }
+        .sheet(isPresented: $isPhotoSelectShowing) {
+            refreshUser()
+        } content: {
+            NavigationView {
+                PhotoPickerView(isShowing: $isPhotoSelectShowing)
+            }
+        }
         .loadingOverlay(isLoading: $isLoading)
         .errorAlert(error: $error)
         .foregroundStyle(Color.white)
@@ -111,10 +122,11 @@ struct ProfileView: View {
             isLoading = false
             switch result {
             case .success():
-                if let currentUser = viewModel.currentUser {
-                    // Workaround to refresh user datas
-                    user = UserData.EmptyUser
-                    user = currentUser
+                DispatchQueue.main.async {
+                    if let currentUser = viewModel.currentUser {
+                        user = currentUser
+                        id = UUID()
+                    }
                 }
             case .failure(let failure):
                 error = failure

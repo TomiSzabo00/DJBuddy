@@ -12,7 +12,7 @@ struct EventListTile: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            AsyncImage(url: URL(string: eventData.dj.profilePicUrl)) { image in
+            AsyncImage(url: URL(string: "\(API.apiAddress)/\(eventData.dj.profilePicUrl)")) { image in
                 image.resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 100)

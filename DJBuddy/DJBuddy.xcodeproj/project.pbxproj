@@ -82,6 +82,8 @@
 		55FB42E52AF57D0800ED9197 /* PaymentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB42E42AF57D0800ED9197 /* PaymentResponse.swift */; };
 		55FB42E72AF6A52100ED9197 /* StripePaymentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB42E62AF6A52100ED9197 /* StripePaymentHelper.swift */; };
 		55FB42EA2AF6A5F900ED9197 /* BalanceTopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB42E92AF6A5F900ED9197 /* BalanceTopUpView.swift */; };
+		55FB42EC2AF7F66C00ED9197 /* PhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB42EB2AF7F66C00ED9197 /* PhotoPickerView.swift */; };
+		55FB42EE2AF7FDE500ED9197 /* PhotoPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB42ED2AF7FDE500ED9197 /* PhotoPickerViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -155,6 +157,8 @@
 		55FB42E42AF57D0800ED9197 /* PaymentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResponse.swift; sourceTree = "<group>"; };
 		55FB42E62AF6A52100ED9197 /* StripePaymentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripePaymentHelper.swift; sourceTree = "<group>"; };
 		55FB42E92AF6A5F900ED9197 /* BalanceTopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceTopUpView.swift; sourceTree = "<group>"; };
+		55FB42EB2AF7F66C00ED9197 /* PhotoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerView.swift; sourceTree = "<group>"; };
+		55FB42ED2AF7FDE500ED9197 /* PhotoPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -414,6 +418,8 @@
 			children = (
 				552E86022AD47336006D5E86 /* ProfileView.swift */,
 				55FB42E92AF6A5F900ED9197 /* BalanceTopUpView.swift */,
+				55FB42EB2AF7F66C00ED9197 /* PhotoPickerView.swift */,
+				55FB42ED2AF7FDE500ED9197 /* PhotoPickerViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -514,6 +520,7 @@
 				5573DC722AE30B090025751F /* SongDetalsView.swift in Sources */,
 				5573DC742AE41CCC0025751F /* SelectEventView.swift in Sources */,
 				552E86052AD476C9006D5E86 /* CircleButton.swift in Sources */,
+				55FB42EC2AF7F66C00ED9197 /* PhotoPickerView.swift in Sources */,
 				552E85F02AD3F85C006D5E86 /* MenuButtonType.swift in Sources */,
 				5573DC882AE6CB9C0025751F /* Errors.swift in Sources */,
 				55A583A52AE1531E00438049 /* MapSelectionView.swift in Sources */,
@@ -542,6 +549,7 @@
 				5573DC592AE19DC50025751F /* EventData.swift in Sources */,
 				552E86072AD47BD9006D5E86 /* NavigationBarModifier.swift in Sources */,
 				5573DC692AE2F2B30025751F /* MainMenuViewModel.swift in Sources */,
+				55FB42EE2AF7FDE500ED9197 /* PhotoPickerViewModel.swift in Sources */,
 				5573DC7A2AE42D750025751F /* CheckmarkButtonStyle.swift in Sources */,
 				5573DC612AE2AAE50025751F /* InfoView.swift in Sources */,
 				5584D4182AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift in Sources */,

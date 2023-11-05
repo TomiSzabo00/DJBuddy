@@ -65,7 +65,9 @@ final class UserData: Identifiable, ObservableObject, Hashable {
     }
 
     static func == (lhs: UserData, rhs: UserData) -> Bool {
-        lhs.id == rhs.id
+        lhs.id == rhs.id &&
+        lhs.balance == rhs.balance &&
+        lhs.profilePicUrl == rhs.profilePicUrl
     }
 
     static var EmptyUser: UserData {
