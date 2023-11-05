@@ -224,22 +224,13 @@ final class EventControlViewModel: ObservableObject, Hashable {
 
         selectedSong.amount = selectedPrice
 
-        API.removeFromUserBalance(amount: selectedPrice, user: user) { [weak self] result in
-            guard let self else { return }
+        API.requestSong(selectedSong, for: self.event, by: user) { result in
+            self.isLoading = false
             switch result {
-            case .success():
-                API.requestSong(selectedSong, for: self.event) { result in
-                    self.isLoading = false
-                    switch result {
-                    case .success(let id):
-                        selectedSong.id = id
-                        completion(.success(()))
-                    case .failure(let failure):
-                        completion(.failure(failure))
-                    }
-                }
+            case .success(let id):
+                selectedSong.id = id
+                completion(.success(()))
             case .failure(let failure):
-                self.isLoading = false
                 completion(.failure(failure))
             }
         }
