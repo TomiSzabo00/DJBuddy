@@ -185,4 +185,21 @@ final class AuthViewModel: ObservableObject {
 
         return true
     }
+
+    func refreshUser(completion: @escaping (Result<Void, APIError>) -> Void) {
+        guard let currentUser else { completion(.failure(.general(desc: "User doesn't exists."))); return }
+
+        API.getUserData(currentUser) { [weak self] result in
+            switch result {
+            case .success(let success):
+                DispatchQueue.main.async {
+                    self?.currentUser = success
+                    self?.objectWillChange.send()
+                    completion(.success(()))
+                }
+            case .failure(let failure):
+                completion(.failure(failure))
+            }
+        }
+    }
 }

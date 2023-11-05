@@ -7,12 +7,74 @@
 
 import Foundation
 import CoreLocation
+import StripeCore
+import StripePaymentSheet
+
+struct CustomResponse: Decodable {
+    let detail: String
+}
 
 final class API {
     // MARK: Constants
     private static let apiAddress = "http://127.0.0.1:9000"
     private static let apiWebSocketAddress = "ws://127.0.0.1:9000"
     private static let eventWebSocketUrl = "\(apiWebSocketAddress)/ws/events"
+
+    static func didDecodeCustomResponse(from data: Data?, completion: @escaping (Result<UserData, APIError>) -> Void) -> Bool {
+        guard let data else { return false }
+        do {
+            let responseObject = try JSONDecoder().decode(CustomResponse.self, from: data)
+            DispatchQueue.main.async {
+                completion(.failure(.general(desc: responseObject.detail)))
+            }
+            return true
+        } catch {
+            print(error.localizedDescription)
+        }
+        return false
+    }
+
+    static func didDecodeCustomResponse(from data: Data?, completion: @escaping (Result<Void, APIError>) -> Void) -> Bool {
+        guard let data else { return false }
+        do {
+            let responseObject = try JSONDecoder().decode(CustomResponse.self, from: data)
+            DispatchQueue.main.async {
+                completion(.failure(.general(desc: responseObject.detail)))
+            }
+            return true
+        } catch {
+            print(error.localizedDescription)
+        }
+        return false
+    }
+
+    static func didDecodeCustomResponse(from data: Data?, completion: @escaping (Result<[EventData], APIError>) -> Void) -> Bool {
+        guard let data else { return false }
+        do {
+            let responseObject = try JSONDecoder().decode(CustomResponse.self, from: data)
+            DispatchQueue.main.async {
+                completion(.failure(.general(desc: responseObject.detail)))
+            }
+            return true
+        } catch {
+            print(error.localizedDescription)
+        }
+        return false
+    }
+
+    static func didDecodeCustomResponse(from data: Data?, completion: @escaping (Result<Int, APIError>) -> Void) -> Bool {
+        guard let data else { return false }
+        do {
+            let responseObject = try JSONDecoder().decode(CustomResponse.self, from: data)
+            DispatchQueue.main.async {
+                completion(.failure(.general(desc: responseObject.detail)))
+            }
+            return true
+        } catch {
+            print(error.localizedDescription)
+        }
+        return false
+    }
 
     // MARK: Login
     static func login(with email: String, and password: String, completion: @escaping (Result<UserData, APIError>) -> Void) {
@@ -64,6 +126,9 @@ final class API {
                         completion(.failure(.wrongEmailOrPassword))
                     }
                 } else {
+                    if didDecodeCustomResponse(from: data, completion: completion) {
+                        return
+                    }
                     DispatchQueue.main.async {
                         completion(.failure(.general(desc: response.debugDescription)))
                     }
@@ -153,6 +218,9 @@ final class API {
                         completion(.failure(.userAlreadyExists))
                     }
                 } else {
+                    if didDecodeCustomResponse(from: data, completion: completion) {
+                        return
+                    }
                     DispatchQueue.main.async {
                         completion(.failure(.general(desc: response.debugDescription)))
                     }
@@ -177,6 +245,195 @@ final class API {
                 } else {
                     print("unable to parse error response as string")
                 }
+            }
+        }
+
+        task.resume()
+    }
+
+    // MARK: User
+
+    static func getUserData(_ user: UserData, completion: @escaping (Result<UserData, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/users/\(user.id)")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard
+                let data = data,
+                error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            do {
+                let responseObject = try JSONDecoder().decode(UserData_Database.self, from: data)
+                let user = UserData(decodable: responseObject)
+                DispatchQueue.main.async {
+                    completion(.success(user))
+                }
+            } catch {
+                print(error) // parsing error
+
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("responseString = \(responseString)")
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: responseString)))
+                    }
+                } else {
+                    print("unable to parse error response as string")
+                }
+            }
+        }
+
+        task.resume()
+    }
+
+    static func addToUserBalance(amount: Double, user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/users/\(user.id)/balance/\(amount)")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard error == nil, let response = response as? HTTPURLResponse
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            guard response.statusCode == 200 else {
+                if didDecodeCustomResponse(from: data, completion: completion) {
+                    return
+                }
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: response.debugDescription)))
+                }
+                return
+            }
+
+            DispatchQueue.main.async {
+                completion(.success(()))
+            }
+        }
+
+        task.resume()
+    }
+
+    static func removeFromUserBalance(amount: Double, user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/users/\(user.id)/balance/\(amount)/remove")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard error == nil, let response = response as? HTTPURLResponse
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            guard response.statusCode == 200 else {
+                if didDecodeCustomResponse(from: data, completion: completion) {
+                    return
+                }
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: response.debugDescription)))
+                }
+                return
+            }
+
+            DispatchQueue.main.async {
+                completion(.success(()))
+            }
+        }
+
+        task.resume()
+    }
+
+    static func withdrawFromBalance(of user: UserData, amount: Double? = nil, completion: @escaping (Result<Void, APIError>) -> Void) {
+        var components = URLComponents(string: "\(apiAddress)/users/\(user.id)/withdraw/")!
+
+        if let amount {
+            components.queryItems = [
+                URLQueryItem(name: "amount", value: "\(amount)")
+            ]
+        }
+
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "PUT"
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data, error == nil, let response = response as? HTTPURLResponse
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            guard response.statusCode == 200 else {
+                if didDecodeCustomResponse(from: data, completion: completion) {
+                    return
+                }
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: response.debugDescription)))
+                }
+                return
+            }
+
+//            let amountStr = String(data: data, encoding: .utf8) ?? ""
+//            let amount = Double(amountStr) ?? -1
+            DispatchQueue.main.async {
+                completion(.success(()))
             }
         }
 
@@ -211,7 +468,7 @@ final class API {
             return
         }
 
-        let task = URLSession.shared.dataTask(with: request) { _, response, error in
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let response = response as? HTTPURLResponse,
                   error == nil
             else {
@@ -230,6 +487,9 @@ final class API {
             }
 
             guard response.statusCode == 201 else {
+                if didDecodeCustomResponse(from: data, completion: completion) {
+                    return
+                }
                 DispatchQueue.main.async {
                     completion(.failure(.general(desc: response.debugDescription)))
                 }
@@ -280,6 +540,9 @@ final class API {
             }
 
             guard response.statusCode == 200 else {
+                if didDecodeCustomResponse(from: data, completion: completion) {
+                    return
+                }
                 DispatchQueue.main.async {
                     completion(.failure(.general(desc: response.debugDescription)))
                 }
@@ -350,6 +613,9 @@ final class API {
             }
 
             guard response.statusCode == 200 else {
+                if didDecodeCustomResponse(from: data, completion: completion) {
+                    return
+                }
                 DispatchQueue.main.async {
                     completion(.failure(.general(desc: response.debugDescription)))
                 }
@@ -552,7 +818,7 @@ final class API {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
 
-        let task = URLSession.shared.dataTask(with: request) { _, response, error in
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard
                 let response = response as? HTTPURLResponse,
                 error == nil
@@ -574,6 +840,9 @@ final class API {
             }
 
             guard response.statusCode == 200 else {
+                if didDecodeCustomResponse(from: data, completion: completion) {
+                    return
+                }
                 DispatchQueue.main.async {
                     completion(.failure(.general(desc: response.debugDescription)))
                 }
@@ -594,7 +863,7 @@ final class API {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
 
-        let task = URLSession.shared.dataTask(with: request) { _, response, error in
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard
                 let response = response as? HTTPURLResponse,
                 error == nil
@@ -616,6 +885,9 @@ final class API {
             }
 
             guard response.statusCode == 200 else {
+                if didDecodeCustomResponse(from: data, completion: completion) {
+                    return
+                }
                 DispatchQueue.main.async {
                     completion(.failure(.general(desc: response.debugDescription)))
                 }
@@ -636,7 +908,7 @@ final class API {
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
 
-        let task = URLSession.shared.dataTask(with: request) { _, response, error in
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard
                 let response = response as? HTTPURLResponse,
                 error == nil
@@ -658,6 +930,9 @@ final class API {
             }
 
             guard response.statusCode == 200 else {
+                if didDecodeCustomResponse(from: data, completion: completion) {
+                    return
+                }
                 DispatchQueue.main.async {
                     completion(.failure(.general(desc: response.debugDescription)))
                 }
@@ -678,7 +953,7 @@ final class API {
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
 
-        let task = URLSession.shared.dataTask(with: request) { _, response, error in
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard
                 let response = response as? HTTPURLResponse,
                 error == nil
@@ -700,6 +975,9 @@ final class API {
             }
 
             guard response.statusCode == 200 else {
+                if didDecodeCustomResponse(from: data, completion: completion) {
+                    return
+                }
                 DispatchQueue.main.async {
                     completion(.failure(.general(desc: response.debugDescription)))
                 }
@@ -714,10 +992,10 @@ final class API {
         task.resume()
     }
 
-    // MARK: Song functions
+    // MARK: Song
 
-    static func requestSong(_ song: SongData, for event: EventData, completion: @escaping (Result<Int, APIError>) -> Void) {
-        let url = URL(string: "\(apiAddress)/songs")!
+    static func requestSong(_ song: SongData, for event: EventData, by user: UserData, completion: @escaping (Result<Int, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/songs/request/by/\(user.id)")!
 
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -758,6 +1036,9 @@ final class API {
             }
 
             guard response.statusCode == 201 else {
+                if didDecodeCustomResponse(from: data, completion: completion) {
+                    return
+                }
                 DispatchQueue.main.async {
                     completion(.failure(.general(desc: response.debugDescription)))
                 }
@@ -841,7 +1122,7 @@ final class API {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
 
-        let task = URLSession.shared.dataTask(with: request) { _, response, error in
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard
                 let response = response as? HTTPURLResponse,
                 error == nil
@@ -863,6 +1144,9 @@ final class API {
             }
 
             guard response.statusCode == 200 else {
+                if didDecodeCustomResponse(from: data, completion: completion) {
+                    return
+                }
                 DispatchQueue.main.async {
                     completion(.failure(.general(desc: response.debugDescription)))
                 }
@@ -892,5 +1176,62 @@ final class API {
         }
         let task = connectToWebSocket(on: concreteUrl)
         return task
+    }
+
+    // MARK: Payment
+
+    static func preparePayment(forAmount amount: Double, completion: @escaping (Result<PaymentSheet, APIError>) -> Void) {
+        var components = URLComponents(string: "\(apiAddress)/payment/create/")!
+
+        components.queryItems = [
+            URLQueryItem(name: "amount", value: "\(amount)")
+        ]
+
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "GET"
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data, error == nil
+            else {
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: error!.localizedDescription)))
+                }
+                return
+            }
+
+            do {
+                let response = try JSONDecoder().decode(PaymentResponse.self, from: data)
+
+                STPAPIClient.shared.publishableKey = response.publishableKey
+
+                // Create a PaymentSheet instance
+                var configuration = PaymentSheet.Configuration()
+                configuration.merchantDisplayName = "DJBuddy, Inc."
+                configuration.customer = .init(id: response.customer, ephemeralKeySecret: response.ephemeralKey)
+                configuration.style = .alwaysDark
+                configuration.defaultBillingDetails.address.country = "HU"
+
+                var appearance = PaymentSheet.Appearance()
+                appearance.cornerRadius = 12
+                appearance.colors.primary = .systemRed
+                appearance.colors.textSecondary = .white
+                appearance.colors.componentText = .white
+                appearance.colors.componentPlaceholderText = .white
+
+                configuration.appearance = appearance
+
+                let paymentSheet = PaymentSheet(paymentIntentClientSecret: response.paymentIntent, configuration: configuration)
+                DispatchQueue.main.async {
+                    completion(.success(paymentSheet))
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: error.localizedDescription)))
+                    print(String.init(data: data, encoding: .utf8) ?? "")
+                }
+            }
+        }
+
+        task.resume()
     }
 }

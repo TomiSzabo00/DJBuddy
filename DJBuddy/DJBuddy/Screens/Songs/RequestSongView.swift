@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RequestSongView: View {
+    @EnvironmentObject var user: UserData
     @EnvironmentObject var navigator: Navigator
     @ObservedObject var viewModel: EventControlViewModel
 
@@ -34,7 +35,7 @@ struct RequestSongView: View {
             .buttonStyle(.checkmark(isOn: $viewModel.didAgree))
 
             Button("Request") {
-                viewModel.requestSong() { result in
+                viewModel.requestSong(by: user) { result in
                     switch result {
                     case .success(_):
                         navigator.back()
@@ -100,5 +101,6 @@ struct RequestSongView: View {
     NavigationView {
         RequestSongView(viewModel: EventControlViewModel(event: EventData.PreviewData))
             .environmentObject(Navigator())
+            .environmentObject(UserData.EmptyUser)
     }
 }

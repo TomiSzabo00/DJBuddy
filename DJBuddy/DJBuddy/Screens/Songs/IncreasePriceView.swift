@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct IncreasePriceView: View {
+    @EnvironmentObject var user: UserData
+
     let song: SongData
     @StateObject var viewModel: EventControlViewModel
     @Binding var isShowing: Bool
@@ -28,7 +30,7 @@ struct IncreasePriceView: View {
 
                 Button("Increase") {
                     isShowing = false
-                    viewModel.increasePrice { result in
+                    viewModel.increasePrice(by: user) { result in
                         switch result {
                         case .success(_):
                             break
@@ -55,5 +57,6 @@ struct IncreasePriceView: View {
 #Preview {
     NavigationView {
         IncreasePriceView(song: SongData.PreviewData, viewModel: EventControlViewModel(event: EventData.PreviewData), isShowing: .constant(true))
+            .environmentObject(UserData.EmptyUser)
     }
 }

@@ -49,7 +49,7 @@ struct SongDetalsView: View {
 
                         if user.type == .dj {
                             Button("Accept") {
-                                viewModel.accept(song: song) { result in
+                                viewModel.accept(song: song, dj: user) { result in
                                     switch result {
                                     case .success(_):
                                         navigator.back()
@@ -94,6 +94,7 @@ struct SongDetalsView: View {
         .navBarWithTitle(title: "Song", navigator: navigator, leadingButton: .back)
         .sheet(isPresented: $isIncPriceShowing) {
             IncreasePriceView(song: song, viewModel: viewModel, isShowing: $isIncPriceShowing)
+                .environmentObject(user)
         }
         .loadingOverlay(isLoading: $viewModel.isLoading)
         .errorAlert(error: $error)
