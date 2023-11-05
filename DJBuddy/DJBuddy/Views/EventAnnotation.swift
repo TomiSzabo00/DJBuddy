@@ -10,6 +10,8 @@ import SwiftUI
 struct EventAnnotation: View {
     let event: EventData
 
+    @State var id = UUID()
+
     var body: some View {
         ZStack {
             Triangle()
@@ -20,7 +22,7 @@ struct EventAnnotation: View {
                 .fill(.white)
                 .frame(width: 40)
                 .overlay {
-                    AsyncImage(url: URL(string: event.dj.profilePicUrl)) { image in
+                    AsyncImage(url: URL(string: "\(API.apiAddress)/\(event.dj.profilePicUrl)")) { image in
                         image.resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 30)
@@ -31,6 +33,7 @@ struct EventAnnotation: View {
                             .frame(height: 30)
                     }
                     .clipShape(.circle)
+                    .id(id)
                 }
         }
     }

@@ -9,7 +9,9 @@ import SwiftUI
 
 struct EventListTile: View {
     let eventData: EventData
-    
+
+    @State var id = UUID()
+
     var body: some View {
         HStack(spacing: 0) {
             AsyncImage(url: URL(string: "\(API.apiAddress)/\(eventData.dj.profilePicUrl)")) { image in
@@ -22,6 +24,7 @@ struct EventListTile: View {
                     .scaledToFit()
                     .frame(height: 100)
             }
+            .id(id)
 
             VStack(alignment: .leading) {
                 Text(eventData.dj.username)
