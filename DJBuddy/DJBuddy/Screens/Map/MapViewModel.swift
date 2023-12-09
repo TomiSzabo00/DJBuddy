@@ -27,6 +27,7 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         case .authorizedAlways, .authorizedWhenInUse, .authorized:
+            guard let location = locationManager.location else { break }
             region = regionFrom(coordinates: locationManager.location!.coordinate)
         default:
             break
@@ -42,7 +43,9 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
     }
 
     func getLocation() {
-        locationManager?.requestLocation()
+        if [.authorizedWhenInUse, .authorizedAlways].contains(locationManager?.authorizationStatus) {
+            locationManager?.requestLocation()
+        }
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

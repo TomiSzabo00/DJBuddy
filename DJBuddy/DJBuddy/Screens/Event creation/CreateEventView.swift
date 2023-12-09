@@ -98,4 +98,5 @@ struct CreateEventView: View {
 #Preview {
     CreateEventView()
         .environmentObject(UserData.EmptyUser)
+        .environmentObject(Navigator())
 }
