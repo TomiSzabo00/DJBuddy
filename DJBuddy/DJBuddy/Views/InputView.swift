@@ -14,6 +14,8 @@ struct PlaceholderTextField: View {
     @State var isSecure: Bool = true
     let isPasswordField: Bool
 
+    let onEditAction: () -> Void
+
     @FocusState private var inFocus: Bool
 
     var body: some View {
@@ -36,14 +38,16 @@ struct PlaceholderTextField: View {
         }
         .onChange(of: text) { (_, newValue) in
             showPlaceholder = newValue.isEmpty
+            onEditAction()
         }
         .modifier(FloatingTextModifier(isShowing: $showPlaceholder, placeholder: placeholder, isSecure: $isSecure, isPassword: isPasswordField))
     }
 
-    init(placeholder: String, text: Binding<String>, isPassword: Bool = false) {
+    init(placeholder: String, text: Binding<String>, isPassword: Bool = false, onEditAction: @escaping () -> Void = {}) {
         self.placeholder = placeholder
         _text = text
         isPasswordField = isPassword
+        self.onEditAction = onEditAction
     }
 }
 

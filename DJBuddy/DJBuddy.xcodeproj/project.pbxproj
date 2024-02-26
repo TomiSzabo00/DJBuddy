@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5527A19C2B8CEB190027D134 /* JoinEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527A19B2B8CEB190027D134 /* JoinEventView.swift */; };
+		5527A19E2B8CEE840027D134 /* JoinEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527A19D2B8CEE840027D134 /* JoinEventViewModel.swift */; };
 		552E85E32AD2E1FD006D5E86 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85E22AD2E1FD006D5E86 /* MainMenu.swift */; };
 		552E85E62AD2E605006D5E86 /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85E52AD2E605006D5E86 /* CustomColors.swift */; };
 		552E85E92AD2E745006D5E86 /* BackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85E82AD2E745006D5E86 /* BackgroundColor.swift */; };
@@ -87,6 +89,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5527A19B2B8CEB190027D134 /* JoinEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinEventView.swift; sourceTree = "<group>"; };
+		5527A19D2B8CEE840027D134 /* JoinEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinEventViewModel.swift; sourceTree = "<group>"; };
 		552E85E22AD2E1FD006D5E86 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		552E85E52AD2E605006D5E86 /* CustomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
 		552E85E82AD2E745006D5E86 /* BackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundColor.swift; sourceTree = "<group>"; };
@@ -178,6 +182,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5527A19A2B8CEB010027D134 /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				55A583992AE1504E00438049 /* Event creation */,
+				5573DC5A2AE1D32A0025751F /* Event controls */,
+				5527A19B2B8CEB190027D134 /* JoinEventView.swift */,
+				5527A19D2B8CEE840027D134 /* JoinEventViewModel.swift */,
+			);
+			path = Event;
+			sourceTree = "<group>";
+		};
 		552E85E12AD2DA3B006D5E86 /* Main menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,12 +233,11 @@
 		552E86002AD472CC006D5E86 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				5527A19A2B8CEB010027D134 /* Event */,
 				55FB42E82AF6A5DE00ED9197 /* Profile */,
 				5584D41C2AC1CB6800BC61F6 /* AuthScreens */,
 				5573DC892AE703FC0025751F /* Map */,
 				5573DC702AE30AF90025751F /* Songs */,
-				5573DC5A2AE1D32A0025751F /* Event controls */,
-				55A583992AE1504E00438049 /* Event creation */,
 				552E86012AD47307006D5E86 /* Home */,
 				552E85E12AD2DA3B006D5E86 /* Main menu */,
 				55AAC7812AED91F3009414F0 /* StateManager.swift */,
@@ -532,6 +546,7 @@
 				5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */,
 				5573DC7E2AE542CB0025751F /* SongSelectionView.swift in Sources */,
 				55A5839D2AE1507400438049 /* AddressSelectionViewModel.swift in Sources */,
+				5527A19C2B8CEB190027D134 /* JoinEventView.swift in Sources */,
 				5584D4272AC2132600BC61F6 /* AuthViewModel.swift in Sources */,
 				556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */,
 				5573DC7C2AE46AFC0025751F /* PriceSelectionView.swift in Sources */,
@@ -556,6 +571,7 @@
 				5573DC632AE2ACCE0025751F /* SongList.swift in Sources */,
 				55AAC7822AED91F3009414F0 /* StateManager.swift in Sources */,
 				5584D42A2AC21B2D00BC61F6 /* InputView.swift in Sources */,
+				5527A19E2B8CEE840027D134 /* JoinEventViewModel.swift in Sources */,
 				55A583952AE14FEF00438049 /* AddressResult.swift in Sources */,
 				5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */,
 				55A5839F2AE150F400438049 /* MapSelectionViewModel.swift in Sources */,

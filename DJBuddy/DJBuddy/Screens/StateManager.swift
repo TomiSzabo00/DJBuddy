@@ -37,6 +37,8 @@ struct StateManager: View {
                             SongDetalsView(song: song, viewModel: vm)
                         case .balanceTopUp:
                             BalanceTopUpView()
+                        case .joinEvent:
+                            JoinEventView()
                         }
                     }
             } else {
