@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import CodeScanner
 
 struct JoinEventView: View {
     @EnvironmentObject var navigator: Navigator
 
     @StateObject private var viewModel = JoinEventViewModel()
+    @State private var isScannerShowing = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -36,6 +38,13 @@ struct JoinEventView: View {
         .padding(20)
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: "Join an event", navigator: navigator, leadingButton: .back)
+        .errorAlert(error: $viewModel.scanError)
+        .sheet(isPresented: $isScannerShowing) {
+            CodeScannerView(codeTypes: [.qr], simulatedData: "it works!") { result in
+                isScannerShowing = false
+                viewModel.handleScan(result: result)
+            }
+        }
     }
 
     @ViewBuilder private func scanItView() -> some View {
@@ -47,7 +56,7 @@ struct JoinEventView: View {
                 Spacer()
 
                 Button {
-
+                    isScannerShowing = true
                 } label: {
                     HStack {
                         Text("Scan it!")

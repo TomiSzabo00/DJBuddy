@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5527A19C2B8CEB190027D134 /* JoinEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527A19B2B8CEB190027D134 /* JoinEventView.swift */; };
 		5527A19E2B8CEE840027D134 /* JoinEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527A19D2B8CEE840027D134 /* JoinEventViewModel.swift */; };
+		5527A1A12B8D35BC0027D134 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 5527A1A02B8D35BC0027D134 /* CodeScanner */; };
 		552E85E32AD2E1FD006D5E86 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85E22AD2E1FD006D5E86 /* MainMenu.swift */; };
 		552E85E62AD2E605006D5E86 /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85E52AD2E605006D5E86 /* CustomColors.swift */; };
 		552E85E92AD2E745006D5E86 /* BackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85E82AD2E745006D5E86 /* BackgroundColor.swift */; };
@@ -175,6 +176,7 @@
 				55FB42E02AF43A8A00ED9197 /* StripeIdentity in Frameworks */,
 				55FB42D82AF43A8A00ED9197 /* Stripe in Frameworks */,
 				55FB42E32AF5597600ED9197 /* StripePaymentSheet in Frameworks */,
+				5527A1A12B8D35BC0027D134 /* CodeScanner in Frameworks */,
 				55FB42DA2AF43A8A00ED9197 /* StripeApplePay in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -461,6 +463,7 @@
 				55FB42DD2AF43A8A00ED9197 /* StripeFinancialConnections */,
 				55FB42DF2AF43A8A00ED9197 /* StripeIdentity */,
 				55FB42E22AF5597600ED9197 /* StripePaymentSheet */,
+				5527A1A02B8D35BC0027D134 /* CodeScanner */,
 			);
 			productName = DJBuddy;
 			productReference = 5584D4042AC18D9700BC61F6 /* DJBuddy.app */;
@@ -492,6 +495,7 @@
 			mainGroup = 5584D3FB2AC18D9700BC61F6;
 			packageReferences = (
 				55FB42D62AF43A8A00ED9197 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */,
+				5527A19F2B8D35BC0027D134 /* XCRemoteSwiftPackageReference "CodeScanner" */,
 			);
 			productRefGroup = 5584D4052AC18D9700BC61F6 /* Products */;
 			projectDirPath = "";
@@ -727,6 +731,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = Please.;
+				INFOPLIST_KEY_NSCameraUsageDescription = "To scan QR codes.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "To display on the map.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To display on the map.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -759,6 +764,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = Please.;
+				INFOPLIST_KEY_NSCameraUsageDescription = "To scan QR codes.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "To display on the map.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To display on the map.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -803,6 +809,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5527A19F2B8D35BC0027D134 /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.0;
+			};
+		};
 		55FB42D62AF43A8A00ED9197 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/stripe/stripe-ios-spm";
@@ -814,6 +828,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5527A1A02B8D35BC0027D134 /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5527A19F2B8D35BC0027D134 /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
+		};
 		55FB42D72AF43A8A00ED9197 /* Stripe */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 55FB42D62AF43A8A00ED9197 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
