@@ -28,7 +28,7 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
             locationManager.requestWhenInUseAuthorization()
         case .authorizedAlways, .authorizedWhenInUse, .authorized:
             guard let location = locationManager.location else { break }
-            region = regionFrom(coordinates: locationManager.location!.coordinate)
+            region = regionFrom(coordinates: location.coordinate)
         default:
             break
         }
