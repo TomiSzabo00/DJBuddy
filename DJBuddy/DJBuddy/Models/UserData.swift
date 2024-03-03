@@ -81,6 +81,18 @@ final class UserData: Identifiable, ObservableObject, Hashable {
                  balance: -1
         )
     }
+
+    static var PreviewUser: UserData {
+        UserData(id: "id",
+                 username: "Test",
+                 email: "test@test.test",
+                 firstName: "T",
+                 lastName: "Est",
+                 type: .user,
+                 profilePicUrl: "",
+                 balance: 1
+        )
+    }
 }
 
 @Model

@@ -18,6 +18,7 @@ enum NavigationDestination: Hashable {
     case songDetails(SongData, EventControlViewModel)
     case balanceTopUp
     case joinEvent
+    case eventDetails(EventData)
 }
 
 class Navigator: ObservableObject {

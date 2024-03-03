@@ -10,6 +10,8 @@
 		5527A19C2B8CEB190027D134 /* JoinEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527A19B2B8CEB190027D134 /* JoinEventView.swift */; };
 		5527A19E2B8CEE840027D134 /* JoinEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527A19D2B8CEE840027D134 /* JoinEventViewModel.swift */; };
 		5527A1A12B8D35BC0027D134 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 5527A1A02B8D35BC0027D134 /* CodeScanner */; };
+		5527A1D52B94DFE70027D134 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527A1D42B94DFE70027D134 /* EventDetailsView.swift */; };
+		5527A1D72B94E3EF0027D134 /* ShareEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527A1D62B94E3EF0027D134 /* ShareEventView.swift */; };
 		552E85E32AD2E1FD006D5E86 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85E22AD2E1FD006D5E86 /* MainMenu.swift */; };
 		552E85E62AD2E605006D5E86 /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85E52AD2E605006D5E86 /* CustomColors.swift */; };
 		552E85E92AD2E745006D5E86 /* BackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E85E82AD2E745006D5E86 /* BackgroundColor.swift */; };
@@ -92,6 +94,8 @@
 /* Begin PBXFileReference section */
 		5527A19B2B8CEB190027D134 /* JoinEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinEventView.swift; sourceTree = "<group>"; };
 		5527A19D2B8CEE840027D134 /* JoinEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinEventViewModel.swift; sourceTree = "<group>"; };
+		5527A1D42B94DFE70027D134 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
+		5527A1D62B94E3EF0027D134 /* ShareEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareEventView.swift; sourceTree = "<group>"; };
 		552E85E22AD2E1FD006D5E86 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		552E85E52AD2E605006D5E86 /* CustomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
 		552E85E82AD2E745006D5E86 /* BackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundColor.swift; sourceTree = "<group>"; };
@@ -187,12 +191,30 @@
 		5527A19A2B8CEB010027D134 /* Event */ = {
 			isa = PBXGroup;
 			children = (
+				5527A1D32B94DFD00027D134 /* Event Details */,
+				5527A1D22B94DFC30027D134 /* Join Event */,
 				55A583992AE1504E00438049 /* Event creation */,
 				5573DC5A2AE1D32A0025751F /* Event controls */,
+			);
+			path = Event;
+			sourceTree = "<group>";
+		};
+		5527A1D22B94DFC30027D134 /* Join Event */ = {
+			isa = PBXGroup;
+			children = (
 				5527A19B2B8CEB190027D134 /* JoinEventView.swift */,
 				5527A19D2B8CEE840027D134 /* JoinEventViewModel.swift */,
 			);
-			path = Event;
+			path = "Join Event";
+			sourceTree = "<group>";
+		};
+		5527A1D32B94DFD00027D134 /* Event Details */ = {
+			isa = PBXGroup;
+			children = (
+				5527A1D42B94DFE70027D134 /* EventDetailsView.swift */,
+				5527A1D62B94E3EF0027D134 /* ShareEventView.swift */,
+			);
+			path = "Event Details";
 			sourceTree = "<group>";
 		};
 		552E85E12AD2DA3B006D5E86 /* Main menu */ = {
@@ -527,6 +549,7 @@
 				5573DC802AE544300025751F /* SongSelectionViewModel.swift in Sources */,
 				55A583AD2AE1937A00438049 /* UserData.swift in Sources */,
 				5573DC5E2AE280BF0025751F /* ButtonType.swift in Sources */,
+				5527A1D52B94DFE70027D134 /* EventDetailsView.swift in Sources */,
 				5584D4162AC1A64800BC61F6 /* LandingView.swift in Sources */,
 				5573DC6F2AE303520025751F /* SetThemeView.swift in Sources */,
 				55A583A32AE152DE00438049 /* AddressRow.swift in Sources */,
@@ -560,6 +583,7 @@
 				55FB42EA2AF6A5F900ED9197 /* BalanceTopUpView.swift in Sources */,
 				552E85FF2AD45D05006D5E86 /* TabViewSelector.swift in Sources */,
 				552E85E32AD2E1FD006D5E86 /* MainMenu.swift in Sources */,
+				5527A1D72B94E3EF0027D134 /* ShareEventView.swift in Sources */,
 				5573DC862AE6CA350025751F /* ErrorAlert.swift in Sources */,
 				5573DC652AE2AF3B0025751F /* SongData.swift in Sources */,
 				5573DC762AE423F10025751F /* UserEventView.swift in Sources */,
