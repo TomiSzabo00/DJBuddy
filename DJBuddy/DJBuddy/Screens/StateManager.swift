@@ -39,8 +39,8 @@ struct StateManager: View {
                             BalanceTopUpView()
                         case .joinEvent:
                             JoinEventView()
-                        case let .eventDetails(event):
-                            EventDetailsView(event: event)
+                        case let .eventDetails(event, isJoined):
+                            EventDetailsView(event: event, isJoined: isJoined)
                         }
                     }
             } else {
