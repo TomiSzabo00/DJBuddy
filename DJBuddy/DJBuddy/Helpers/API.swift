@@ -21,6 +21,33 @@ final class API {
     private static let apiWebSocketAddress = "ws://127.0.0.1:9000"
     private static let eventWebSocketUrl = "\(apiWebSocketAddress)/ws/events"
 
+    static func decodeCustomResponse(from error: Error) -> String {
+        do {
+            let responseObject = try JSONDecoder().decode(CustomResponse.self, from: error.localizedDescription.data(using: .utf8) ?? Data())
+            return responseObject.detail
+        } catch {
+            return error.localizedDescription
+        }
+    }
+
+    static func decodeCustomResponse(from data: Data) -> String {
+        do {
+            let responseObject = try JSONDecoder().decode(CustomResponse.self, from: data)
+            return responseObject.detail
+        } catch {
+            return String(data: data, encoding: .utf8) ?? ""
+        }
+    }
+
+    static func decodeCustomResponse(from string: String) -> String {
+        do {
+            let responseObject = try JSONDecoder().decode(CustomResponse.self, from: string.data(using: .utf8) ?? Data())
+            return responseObject.detail
+        } catch {
+            return string
+        }
+    }
+
     static func didDecodeCustomResponse(from data: Data?, completion: @escaping (Result<UserData, APIError>) -> Void) -> Bool {
         guard let data else { return false }
         do {
@@ -1047,6 +1074,57 @@ final class API {
 
             DispatchQueue.main.async {
                 completion(.success(()))
+            }
+        }
+
+        task.resume()
+    }
+
+    static func getnumberOfJoined(to event: EventData, completion: @escaping (Result<Int, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/events/\(event.id)/users/count")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard
+                let data = data,
+                error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        let msg = decodeCustomResponse(from: error)
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: msg)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            do {
+                let responseObject = try JSONDecoder().decode(Int.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(responseObject))
+                }
+            } catch {
+                print(error) // parsing error
+
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("responseString = \(responseString)")
+                    let msg = decodeCustomResponse(from: responseString)
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: msg)))
+                    }
+                } else {
+                    print("unable to parse error response as string")
+                }
             }
         }
 

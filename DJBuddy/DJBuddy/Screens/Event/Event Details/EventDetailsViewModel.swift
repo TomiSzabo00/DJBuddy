@@ -11,6 +11,7 @@ final class EventDetailsViewModel: ObservableObject {
     @Published var isJoined = false
     @Published var isLoading = false
     @Published var error: Error? = nil
+    @Published var numberOfJoined: Int = 0
 
     func join(event: EventData, user: UserData) {
         isLoading = true
@@ -19,7 +20,9 @@ final class EventDetailsViewModel: ObservableObject {
             self?.isLoading = false
             switch result {
             case .success():
-                self?.isJoined = true
+                DispatchQueue.main.async {
+                    self?.isJoined = true
+                }
             case .failure(let failure):
                 DispatchQueue.main.async {
                     self?.error = failure
@@ -35,7 +38,27 @@ final class EventDetailsViewModel: ObservableObject {
             self?.isLoading = false
             switch result {
             case .success():
-                self?.isJoined = false
+                DispatchQueue.main.async {
+                    self?.isJoined = false
+                }
+            case .failure(let failure):
+                DispatchQueue.main.async {
+                    self?.error = failure
+                }
+            }
+        }
+    }
+
+    func getNumberOfJoined(to event: EventData) {
+        isLoading = true
+
+        API.getnumberOfJoined(to: event) { [weak self] result in
+            self?.isLoading = false
+            switch result {
+            case let .success(num):
+                DispatchQueue.main.async {
+                    self?.numberOfJoined = num
+                }
             case .failure(let failure):
                 DispatchQueue.main.async {
                     self?.error = failure

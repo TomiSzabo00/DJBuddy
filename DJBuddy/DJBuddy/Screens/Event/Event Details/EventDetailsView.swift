@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct EventDetailsView: View {
     @EnvironmentObject private var navigator: Navigator
@@ -17,12 +18,33 @@ struct EventDetailsView: View {
     let isJoined: Bool
     @State private var isShareShowing = false
 
+    private var region: MKCoordinateRegion {
+        MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: event.location.latitude, longitude: event.location.longitude), span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005))
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text(event.dj.username)
+            VStack(alignment: .leading, spacing: 5) {
+                Text(event.name)
+                    .font(.largeTitle)
+                Text("by")
+                    .foregroundStyle(.secondary)
+                    .font(.subheadline)
+                Text(event.dj.username)
+            }
 
-            Text("Joined users: \(3)")
+            AddressRow(address: event.location)
+
+            Map(position: .constant(MapCameraPosition.region(region))) {
+                Marker(coordinate: CLLocationCoordinate2D(latitude: event.location.latitude, longitude: event.location.longitude)) {
+                    Label(event.name, systemImage: "headphones")
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: 150)
+            .clipShape(.rect(cornerRadius: 12))
+            .disabled(true)
+
+            Text("Joined users: \(viewModel.numberOfJoined)")
 
             Spacer()
 
@@ -41,6 +63,7 @@ struct EventDetailsView: View {
         .errorAlert(error: $viewModel.error)
         .onAppear {
             viewModel.isJoined = isJoined
+            viewModel.getNumberOfJoined(to: event)
         }
         .animation(.default, value: viewModel.isJoined)
     }
