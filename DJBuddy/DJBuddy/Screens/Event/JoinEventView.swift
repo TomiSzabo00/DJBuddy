@@ -19,9 +19,7 @@ struct JoinEventView: View {
             InfoView("You can join by typing in the code of the event or by scanning the QR code.")
 
             Text("Code")
-            PlaceholderTextField(placeholder: "Event's code...", text: $viewModel.eventCode) {
-                viewModel.validateCode()
-            }
+            codeInputView()
 
             scanItView()
                 .padding(.vertical, 20)
@@ -45,6 +43,43 @@ struct JoinEventView: View {
                 viewModel.handleScan(result: result)
             }
         }
+    }
+
+    @ViewBuilder private var placeholderView: some View {
+        ZStack(alignment: .leading) {
+            HStack(spacing: 0) {
+                Text(viewModel.eventCode)
+                    .foregroundColor(.white)
+                    .font(.system(size: 18, weight: .semibold))
+                Text(viewModel.placeholderText)
+                    .foregroundColor(.gray.opacity(0.5))
+                    .font(.system(size: 18, weight: .semibold))
+            }
+        }
+    }
+
+    @ViewBuilder private func codeInputView() -> some View {
+        TextField("", text: $viewModel.eventCode)
+            .font(.system(size: 18, weight: .semibold))
+            .foregroundStyle(.gray)
+            .autocorrectionDisabled(true)
+            .autocapitalization(.allCharacters)
+            .background(placeholderView, alignment: .leading)
+            .padding(.leading)
+            .frame(height: 66)
+            .background(
+                ZStack(alignment: .leading) {
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.white)
+                }
+            )
+            .onChange(of: viewModel.eventCode) { oldValue, newValue in
+                if newValue.count > oldValue.count {
+                    viewModel.charaterAddedToCode(oldValue: oldValue)
+                } else if newValue.count < oldValue.count {
+                    viewModel.characterRemovedFromCode(original: oldValue)
+                }
+            }
     }
 
     @ViewBuilder private func scanItView() -> some View {
