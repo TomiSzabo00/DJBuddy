@@ -38,6 +38,10 @@ final class UserData: Identifiable, ObservableObject, Hashable {
         "\(firstName) \(lastName)"
     }
 
+    var isDj: Bool {
+        type == .dj
+    }
+
     init(id: String, username: String, email: String, firstName: String, lastName: String, type: UserTypeEnum, profilePicUrl: String, balance: Double) {
         self.id = id
         self.username = username
@@ -79,6 +83,18 @@ final class UserData: Identifiable, ObservableObject, Hashable {
                  type: .user,
                  profilePicUrl: "",
                  balance: -1
+        )
+    }
+
+    static var PreviewUser: UserData {
+        UserData(id: "id",
+                 username: "Test",
+                 email: "test@test.test",
+                 firstName: "T",
+                 lastName: "Est",
+                 type: .user,
+                 profilePicUrl: "",
+                 balance: 1
         )
     }
 }

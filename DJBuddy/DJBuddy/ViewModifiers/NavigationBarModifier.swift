@@ -88,6 +88,12 @@ struct NavigationBarModifier<MenuContent: View>: ViewModifier {
             } label: {
                 Image(systemName: "multiply")
             }
+        case let .share(isShowing):
+            Button {
+                isShowing.wrappedValue = true
+            } label: {
+                Image(systemName: "square.and.arrow.up")
+            }
         }
     }
 }

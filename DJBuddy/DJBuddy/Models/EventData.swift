@@ -18,6 +18,7 @@ class EventData_Database: Decodable {
     let date: String
     let state: String
     let theme: String
+    let code: String
     let songs: [SongData]
 
     enum CodingKeys: String, CodingKey {
@@ -31,6 +32,7 @@ class EventData_Database: Decodable {
         case date
         case state
         case theme
+        case code
         case songs
     }
 }
@@ -41,6 +43,7 @@ class EventData: Hashable, Identifiable, ObservableObject {
     let dj: UserData
     let location: AddressResult
     let date: Date
+    let code: String
     var state: EventState
     var theme: SongTheme?
     var requestedSongs: [SongData] {
@@ -49,7 +52,7 @@ class EventData: Hashable, Identifiable, ObservableObject {
         }
     }
 
-    init(name: String, dj: UserData, location: AddressResult, date: Date, state: EventState = .upcoming, requestedSongs: [SongData] = [], theme: SongTheme? = nil) {
+    init(name: String, dj: UserData, location: AddressResult, date: Date, code: String = "", state: EventState = .upcoming, requestedSongs: [SongData] = [], theme: SongTheme? = nil) {
         self.id = UUID().uuidString
         self.name = name
         self.dj = dj
@@ -58,6 +61,7 @@ class EventData: Hashable, Identifiable, ObservableObject {
         self.state = state
         self.requestedSongs = requestedSongs
         self.theme = theme
+        self.code = code
     }
 
     init(decodable: EventData_Database) {
@@ -66,6 +70,7 @@ class EventData: Hashable, Identifiable, ObservableObject {
         self.dj = UserData(decodable: decodable.dj)
         self.location = AddressResult(title: decodable.address_title, subtitle: decodable.address_subtitle, latitude: decodable.latitude, longitude: decodable.longitude)
         self.date = Date.fromIsoString(decodable.date)
+        self.code = decodable.code
         self.state = EventState(rawValue: decodable.state) ?? .upcoming
         self.theme = SongTheme(rawValue: decodable.theme)
         self.requestedSongs = decodable.songs.sorted(by: { $0.amount > $1.amount })
@@ -82,9 +87,10 @@ class EventData: Hashable, Identifiable, ObservableObject {
     static var PreviewData: EventData {
         let date = Calendar.current.date(byAdding: .day, value: Int.random(in: 1...10), to: Date.now)!
         return EventData(name: "Event",
-                         dj: UserData.EmptyUser,
+                         dj: UserData.PreviewUser,
                          location: AddressResult.PreviewData,
                          date: date,
+                         code: "AAAA - AAAA - AAAA",
                          state: .inProgress,
                          requestedSongs: [SongData.PreviewData, SongData.PreviewData2]
         )
@@ -93,9 +99,10 @@ class EventData: Hashable, Identifiable, ObservableObject {
     static var MapPreviewData: EventData {
         let date = Calendar.current.date(byAdding: .day, value: Int.random(in: 1...10), to: Date.now)!
         return EventData(name: "Event",
-                         dj: UserData.EmptyUser,
+                         dj: UserData.PreviewUser,
                          location: AddressResult.MapPreviewData,
                          date: date,
+                         code: "AAAA - AAAA - AAAA",
                          state: .inProgress,
                          requestedSongs: [SongData.PreviewData, SongData.PreviewData2]
         )
@@ -107,6 +114,7 @@ class EventData: Hashable, Identifiable, ObservableObject {
                          dj: UserData.EmptyUser,
                          location: AddressResult.MapPreviewData2,
                          date: date,
+                         code: "AAAA - AAAA - AAAA",
                          state: .inProgress,
                          requestedSongs: [SongData.PreviewData, SongData.PreviewData2]
         )

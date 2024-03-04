@@ -13,4 +13,5 @@ enum ButtonType {
     case options
     case profile(String)
     case close(Binding<Bool>)
+    case share(Binding<Bool>)
 }

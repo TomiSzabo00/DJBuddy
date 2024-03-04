@@ -29,6 +29,9 @@ struct UserHomeView: View {
                                 .contextMenu {
                                     menuButtons(for: event, with: eventType)
                                 }
+                                .onTapGesture {
+                                    navigator.navigate(to: .eventDetails(event, eventType == .yourEvents))
+                                }
                         }
                     } header: {
                         Text(eventType.title(for: .user))
