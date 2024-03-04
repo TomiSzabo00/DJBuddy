@@ -12,6 +12,7 @@ final class EventDetailsViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var error: Error? = nil
     @Published var numberOfJoined: Int = 0
+    @Published var isDJLiked: Bool? = false
 
     func join(event: EventData, user: UserData) {
         isLoading = true
@@ -64,6 +65,46 @@ final class EventDetailsViewModel: ObservableObject {
                     self?.error = failure
                 }
             }
+        }
+    }
+
+    func getLikeStatus(on dj: UserData, by user: UserData) {
+        isLoading = true
+
+        API.isDJLikedByUser(dj: dj, user: user) { [weak self] result in
+            self?.isLoading = false
+            switch result {
+            case let .success(isLiked):
+                DispatchQueue.main.async {
+                    self?.isDJLiked = isLiked
+                }
+            case .failure(let failure):
+                DispatchQueue.main.async {
+                    self?.error = failure
+                }
+            }
+        }
+    }
+
+    func toggleLike(on dj: UserData, by user: UserData) {
+        guard let isDJLiked else { return }
+        let completion: (Result<Void, APIError>) -> Void = { [weak self] result in
+            switch result {
+            case .success():
+                DispatchQueue.main.async {
+                    self?.isDJLiked = !isDJLiked
+                }
+            case .failure(let failure):
+                DispatchQueue.main.async {
+                    self?.error = failure
+                }
+            }
+        }
+
+        if isDJLiked {
+            API.unlike(dj: dj, by: user, completion: completion)
+        } else {
+            API.like(dj: dj, by: user, completion: completion)
         }
     }
 }

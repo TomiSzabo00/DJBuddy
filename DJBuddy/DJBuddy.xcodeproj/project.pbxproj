@@ -28,6 +28,7 @@
 		552E86052AD476C9006D5E86 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86042AD476C9006D5E86 /* CircleButton.swift */; };
 		552E86072AD47BD9006D5E86 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86062AD47BD9006D5E86 /* NavigationBarModifier.swift */; };
 		552E860C2AD4878A006D5E86 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E860B2AD4878A006D5E86 /* Navigator.swift */; };
+		555934B42B96419E009FFF02 /* DJRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555934B32B96419E009FFF02 /* DJRow.swift */; };
 		556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */; };
 		5573DC592AE19DC50025751F /* EventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC582AE19DC50025751F /* EventData.swift */; };
 		5573DC5C2AE1D36F0025751F /* EventControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC5B2AE1D36F0025751F /* EventControlView.swift */; };
@@ -113,6 +114,7 @@
 		552E86042AD476C9006D5E86 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		552E86062AD47BD9006D5E86 /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
 		552E860B2AD4878A006D5E86 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		555934B32B96419E009FFF02 /* DJRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJRow.swift; sourceTree = "<group>"; };
 		556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTypeEnum.swift; sourceTree = "<group>"; };
 		5573DC582AE19DC50025751F /* EventData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventData.swift; sourceTree = "<group>"; };
 		5573DC5B2AE1D36F0025751F /* EventControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventControlView.swift; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 				5573DC662AE2B7F30025751F /* SongRow.swift */,
 				5573DC812AE54F410025751F /* SimpleSongRow.swift */,
 				5573DC902AE71C380025751F /* EventAnnotation.swift */,
+				555934B32B96419E009FFF02 /* DJRow.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -577,6 +580,7 @@
 				5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */,
 				5573DC7E2AE542CB0025751F /* SongSelectionView.swift in Sources */,
 				55A5839D2AE1507400438049 /* AddressSelectionViewModel.swift in Sources */,
+				555934B42B96419E009FFF02 /* DJRow.swift in Sources */,
 				5527A19C2B8CEB190027D134 /* JoinEventView.swift in Sources */,
 				5584D4272AC2132600BC61F6 /* AuthViewModel.swift in Sources */,
 				556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */,

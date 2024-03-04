@@ -528,6 +528,124 @@ final class API {
         task.resume()
     }
 
+    static func isDJLikedByUser(dj: UserData, user: UserData, completion: @escaping (Result<Bool, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/users/\(user.id)/likes/\(dj.id)")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard
+                let data = data,
+                error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        let msg = decodeCustomResponse(from: error)
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: msg)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            do {
+                let responseObject = try JSONDecoder().decode(Bool.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(responseObject))
+                }
+            } catch {
+                print(error) // parsing error
+
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("responseString = \(responseString)")
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: responseString)))
+                    }
+                } else {
+                    print("unable to parse error response as string")
+                }
+            }
+        }
+
+        task.resume()
+    }
+
+    static func like(dj: UserData, by user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/users/\(user.id)/like/\(dj.id)")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+
+        let task = URLSession.shared.dataTask(with: request) { _, _, error in
+            guard error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        let msg = decodeCustomResponse(from: error)
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: msg)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            DispatchQueue.main.async {
+                completion(.success(()))
+            }
+        }
+
+        task.resume()
+    }
+
+    static func unlike(dj: UserData, by user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/users/\(user.id)/unlike/\(dj.id)")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+
+        let task = URLSession.shared.dataTask(with: request) { _, _, error in
+            guard error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        let msg = decodeCustomResponse(from: error)
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: msg)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            DispatchQueue.main.async {
+                completion(.success(()))
+            }
+        }
+
+        task.resume()
+    }
+
     // MARK: Events
 
     static func createEvent(_ event: EventData, by dj: UserData? = nil, completion: @escaping (Result<Void, APIError>) -> Void) {

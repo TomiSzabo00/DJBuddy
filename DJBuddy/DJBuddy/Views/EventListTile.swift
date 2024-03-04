@@ -16,13 +16,13 @@ struct EventListTile: View {
         HStack(spacing: 0) {
             AsyncImage(url: URL(string: "\(API.apiAddress)/\(eventData.dj.profilePicUrl)")) { image in
                 image.resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 100)
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 100, height: 100)
             } placeholder: {
                 Image("default")
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 100)
+                    .frame(width: 100, height: 100)
             }
             .id(id)
 
