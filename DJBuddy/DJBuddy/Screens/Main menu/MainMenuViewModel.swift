@@ -15,7 +15,7 @@ enum EventDataType: String {
     func title(for type: UserTypeEnum) -> String {
         switch self {
         case .yourEvents:
-            return type == .dj ? "Your events" : "Joined events"
+            return type == .dj ? "Upcoming events" : "Upcoming joined events"
         case .nearYou:
             return "Events near you"
         }
