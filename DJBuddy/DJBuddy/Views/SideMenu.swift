@@ -57,7 +57,9 @@ struct SideMenu: View {
                     navigator.navigate(to: .joinEvent)
                 }
             case .past:
-                return {}
+                return {
+                    navigator.navigate(to: .pastEvents)
+                }
             case .liked:
                 return {
                     navigator.navigate(to: .likedDjs)

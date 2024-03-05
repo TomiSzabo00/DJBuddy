@@ -43,6 +43,8 @@ struct StateManager: View {
                             EventDetailsView(event: event, isJoined: isJoined)
                         case .likedDjs:
                             LikedDJsView()
+                        case .pastEvents:
+                            PastEventsView()
                         }
                     }
             } else {

@@ -52,6 +52,25 @@ class EventData: Hashable, Identifiable, ObservableObject {
         }
     }
 
+    var isInThePast: Bool {
+        let calendar = Calendar.current
+
+        let todayComponents = calendar.dateComponents([.year, .month, .day], from: .now)
+        let eventComponents = calendar.dateComponents([.year, .month, .day], from: date)
+
+        guard let eventYear = eventComponents.year,
+              let eventMonth = eventComponents.month,
+              let eventDay = eventComponents.day,
+              let todayYear = todayComponents.year,
+              let todayMonth = todayComponents.month,
+              let todayDay = todayComponents.day
+        else { return true }
+
+        return eventYear < todayYear ||
+        (eventYear == todayYear && eventMonth < todayMonth) ||
+        (eventYear == todayYear && eventMonth < todayMonth && eventDay < todayDay)
+    }
+
     init(name: String, dj: UserData, location: AddressResult, date: Date, code: String = "", state: EventState = .upcoming, requestedSongs: [SongData] = [], theme: SongTheme? = nil) {
         self.id = UUID().uuidString
         self.name = name

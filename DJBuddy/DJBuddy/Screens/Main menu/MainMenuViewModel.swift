@@ -29,18 +29,30 @@ final class MainMenuViewModel: ObservableObject {
     @Published var currentLocation: CLLocationCoordinate2D? = nil
     private var isLoadingQuietly = false
 
-    func fetchEvents(for user: UserData) {
-        isLoading = true
+    func fetchEvents(for user: UserData, isQuiet: Bool = false) {
+        guard !isLoading, !isLoadingQuietly else { return }
+            
+        isLoading = !isQuiet
+        isLoadingQuietly = isQuiet
 
         API.getEvents(from: user) { [weak self] result in
             guard let self else { return }
             isLoading = false
+            isLoadingQuietly = false
             switch result {
             case .success(let events):
-                yourEvents[.yourEvents] = events
-                sortEventsByDate(&yourEvents[.yourEvents]!)
+                DispatchQueue.main.async {
+                    self.yourEvents[.yourEvents] = events.filter { !$0.isInThePast }
+                    self.sortEventsByDate(&self.yourEvents[.yourEvents]!)
+                }
             case .failure(let error):
-                self.error = error
+                if !isQuiet {
+                    DispatchQueue.main.async {
+                        self.error = error
+                    }
+                } else {
+                    print(error.localizedDescription)
+                }
             }
         }
     }
@@ -54,33 +66,17 @@ final class MainMenuViewModel: ObservableObject {
             isLoading = false
             switch result {
             case .success(let events):
-                var nearYou = events
-                if let joined = yourEvents[.yourEvents] {
-                    nearYou = events.filter { !joined.contains($0) }
+                DispatchQueue.main.async {
+                    let currentEvents = events.filter { !$0.isInThePast }
+                    var nearYou = currentEvents
+                    if let joined = self.yourEvents[.yourEvents] {
+                        nearYou = currentEvents.filter { !joined.contains($0) }
+                    }
+                    self.yourEvents[.nearYou] = nearYou
+                    self.sortEventsByDate(&self.yourEvents[.nearYou]!)
                 }
-                yourEvents[.nearYou] = nearYou
-                sortEventsByDate(&yourEvents[.nearYou]!)
             case .failure(let failure):
                 self.error = failure
-            }
-        }
-    }
-
-    func fetchEventsQuietly(for user: UserData) {
-        guard !isLoading, !isLoadingQuietly else { return }
-
-        isLoadingQuietly = true
-
-        API.getEvents(from: user) { [weak self] result in
-            guard let self else { return }
-            isLoadingQuietly = false
-            switch result {
-            case .success(let events):
-                yourEvents[.yourEvents] = events
-                sortEventsByDate(&yourEvents[.yourEvents]!)
-                objectWillChange.send()
-            case .failure(let error):
-                print(error.localizedDescription)
             }
         }
     }
@@ -90,7 +86,7 @@ final class MainMenuViewModel: ObservableObject {
         print("Events refreshed")
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            yourEvents[.yourEvents] = newEvents
+            yourEvents[.yourEvents] = newEvents.filter { !$0.isInThePast }
             sortEventsByDate(&yourEvents[.yourEvents]!)
             self.objectWillChange.send()
         }
@@ -106,14 +102,21 @@ final class MainMenuViewModel: ObservableObject {
         isLoading = true
 
         API.joinEvent(event, user: user) { [weak self] result in
-            self?.isLoading = false
+            guard let self else { return }
+            isLoading = false
+
             switch result {
             case .success():
-                self?.fetchEvents(for: user)
-                self?.fetchNearEvents(for: user)
+                DispatchQueue.main.async {
+                    if self.yourEvents[.nearYou]?.contains(event) == true {
+                        self.yourEvents[.nearYou]?.remove(event)
+                    }
+                    self.yourEvents[.yourEvents]?.append(event)
+                    self.sortEventsByDate(&self.yourEvents[.yourEvents]!)
+                }
             case .failure(let failure):
                 DispatchQueue.main.async {
-                    self?.error = failure
+                    self.error = failure
                 }
             }
         }
@@ -126,7 +129,11 @@ final class MainMenuViewModel: ObservableObject {
             self?.isLoading = false
             switch result {
             case .success():
-                self?.fetchEvents(for: user)
+                DispatchQueue.main.async {
+                    if self?.yourEvents[.yourEvents]?.contains(event) == true {
+                        self?.yourEvents[.yourEvents]?.remove(event)
+                    }
+                }
                 self?.fetchNearEvents(for: user)
             case .failure(let failure):
                 DispatchQueue.main.async {

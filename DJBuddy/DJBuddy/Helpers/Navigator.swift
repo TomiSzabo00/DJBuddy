@@ -20,6 +20,7 @@ enum NavigationDestination: Hashable {
     case joinEvent
     case eventDetails(EventData, Bool)
     case likedDjs
+    case pastEvents
 }
 
 class Navigator: ObservableObject {
