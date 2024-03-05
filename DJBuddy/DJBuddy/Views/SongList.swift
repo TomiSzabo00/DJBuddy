@@ -59,4 +59,6 @@ struct SongList<Header: View>: View {
 
 #Preview {
     SongList()//SongData.PreviewData])
+        .environmentObject(Navigator())
+        .environmentObject(EventControlViewModel(event: EventData.PreviewData))
 }

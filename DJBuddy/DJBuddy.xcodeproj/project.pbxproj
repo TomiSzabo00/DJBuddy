@@ -29,6 +29,10 @@
 		552E86072AD47BD9006D5E86 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86062AD47BD9006D5E86 /* NavigationBarModifier.swift */; };
 		552E860C2AD4878A006D5E86 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E860B2AD4878A006D5E86 /* Navigator.swift */; };
 		555934B42B96419E009FFF02 /* DJRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555934B32B96419E009FFF02 /* DJRow.swift */; };
+		555934B72B96605F009FFF02 /* LikedDJsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555934B62B96605F009FFF02 /* LikedDJsView.swift */; };
+		555934B92B9662AE009FFF02 /* LikedDJRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555934B82B9662AE009FFF02 /* LikedDJRow.swift */; };
+		555934BB2B971053009FFF02 /* DiscardableModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555934BA2B971053009FFF02 /* DiscardableModifier.swift */; };
+		555934BD2B9715CC009FFF02 /* LikedDJsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555934BC2B9715CC009FFF02 /* LikedDJsViewModel.swift */; };
 		556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */; };
 		5573DC592AE19DC50025751F /* EventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC582AE19DC50025751F /* EventData.swift */; };
 		5573DC5C2AE1D36F0025751F /* EventControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC5B2AE1D36F0025751F /* EventControlView.swift */; };
@@ -115,6 +119,10 @@
 		552E86062AD47BD9006D5E86 /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
 		552E860B2AD4878A006D5E86 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		555934B32B96419E009FFF02 /* DJRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJRow.swift; sourceTree = "<group>"; };
+		555934B62B96605F009FFF02 /* LikedDJsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedDJsView.swift; sourceTree = "<group>"; };
+		555934B82B9662AE009FFF02 /* LikedDJRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedDJRow.swift; sourceTree = "<group>"; };
+		555934BA2B971053009FFF02 /* DiscardableModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscardableModifier.swift; sourceTree = "<group>"; };
+		555934BC2B9715CC009FFF02 /* LikedDJsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedDJsViewModel.swift; sourceTree = "<group>"; };
 		556628912AC80B0D00BF14D3 /* UserTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTypeEnum.swift; sourceTree = "<group>"; };
 		5573DC582AE19DC50025751F /* EventData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventData.swift; sourceTree = "<group>"; };
 		5573DC5B2AE1D36F0025751F /* EventControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventControlView.swift; sourceTree = "<group>"; };
@@ -247,6 +255,7 @@
 				552E86062AD47BD9006D5E86 /* NavigationBarModifier.swift */,
 				5573DC6A2AE2F4AA0025751F /* LoadingOverlayViewModifier.swift */,
 				5573DC852AE6CA350025751F /* ErrorAlert.swift */,
+				555934BA2B971053009FFF02 /* DiscardableModifier.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -262,6 +271,7 @@
 		552E86002AD472CC006D5E86 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				555934B52B966052009FFF02 /* Likes */,
 				5527A19A2B8CEB010027D134 /* Event */,
 				55FB42E82AF6A5DE00ED9197 /* Profile */,
 				5584D41C2AC1CB6800BC61F6 /* AuthScreens */,
@@ -292,6 +302,15 @@
 				55FB42E62AF6A52100ED9197 /* StripePaymentHelper.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		555934B52B966052009FFF02 /* Likes */ = {
+			isa = PBXGroup;
+			children = (
+				555934B62B96605F009FFF02 /* LikedDJsView.swift */,
+				555934BC2B9715CC009FFF02 /* LikedDJsViewModel.swift */,
+			);
+			path = Likes;
 			sourceTree = "<group>";
 		};
 		5573DC5A2AE1D32A0025751F /* Event controls */ = {
@@ -425,6 +444,7 @@
 				5573DC812AE54F410025751F /* SimpleSongRow.swift */,
 				5573DC902AE71C380025751F /* EventAnnotation.swift */,
 				555934B32B96419E009FFF02 /* DJRow.swift */,
+				555934B82B9662AE009FFF02 /* LikedDJRow.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -572,10 +592,12 @@
 				552E85F02AD3F85C006D5E86 /* MenuButtonType.swift in Sources */,
 				5573DC882AE6CB9C0025751F /* Errors.swift in Sources */,
 				55A583A52AE1531E00438049 /* MapSelectionView.swift in Sources */,
+				555934BD2B9715CC009FFF02 /* LikedDJsViewModel.swift in Sources */,
 				5584D41A2AC1AEB700BC61F6 /* LargeSecondaryButtonStyle.swift in Sources */,
 				5573DC5C2AE1D36F0025751F /* EventControlView.swift in Sources */,
 				552E85F82AD43777006D5E86 /* EventList.swift in Sources */,
 				55FB42E72AF6A52100ED9197 /* StripePaymentHelper.swift in Sources */,
+				555934BB2B971053009FFF02 /* DiscardableModifier.swift in Sources */,
 				55A583AB2AE18C6600438049 /* UserHomeView.swift in Sources */,
 				5584D40A2AC18D9700BC61F6 /* WavyBackgroundView.swift in Sources */,
 				5573DC7E2AE542CB0025751F /* SongSelectionView.swift in Sources */,
@@ -601,6 +623,7 @@
 				552E86072AD47BD9006D5E86 /* NavigationBarModifier.swift in Sources */,
 				5573DC692AE2F2B30025751F /* MainMenuViewModel.swift in Sources */,
 				55FB42EE2AF7FDE500ED9197 /* PhotoPickerViewModel.swift in Sources */,
+				555934B72B96605F009FFF02 /* LikedDJsView.swift in Sources */,
 				5573DC7A2AE42D750025751F /* CheckmarkButtonStyle.swift in Sources */,
 				5573DC612AE2AAE50025751F /* InfoView.swift in Sources */,
 				5584D4182AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift in Sources */,
@@ -611,6 +634,7 @@
 				55A583952AE14FEF00438049 /* AddressResult.swift in Sources */,
 				5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */,
 				55A5839F2AE150F400438049 /* MapSelectionViewModel.swift in Sources */,
+				555934B92B9662AE009FFF02 /* LikedDJRow.swift in Sources */,
 				552E86032AD47336006D5E86 /* ProfileView.swift in Sources */,
 				552E85E92AD2E745006D5E86 /* BackgroundColor.swift in Sources */,
 				552E85EE2AD3F78A006D5E86 /* SideMenu.swift in Sources */,

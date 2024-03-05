@@ -23,6 +23,7 @@ final class EventDetailsViewModel: ObservableObject {
             case .success():
                 DispatchQueue.main.async {
                     self?.isJoined = true
+                    self?.numberOfJoined += 1
                 }
             case .failure(let failure):
                 DispatchQueue.main.async {
@@ -41,6 +42,7 @@ final class EventDetailsViewModel: ObservableObject {
             case .success():
                 DispatchQueue.main.async {
                     self?.isJoined = false
+                    self?.numberOfJoined -= 1
                 }
             case .failure(let failure):
                 DispatchQueue.main.async {
