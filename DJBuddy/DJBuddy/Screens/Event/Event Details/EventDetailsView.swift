@@ -18,19 +18,27 @@ struct EventDetailsView: View {
     let isJoined: Bool
     @State private var isShareShowing = false
 
+    private let dateFormatter = DateComponentsFormatter()
+
     private var region: MKCoordinateRegion {
         MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: event.location.latitude, longitude: event.location.longitude), span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005))
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            VStack(alignment: .leading, spacing: 5) {
-                Text(event.name)
-                    .font(.largeTitle)
+            VStack(alignment: .leading, spacing: 10) {
+                HStack {
+                    Text(event.name)
+                        .font(.largeTitle)
+                    Spacer()
+                    Label("\(viewModel.numberOfJoined)", systemImage: "person.3.fill")
+                }
                 Text("by")
                     .foregroundStyle(.secondary)
                     .font(.subheadline)
-                Text(event.dj.username)
+                DJRow(dj: event.dj, isLiked: user.isDj ? .constant(nil) : $viewModel.isDJLiked) {
+                    viewModel.toggleLike(on: event.dj, by: user)
+                }
             }
 
             AddressRow(address: event.location)
@@ -44,7 +52,13 @@ struct EventDetailsView: View {
             .clipShape(.rect(cornerRadius: 12))
             .disabled(true)
 
-            Text("Joined users: \(viewModel.numberOfJoined)")
+            if let timeUntil = dateFormatter.string(from: event.date.timeIntervalSinceNow) {
+                if timeUntil.starts(with: "-") {
+                    Text(timeUntil.dropFirst() + " ago.")
+                } else {
+                    Text(timeUntil + " until event.")
+                }
+            }
 
             Spacer()
 
@@ -64,6 +78,10 @@ struct EventDetailsView: View {
         .onAppear {
             viewModel.isJoined = isJoined
             viewModel.getNumberOfJoined(to: event)
+            viewModel.getLikeStatus(on: event.dj, by: user)
+
+            dateFormatter.allowedUnits = [.day]
+            dateFormatter.unitsStyle = .full
         }
         .animation(.default, value: viewModel.isJoined)
     }

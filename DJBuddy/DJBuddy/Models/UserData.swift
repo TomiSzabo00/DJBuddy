@@ -64,6 +64,17 @@ final class UserData: Identifiable, ObservableObject, Hashable {
         self.balance = decodable.balance
     }
 
+    init(decodable: LikedDJData) {
+        self.id = decodable.id
+        self.username = decodable.username
+        self.email = decodable.email
+        self.firstName = decodable.firstName
+        self.lastName = decodable.lastName
+        self.type = UserTypeEnum(rawValue: decodable.type) ?? .user
+        self.profilePicUrl = decodable.profilePicUrl
+        self.balance = decodable.balance
+    }
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
@@ -96,6 +107,24 @@ final class UserData: Identifiable, ObservableObject, Hashable {
                  profilePicUrl: "",
                  balance: 1
         )
+    }
+}
+
+class LikedDJData: Decodable {
+    let id: String
+    let username: String
+    let email: String
+    let firstName: String
+    let lastName: String
+    let type: String
+    var profilePicUrl: String
+    let balance: Double
+    let likeCount: Int
+
+    enum CodingKeys: String, CodingKey {
+        case id = "uuid"
+        case username, email, firstName, lastName, type, profilePicUrl, balance
+        case likeCount = "like_count"
     }
 }
 

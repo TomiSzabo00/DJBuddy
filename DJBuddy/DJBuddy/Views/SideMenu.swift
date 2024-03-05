@@ -59,7 +59,9 @@ struct SideMenu: View {
             case .past:
                 return {}
             case .liked:
-                return {}
+                return {
+                    navigator.navigate(to: .likedDjs)
+                }
             case .songs:
                 return {}
             case .profile:
