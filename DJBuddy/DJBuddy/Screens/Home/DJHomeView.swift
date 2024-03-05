@@ -27,7 +27,7 @@ struct DJHomeView: View {
                         }
                 }
             } header: {
-                Text("Your events")
+                Text(EventDataType.yourEvents.title(for: user.type))
                     .textCase(.uppercase)
                     .font(.subheadline)
             }

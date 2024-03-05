@@ -28,6 +28,8 @@
 		552E86052AD476C9006D5E86 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86042AD476C9006D5E86 /* CircleButton.swift */; };
 		552E86072AD47BD9006D5E86 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E86062AD47BD9006D5E86 /* NavigationBarModifier.swift */; };
 		552E860C2AD4878A006D5E86 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E860B2AD4878A006D5E86 /* Navigator.swift */; };
+		5542532C2B97D7AD00A0D6E4 /* PastEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5542532B2B97D7AD00A0D6E4 /* PastEventsView.swift */; };
+		5542532E2B97D87200A0D6E4 /* PastEventsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5542532D2B97D87200A0D6E4 /* PastEventsViewModel.swift */; };
 		555934B42B96419E009FFF02 /* DJRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555934B32B96419E009FFF02 /* DJRow.swift */; };
 		555934B72B96605F009FFF02 /* LikedDJsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555934B62B96605F009FFF02 /* LikedDJsView.swift */; };
 		555934B92B9662AE009FFF02 /* LikedDJRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555934B82B9662AE009FFF02 /* LikedDJRow.swift */; };
@@ -118,6 +120,8 @@
 		552E86042AD476C9006D5E86 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		552E86062AD47BD9006D5E86 /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
 		552E860B2AD4878A006D5E86 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		5542532B2B97D7AD00A0D6E4 /* PastEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastEventsView.swift; sourceTree = "<group>"; };
+		5542532D2B97D87200A0D6E4 /* PastEventsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastEventsViewModel.swift; sourceTree = "<group>"; };
 		555934B32B96419E009FFF02 /* DJRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJRow.swift; sourceTree = "<group>"; };
 		555934B62B96605F009FFF02 /* LikedDJsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedDJsView.swift; sourceTree = "<group>"; };
 		555934B82B9662AE009FFF02 /* LikedDJRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedDJRow.swift; sourceTree = "<group>"; };
@@ -203,6 +207,7 @@
 		5527A19A2B8CEB010027D134 /* Event */ = {
 			isa = PBXGroup;
 			children = (
+				5542532A2B97D79F00A0D6E4 /* Past events */,
 				5527A1D32B94DFD00027D134 /* Event Details */,
 				5527A1D22B94DFC30027D134 /* Join Event */,
 				55A583992AE1504E00438049 /* Event creation */,
@@ -302,6 +307,15 @@
 				55FB42E62AF6A52100ED9197 /* StripePaymentHelper.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		5542532A2B97D79F00A0D6E4 /* Past events */ = {
+			isa = PBXGroup;
+			children = (
+				5542532B2B97D7AD00A0D6E4 /* PastEventsView.swift */,
+				5542532D2B97D87200A0D6E4 /* PastEventsViewModel.swift */,
+			);
+			path = "Past events";
 			sourceTree = "<group>";
 		};
 		555934B52B966052009FFF02 /* Likes */ = {
@@ -626,6 +640,7 @@
 				555934B72B96605F009FFF02 /* LikedDJsView.swift in Sources */,
 				5573DC7A2AE42D750025751F /* CheckmarkButtonStyle.swift in Sources */,
 				5573DC612AE2AAE50025751F /* InfoView.swift in Sources */,
+				5542532C2B97D7AD00A0D6E4 /* PastEventsView.swift in Sources */,
 				5584D4182AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift in Sources */,
 				5573DC632AE2ACCE0025751F /* SongList.swift in Sources */,
 				55AAC7822AED91F3009414F0 /* StateManager.swift in Sources */,
@@ -649,6 +664,7 @@
 				552E85E62AD2E605006D5E86 /* CustomColors.swift in Sources */,
 				55FB42E52AF57D0800ED9197 /* PaymentResponse.swift in Sources */,
 				55AAC7842AED9957009414F0 /* API.swift in Sources */,
+				5542532E2B97D87200A0D6E4 /* PastEventsViewModel.swift in Sources */,
 				5584D4202AC1DA0B00BC61F6 /* UnderlinedButtonStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -62,7 +62,9 @@ struct EventDetailsView: View {
 
             Spacer()
 
-            buttonContent()
+            if !event.isInThePast {
+                buttonContent()
+            }
         }
         .foregroundStyle(.white)
         .padding(20)

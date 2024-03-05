@@ -14,14 +14,13 @@ struct DiscardableModifier: ViewModifier {
     func body(content: Content) -> some View {
         ZStack(alignment: alignment) {
             content
-            Button {
-                discardAction()
-            } label: {
-                Image(systemName: "multiply.circle.fill")
-                    .foregroundStyle(.ultraThinMaterial)
-                    .font(.title2)
-            }
-            .padding(20)
+            Image(systemName: "multiply.circle.fill")
+                .foregroundStyle(.ultraThinMaterial)
+                .font(.title2)
+                .onTapGesture {
+                    discardAction()
+                }
+                .padding(20)
         }
     }
 }
