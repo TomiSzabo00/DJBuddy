@@ -86,6 +86,8 @@
 		55A583AD2AE1937A00438049 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583AC2AE1937A00438049 /* UserData.swift */; };
 		55AAC7822AED91F3009414F0 /* StateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AAC7812AED91F3009414F0 /* StateManager.swift */; };
 		55AAC7842AED9957009414F0 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AAC7832AED9957009414F0 /* API.swift */; };
+		55F607612B990BAB0033AF73 /* SavedSongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F607602B990BAB0033AF73 /* SavedSongsView.swift */; };
+		55F607632B990C140033AF73 /* SavedSongsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F607622B990C140033AF73 /* SavedSongsViewModel.swift */; };
 		55FB42D82AF43A8A00ED9197 /* Stripe in Frameworks */ = {isa = PBXBuildFile; productRef = 55FB42D72AF43A8A00ED9197 /* Stripe */; };
 		55FB42DA2AF43A8A00ED9197 /* StripeApplePay in Frameworks */ = {isa = PBXBuildFile; productRef = 55FB42D92AF43A8A00ED9197 /* StripeApplePay */; };
 		55FB42DC2AF43A8A00ED9197 /* StripeCardScan in Frameworks */ = {isa = PBXBuildFile; productRef = 55FB42DB2AF43A8A00ED9197 /* StripeCardScan */; };
@@ -179,6 +181,8 @@
 		55A583AC2AE1937A00438049 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		55AAC7812AED91F3009414F0 /* StateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateManager.swift; sourceTree = "<group>"; };
 		55AAC7832AED9957009414F0 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		55F607602B990BAB0033AF73 /* SavedSongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSongsView.swift; sourceTree = "<group>"; };
+		55F607622B990C140033AF73 /* SavedSongsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSongsViewModel.swift; sourceTree = "<group>"; };
 		55FB42E42AF57D0800ED9197 /* PaymentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResponse.swift; sourceTree = "<group>"; };
 		55FB42E62AF6A52100ED9197 /* StripePaymentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripePaymentHelper.swift; sourceTree = "<group>"; };
 		55FB42E92AF6A5F900ED9197 /* BalanceTopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceTopUpView.swift; sourceTree = "<group>"; };
@@ -348,6 +352,8 @@
 				5573DC7D2AE542CB0025751F /* SongSelectionView.swift */,
 				5573DC7F2AE544300025751F /* SongSelectionViewModel.swift */,
 				5573DC832AE65D940025751F /* IncreasePriceView.swift */,
+				55F607602B990BAB0033AF73 /* SavedSongsView.swift */,
+				55F607622B990C140033AF73 /* SavedSongsViewModel.swift */,
 			);
 			path = Songs;
 			sourceTree = "<group>";
@@ -640,6 +646,7 @@
 				555934B72B96605F009FFF02 /* LikedDJsView.swift in Sources */,
 				5573DC7A2AE42D750025751F /* CheckmarkButtonStyle.swift in Sources */,
 				5573DC612AE2AAE50025751F /* InfoView.swift in Sources */,
+				55F607632B990C140033AF73 /* SavedSongsViewModel.swift in Sources */,
 				5542532C2B97D7AD00A0D6E4 /* PastEventsView.swift in Sources */,
 				5584D4182AC1ACCE00BC61F6 /* LargeProminentButtonStyle.swift in Sources */,
 				5573DC632AE2ACCE0025751F /* SongList.swift in Sources */,
@@ -660,6 +667,7 @@
 				5573DC822AE54F410025751F /* SimpleSongRow.swift in Sources */,
 				5573DC912AE71C380025751F /* EventAnnotation.swift in Sources */,
 				55A583A72AE15D2500438049 /* CreateEventView.swift in Sources */,
+				55F607612B990BAB0033AF73 /* SavedSongsView.swift in Sources */,
 				55A583A92AE1704900438049 /* CreateEventViewModel.swift in Sources */,
 				552E85E62AD2E605006D5E86 /* CustomColors.swift in Sources */,
 				55FB42E52AF57D0800ED9197 /* PaymentResponse.swift in Sources */,

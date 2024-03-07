@@ -1515,6 +1515,172 @@ final class API {
         task.resume()
     }
 
+    static func save(song: SongData, by user: UserData, completion: @escaping (Result<Int, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/users/\(user.id)/save")!
+
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+
+        let parameters: [String: Any] = [
+            "title": song.title,
+            "artist": song.artist,
+            "amount": song.amount,
+            "albumArtUrl": song.albumArtUrl,
+            "event_id": ""
+        ]
+
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        } catch let error {
+            print(error.localizedDescription)
+            return
+        }
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data,
+                  let response = response as? HTTPURLResponse,
+                  error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
+                    }
+                }
+                return
+            }
+
+            guard response.statusCode == 201 else {
+                if didDecodeCustomResponse(from: data, completion: completion) {
+                    return
+                }
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: response.debugDescription)))
+                }
+                return
+            }
+
+            do {
+                let song = try JSONDecoder().decode(SongData.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(song.id))
+                }
+            } catch {
+                print(error) // parsing error
+
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("responseString = \(responseString)")
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: responseString)))
+                    }
+                } else {
+                    print("unable to parse error response as string")
+                }
+            }
+        }
+
+        task.resume()
+    }
+
+    static func unsave(song: SongData, by user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/users/\(user.id)/unsave/\(song.id)")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard
+                let response = response as? HTTPURLResponse,
+                error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: error.localizedDescription)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            guard response.statusCode == 200 else {
+                if didDecodeCustomResponse(from: data, completion: completion) {
+                    return
+                }
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: response.debugDescription)))
+                }
+                return
+            }
+
+            DispatchQueue.main.async {
+                completion(.success(()))
+            }
+        }
+
+        task.resume()
+    }
+
+    static func getAllSavedSongs(by user: UserData, completion: @escaping (Result<[SongData], APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/users/\(user.id)/saved_songs")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data, error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        let msg = decodeCustomResponse(from: error)
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: msg)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            do {
+                let responseObject = try JSONDecoder().decode([SongData].self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(responseObject))
+                }
+            } catch {
+                print(error) // parsing error
+
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("responseString = \(responseString)")
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: responseString)))
+                    }
+                } else {
+                    print("unable to parse error response as string")
+                }
+            }
+        }
+
+        task.resume()
+    }
+
     // MARK: WebSockets
 
     private static func connectToWebSocket(on urlString: String) -> URLSessionWebSocketTask? {

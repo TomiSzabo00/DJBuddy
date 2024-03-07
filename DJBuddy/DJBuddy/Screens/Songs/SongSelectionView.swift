@@ -51,6 +51,7 @@ struct SongSelectionView: View {
                     SimpleSongRow(song: song, textColor: .white)
                         .onTapGesture {
                             selectAction(song)
+                            isShowing = false
                         }
                 }
                 .listStyle(.plain)

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SimpleSongRow: View {
     let song: SongData
-    let height = 66.0
+    var height = 66.0
     var textColor: Color = .black
 
     var body: some View {
