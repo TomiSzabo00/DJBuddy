@@ -79,7 +79,7 @@ struct MainMenu: View {
             }
         }
         .ignoresSafeArea()
-        .navBarWithTitle(title: "", navigator: navigator, leadingButton: .menu(signOutAction), trailingButton: .profile(user.firstName))
+        .navBarWithTitle(title: "", navigator: navigator, leadingButton: .menu(user.type, signOutAction), trailingButton: .profile(user.firstName))
         .loadingOverlay(isLoading: $viewModel.isLoading)
     }
 }

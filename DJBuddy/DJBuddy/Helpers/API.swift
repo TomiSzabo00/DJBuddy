@@ -1754,4 +1754,281 @@ final class API {
 
         task.resume()
     }
+
+    // MARK: Playlists
+
+    static func createPlaylist(by user: UserData, name: String, completion: @escaping (Result<Int, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/playlists/create")!
+
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+
+        let parameters: [String: Any] = [
+            "name": name,
+            "user_id": user.id
+        ]
+
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        } catch let error {
+            print(error.localizedDescription)
+            return
+        }
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data, error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        let msg = decodeCustomResponse(from: error)
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: msg)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            do {
+                let responseObject = try JSONDecoder().decode(Int.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(responseObject))
+                }
+            } catch {
+                print(error) // parsing error
+
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("responseString = \(responseString)")
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: responseString)))
+                    }
+                } else {
+                    print("unable to parse error response as string")
+                }
+            }
+        }
+
+        task.resume()
+    }
+
+    static func deletePlaylist(id: Int, completion: @escaping (Result<Void, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/playlists/\(id)/remove")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+
+        let task = URLSession.shared.dataTask(with: request) { _, _, error in
+            guard error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        let msg = decodeCustomResponse(from: error)
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: msg)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            DispatchQueue.main.async {
+                completion(.success(()))
+            }
+        }
+
+        task.resume()
+    }
+
+    static func addSong(to playlist: Playlist, song: SongData, completion: @escaping (Result<Void, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/playlists/\(playlist.id)/add_song")!
+
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+
+        let parameters: [String: Any] = [
+            "title": song.title,
+            "artist": song.artist,
+            "amount": 0,
+            "albumArtUrl": song.albumArtUrl,
+            "event_id": ""
+        ]
+
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        } catch let error {
+            print(error.localizedDescription)
+            return
+        }
+
+        let task = URLSession.shared.dataTask(with: request) { _, _, error in
+            guard error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        let msg = decodeCustomResponse(from: error)
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: msg)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            DispatchQueue.main.async {
+                completion(.success(()))
+            }
+        }
+
+        task.resume()
+    }
+
+    static func removeSong(from playlist: Playlist, song: SongData, completion: @escaping (Result<Void, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/playlists/\(playlist.id)/remove_song/\(song.id)")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+
+        let task = URLSession.shared.dataTask(with: request) { _, _, error in
+            guard error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        let msg = decodeCustomResponse(from: error)
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: msg)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            DispatchQueue.main.async {
+                completion(.success(()))
+            }
+        }
+
+        task.resume()
+    }
+
+    static func getAllSongs(from playlist: Playlist, completion: @escaping (Result<[SongData], APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/playlists/\(playlist.id)/songs")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data, error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        let msg = decodeCustomResponse(from: error)
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: msg)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            do {
+                let responseObject = try JSONDecoder().decode([SongData].self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(responseObject))
+                }
+            } catch {
+                print(error) // parsing error
+
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("responseString = \(responseString)")
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: responseString)))
+                    }
+                } else {
+                    print("unable to parse error response as string")
+                }
+            }
+        }
+
+        task.resume()
+    }
+
+    static func getAllPlaylists(of user: UserData, completion: @escaping (Result<[Playlist], APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/playlists/\(user.id)")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data, error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        let msg = decodeCustomResponse(from: error)
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: msg)))
+                        }
+                    }
+                } else {
+                    print("Error occured but it is nil")
+                }
+                return
+            }
+
+            do {
+                let responseObject = try JSONDecoder().decode([Playlist].self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(responseObject))
+                }
+            } catch {
+                print(error) // parsing error
+
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("responseString = \(responseString)")
+                    DispatchQueue.main.async {
+                        completion(.failure(.general(desc: responseString)))
+                    }
+                } else {
+                    print("unable to parse error response as string")
+                }
+            }
+        }
+
+        task.resume()
+    }
 }

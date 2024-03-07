@@ -10,6 +10,7 @@ import SwiftUI
 struct SideMenu: View {
     @Binding var isShowing: Bool
     let navigator: Navigator
+    let userType: UserTypeEnum
     var edgeTransition: AnyTransition = .move(edge: .leading)
 
     let signOutAction: () -> Void
@@ -37,7 +38,7 @@ struct SideMenu: View {
 
     @ViewBuilder var content: some View {
         VStack(alignment: .leading, spacing: 40) {
-            ForEach(MenuButtonType.allCases) { type in
+            ForEach(MenuButtonType.allCases(for: userType)) { type in
                 HStack {
                     menuButton(type: type)
                     Spacer()
@@ -65,7 +66,14 @@ struct SideMenu: View {
                     navigator.navigate(to: .likedDjs)
                 }
             case .songs:
-                return {}
+                if userType == .user {
+                    return {
+                        navigator.navigate(to: .savedSongs)
+                    }
+                }
+                return {
+                    navigator.navigate(to: .playlists)
+                }
             case .profile:
                 return {
                     navigator.navigate(to: .profile)
@@ -77,7 +85,7 @@ struct SideMenu: View {
             }
         }()
 
-        Button(type.title) {
+        Button(type.title(for: userType)) {
             isShowing.toggle()
             action()
         }
@@ -85,5 +93,5 @@ struct SideMenu: View {
 }
 
 #Preview {
-    SideMenu(isShowing: .constant(true), navigator: Navigator()) {}
+    SideMenu(isShowing: .constant(true), navigator: Navigator(), userType: .user) {}
 }

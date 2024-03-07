@@ -9,9 +9,10 @@ import SwiftUI
 
 enum ButtonType {
     case back
-    case menu(() -> Void)
+    case menu(UserTypeEnum, () -> Void)
     case options
     case profile(String)
     case close(Binding<Bool>)
     case share(Binding<Bool>)
+    case add(Binding<Bool>)
 }

@@ -12,6 +12,7 @@ struct NavigationBarModifier<MenuContent: View>: ViewModifier {
     @State var isOptionsShowing = false
 
     @State private var signOutAction: () -> Void = {}
+    @State private var userType: UserTypeEnum = .user
 
     init(title: String, 
          navigator: Navigator,
@@ -51,7 +52,7 @@ struct NavigationBarModifier<MenuContent: View>: ViewModifier {
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden()
-            .sideMenu(isShowing: $isMenuShowing, navigator: navigator, signOutAction: signOutAction)
+            .sideMenu(isShowing: $isMenuShowing, navigator: navigator, userType: userType, signOutAction: signOutAction)
             .confirmationDialog("", isPresented: $isOptionsShowing) {
                 actionSheetContent
                 .preferredColorScheme(.dark)
@@ -67,9 +68,10 @@ struct NavigationBarModifier<MenuContent: View>: ViewModifier {
             } label: {
                 Image(systemName: "chevron.left")
             }
-        case let .menu(signOutAction):
+        case let .menu(type, signOutAction):
             MenuButton(isShowing: $isMenuShowing) {}
                 .onAppear {
+                    self.userType = type
                     self.signOutAction = signOutAction
                 }
         case .options:
@@ -93,6 +95,12 @@ struct NavigationBarModifier<MenuContent: View>: ViewModifier {
                 isShowing.wrappedValue = true
             } label: {
                 Image(systemName: "square.and.arrow.up")
+            }
+        case let .add(isShowing):
+            Button {
+                isShowing.wrappedValue = true
+            } label: {
+                Image(systemName: "plus")
             }
         }
     }
