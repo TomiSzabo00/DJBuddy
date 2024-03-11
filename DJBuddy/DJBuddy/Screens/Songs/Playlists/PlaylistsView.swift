@@ -15,15 +15,21 @@ struct PlaylistsView: View {
     @State private var isNewPlaylistShowing = false
     @State private var newPlaylistName = ""
 
+    @State private var id = UUID()
+
     var body: some View {
         VStack(spacing: 20) {
             List {
                 Section {
                     ForEach(viewModel.playlists) { playlist in
                         PlaylistRow(playlist: playlist)
-                            .discardable {
-                                
+                            .onTapGesture {
+                                navigator.navigate(to: .playlistDetails(playlist))
                             }
+                            .discardable {
+                                viewModel.delete(playlist: playlist)
+                            }
+                            .id("\(id)\(playlist.id)\(playlist.songs.count)")
                     }
                 } header: {
                     Text("Your saved playlists")

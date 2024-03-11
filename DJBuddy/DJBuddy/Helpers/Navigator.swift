@@ -23,7 +23,7 @@ enum NavigationDestination: Hashable {
     case pastEvents
     case savedSongs
     case playlists
-    case playlistDetails([SongData])
+    case playlistDetails(Playlist)
 }
 
 class Navigator: ObservableObject {

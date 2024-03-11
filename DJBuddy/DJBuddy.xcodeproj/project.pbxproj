@@ -89,6 +89,8 @@
 		55A583AD2AE1937A00438049 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583AC2AE1937A00438049 /* UserData.swift */; };
 		55AAC7822AED91F3009414F0 /* StateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AAC7812AED91F3009414F0 /* StateManager.swift */; };
 		55AAC7842AED9957009414F0 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AAC7832AED9957009414F0 /* API.swift */; };
+		55CF4A672B9F560A00116154 /* PlaylistDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CF4A662B9F560A00116154 /* PlaylistDetailsView.swift */; };
+		55CF4A692B9F5E6700116154 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CF4A682B9F5E6700116154 /* Playlist.swift */; };
 		55F607612B990BAB0033AF73 /* SavedSongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F607602B990BAB0033AF73 /* SavedSongsView.swift */; };
 		55F607632B990C140033AF73 /* SavedSongsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F607622B990C140033AF73 /* SavedSongsViewModel.swift */; };
 		55FB42D82AF43A8A00ED9197 /* Stripe in Frameworks */ = {isa = PBXBuildFile; productRef = 55FB42D72AF43A8A00ED9197 /* Stripe */; };
@@ -187,6 +189,8 @@
 		55A583AC2AE1937A00438049 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		55AAC7812AED91F3009414F0 /* StateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateManager.swift; sourceTree = "<group>"; };
 		55AAC7832AED9957009414F0 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		55CF4A662B9F560A00116154 /* PlaylistDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailsView.swift; sourceTree = "<group>"; };
+		55CF4A682B9F5E6700116154 /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		55F607602B990BAB0033AF73 /* SavedSongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSongsView.swift; sourceTree = "<group>"; };
 		55F607622B990C140033AF73 /* SavedSongsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSongsViewModel.swift; sourceTree = "<group>"; };
 		55FB42E42AF57D0800ED9197 /* PaymentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResponse.swift; sourceTree = "<group>"; };
@@ -446,6 +450,7 @@
 				5573DC5D2AE280BF0025751F /* ButtonType.swift */,
 				5573DC642AE2AF3B0025751F /* SongData.swift */,
 				55FB42E42AF57D0800ED9197 /* PaymentResponse.swift */,
+				55CF4A682B9F5E6700116154 /* Playlist.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -506,6 +511,7 @@
 			children = (
 				5594F7402B9A115F00DDD80A /* PlaylistsView.swift */,
 				5594F7422B9A130200DDD80A /* PlaylistViewModel.swift */,
+				55CF4A662B9F560A00116154 /* PlaylistDetailsView.swift */,
 			);
 			path = Playlists;
 			sourceTree = "<group>";
@@ -651,6 +657,7 @@
 				5594F7452B9A49BD00DDD80A /* PlaylistRow.swift in Sources */,
 				552E86052AD476C9006D5E86 /* CircleButton.swift in Sources */,
 				55FB42EC2AF7F66C00ED9197 /* PhotoPickerView.swift in Sources */,
+				55CF4A692B9F5E6700116154 /* Playlist.swift in Sources */,
 				552E85F02AD3F85C006D5E86 /* MenuButtonType.swift in Sources */,
 				5573DC882AE6CB9C0025751F /* Errors.swift in Sources */,
 				55A583A52AE1531E00438049 /* MapSelectionView.swift in Sources */,
@@ -714,6 +721,7 @@
 				55F607612B990BAB0033AF73 /* SavedSongsView.swift in Sources */,
 				55A583A92AE1704900438049 /* CreateEventViewModel.swift in Sources */,
 				552E85E62AD2E605006D5E86 /* CustomColors.swift in Sources */,
+				55CF4A672B9F560A00116154 /* PlaylistDetailsView.swift in Sources */,
 				55FB42E52AF57D0800ED9197 /* PaymentResponse.swift in Sources */,
 				55AAC7842AED9957009414F0 /* API.swift in Sources */,
 				5542532E2B97D87200A0D6E4 /* PastEventsViewModel.swift in Sources */,

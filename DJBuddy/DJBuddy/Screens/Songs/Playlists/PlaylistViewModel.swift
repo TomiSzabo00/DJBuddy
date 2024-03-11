@@ -7,24 +7,6 @@
 
 import Foundation
 
-struct Playlist: Identifiable, Decodable {
-    let id: Int
-    let title: String
-    var songs: [SongData]
-
-    enum CodingKeys: String, CodingKey {
-        case id
-        case title = "name"
-        case songs
-    }
-
-    init(id: Int, title: String, songs: [SongData] = []) {
-        self.id = id
-        self.title = title
-        self.songs = songs
-    }
-}
-
 final class PlaylistViewModel: ObservableObject {
     @Published private(set) var playlists: [Playlist] = []
     @Published var isLoading = false
@@ -40,6 +22,7 @@ final class PlaylistViewModel: ObservableObject {
             case .success(let success):
                 DispatchQueue.main.async {
                     self?.playlists = success
+                    self?.objectWillChange.send()
                 }
             case .failure(let failure):
                 DispatchQueue.main.async {
@@ -55,6 +38,53 @@ final class PlaylistViewModel: ObservableObject {
             case .success(let success):
                 DispatchQueue.main.async {
                     self?.playlists.append(Playlist(id: success, title: name))
+                }
+            case .failure(let failure):
+                DispatchQueue.main.async {
+                    self?.error = failure
+                }
+            }
+        }
+    }
+
+    func delete(playlist: Playlist) {
+        API.deletePlaylist(id: playlist.id) { [weak self] result in
+            switch result {
+            case .success():
+                DispatchQueue.main.async {
+                    self?.playlists.removeAll(where: { $0.id == playlist.id })
+                }
+            case .failure(let failure):
+                DispatchQueue.main.async {
+                    self?.error = failure
+                }
+            }
+        }
+    }
+
+    func add(song: SongData, to playlist: Playlist) {
+        API.addSong(to: playlist, song: song) { [weak self] result in
+            switch result {
+            case .success():
+                DispatchQueue.main.async {
+                    playlist.songs.append(song)
+                    self?.objectWillChange.send()
+                }
+            case .failure(let failure):
+                DispatchQueue.main.async {
+                    self?.error = failure
+                }
+            }
+        }
+    }
+
+    func remove(song: SongData, from playlist: Playlist) {
+        API.removeSong(from: playlist, song: song) { [weak self] result in
+            switch result {
+            case .success():
+                DispatchQueue.main.async {
+                    playlist.songs.remove(song)
+                    self?.objectWillChange.send()
                 }
             case .failure(let failure):
                 DispatchQueue.main.async {

@@ -49,8 +49,8 @@ struct StateManager: View {
                             SavedSongsView()
                         case .playlists:
                             PlaylistsView()
-                        case let .playlistDetails(songs):
-                            EmptyView()
+                        case let .playlistDetails(playlist):
+                            PlaylistDetailsView(playList: playlist)
                         }
                     }
             } else {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PlaylistRow: View {
-    let playlist: Playlist
+    @State var playlist: Playlist
 
     var body: some View {
         VStack(alignment: .leading) {
