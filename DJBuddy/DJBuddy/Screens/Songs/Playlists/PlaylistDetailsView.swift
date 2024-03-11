@@ -16,23 +16,45 @@ struct PlaylistDetailsView: View {
 
     @State private var isNewSongShowing = false
 
+    private var remainingSongs: Int {
+        Playlist.minimumCount - playList.songs.count
+    }
+
     var body: some View {
         VStack(spacing: 20) {
             List {
+                if !playList.hasEnoughSongs {
+                    InfoView("This playlist doen't have enough songs to be used as a filter. Add \(remainingSongs) more.", type: .warning)
+                        .listStyle(.plain)
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                }
+
                 Section {
                     ForEach(playList.songs) { song in
                         SimpleSongRow(song: song, height: 80)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .frame(maxWidth: .infinity, maxHeight: 80, alignment: .leading)
                             .background(
                                 RoundedRectangle(cornerRadius: 12)
                                     .fill(.white)
                             )
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
                             .discardable {
                                 viewModel.remove(song: song, from: playList)
                             }
                     }
                 } header: {
-                    Text("Songs in this playlist")
+                    HStack(spacing: 0) {
+                        Text("Songs in this playlist")
+                        Spacer()
+                        Text("\(playList.songs.count)")
+                        if playList.hasEnoughSongs {
+                            Text(" songs")
+                        } else {
+                            Text("/\(Playlist.minimumCount)")
+                        }
+                    }
                 }
                 .listStyle(.plain)
                 .listRowSeparator(.hidden)

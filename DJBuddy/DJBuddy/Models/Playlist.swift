@@ -12,6 +12,10 @@ class Playlist: Identifiable, Decodable, Equatable, Hashable {
     let title: String
     var songs: [SongData]
 
+    var hasEnoughSongs: Bool {
+        songs.count >= Self.minimumCount
+    }
+
     enum CodingKeys: String, CodingKey {
         case id
         case title = "name"
@@ -35,4 +39,8 @@ class Playlist: Identifiable, Decodable, Equatable, Hashable {
     static var PreviewData: Playlist {
         Playlist(id: 0, title: "Preview playlist", songs: [SongData.PreviewData, SongData.PreviewData2])
     }
+}
+
+extension Playlist {
+    static let minimumCount: Int = 10
 }

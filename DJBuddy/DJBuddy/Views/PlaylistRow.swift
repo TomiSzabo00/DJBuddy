@@ -18,9 +18,16 @@ struct PlaylistRow: View {
                 .fontWeight(.heavy)
                 .font(.title3)
 
-            Text("\(playlist.songs.count) songs")
-                .font(.subheadline)
-                .foregroundStyle(Color.gray)
+            HStack {
+                Text("^[\(playlist.songs.count) song](inflect: true)")
+                    .font(.subheadline)
+                    .foregroundStyle(Color.gray)
+
+                if !playlist.hasEnoughSongs {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundStyle(.yellow)
+                }
+            }
         }
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, maxHeight: 60, alignment: .leading)

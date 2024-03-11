@@ -20,6 +20,12 @@ struct PlaylistsView: View {
     var body: some View {
         VStack(spacing: 20) {
             List {
+                InfoView("You can set a playlist as a filter on an event so users can only request songs from there.")
+                    .listStyle(.plain)
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+
                 Section {
                     ForEach(viewModel.playlists) { playlist in
                         PlaylistRow(playlist: playlist)
