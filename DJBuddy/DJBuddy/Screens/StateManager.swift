@@ -45,6 +45,8 @@ struct StateManager: View {
                             LikedDJsView()
                         case .pastEvents:
                             PastEventsView()
+                        case .savedSongs:
+                            SavedSongsView()
                         }
                     }
             } else {

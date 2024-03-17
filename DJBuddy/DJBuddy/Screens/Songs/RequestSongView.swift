@@ -53,7 +53,6 @@ struct RequestSongView: View {
         .sheet(isPresented: $isSongSelectionShowing) {
             SongSelectionView(isShowing: $isSongSelectionShowing, theme: viewModel.event.theme) { selectedSong in
                 viewModel.selectedSong = selectedSong
-                isSongSelectionShowing = false
             }
         }
         .loadingOverlay(isLoading: $viewModel.isLoading)
