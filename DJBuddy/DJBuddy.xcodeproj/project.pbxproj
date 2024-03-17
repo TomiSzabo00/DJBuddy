@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5516558A2BA72B7000C55465 /* SongSelectionFromPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551655892BA72B7000C55465 /* SongSelectionFromPlaylistView.swift */; };
 		5527A19C2B8CEB190027D134 /* JoinEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527A19B2B8CEB190027D134 /* JoinEventView.swift */; };
 		5527A19E2B8CEE840027D134 /* JoinEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527A19D2B8CEE840027D134 /* JoinEventViewModel.swift */; };
 		5527A1A12B8D35BC0027D134 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 5527A1A02B8D35BC0027D134 /* CodeScanner */; };
@@ -73,6 +74,9 @@
 		5584D4252AC2128800BC61F6 /* LandingPageEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4242AC2128800BC61F6 /* LandingPageEnum.swift */; };
 		5584D4272AC2132600BC61F6 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4262AC2132600BC61F6 /* AuthViewModel.swift */; };
 		5584D42A2AC21B2D00BC61F6 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4292AC21B2D00BC61F6 /* InputView.swift */; };
+		5594F7412B9A115F00DDD80A /* PlaylistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5594F7402B9A115F00DDD80A /* PlaylistsView.swift */; };
+		5594F7432B9A130200DDD80A /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5594F7422B9A130200DDD80A /* PlaylistViewModel.swift */; };
+		5594F7452B9A49BD00DDD80A /* PlaylistRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5594F7442B9A49BD00DDD80A /* PlaylistRow.swift */; };
 		55A583952AE14FEF00438049 /* AddressResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583942AE14FEF00438049 /* AddressResult.swift */; };
 		55A5839B2AE1506800438049 /* AddressSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5839A2AE1506800438049 /* AddressSelectionView.swift */; };
 		55A5839D2AE1507400438049 /* AddressSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5839C2AE1507400438049 /* AddressSelectionViewModel.swift */; };
@@ -86,6 +90,8 @@
 		55A583AD2AE1937A00438049 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A583AC2AE1937A00438049 /* UserData.swift */; };
 		55AAC7822AED91F3009414F0 /* StateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AAC7812AED91F3009414F0 /* StateManager.swift */; };
 		55AAC7842AED9957009414F0 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AAC7832AED9957009414F0 /* API.swift */; };
+		55CF4A672B9F560A00116154 /* PlaylistDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CF4A662B9F560A00116154 /* PlaylistDetailsView.swift */; };
+		55CF4A692B9F5E6700116154 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CF4A682B9F5E6700116154 /* Playlist.swift */; };
 		55F607612B990BAB0033AF73 /* SavedSongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F607602B990BAB0033AF73 /* SavedSongsView.swift */; };
 		55F607632B990C140033AF73 /* SavedSongsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F607622B990C140033AF73 /* SavedSongsViewModel.swift */; };
 		55FB42D82AF43A8A00ED9197 /* Stripe in Frameworks */ = {isa = PBXBuildFile; productRef = 55FB42D72AF43A8A00ED9197 /* Stripe */; };
@@ -102,6 +108,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		551655892BA72B7000C55465 /* SongSelectionFromPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSelectionFromPlaylistView.swift; sourceTree = "<group>"; };
 		5527A19B2B8CEB190027D134 /* JoinEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinEventView.swift; sourceTree = "<group>"; };
 		5527A19D2B8CEE840027D134 /* JoinEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinEventViewModel.swift; sourceTree = "<group>"; };
 		5527A1D42B94DFE70027D134 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
@@ -168,6 +175,9 @@
 		5584D4242AC2128800BC61F6 /* LandingPageEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageEnum.swift; sourceTree = "<group>"; };
 		5584D4262AC2132600BC61F6 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		5584D4292AC21B2D00BC61F6 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		5594F7402B9A115F00DDD80A /* PlaylistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsView.swift; sourceTree = "<group>"; };
+		5594F7422B9A130200DDD80A /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
+		5594F7442B9A49BD00DDD80A /* PlaylistRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistRow.swift; sourceTree = "<group>"; };
 		55A583942AE14FEF00438049 /* AddressResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressResult.swift; sourceTree = "<group>"; };
 		55A5839A2AE1506800438049 /* AddressSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSelectionView.swift; sourceTree = "<group>"; };
 		55A5839C2AE1507400438049 /* AddressSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSelectionViewModel.swift; sourceTree = "<group>"; };
@@ -181,6 +191,8 @@
 		55A583AC2AE1937A00438049 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		55AAC7812AED91F3009414F0 /* StateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateManager.swift; sourceTree = "<group>"; };
 		55AAC7832AED9957009414F0 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		55CF4A662B9F560A00116154 /* PlaylistDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailsView.swift; sourceTree = "<group>"; };
+		55CF4A682B9F5E6700116154 /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		55F607602B990BAB0033AF73 /* SavedSongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSongsView.swift; sourceTree = "<group>"; };
 		55F607622B990C140033AF73 /* SavedSongsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSongsViewModel.swift; sourceTree = "<group>"; };
 		55FB42E42AF57D0800ED9197 /* PaymentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResponse.swift; sourceTree = "<group>"; };
@@ -346,14 +358,12 @@
 		5573DC702AE30AF90025751F /* Songs */ = {
 			isa = PBXGroup;
 			children = (
+				5594F73F2B9A112000DDD80A /* Playlists */,
+				5594F73E2B9A10F400DDD80A /* Price */,
+				5594F73D2B9A10CD00DDD80A /* Song selection */,
+				5594F73C2B9A108600DDD80A /* Saved songs */,
 				5573DC712AE30B090025751F /* SongDetalsView.swift */,
 				5573DC772AE427800025751F /* RequestSongView.swift */,
-				5573DC7B2AE46AFC0025751F /* PriceSelectionView.swift */,
-				5573DC7D2AE542CB0025751F /* SongSelectionView.swift */,
-				5573DC7F2AE544300025751F /* SongSelectionViewModel.swift */,
-				5573DC832AE65D940025751F /* IncreasePriceView.swift */,
-				55F607602B990BAB0033AF73 /* SavedSongsView.swift */,
-				55F607622B990C140033AF73 /* SavedSongsViewModel.swift */,
 			);
 			path = Songs;
 			sourceTree = "<group>";
@@ -442,6 +452,7 @@
 				5573DC5D2AE280BF0025751F /* ButtonType.swift */,
 				5573DC642AE2AF3B0025751F /* SongData.swift */,
 				55FB42E42AF57D0800ED9197 /* PaymentResponse.swift */,
+				55CF4A682B9F5E6700116154 /* Playlist.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -465,8 +476,47 @@
 				5573DC902AE71C380025751F /* EventAnnotation.swift */,
 				555934B32B96419E009FFF02 /* DJRow.swift */,
 				555934B82B9662AE009FFF02 /* LikedDJRow.swift */,
+				5594F7442B9A49BD00DDD80A /* PlaylistRow.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		5594F73C2B9A108600DDD80A /* Saved songs */ = {
+			isa = PBXGroup;
+			children = (
+				55F607602B990BAB0033AF73 /* SavedSongsView.swift */,
+				55F607622B990C140033AF73 /* SavedSongsViewModel.swift */,
+			);
+			path = "Saved songs";
+			sourceTree = "<group>";
+		};
+		5594F73D2B9A10CD00DDD80A /* Song selection */ = {
+			isa = PBXGroup;
+			children = (
+				5573DC7F2AE544300025751F /* SongSelectionViewModel.swift */,
+				5573DC7D2AE542CB0025751F /* SongSelectionView.swift */,
+				551655892BA72B7000C55465 /* SongSelectionFromPlaylistView.swift */,
+			);
+			path = "Song selection";
+			sourceTree = "<group>";
+		};
+		5594F73E2B9A10F400DDD80A /* Price */ = {
+			isa = PBXGroup;
+			children = (
+				5573DC7B2AE46AFC0025751F /* PriceSelectionView.swift */,
+				5573DC832AE65D940025751F /* IncreasePriceView.swift */,
+			);
+			path = Price;
+			sourceTree = "<group>";
+		};
+		5594F73F2B9A112000DDD80A /* Playlists */ = {
+			isa = PBXGroup;
+			children = (
+				5594F7402B9A115F00DDD80A /* PlaylistsView.swift */,
+				5594F7422B9A130200DDD80A /* PlaylistViewModel.swift */,
+				55CF4A662B9F560A00116154 /* PlaylistDetailsView.swift */,
+			);
+			path = Playlists;
 			sourceTree = "<group>";
 		};
 		55A583932AE14FDB00438049 /* Map */ = {
@@ -607,8 +657,10 @@
 				5573DC672AE2B7F30025751F /* SongRow.swift in Sources */,
 				5573DC722AE30B090025751F /* SongDetalsView.swift in Sources */,
 				5573DC742AE41CCC0025751F /* SelectEventView.swift in Sources */,
+				5594F7452B9A49BD00DDD80A /* PlaylistRow.swift in Sources */,
 				552E86052AD476C9006D5E86 /* CircleButton.swift in Sources */,
 				55FB42EC2AF7F66C00ED9197 /* PhotoPickerView.swift in Sources */,
+				55CF4A692B9F5E6700116154 /* Playlist.swift in Sources */,
 				552E85F02AD3F85C006D5E86 /* MenuButtonType.swift in Sources */,
 				5573DC882AE6CB9C0025751F /* Errors.swift in Sources */,
 				55A583A52AE1531E00438049 /* MapSelectionView.swift in Sources */,
@@ -628,6 +680,7 @@
 				556628922AC80B0D00BF14D3 /* UserTypeEnum.swift in Sources */,
 				5573DC7C2AE46AFC0025751F /* PriceSelectionView.swift in Sources */,
 				552E85EB2AD3EFF1006D5E86 /* EventListTile.swift in Sources */,
+				5594F7432B9A130200DDD80A /* PlaylistViewModel.swift in Sources */,
 				5573DC6B2AE2F4AA0025751F /* LoadingOverlayViewModifier.swift in Sources */,
 				552E85F42AD3FAC9006D5E86 /* SideMenuModifier.swift in Sources */,
 				55FB42EA2AF6A5F900ED9197 /* BalanceTopUpView.swift in Sources */,
@@ -644,6 +697,7 @@
 				5573DC692AE2F2B30025751F /* MainMenuViewModel.swift in Sources */,
 				55FB42EE2AF7FDE500ED9197 /* PhotoPickerViewModel.swift in Sources */,
 				555934B72B96605F009FFF02 /* LikedDJsView.swift in Sources */,
+				5516558A2BA72B7000C55465 /* SongSelectionFromPlaylistView.swift in Sources */,
 				5573DC7A2AE42D750025751F /* CheckmarkButtonStyle.swift in Sources */,
 				5573DC612AE2AAE50025751F /* InfoView.swift in Sources */,
 				55F607632B990C140033AF73 /* SavedSongsViewModel.swift in Sources */,
@@ -657,6 +711,7 @@
 				5584D4082AC18D9700BC61F6 /* DJBuddyApp.swift in Sources */,
 				55A5839F2AE150F400438049 /* MapSelectionViewModel.swift in Sources */,
 				555934B92B9662AE009FFF02 /* LikedDJRow.swift in Sources */,
+				5594F7412B9A115F00DDD80A /* PlaylistsView.swift in Sources */,
 				552E86032AD47336006D5E86 /* ProfileView.swift in Sources */,
 				552E85E92AD2E745006D5E86 /* BackgroundColor.swift in Sources */,
 				552E85EE2AD3F78A006D5E86 /* SideMenu.swift in Sources */,
@@ -670,6 +725,7 @@
 				55F607612B990BAB0033AF73 /* SavedSongsView.swift in Sources */,
 				55A583A92AE1704900438049 /* CreateEventViewModel.swift in Sources */,
 				552E85E62AD2E605006D5E86 /* CustomColors.swift in Sources */,
+				55CF4A672B9F560A00116154 /* PlaylistDetailsView.swift in Sources */,
 				55FB42E52AF57D0800ED9197 /* PaymentResponse.swift in Sources */,
 				55AAC7842AED9957009414F0 /* API.swift in Sources */,
 				5542532E2B97D87200A0D6E4 /* PastEventsViewModel.swift in Sources */,

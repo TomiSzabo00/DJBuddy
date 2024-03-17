@@ -22,6 +22,8 @@ enum NavigationDestination: Hashable {
     case likedDjs
     case pastEvents
     case savedSongs
+    case playlists
+    case playlistDetails(Playlist)
 }
 
 class Navigator: ObservableObject {

@@ -17,7 +17,7 @@ enum MenuButtonType: Identifiable, CaseIterable {
     case profile
     case signOut
 
-    var title: String {
+    func title(for type: UserTypeEnum) -> String {
         switch self {
         case .join:
             "Join an event"
@@ -26,11 +26,20 @@ enum MenuButtonType: Identifiable, CaseIterable {
         case .liked:
             "Liked DJs"
         case .songs:
-            "Saved songs"
+            type == .dj ? "Playlists" : "Saved songs"
         case .profile:
             "Profile"
         case .signOut:
             "Sign out"
+        }
+    }
+
+    static func allCases(for type: UserTypeEnum) -> [MenuButtonType] {
+        switch type {
+        case .user:
+            return allCases
+        case .dj:
+            return [.past, .songs, .profile, .signOut]
         }
     }
 }

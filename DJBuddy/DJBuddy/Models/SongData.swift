@@ -49,7 +49,7 @@ class SongData: Identifiable, Hashable, ObservableObject, Decodable {
     }
 
     static var PreviewData2: SongData {
-        SongData(id: 0,
+        SongData(id: 1,
                  title: "bad guy",
                  artist: "Billie Eilish",
                  amount: 10,

@@ -47,6 +47,10 @@ struct StateManager: View {
                             PastEventsView()
                         case .savedSongs:
                             SavedSongsView()
+                        case .playlists:
+                            PlaylistsView()
+                        case let .playlistDetails(playlist):
+                            PlaylistDetailsView(playList: playlist)
                         }
                     }
             } else {
