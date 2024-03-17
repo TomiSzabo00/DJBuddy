@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct EventControlView: View {
+    @EnvironmentObject private var user: UserData
     @EnvironmentObject var navigator: Navigator
     @ObservedObject var viewModel: EventControlViewModel
 
-    @State var isSelectThemeShowing = false
-    @State var error: Error? = nil
+    @State var isSongFiltersShowing = false
 
     var body: some View {
         VStack {
@@ -21,6 +21,8 @@ struct EventControlView: View {
 
                 if let theme = viewModel.event.theme {
                     InfoView("The current theme for this event is \(theme.displayName.uppercased())", type: .info)
+                } else if let currentPlaylist = viewModel.currentPlaylist {
+                    InfoView("You have set the playlist \"**\(currentPlaylist.title)**\" as a filter.", type: .info)
                 }
             }
             .environmentObject(navigator)
@@ -29,71 +31,50 @@ struct EventControlView: View {
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: viewModel.event.name, navigator: navigator, leadingButton: .back, trailingButton: .options) {
             VStack {
-                Button("Set theme") {
-                    isSelectThemeShowing.toggle()
+                Button("Add song filters") {
+                    isSongFiltersShowing.toggle()
                 }
-                Button("Remove theme") {
-                    viewModel.setTheme(to: nil) { result in
-                        switch result {
-                        case .success(_):
-                            break
-                        case .failure(let error):
-                            self.error = error
-                        }
+                if viewModel.event.theme != nil || viewModel.event.playlistId != nil {
+                    Button("Remove filter") {
+                        viewModel.setTheme(to: nil)
+                        viewModel.setPlaylist(to: nil)
                     }
                 }
-                Button("Pause requests") {
-                    viewModel.setState(to: .paused) { result in
-                        switch result {
-                        case .success(_):
-                            break
-                        case .failure(let error):
-                            self.error = error
-                        }
+                if viewModel.event.state == .inProgress {
+                    Button("Pause requests") {
+                        viewModel.setState(to: .paused)
                     }
                 }
-                Button("Resume requests") {
-                    viewModel.setState(to: .inProgress) { result in
-                        switch result {
-                        case .success(_):
-                            break
-                        case .failure(let error):
-                            self.error = error
-                        }
+                if viewModel.event.pausedButNotEnded {
+                    Button("Resume requests") {
+                        viewModel.setState(to: .inProgress)
                     }
                 }
                 Button(role: .destructive) {
-                    viewModel.setState(to: .ended) { result in
-                        switch result {
-                        case .success(_):
-                            break
-                        case .failure(let error):
-                            self.error = error
-                        }
-                    }
+                    viewModel.setState(to: .ended)
                 } label: {
                     Text("End event")
                 }
 
             }
         }
-        .errorAlert(error: $error)
-        .sheet(isPresented: $isSelectThemeShowing) {
+        .errorAlert(error: $viewModel.error)
+        .sheet(isPresented: $isSongFiltersShowing) {
             NavigationView {
-                SetThemeView(event: viewModel.event) { newTheme in
-                    isSelectThemeShowing = false
-                    viewModel.setTheme(to: newTheme) { result in
-                        switch result {
-                        case .success(_):
-                            break
-                        case .failure(let error):
-                            self.error = error
-                        }
-                    }
+                SetThemeView(playlists: viewModel.availablePlaylists) { newTheme in
+                    isSongFiltersShowing = false
+                    
+                    viewModel.setPlaylist(to: nil)
+                    viewModel.setTheme(to: newTheme)
+                } playlistSelection: { newPlaylist in
+                    isSongFiltersShowing = false
+
+                    viewModel.setTheme(to: nil)
+                    viewModel.setPlaylist(to: newPlaylist)
                 } cancel: {
-                    isSelectThemeShowing = false
+                    isSongFiltersShowing = false
                 }
-                .errorAlert(error: $error)
+                .errorAlert(error: $viewModel.error)
             }
         }
         .loadingOverlay(isLoading: $viewModel.isLoading)
@@ -101,6 +82,7 @@ struct EventControlView: View {
             viewModel.initWebSocketForGeneralEventChanges()
             viewModel.initWebSocketForEventThemeChanges()
             viewModel.getCurrentEvent()
+            viewModel.getAvailablePlaylists(for: user)
         }
         .onDisappear {
             viewModel.closeWebSockets()
@@ -118,5 +100,6 @@ struct EventControlView: View {
     NavigationView {
         EventControlView(event: EventData.PreviewData)
             .environmentObject(Navigator())
+            .environmentObject(UserData.PreviewUser)
     }
 }

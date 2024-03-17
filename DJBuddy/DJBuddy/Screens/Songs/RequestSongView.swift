@@ -19,6 +19,8 @@ struct RequestSongView: View {
         VStack(alignment: .leading, spacing: 20) {
             if let theme = viewModel.event.theme {
                 InfoView("The DJ has set the theme to \(theme.displayName.uppercased()) for this event. You can only request songs from this category at the moment.", type: .info)
+            } else if viewModel.event.playlistId != nil {
+                InfoView("The DJ has set a custom playlist for this event. You can only request songs that are listed there.", type: .info)
             }
 
             Text("Choose a song:")
@@ -51,15 +53,25 @@ struct RequestSongView: View {
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: "Request a song", navigator: navigator, leadingButton: .back)
         .sheet(isPresented: $isSongSelectionShowing) {
-            SongSelectionView(isShowing: $isSongSelectionShowing, theme: viewModel.event.theme) { selectedSong in
-                viewModel.selectedSong = selectedSong
+            if let playlist = viewModel.currentPlaylist {
+                SongSelectionFromPlaylistView(isShowing: $isSongSelectionShowing, playlist: playlist) { selectedSong in
+                    viewModel.selectedSong = selectedSong
+                }
+            } else {
+                SongSelectionView(isShowing: $isSongSelectionShowing, theme: viewModel.event.theme) { selectedSong in
+                    viewModel.selectedSong = selectedSong
+                }
             }
         }
         .loadingOverlay(isLoading: $viewModel.isLoading)
         .errorAlert(error: $error)
         .errorAlert(error: $viewModel.formError)
         .onAppear {
-            viewModel.getCurrentTheme()
+            if viewModel.event.playlistId == nil {
+                viewModel.getCurrentTheme()
+            } else {
+                viewModel.getCurrentPlaylist()
+            }
             viewModel.initWebSocketForEventThemeChanges()
         }
         .onDisappear {
@@ -80,7 +92,11 @@ struct RequestSongView: View {
             } else {
                 HStack {
                     Image(systemName: "magnifyingglass")
-                    Text("Search by artist or title...")
+                    if viewModel.currentPlaylist != nil {
+                        Text("Choose song from the playlist...")
+                    } else {
+                        Text("Search by artist or title...")
+                    }
                 }
                 .padding(.horizontal)
             }

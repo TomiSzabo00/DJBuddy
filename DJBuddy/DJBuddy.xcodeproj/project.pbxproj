@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5516558A2BA72B7000C55465 /* SongSelectionFromPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551655892BA72B7000C55465 /* SongSelectionFromPlaylistView.swift */; };
 		5527A19C2B8CEB190027D134 /* JoinEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527A19B2B8CEB190027D134 /* JoinEventView.swift */; };
 		5527A19E2B8CEE840027D134 /* JoinEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527A19D2B8CEE840027D134 /* JoinEventViewModel.swift */; };
 		5527A1A12B8D35BC0027D134 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 5527A1A02B8D35BC0027D134 /* CodeScanner */; };
@@ -107,6 +108,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		551655892BA72B7000C55465 /* SongSelectionFromPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSelectionFromPlaylistView.swift; sourceTree = "<group>"; };
 		5527A19B2B8CEB190027D134 /* JoinEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinEventView.swift; sourceTree = "<group>"; };
 		5527A19D2B8CEE840027D134 /* JoinEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinEventViewModel.swift; sourceTree = "<group>"; };
 		5527A1D42B94DFE70027D134 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
@@ -493,6 +495,7 @@
 			children = (
 				5573DC7F2AE544300025751F /* SongSelectionViewModel.swift */,
 				5573DC7D2AE542CB0025751F /* SongSelectionView.swift */,
+				551655892BA72B7000C55465 /* SongSelectionFromPlaylistView.swift */,
 			);
 			path = "Song selection";
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				5573DC692AE2F2B30025751F /* MainMenuViewModel.swift in Sources */,
 				55FB42EE2AF7FDE500ED9197 /* PhotoPickerViewModel.swift in Sources */,
 				555934B72B96605F009FFF02 /* LikedDJsView.swift in Sources */,
+				5516558A2BA72B7000C55465 /* SongSelectionFromPlaylistView.swift in Sources */,
 				5573DC7A2AE42D750025751F /* CheckmarkButtonStyle.swift in Sources */,
 				5573DC612AE2AAE50025751F /* InfoView.swift in Sources */,
 				55F607632B990C140033AF73 /* SavedSongsViewModel.swift in Sources */,

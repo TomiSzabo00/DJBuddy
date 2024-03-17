@@ -18,6 +18,7 @@ class EventData_Database: Decodable {
     let date: String
     let state: String
     let theme: String
+    let playlist: Int?
     let code: String
     let songs: [SongData]
 
@@ -34,6 +35,7 @@ class EventData_Database: Decodable {
         case theme
         case code
         case songs
+        case playlist = "playlist_id"
     }
 }
 
@@ -46,6 +48,7 @@ class EventData: Hashable, Identifiable, ObservableObject {
     let code: String
     var state: EventState
     var theme: SongTheme?
+    var playlistId: Int?
     var requestedSongs: [SongData] {
         didSet {
             requestedSongs.sort(by: { $0.amount > $1.amount })
@@ -71,6 +74,10 @@ class EventData: Hashable, Identifiable, ObservableObject {
         (eventYear == todayYear && eventMonth < todayMonth && eventDay < todayDay)
     }
 
+    var pausedButNotEnded: Bool {
+        [.upcoming, .paused].contains(state)
+    }
+
     init(name: String, dj: UserData, location: AddressResult, date: Date, code: String = "", state: EventState = .upcoming, requestedSongs: [SongData] = [], theme: SongTheme? = nil) {
         self.id = UUID().uuidString
         self.name = name
@@ -92,6 +99,7 @@ class EventData: Hashable, Identifiable, ObservableObject {
         self.code = decodable.code
         self.state = EventState(rawValue: decodable.state) ?? .upcoming
         self.theme = SongTheme(rawValue: decodable.theme)
+        self.playlistId = decodable.playlist
         self.requestedSongs = decodable.songs.sorted(by: { $0.amount > $1.amount })
     }
 

@@ -15,6 +15,9 @@ final class EventControlViewModel: ObservableObject, Hashable {
     @Published var selectedPrice: Double = 1
     @Published var isLoading = false
     @Published var formError: Error? = nil
+    @Published var error: Error? = nil
+    @Published var availablePlaylists: [Playlist] = []
+    @Published var currentPlaylist: Playlist? = nil
     var currentSong: SongData? = nil
 
     private var webSocketTasks = Set<URLSessionWebSocketTask?>()
@@ -183,24 +186,89 @@ final class EventControlViewModel: ObservableObject, Hashable {
         self.event = event
     }
 
-    func setTheme(to theme: SongTheme?, completion: @escaping (Result<Void, APIError>) -> Void) {
-        guard event.theme != theme else { completion(.success(())); return }
+    func setTheme(to theme: SongTheme?) {
+        guard event.theme != theme else { return }
         isLoading = true
 
         API.setEventTheme(to: theme, in: event) { [weak self] result in
             self?.isLoading = false
-            completion(result)
+            switch result {
+            case .success(_):
+                break
+            case .failure(let error):
+                self?.error = error
+            }
         }
     }
 
-    func setState(to state: EventState, completion: @escaping (Result<Void, APIError>) -> Void) {
-        guard event.state != state else { completion(.success(())); return }
+    func setState(to state: EventState) {
+        guard event.state != state else { return }
 
         isLoading = true
 
         API.setEventState(to: state, in: event) { [weak self] result in
             self?.isLoading = false
-            completion(result)
+            switch result {
+            case .success(_):
+                break
+            case .failure(let error):
+                self?.error = error
+            }
+        }
+    }
+
+    func setPlaylist(to playlist: Playlist?) {
+        guard playlist?.id != event.playlistId else { return }
+
+        isLoading = true
+
+        let completion: (Result<Void, APIError>) -> Void = { [weak self] result in
+            self?.isLoading = false
+            switch result {
+            case .success(_):
+                DispatchQueue.main.async {
+                    self?.currentPlaylist = playlist
+                }
+            case .failure(let error):
+                self?.error = error
+            }
+        }
+
+        if let playlist {
+            API.setEventPlaylist(to: playlist, in: event, completion: completion)
+        } else {
+            API.removeEventPlaylist(from: event, completion: completion)
+        }
+    }
+
+    func getAvailablePlaylists(for user: UserData) {
+        API.getAllPlaylists(of: user) { [weak self] result in
+            switch result {
+            case .success(let allPlaylists):
+                DispatchQueue.main.async {
+                    self?.availablePlaylists = allPlaylists.filter({ $0.hasEnoughSongs })
+                }
+            case .failure(let error):
+                self?.error = error
+            }
+        }
+    }
+
+    func getCurrentPlaylist() {
+        isLoading = true
+
+        API.getEventPlaylist(for: event) { [weak self] playlistResult in
+            self?.isLoading = false
+            switch playlistResult {
+            case .success(let playlist):
+                DispatchQueue.main.async {
+                    self?.currentPlaylist = playlist
+                }
+            case .failure(let failure):
+                DispatchQueue.main.async {
+                    self?.formError = failure
+                }
+            }
         }
     }
 
