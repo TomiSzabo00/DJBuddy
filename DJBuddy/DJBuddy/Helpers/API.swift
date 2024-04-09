@@ -17,8 +17,8 @@ struct CustomResponse: Decodable {
 
 final class API {
     // MARK: Constants
-    static let apiAddress = "http://127.0.0.1:9000"
-    private static let apiWebSocketAddress = "ws://127.0.0.1:9000"
+    static let apiAddress = "https://djbuddy.online/api"
+    private static let apiWebSocketAddress = "wss://djbuddy.online"
     private static let eventWebSocketUrl = "\(apiWebSocketAddress)/ws/events"
 
     static func decodeCustomResponse(from error: Error) -> String {

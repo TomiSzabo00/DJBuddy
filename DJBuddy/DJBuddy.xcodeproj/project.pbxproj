@@ -193,6 +193,7 @@
 		55AAC7832AED9957009414F0 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		55CF4A662B9F560A00116154 /* PlaylistDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailsView.swift; sourceTree = "<group>"; };
 		55CF4A682B9F5E6700116154 /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
+		55DF2A6C2BC2994A007C926D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		55F607602B990BAB0033AF73 /* SavedSongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSongsView.swift; sourceTree = "<group>"; };
 		55F607622B990C140033AF73 /* SavedSongsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSongsViewModel.swift; sourceTree = "<group>"; };
 		55FB42E42AF57D0800ED9197 /* PaymentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResponse.swift; sourceTree = "<group>"; };
@@ -397,6 +398,7 @@
 		5584D4062AC18D9700BC61F6 /* DJBuddy */ = {
 			isa = PBXGroup;
 			children = (
+				55DF2A6C2BC2994A007C926D /* Info.plist */,
 				552E860A2AD4877B006D5E86 /* Helpers */,
 				552E86002AD472CC006D5E86 /* Screens */,
 				552E85E72AD2E737006D5E86 /* ViewModifiers */,
@@ -866,6 +868,7 @@
 				DEVELOPMENT_TEAM = 85XVJT6RC3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DJBuddy/Info.plist;
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = Please.;
 				INFOPLIST_KEY_NSCameraUsageDescription = "To scan QR codes.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "To display on the map.";
@@ -899,6 +902,7 @@
 				DEVELOPMENT_TEAM = 85XVJT6RC3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DJBuddy/Info.plist;
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = Please.;
 				INFOPLIST_KEY_NSCameraUsageDescription = "To scan QR codes.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "To display on the map.";
