@@ -94,6 +94,7 @@
 		55CF4A692B9F5E6700116154 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CF4A682B9F5E6700116154 /* Playlist.swift */; };
 		55F607612B990BAB0033AF73 /* SavedSongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F607602B990BAB0033AF73 /* SavedSongsView.swift */; };
 		55F607632B990C140033AF73 /* SavedSongsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F607622B990C140033AF73 /* SavedSongsViewModel.swift */; };
+		55F6518D2BF0F4DC00BA7CEE /* VerifyEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F6518C2BF0F4DB00BA7CEE /* VerifyEmailView.swift */; };
 		55FB42D82AF43A8A00ED9197 /* Stripe in Frameworks */ = {isa = PBXBuildFile; productRef = 55FB42D72AF43A8A00ED9197 /* Stripe */; };
 		55FB42DA2AF43A8A00ED9197 /* StripeApplePay in Frameworks */ = {isa = PBXBuildFile; productRef = 55FB42D92AF43A8A00ED9197 /* StripeApplePay */; };
 		55FB42DC2AF43A8A00ED9197 /* StripeCardScan in Frameworks */ = {isa = PBXBuildFile; productRef = 55FB42DB2AF43A8A00ED9197 /* StripeCardScan */; };
@@ -196,6 +197,7 @@
 		55DF2A6C2BC2994A007C926D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		55F607602B990BAB0033AF73 /* SavedSongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSongsView.swift; sourceTree = "<group>"; };
 		55F607622B990C140033AF73 /* SavedSongsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSongsViewModel.swift; sourceTree = "<group>"; };
+		55F6518C2BF0F4DB00BA7CEE /* VerifyEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailView.swift; sourceTree = "<group>"; };
 		55FB42E42AF57D0800ED9197 /* PaymentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResponse.swift; sourceTree = "<group>"; };
 		55FB42E62AF6A52100ED9197 /* StripePaymentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripePaymentHelper.swift; sourceTree = "<group>"; };
 		55FB42E92AF6A5F900ED9197 /* BalanceTopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceTopUpView.swift; sourceTree = "<group>"; };
@@ -438,6 +440,7 @@
 				5584D4092AC18D9700BC61F6 /* WavyBackgroundView.swift */,
 				5584D4152AC1A64800BC61F6 /* LandingView.swift */,
 				5584D4262AC2132600BC61F6 /* AuthViewModel.swift */,
+				55F6518C2BF0F4DB00BA7CEE /* VerifyEmailView.swift */,
 			);
 			path = AuthScreens;
 			sourceTree = "<group>";
@@ -643,6 +646,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55F6518D2BF0F4DC00BA7CEE /* VerifyEmailView.swift in Sources */,
 				5573DC842AE65D940025751F /* IncreasePriceView.swift in Sources */,
 				5573DC802AE544300025751F /* SongSelectionViewModel.swift in Sources */,
 				55A583AD2AE1937A00438049 /* UserData.swift in Sources */,

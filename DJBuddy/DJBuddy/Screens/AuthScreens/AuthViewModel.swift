@@ -9,6 +9,12 @@ import Foundation
 import SwiftUI
 import SwiftData
 
+enum AuthState {
+    case loggedOut
+    case loggedIn
+    case verifyEmail
+}
+
 final class AuthViewModel: ObservableObject {
     @Published private(set) var pageState: LandingPageEnum = .landingPage
     @Published var userType: UserTypeEnum = .user
@@ -23,8 +29,14 @@ final class AuthViewModel: ObservableObject {
     @Published var error: Error? = nil
     @Published var isLoading = false
 
+    @Published var authState: AuthState = .loggedOut
+    @Published var verifyableUserId: String?
+    @Published var verificationCode = ""
+    @Published var isVerifyAlertShowing = false
+
     private var context: ModelContext!
 
+    @MainActor
     func tryLoginFromStoredData(context: ModelContext) {
         self.context = context
         guard let loginData = fetchStoredLoginData() else { print("No previous login data found."); return }
@@ -38,6 +50,7 @@ final class AuthViewModel: ObservableObject {
             switch response {
             case .success(let user):
                 currentUser = user
+                authState = .loggedIn
             case .failure(let error):
                 print(error.localizedDescription)
                 self.error = APIError.sessionExpired
@@ -87,6 +100,7 @@ final class AuthViewModel: ObservableObject {
         artistNameText.removeAll()
     }
 
+    @MainActor
     func login() {
         guard checkAllLoginFieldsAreValid() else { return }
 
@@ -100,12 +114,14 @@ final class AuthViewModel: ObservableObject {
             case .success(let user):
                 currentUser = user
                 saveLoginDataToPersistentData(email: emailText, password: passwordText)
+                authState = .loggedIn
             case .failure(let error):
                 self.error = error
             }
         }
     }
 
+    @MainActor
     func signUp() {
         guard checkAllRegisterFieldsAreValid() else { return }
 
@@ -121,11 +137,33 @@ final class AuthViewModel: ObservableObject {
             isLoading = false
 
             switch response {
-            case .success(let user):
-                currentUser = user
-                saveLoginDataToPersistentData(email: emailText, password: passwordText)
+            case .success(let userId):
+                verifyableUserId = userId
+                isVerifyAlertShowing.toggle()
             case .failure(let error):
                 self.error = error
+            }
+        }
+    }
+
+    @MainActor
+    func verifyEmail() {
+        guard !verificationCode.isEmpty,
+              let verifyableUserId
+        else { return }
+
+        isLoading = true
+
+        API.verifyEmail(for: verifyableUserId, with: verificationCode) { [weak self] result in
+            guard let self else { return }
+            isLoading = false
+
+            switch result {
+            case .success(let user):
+                currentUser = user
+                authState = .loggedIn
+            case .failure(let failure):
+                self.error = failure
             }
         }
     }

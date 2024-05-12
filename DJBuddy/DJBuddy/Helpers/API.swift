@@ -17,7 +17,8 @@ struct CustomResponse: Decodable {
 
 final class API {
     // MARK: Constants
-    static let apiAddress = "https://djbuddy.online/api"
+//    static let apiAddress = "https://djbuddy.online/api"
+    static let apiAddress = "http://127.0.0.1:9000/api"
     private static let apiWebSocketAddress = "wss://djbuddy.online"
     private static let eventWebSocketUrl = "\(apiWebSocketAddress)/ws/events"
 
@@ -105,6 +106,7 @@ final class API {
     }
 
     // MARK: Login
+
     static func login(with email: String, and password: String, completion: @escaping (Result<UserData, APIError>) -> Void) {
         let url = URL(string: "\(apiAddress)/users/login")!
 
@@ -188,7 +190,8 @@ final class API {
     }
 
     // MARK: Register
-    static func register(email: String, password: String, firstName: String, lastName: String, artistName: String, type: String, completion: @escaping (Result<UserData, APIError>) -> Void) {
+
+    static func register(email: String, password: String, firstName: String, lastName: String, artistName: String, type: String, completion: @escaping (Result<String, APIError>) -> Void) {
         let url = URL(string: "\(apiAddress)/users/register")!
 
         var request = URLRequest(url: url)
@@ -224,8 +227,9 @@ final class API {
                             completion(.failure(.unreachable))
                         }
                     } else {
+                        let msg = decodeCustomResponse(from: error)
                         DispatchQueue.main.async {
-                            completion(.failure(.general(desc: error.localizedDescription)))
+                            completion(.failure(.general(desc: msg)))
                         }
                     }
                 } else {
@@ -241,17 +245,60 @@ final class API {
                     DispatchQueue.main.async {
                         completion(.failure(.wrongEmailOrPassword))
                     }
-                } else if response.statusCode == 400 {
+                } else {
+                    let msg = decodeCustomResponse(from: data)
                     DispatchQueue.main.async {
-                        completion(.failure(.userAlreadyExists))
+                        completion(.failure(.general(desc: msg)))
+                    }
+                }
+                return
+            }
+
+            do {
+                let responseObject = try JSONDecoder().decode(String.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(responseObject))
+                }
+            } catch {
+                print(error) // parsing error
+                let msg = decodeCustomResponse(from: error)
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: msg)))
+                }
+            }
+        }
+
+        task.resume()
+    }
+
+    // MARK: Verification
+
+    static func verifyEmail(for userId: String, with code: String, completion: @escaping (Result<UserData, APIError>) -> Void) {
+        let url = URL(string: "\(apiAddress)/users/verify/\(userId)/with/\(code)")!
+
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard
+                let data = data,
+                let response = response as? HTTPURLResponse,
+                error == nil
+            else {
+                if let error {
+                    if (error as NSError).code == -1004 {
+                        DispatchQueue.main.async {
+                            completion(.failure(.unreachable))
+                        }
+                    } else {
+                        let msg = decodeCustomResponse(from: error)
+                        DispatchQueue.main.async {
+                            completion(.failure(.general(desc: msg)))
+                        }
                     }
                 } else {
-                    if didDecodeCustomResponse(from: data, completion: completion) {
-                        return
-                    }
-                    DispatchQueue.main.async {
-                        completion(.failure(.general(desc: response.debugDescription)))
-                    }
+                    print("Error occured but it is nil")
                 }
                 return
             }
@@ -264,14 +311,9 @@ final class API {
                 }
             } catch {
                 print(error) // parsing error
-
-                if let responseString = String(data: data, encoding: .utf8) {
-                    print("responseString = \(responseString)")
-                    DispatchQueue.main.async {
-                        completion(.failure(.general(desc: responseString)))
-                    }
-                } else {
-                    print("unable to parse error response as string")
+                let msg = decodeCustomResponse(from: error)
+                DispatchQueue.main.async {
+                    completion(.failure(.general(desc: msg)))
                 }
             }
         }
