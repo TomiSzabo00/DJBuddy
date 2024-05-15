@@ -63,9 +63,6 @@ struct RequestSongView: View {
                 }
             }
         }
-        .loadingOverlay(isLoading: $viewModel.isLoading)
-        .errorAlert(error: $error)
-        .errorAlert(error: $viewModel.formError)
         .onAppear {
             if viewModel.event.playlistId == nil {
                 viewModel.getCurrentTheme()

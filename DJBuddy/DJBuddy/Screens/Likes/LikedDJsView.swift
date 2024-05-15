@@ -37,8 +37,6 @@ struct LikedDJsView: View {
         .onAppear {
             viewModel.getLikedDjs(for: user)
         }
-        .errorAlert(error: $viewModel.error)
-        .loadingOverlay(isLoading: $viewModel.isLoading)
     }
 }
 

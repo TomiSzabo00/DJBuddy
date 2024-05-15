@@ -75,8 +75,6 @@ struct EventDetailsView: View {
                 ShareEventView(code: event.code, isShowing: $isShareShowing)
             }
         }
-        .loadingOverlay(isLoading: $viewModel.isLoading)
-        .errorAlert(error: $viewModel.error)
         .onAppear {
             viewModel.isJoined = isJoined
             viewModel.getNumberOfJoined(to: event)

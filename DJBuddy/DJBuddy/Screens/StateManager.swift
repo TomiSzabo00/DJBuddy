@@ -12,9 +12,10 @@ struct StateManager: View {
     @StateObject private var navigator: Navigator
     @StateObject private var mainMenuViewModel: MainMenuViewModel
 
-    @StateObject private var stateHelper: StateHelper
-
     @Environment(\.modelContext) private var context
+
+    @StateObject private var stateHelper: StateHelper
+    @State private var isErrorAlertShowing = false
 
     var body: some View {
         NavigationStack(path: $navigator.path) {
@@ -70,7 +71,19 @@ struct StateManager: View {
             }
         }
         .loadingOverlay(isLoading: $stateHelper.isLoading)
-        .errorAlert(error: $stateHelper.error)
+        .alert(stateHelper.alertContent?.title ?? "", isPresented: $isErrorAlertShowing) {
+            Button("OK") {
+                stateHelper.alertContent?.dismissAction()
+            }
+        } message: {
+            Text(stateHelper.alertContent?.message ?? "")
+        }
+        .onReceive(stateHelper.$alertContent, perform: { content in
+            if content != nil {
+                UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .dark
+                isErrorAlertShowing = true
+            }
+        })
         .animation(.default, value: viewModel.authState)
         .environmentObject(navigator)
         .environmentObject(stateHelper)

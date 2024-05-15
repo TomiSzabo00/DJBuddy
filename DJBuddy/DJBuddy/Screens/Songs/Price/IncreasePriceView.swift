@@ -49,7 +49,6 @@ struct IncreasePriceView: View {
             .padding()
             .navBarWithTitle(title: "Increase price", leadingButton: .close($isShowing))
             .backgroundColor(.asset.background)
-            .errorAlert(error: $error)
         }
     }
 }

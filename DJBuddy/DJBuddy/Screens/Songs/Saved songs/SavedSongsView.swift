@@ -51,8 +51,6 @@ struct SavedSongsView: View {
         .onAppear {
             viewModel.getLikedSongs(for: user)
         }
-        .errorAlert(error: $viewModel.error)
-        .loadingOverlay(isLoading: $viewModel.isLoading)
         .sheet(isPresented: $isSongSelectionShowing) {
             SongSelectionView(isShowing: $isSongSelectionShowing) { selectedSong in
                 viewModel.like(song: selectedSong, by: user)

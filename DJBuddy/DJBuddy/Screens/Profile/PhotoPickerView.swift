@@ -73,8 +73,6 @@ struct PhotoPickerView: View {
                 print("Failed")
             }
         }
-        .loadingOverlay(isLoading: $viewModel.isLoading)
-        .errorAlert(error: $viewModel.error)
         .foregroundStyle(.white)
         .padding()
         .backgroundColor(.asset.background)

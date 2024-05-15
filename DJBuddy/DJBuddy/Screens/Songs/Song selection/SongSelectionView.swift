@@ -56,7 +56,6 @@ struct SongSelectionView: View {
                 }
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
-                .loadingOverlay(isLoading: $viewModel.isSearching)
             }
             .navBarWithTitle(title: "Select music", leadingButton: .close($isShowing))
             .backgroundColor(.asset.background)

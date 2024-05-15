@@ -36,7 +36,6 @@ struct JoinEventView: View {
         .padding(20)
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: "Join an event", navigator: navigator, leadingButton: .back)
-        .errorAlert(error: $viewModel.scanError)
         .sheet(isPresented: $isScannerShowing) {
             CodeScannerView(codeTypes: [.qr], simulatedData: "it works!") { result in
                 isScannerShowing = false

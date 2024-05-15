@@ -108,8 +108,6 @@ struct ProfileView: View {
                 PhotoPickerView(isShowing: $isPhotoSelectShowing)
             }
         }
-        .loadingOverlay(isLoading: $isLoading)
-        .errorAlert(error: $error)
         .foregroundStyle(Color.white)
         .ignoresSafeArea(edges: .horizontal)
         .navBarWithTitle(title: "Profile", navigator: navigator, leadingButton: .back)

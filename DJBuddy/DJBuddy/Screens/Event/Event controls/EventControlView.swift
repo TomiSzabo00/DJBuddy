@@ -58,7 +58,6 @@ struct EventControlView: View {
 
             }
         }
-        .errorAlert(error: $viewModel.error)
         .sheet(isPresented: $isSongFiltersShowing) {
             NavigationView {
                 SetThemeView(playlists: viewModel.availablePlaylists) { newTheme in
@@ -74,10 +73,8 @@ struct EventControlView: View {
                 } cancel: {
                     isSongFiltersShowing = false
                 }
-                .errorAlert(error: $viewModel.error)
             }
         }
-        .loadingOverlay(isLoading: $viewModel.isLoading)
         .onAppear {
             viewModel.initWebSocketForGeneralEventChanges()
             viewModel.initWebSocketForEventThemeChanges()

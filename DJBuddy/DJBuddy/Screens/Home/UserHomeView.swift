@@ -45,7 +45,6 @@ struct UserHomeView: View {
             await viewModel.refreshEvents(for: user)
         }
         .animation(.default, value: events)
-        .errorAlert(error: $viewModel.error)
     }
 
     @ViewBuilder private func menuButtons(for event: EventData, with eventType: EventDataType) -> some View {

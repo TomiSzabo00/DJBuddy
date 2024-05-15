@@ -58,7 +58,6 @@
 		5573DC802AE544300025751F /* SongSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC7F2AE544300025751F /* SongSelectionViewModel.swift */; };
 		5573DC822AE54F410025751F /* SimpleSongRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC812AE54F410025751F /* SimpleSongRow.swift */; };
 		5573DC842AE65D940025751F /* IncreasePriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC832AE65D940025751F /* IncreasePriceView.swift */; };
-		5573DC862AE6CA350025751F /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC852AE6CA350025751F /* ErrorAlert.swift */; };
 		5573DC882AE6CB9C0025751F /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC872AE6CB9C0025751F /* Errors.swift */; };
 		5573DC8B2AE7040B0025751F /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC8A2AE7040B0025751F /* MapView.swift */; };
 		5573DC8F2AE70D840025751F /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573DC8E2AE70D840025751F /* MapViewModel.swift */; };
@@ -160,7 +159,6 @@
 		5573DC7F2AE544300025751F /* SongSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSelectionViewModel.swift; sourceTree = "<group>"; };
 		5573DC812AE54F410025751F /* SimpleSongRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSongRow.swift; sourceTree = "<group>"; };
 		5573DC832AE65D940025751F /* IncreasePriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncreasePriceView.swift; sourceTree = "<group>"; };
-		5573DC852AE6CA350025751F /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
 		5573DC872AE6CB9C0025751F /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		5573DC8A2AE7040B0025751F /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		5573DC8E2AE70D840025751F /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
@@ -280,7 +278,6 @@
 				552E85F32AD3FAC9006D5E86 /* SideMenuModifier.swift */,
 				552E86062AD47BD9006D5E86 /* NavigationBarModifier.swift */,
 				5573DC6A2AE2F4AA0025751F /* LoadingOverlayViewModifier.swift */,
-				5573DC852AE6CA350025751F /* ErrorAlert.swift */,
 				555934BA2B971053009FFF02 /* DiscardableModifier.swift */,
 			);
 			path = ViewModifiers;
@@ -696,7 +693,6 @@
 				552E85FF2AD45D05006D5E86 /* TabViewSelector.swift in Sources */,
 				552E85E32AD2E1FD006D5E86 /* MainMenu.swift in Sources */,
 				5527A1D72B94E3EF0027D134 /* ShareEventView.swift in Sources */,
-				5573DC862AE6CA350025751F /* ErrorAlert.swift in Sources */,
 				5573DC652AE2AF3B0025751F /* SongData.swift in Sources */,
 				5573DC762AE423F10025751F /* UserEventView.swift in Sources */,
 				552E85F22AD3FA4D006D5E86 /* MenuButton.swift in Sources */,

@@ -75,8 +75,6 @@ struct PlaylistDetailsView: View {
         .onAppear {
             viewModel.getPlaylists(of: user)
         }
-        .errorAlert(error: $viewModel.error)
-        .loadingOverlay(isLoading: $viewModel.isLoading)
         .sheet(isPresented: $isNewSongShowing) {
             SongSelectionView(isShowing: $isNewSongShowing) { selectedSong in
                 viewModel.add(song: selectedSong, to: playList)

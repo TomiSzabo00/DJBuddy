@@ -7,9 +7,21 @@
 
 import Foundation
 
+struct AlertContent {
+    let title: String
+    let message: String
+    let dismissAction: () -> Void
+
+    init(title: String, message: String = "", dismissAction: @escaping () -> Void = {}) {
+        self.title = title
+        self.message = message
+        self.dismissAction = dismissAction
+    }
+}
+
 final class StateHelper: ObservableObject {
     @Published var isLoading: Bool = false
-    @Published var error: Error? = nil
+    @Published private(set) var alertContent: AlertContent?
 
     var signoutAction: () -> Void
 
@@ -24,9 +36,19 @@ final class StateHelper: ObservableObject {
             do {
                 try await task()
                 isLoading = false
+            } catch let error as APIError {
+                isLoading = false
+                alertContent = AlertContent(title: error.title, message: error.message) { [weak self] in
+                    if error.isFatal {
+                        self?.signoutAction()
+                    }
+                }
+            } catch let error as FormError {
+                isLoading = false
+                alertContent = AlertContent(title: error.title, message: error.message)
             } catch {
                 isLoading = false
-                self.error = error
+                alertContent = AlertContent(title: error.localizedDescription)
             }
         }
     }

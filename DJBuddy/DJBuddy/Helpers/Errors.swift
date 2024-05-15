@@ -7,7 +7,8 @@
 
 import Foundation
 
-enum APIError: LocalizedError {
+
+enum APIError: Error {
     case unreachable
     case wrongEmailOrPassword
     case userAlreadyExists
@@ -15,7 +16,7 @@ enum APIError: LocalizedError {
     case general(desc: String)
     case somethingWentWrong
 
-    var errorDescription: String? {
+    var title: String {
         switch self {
         case .unreachable:
             return "Unreachable"
@@ -30,7 +31,7 @@ enum APIError: LocalizedError {
         }
     }
 
-    var recoverySuggestion: String? {
+    var message: String {
         switch self {
         case .unreachable:
             return "Couldn't reach the server. Try again later."
@@ -46,11 +47,22 @@ enum APIError: LocalizedError {
             return "Something went wrong."
         }
     }
+
+    var isFatal: Bool {
+        switch self {
+        case .sessionExpired: true
+        default: false
+        }
+    }
 }
 
 extension APIError {
     init(response: CustomResponse) {
         switch response.errorCode {
+        case 0:
+            self = .somethingWentWrong
+        case 1:
+            self = .sessionExpired
         case 2:
             self = .wrongEmailOrPassword
         case 3:
@@ -61,7 +73,7 @@ extension APIError {
     }
 }
 
-enum FormError: LocalizedError {
+enum FormError: Error, CaseIterable {
     case nameMissing
     case acceptMissing
     case priceMissing
@@ -75,7 +87,7 @@ enum FormError: LocalizedError {
     case firstNameMissing
     case lastNameMissing
 
-    var errorDescription: String? {
+    var title: String {
         if self == .acceptMissing {
             return "Terms and Conditions"
         } else if self == .passwordsDontMatch {
@@ -113,7 +125,7 @@ enum FormError: LocalizedError {
         return prefix + " is missing"
     }
 
-    var recoverySuggestion: String? {
+    var message: String {
         switch self {
         case .acceptMissing:
             "You have to accept our Terms and Conditions."

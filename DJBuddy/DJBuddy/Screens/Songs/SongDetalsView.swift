@@ -96,8 +96,6 @@ struct SongDetalsView: View {
             IncreasePriceView(song: song, viewModel: viewModel, isShowing: $isIncPriceShowing)
                 .environmentObject(user)
         }
-        .loadingOverlay(isLoading: $viewModel.isLoading)
-        .errorAlert(error: $error)
     }
 }
 

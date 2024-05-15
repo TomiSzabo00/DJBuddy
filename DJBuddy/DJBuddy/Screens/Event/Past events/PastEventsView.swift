@@ -37,8 +37,6 @@ struct PastEventsView: View {
         .onAppear {
             viewModel.getPastEvents(for: user)
         }
-        .errorAlert(error: $viewModel.error)
-        .loadingOverlay(isLoading: $viewModel.isLoading)
     }
 }
 

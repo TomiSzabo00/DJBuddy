@@ -59,8 +59,6 @@ struct PlaylistsView: View {
         .onAppear {
             viewModel.getPlaylists(of: user)
         }
-        .errorAlert(error: $viewModel.error)
-        .loadingOverlay(isLoading: $viewModel.isLoading)
         .alert("Create new playlist", isPresented: $isNewPlaylistShowing) {
             TextField("Name", text: $newPlaylistName)
             Button("OK") {

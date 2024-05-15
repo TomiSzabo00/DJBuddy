@@ -67,8 +67,6 @@ struct BalanceTopUpView: View {
             }
 
         }
-        .loadingOverlay(isLoading: $paymentHelper.isLoading)
-        .errorAlert(error: $paymentHelper.error)
         .padding()
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: "Add funds", navigator: navigator, leadingButton: .back)
