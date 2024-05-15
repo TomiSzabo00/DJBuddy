@@ -8,70 +8,32 @@
 import Foundation
 
 
-enum APIError: Error {
-    case unreachable
-    case wrongEmailOrPassword
-    case userAlreadyExists
-    case sessionExpired
-    case general(desc: String)
-    case somethingWentWrong
-
-    var title: String {
-        switch self {
-        case .unreachable:
-            return "Unreachable"
-        case .wrongEmailOrPassword:
-            return "Incorrect login"
-        case .userAlreadyExists:
-            return "Email in use"
-        case .sessionExpired:
-            return "Session expired"
-        default:
-            return "Error"
-        }
-    }
-
-    var message: String {
-        switch self {
-        case .unreachable:
-            return "Couldn't reach the server. Try again later."
-        case .wrongEmailOrPassword:
-            return "The email and password combination was incorrect."
-        case .userAlreadyExists:
-            return "This email has been registered already. Try logging in."
-        case .sessionExpired:
-            return "The previous login session has expired. Please log in again."
-        case .general(desc: let desc):
-            return desc
-        default:
-            return "Something went wrong."
-        }
-    }
+struct APIError: Error {
+    let title: String
+    let message: String
+    let errorCode: Int
 
     var isFatal: Bool {
-        switch self {
-        case .sessionExpired: true
-        default: false
-        }
+        [1].contains(errorCode)
+    }
+
+    init(title: String = "Error", message: String, errorCode: Int = -1) {
+        self.title = title
+        self.message = message
+        self.errorCode = errorCode
+    }
+
+    init(from response: CustomResponse) {
+        self.init(title: "Error", message: response.message, errorCode: response.errorCode)
     }
 }
 
 extension APIError {
-    init(response: CustomResponse) {
-        switch response.errorCode {
-        case 0:
-            self = .somethingWentWrong
-        case 1:
-            self = .sessionExpired
-        case 2:
-            self = .wrongEmailOrPassword
-        case 3:
-            self = .userAlreadyExists
-        default:
-            self = .general(desc: response.message)
-        }
+    static var somethingWentWrong: APIError {
+        APIError(message: "Something went wrong", errorCode: 0)
     }
 }
+
 
 enum FormError: Error, CaseIterable {
     case nameMissing

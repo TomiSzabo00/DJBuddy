@@ -43,8 +43,8 @@ final class StripePaymentHelper: ObservableObject {
         case .canceled:
             // This is not an error so don't treat it like one
             print("Payment cancelled")
-        case .failed(let error):
-            self.error = APIError.general(desc: error.localizedDescription)
+        case .failed(_):
+//            self.error = APIError.general(desc: error.localizedDescription)
             self.paymentSheet = nil
         }
     }

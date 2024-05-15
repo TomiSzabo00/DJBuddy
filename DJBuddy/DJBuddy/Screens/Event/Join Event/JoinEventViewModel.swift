@@ -26,7 +26,7 @@ final class JoinEventViewModel: ObservableObject {
             // text has been pasted here
             guard eventCode.components(separatedBy: " - ").count == 3 else {
                 eventCode = ""
-                scanError = APIError.general(desc: "Wrong code pasted. Try a different one.")
+                scanError = APIError(message: "Wrong code pasted. Try a different one.")
                 return
             }
         }

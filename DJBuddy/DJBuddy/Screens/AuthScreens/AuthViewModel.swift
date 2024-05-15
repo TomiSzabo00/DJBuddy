@@ -26,8 +26,6 @@ final class AuthViewModel: ObservableObject {
     @Published var lastNameText: String = ""
 
     @Published var currentUser: UserData? = nil
-    @Published var error: Error? = nil
-    @Published var isLoading = false
 
     @Published var authState: AuthState = .loggedOut
     @Published var verifyableUserId: String?
@@ -40,15 +38,11 @@ final class AuthViewModel: ObservableObject {
     func tryLoginFromStoredData(context: ModelContext) async throws {
         self.context = context
         guard let loginData = fetchStoredLoginData() else { print("No previous login data found."); return }
-        
-        isLoading = true
 
         do {
             currentUser = try await API.login(with: loginData.email, token: loginData.token)
-            isLoading = false
             authState = .loggedIn
         } catch {
-            isLoading = false
             throw error
         }
     }
@@ -98,27 +92,21 @@ final class AuthViewModel: ObservableObject {
 
     @MainActor
     func login() async throws {
-        guard checkAllLoginFieldsAreValid() else { return }
-
-        isLoading = true
+        guard try checkAllLoginFieldsAreValid() else { return }
 
         do {
             let (user, authToken) = try await API.login(with: emailText, password: passwordText)
             currentUser = user
             saveLoginDataToPersistentData(email: emailText, token: authToken)
-            isLoading = false
             authState = .loggedIn
         } catch {
-            isLoading = false
             throw error
         }
     }
 
     @MainActor
     func signUp() async throws {
-        guard checkAllRegisterFieldsAreValid() else { return }
-
-        isLoading = true
+        guard try checkAllRegisterFieldsAreValid() else { return }
 
         do {
             verifyableUserId = try await API.register(email: emailText,
@@ -127,10 +115,8 @@ final class AuthViewModel: ObservableObject {
                                                       lastName: lastNameText,
                                                       artistName: artistNameText,
                                                       type: userType.rawValue)
-            isLoading = false
             isVerifyAlertShowing.toggle()
         } catch {
-            isLoading = false
             throw error
         }
     }
@@ -141,18 +127,15 @@ final class AuthViewModel: ObservableObject {
               let verifyableUserId
         else { return }
 
-        isLoading = true
-
         API.verifyEmail(for: verifyableUserId, with: verificationCode) { [weak self] result in
             guard let self else { return }
-            isLoading = false
 
             switch result {
             case .success(let user):
                 currentUser = user
                 authState = .loggedIn
-            case .failure(let failure):
-                self.error = failure
+            case .failure(_):
+                break
             }
         }
     }
@@ -163,58 +146,50 @@ final class AuthViewModel: ObservableObject {
         resetTextFields()
     }
 
-    func checkAllLoginFieldsAreValid() -> Bool {
+    func checkAllLoginFieldsAreValid() throws -> Bool {
         guard !emailText.isEmpty else {
-            error = FormError.emailMissing
-            return false
+            throw FormError.emailMissing
         }
 
         guard !passwordText.isEmpty else {
-            error = FormError.passwordMissing
-            return false
+            throw FormError.passwordMissing
         }
 
         return true
     }
 
-    func checkAllRegisterFieldsAreValid() -> Bool {
+    func checkAllRegisterFieldsAreValid() throws -> Bool {
         if userType == .dj {
             guard !artistNameText.isEmpty else {
-                error = FormError.artistNameMissing
-                return false
+                throw FormError.artistNameMissing
             }
         }
 
         guard !emailText.isEmpty else {
-            error = FormError.emailMissing
-            return false
+            throw FormError.emailMissing
         }
 
         guard !firstNameText.isEmpty else {
-            error = FormError.firstNameMissing
-            return false
+            throw FormError.firstNameMissing
         }
 
         guard !lastNameText.isEmpty else {
-            error = FormError.lastNameMissing
-            return false
+            throw FormError.lastNameMissing
         }
 
         guard !passwordText.isEmpty else {
-            error = FormError.passwordMissing
-            return false
+            throw FormError.passwordMissing
         }
 
         guard passwordText == passwordAgainText else {
-            error = FormError.passwordsDontMatch
-            return false
+            throw FormError.passwordsDontMatch
         }
 
         return true
     }
 
     func refreshUser(completion: @escaping (Result<Void, APIError>) -> Void) {
-        guard let currentUser else { completion(.failure(.general(desc: "User doesn't exists."))); return }
+        guard let currentUser else { return }
 
         API.getUserData(currentUser) { [weak self] result in
             switch result {

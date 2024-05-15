@@ -32,7 +32,7 @@ extension URLSession {
                 return data
             } else {
                 let errorData = try JSONDecoder().decode(CustomResponse.self, from: data)
-                throw APIError(response: errorData)
+                throw APIError(from: errorData)
             }
         } catch {
             throw error
@@ -1797,7 +1797,7 @@ final class API {
             guard let data, error == nil
             else {
                 DispatchQueue.main.async {
-                    completion(.failure(.general(desc: error!.localizedDescription)))
+                    completion(.failure(APIError(message: error!.localizedDescription)))
                 }
                 return
             }
@@ -1829,7 +1829,7 @@ final class API {
                 }
             } catch {
                 DispatchQueue.main.async {
-                    completion(.failure(.general(desc: error.localizedDescription)))
+                    completion(.failure(APIError(message: error.localizedDescription)))
                     print(String.init(data: data, encoding: .utf8) ?? "")
                 }
             }
