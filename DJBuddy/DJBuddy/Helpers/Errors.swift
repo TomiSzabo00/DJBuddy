@@ -13,6 +13,7 @@ enum APIError: LocalizedError {
     case userAlreadyExists
     case sessionExpired
     case general(desc: String)
+    case somethingWentWrong
 
     var errorDescription: String? {
         switch self {
@@ -24,7 +25,7 @@ enum APIError: LocalizedError {
             return "Email in use"
         case .sessionExpired:
             return "Session expired"
-        case .general(desc:):
+        default:
             return "Error"
         }
     }
@@ -41,6 +42,21 @@ enum APIError: LocalizedError {
             return "The previous login session has expired. Please log in again."
         case .general(desc: let desc):
             return desc
+        default:
+            return "Something went wrong."
+        }
+    }
+}
+
+extension APIError {
+    init(response: CustomResponse) {
+        switch response.errorCode {
+        case 2:
+            self = .wrongEmailOrPassword
+        case 3:
+            self = .userAlreadyExists
+        default:
+            self = .general(desc: response.message)
         }
     }
 }

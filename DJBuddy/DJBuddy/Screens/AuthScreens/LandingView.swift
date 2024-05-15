@@ -78,7 +78,13 @@ struct LandingView: View {
                 .foregroundStyle(Color.black)
 
                 Button("Sign In") {
-                    viewModel.login()
+                    Task {
+                        do {
+                            try await viewModel.login()
+                        } catch {
+                            viewModel.error = error
+                        }
+                    }
                 }
                 .buttonStyle(.largeProminent)
 
@@ -126,7 +132,13 @@ struct LandingView: View {
                     .foregroundStyle(Color.black)
 
                     Button("Sign Up") {
-                        viewModel.signUp()
+                        Task {
+                            do {
+                                try await viewModel.signUp()
+                            } catch {
+                                viewModel.error = error
+                            }
+                        }
                     }
                     .buttonStyle(.largeProminent)
                 }

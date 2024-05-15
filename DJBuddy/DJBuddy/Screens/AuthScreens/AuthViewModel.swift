@@ -34,52 +34,48 @@ final class AuthViewModel: ObservableObject {
     @Published var verificationCode = ""
     @Published var isVerifyAlertShowing = false
 
-    private var context: ModelContext!
+    private var context: ModelContext?
 
     @MainActor
-    func tryLoginFromStoredData(context: ModelContext) {
+    func tryLoginFromStoredData(context: ModelContext) async throws {
         self.context = context
         guard let loginData = fetchStoredLoginData() else { print("No previous login data found."); return }
         
         isLoading = true
 
-        API.login(with: loginData.email, and: loginData.password) { [weak self] response in
-            guard let self else { return }
+        do {
+            currentUser = try await API.login(with: loginData.email, token: loginData.token)
             isLoading = false
-
-            switch response {
-            case .success(let user):
-                currentUser = user
-                authState = .loggedIn
-            case .failure(let error):
-                print(error.localizedDescription)
-                self.error = APIError.sessionExpired
-            }
+            authState = .loggedIn
+        } catch {
+            isLoading = false
+            throw error
         }
     }
 
     private func fetchStoredLoginData() -> LoginData? {
         do {
             let descriptor = FetchDescriptor<LoginData>()
-            return try context.fetch(descriptor).first
+            return try context?.fetch(descriptor).first
         } catch {
             print(error.localizedDescription)
             return nil
         }
     }
 
-    private func saveLoginDataToPersistentData(email: String, password: String) {
+    private func saveLoginDataToPersistentData(email: String, token: String) {
         removeLoginDataFromPresistentData()
-        context.insert(LoginData(email: email, password: password))
+        context?.insert(LoginData(email: email, token: token))
         print("User saved as persistent!")
     }
 
     private func removeLoginDataFromPresistentData() {
         do {
             let descriptor = FetchDescriptor<LoginData>()
-            let datas = try context.fetch(descriptor)
-            for data in datas {
-                context.delete(data)
+            if let datas = try context?.fetch(descriptor) {
+                for data in datas {
+                    context?.delete(data)
+                }
             }
             print("User removed from persistent!")
         } catch {
@@ -101,48 +97,41 @@ final class AuthViewModel: ObservableObject {
     }
 
     @MainActor
-    func login() {
+    func login() async throws {
         guard checkAllLoginFieldsAreValid() else { return }
 
         isLoading = true
 
-        API.login(with: emailText, and: passwordText) { [weak self] response in
-            guard let self else { return }
+        do {
+            let (user, authToken) = try await API.login(with: emailText, password: passwordText)
+            currentUser = user
+            saveLoginDataToPersistentData(email: emailText, token: authToken)
             isLoading = false
-
-            switch response {
-            case .success(let user):
-                currentUser = user
-                saveLoginDataToPersistentData(email: emailText, password: passwordText)
-                authState = .loggedIn
-            case .failure(let error):
-                self.error = error
-            }
+            authState = .loggedIn
+        } catch {
+            isLoading = false
+            throw error
         }
     }
 
     @MainActor
-    func signUp() {
+    func signUp() async throws {
         guard checkAllRegisterFieldsAreValid() else { return }
 
         isLoading = true
 
-        API.register(email: emailText,
-                     password: passwordText,
-                     firstName: firstNameText,
-                     lastName: lastNameText,
-                     artistName: artistNameText,
-                     type: userType.rawValue) { [weak self] response in
-            guard let self else { return }
+        do {
+            verifyableUserId = try await API.register(email: emailText,
+                                                      password: passwordText,
+                                                      firstName: firstNameText,
+                                                      lastName: lastNameText,
+                                                      artistName: artistNameText,
+                                                      type: userType.rawValue)
             isLoading = false
-
-            switch response {
-            case .success(let userId):
-                verifyableUserId = userId
-                isVerifyAlertShowing.toggle()
-            case .failure(let error):
-                self.error = error
-            }
+            isVerifyAlertShowing.toggle()
+        } catch {
+            isLoading = false
+            throw error
         }
     }
 

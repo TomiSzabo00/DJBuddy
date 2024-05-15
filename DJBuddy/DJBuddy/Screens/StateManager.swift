@@ -61,7 +61,13 @@ struct StateManager: View {
                 LandingView()
                     .environmentObject(viewModel)
                     .onAppear {
-                        viewModel.tryLoginFromStoredData(context: context)
+                        Task {
+                            do {
+                                try await viewModel.tryLoginFromStoredData(context: context)
+                            } catch {
+                                viewModel.error = error
+                            }
+                        }
                     }
             }
         }

@@ -131,11 +131,10 @@ class LikedDJData: Decodable {
 @Model
 class LoginData {
     let email: String
-    @Attribute(.allowsCloudEncryption)
-    let password: String
+    let token: String
 
-    init(email: String, password: String) {
+    init(email: String, token: String) {
         self.email = email
-        self.password = password
+        self.token = token
     }
 }
