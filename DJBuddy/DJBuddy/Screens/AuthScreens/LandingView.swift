@@ -28,8 +28,6 @@ struct LandingView: View {
             .background(Color.black)
             .animation(.interpolatingSpring(stiffness: 110, damping: 10), value: viewModel.pageState)
         }
-        .errorAlert(error: $viewModel.error)
-        .loadingOverlay(isLoading: $viewModel.isLoading)
     }
 
     @ViewBuilder private var landingContent: some View {
@@ -136,6 +134,13 @@ struct LandingView: View {
             }
             .frame(maxHeight: 400)
             .scrollIndicators(.hidden)
+        }
+        .alert("Verification needed", isPresented: $viewModel.isVerifyAlertShowing) {
+            Button("OK", role: .cancel) {
+                viewModel.authState = .verifyEmail
+            }
+        } message: {
+            Text("You need to verify your email address to complete your registration.\nWe've sent an email with your code to \(viewModel.emailText)")
         }
         .padding()
         .foregroundStyle(Color.white)

@@ -16,7 +16,8 @@ struct StateManager: View {
 
     var body: some View {
         NavigationStack(path: $navigator.path) {
-            if viewModel.currentUser != nil {
+            switch viewModel.authState {
+            case .loggedIn:
                 MainMenu(viewModel: mainMenuViewModel, signOutAction: viewModel.signOut)
                     .navigationDestination(for: NavigationDestination.self) { destination in
                         switch destination {
@@ -53,7 +54,10 @@ struct StateManager: View {
                             PlaylistDetailsView(playList: playlist)
                         }
                     }
-            } else {
+            case .verifyEmail:
+                VerifyEmailView()
+                    .environmentObject(viewModel)
+            case .loggedOut:
                 LandingView()
                     .environmentObject(viewModel)
                     .onAppear {
@@ -61,7 +65,9 @@ struct StateManager: View {
                     }
             }
         }
-        .animation(.default, value: viewModel.currentUser)
+        .loadingOverlay(isLoading: $viewModel.isLoading)
+        .errorAlert(error: $viewModel.error)
+        .animation(.default, value: viewModel.authState)
         .environmentObject(navigator)
         .environmentObject(viewModel.currentUser ?? UserData.EmptyUser)
         .tint(.accent)
