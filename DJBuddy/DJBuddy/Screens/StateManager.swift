@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct StateManager: View {
-    @StateObject private var viewModel = AuthViewModel()
-    @StateObject private var navigator = Navigator()
-    @StateObject private var mainMenuViewModel = MainMenuViewModel()
+    @StateObject private var viewModel: AuthViewModel
+    @StateObject private var navigator: Navigator
+    @StateObject private var mainMenuViewModel: MainMenuViewModel
+
+    @StateObject private var stateHelper: StateHelper
 
     @Environment(\.modelContext) private var context
 
@@ -61,22 +63,26 @@ struct StateManager: View {
                 LandingView()
                     .environmentObject(viewModel)
                     .onAppear {
-                        Task {
-                            do {
-                                try await viewModel.tryLoginFromStoredData(context: context)
-                            } catch {
-                                viewModel.error = error
-                            }
+                        stateHelper.performWithProgress {
+                            try await viewModel.tryLoginFromStoredData(context: context)
                         }
                     }
             }
         }
-        .loadingOverlay(isLoading: $viewModel.isLoading)
-        .errorAlert(error: $viewModel.error)
+        .loadingOverlay(isLoading: $stateHelper.isLoading)
+        .errorAlert(error: $stateHelper.error)
         .animation(.default, value: viewModel.authState)
         .environmentObject(navigator)
+        .environmentObject(stateHelper)
         .environmentObject(viewModel.currentUser ?? UserData.EmptyUser)
         .tint(.accent)
+    }
+
+    init(viewModel: AuthViewModel = AuthViewModel(), navigator: Navigator = Navigator(), mainMenuViewModel: MainMenuViewModel = MainMenuViewModel()) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+        self._navigator = StateObject(wrappedValue: navigator)
+        self._mainMenuViewModel = StateObject(wrappedValue: mainMenuViewModel)
+        self._stateHelper = StateObject(wrappedValue: StateHelper(signoutAction: viewModel.signOut))
     }
 }
 

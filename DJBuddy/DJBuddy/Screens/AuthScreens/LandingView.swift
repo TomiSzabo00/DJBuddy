@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LandingView: View {
     @EnvironmentObject private var viewModel: AuthViewModel
+    @EnvironmentObject private var stateHelper: StateHelper
 
     var body: some View {
         GeometryReader { geo in
@@ -78,12 +79,8 @@ struct LandingView: View {
                 .foregroundStyle(Color.black)
 
                 Button("Sign In") {
-                    Task {
-                        do {
-                            try await viewModel.login()
-                        } catch {
-                            viewModel.error = error
-                        }
+                    stateHelper.performWithProgress {
+                        try await viewModel.login()
                     }
                 }
                 .buttonStyle(.largeProminent)
@@ -132,12 +129,8 @@ struct LandingView: View {
                     .foregroundStyle(Color.black)
 
                     Button("Sign Up") {
-                        Task {
-                            do {
-                                try await viewModel.signUp()
-                            } catch {
-                                viewModel.error = error
-                            }
+                        stateHelper.performWithProgress {
+                            try await viewModel.signUp()
                         }
                     }
                     .buttonStyle(.largeProminent)
