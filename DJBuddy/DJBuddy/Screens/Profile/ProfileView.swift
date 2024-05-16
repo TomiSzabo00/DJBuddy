@@ -15,8 +15,6 @@ struct ProfileView: View {
     @State var user: UserData
 
     @State private var height: CGFloat = 0
-    @State private var error: Error?
-    @State private var isLoading = false
     @State private var isPhotoSelectShowing = false
 
     @State private var id = UUID()
@@ -84,16 +82,12 @@ struct ProfileView: View {
                 if user.type == .user {
                     navigator.navigate(to: .balanceTopUp)
                 } else {
-                    isLoading = true
-                    API.withdrawFromBalance(of: user) { result in
-                        isLoading = false
-                        switch result {
-                        case .success():
-                            stateHelper.performWithProgress {
-                                try await viewModel.refreshUser()
-                            }
-                        case .failure(let error):
-                            self.error = error
+                    stateHelper.performWithProgress {
+                        do {
+                            try await API.withdrawFromBalance(of: user)
+                            try await viewModel.refreshUser()
+                        } catch {
+                            throw error
                         }
                     }
                 }
