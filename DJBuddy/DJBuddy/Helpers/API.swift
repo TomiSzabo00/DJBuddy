@@ -75,14 +75,34 @@ final class API {
         userToken = value
     }
 
+    static func getRequest(url: URL) -> URLRequest {
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue(API.userToken, forHTTPHeaderField: "user_token")
+        return request
+    }
+
+    static func postRequest(url: URL) -> URLRequest {
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.addValue(API.userToken, forHTTPHeaderField: "user_token")
+        return request
+    }
+
+    static func putRequest(components: URLComponents) -> URLRequest {
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "PUT"
+        request.addValue(API.userToken, forHTTPHeaderField: "user_token")
+        return request
+    }
+
     // MARK: Login
 
     static func login(with email: String, password: String) async throws -> (user: UserData, token: String) {
         let url = URL(string: "\(apiAddress)/users/login")!
 
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
+        var request = API.postRequest(url: url)
 
         let parameters: [String: Any] = [
             "email": email,
@@ -108,9 +128,7 @@ final class API {
     static func login(with email: String, token: String) async throws -> UserData {
         let url = URL(string: "\(apiAddress)/users/login")!
 
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
+        var request = API.postRequest(url: url)
 
         let parameters: [String: Any] = [
             "email": email,
@@ -138,9 +156,7 @@ final class API {
     static func register(email: String, password: String, firstName: String, lastName: String, artistName: String, type: String) async throws -> String {
         let url = URL(string: "\(apiAddress)/users/register")!
 
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
+        var request = API.postRequest(url: url)
 
         let parameters: [String: Any] = [
             "username": artistName,
@@ -171,9 +187,7 @@ final class API {
     static func verifyEmail(for userId: String, with code: String) async throws -> UserData {
         let url = URL(string: "\(apiAddress)/users/verify/\(userId)/with/\(code)")!
 
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
+        var request = API.postRequest(url: url)
 
         do {
             let data = try await URLSession.shared.fetchData(with: request)
@@ -280,7 +294,7 @@ final class API {
     }
 
     static func removeFromUserBalance(amount: Double, user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/users/\(user.id)/balance/\(amount)/remove")!
+//        let url = URL(string: "\(apiAddress)/users/\(user.id)/balance/remove/\(amount)")!
 //
 //        var request = URLRequest(url: url)
 //        request.httpMethod = "PUT"
@@ -855,10 +869,7 @@ final class API {
 
     static func getEvents(for user: UserData) async throws -> [EventData] {
         let url = URL(string: "\(apiAddress)/users/events")!
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.addValue(API.userToken, forHTTPHeaderField: "user_token")
+        let request = API.getRequest(url: url)
 
         do {
             let data = try await URLSession.shared.fetchData(with: request)
@@ -1349,7 +1360,7 @@ final class API {
     // MARK: Song
 
     static func requestSong(_ song: SongData, for event: EventData, by user: UserData, completion: @escaping (Result<Int, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/songs/request/by/\(user.id)")!
+//        let url = URL(string: "\(apiAddress)/songs/request")!
 //
 //        var request = URLRequest(url: url)
 //        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -1985,7 +1996,7 @@ final class API {
     }
 
     static func getAllPlaylists(of user: UserData, completion: @escaping (Result<[Playlist], APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/playlists/\(user.id)")!
+//        let url = URL(string: "\(apiAddress)/users/playlists/\(user.id)")!
 //
 //        var request = URLRequest(url: url)
 //        request.httpMethod = "GET"
