@@ -327,34 +327,27 @@ final class EventControlViewModel: ObservableObject, Hashable {
         }
     }
 
-    func increasePrice(by user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
+    func increasePrice(by user: UserData) async throws {
         guard let currentSong,
         let idx = event.requestedSongs.firstIndex(of: currentSong)
         else { return }
 
-        isLoading = true
-
-        API.removeFromUserBalance(amount: selectedPrice, user: user) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success():
-                API.increasePrice(of: currentSong, by: selectedPrice) { [weak self] result in
-                    self?.isLoading = false
-                    switch result {
-                    case .success(let newAmount):
-                        DispatchQueue.main.async {
-                            self?.event.requestedSongs[idx].amount = newAmount
-                            self?.objectWillChange.send()
-                            completion(.success(()))
-                        }
-                    case .failure(let failure):
-                        completion(.failure(failure))
+        do {
+            try await API.removeFromUserBalance(amount: selectedPrice, user: user)
+            API.increasePrice(of: currentSong, by: selectedPrice) { [weak self] result in
+                self?.isLoading = false
+                switch result {
+                case .success(let newAmount):
+                    DispatchQueue.main.async {
+                        self?.event.requestedSongs[idx].amount = newAmount
+                        self?.objectWillChange.send()
                     }
+                case .failure(let failure):
+                    break
                 }
-            case .failure(let failure):
-                self.isLoading = false
-                completion(.failure(failure))
             }
+        } catch {
+            throw error
         }
     }
 

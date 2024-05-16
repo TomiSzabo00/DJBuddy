@@ -226,47 +226,11 @@ final class API {
         let _ = try await URLSession.shared.fetchData(with: request)
     }
 
-    static func removeFromUserBalance(amount: Double, user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/users/\(user.id)/balance/remove/\(amount)")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "PUT"
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//            guard error == nil, let response = response as? HTTPURLResponse
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: error.localizedDescription)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            guard response.statusCode == 200 else {
-//                if didDecodeCustomResponse(from: data, completion: completion) {
-//                    return
-//                }
-//                DispatchQueue.main.async {
-//                    completion(.failure(.general(desc: response.debugDescription)))
-//                }
-//                return
-//            }
-//
-//            DispatchQueue.main.async {
-//                completion(.success(()))
-//            }
-//        }
-//
-//        task.resume()
+    static func removeFromUserBalance(amount: Double, user: UserData) async throws {
+        let url = URL(string: "\(apiAddress)/users/balance/remove/\(amount)")!
+        let request = API.putRequest(url: url)
+        
+        let _ = try await URLSession.shared.fetchData(with: request)
     }
 
     static func withdrawFromBalance(of user: UserData, amount: Double? = nil, completion: @escaping (Result<Void, APIError>) -> Void) {

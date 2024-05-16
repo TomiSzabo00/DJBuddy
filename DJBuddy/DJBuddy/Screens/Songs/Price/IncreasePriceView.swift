@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct IncreasePriceView: View {
+    @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject var user: UserData
 
     let song: SongData
     @StateObject var viewModel: EventControlViewModel
     @Binding var isShowing: Bool
-
-    @State var error: Error? = nil
 
     var body: some View {
         NavigationView {
@@ -30,13 +29,8 @@ struct IncreasePriceView: View {
 
                 Button("Increase") {
                     isShowing = false
-                    viewModel.increasePrice(by: user) { result in
-                        switch result {
-                        case .success(_):
-                            break
-                        case .failure(let error):
-                            self.error = error
-                        }
+                    stateHelper.performWithProgress {
+                        try await viewModel.increasePrice(by: user)
                     }
                 }
                 .buttonStyle(.largeProminent)
