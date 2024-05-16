@@ -220,7 +220,7 @@ final class API {
     }
 
     static func addToUserBalance(amount: Double, user: UserData) async throws {
-        let url = URL(string: "\(apiAddress)/users/\(user.id)/balance/\(amount)")!
+        let url = URL(string: "\(apiAddress)/users/balance/\(amount)")!
         let request = API.putRequest(url: url)
 
         let _ = try await URLSession.shared.fetchData(with: request)
