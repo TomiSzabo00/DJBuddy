@@ -168,52 +168,20 @@ final class API {
 
     // MARK: Verification
 
-    static func verifyEmail(for userId: String, with code: String, completion: @escaping (Result<UserData, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/users/verify/\(userId)/with/\(code)")!
-//
-//        var request = URLRequest(url: url)
-//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//        request.httpMethod = "POST"
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//            guard
-//                let data = data,
-//                let response = response as? HTTPURLResponse,
-//                error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        let msg = decodeCustomResponse(from: error)
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: msg)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            do {
-//                let responseObject = try JSONDecoder().decode(UserData_Database.self, from: data)
-//                let userData = UserData(decodable: responseObject)
-//                DispatchQueue.main.async {
-//                    completion(.success(userData))
-//                }
-//            } catch {
-//                print(error) // parsing error
-//                let msg = decodeCustomResponse(from: error)
-//                DispatchQueue.main.async {
-//                    completion(.failure(.general(desc: msg)))
-//                }
-//            }
-//        }
-//
-//        task.resume()
+    static func verifyEmail(for userId: String, with code: String) async throws -> UserData {
+        let url = URL(string: "\(apiAddress)/users/verify/\(userId)/with/\(code)")!
+
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+
+        do {
+            let data = try await URLSession.shared.fetchData(with: request)
+            let responseObject = try JSONDecoder().decode(UserData_Database.self, from: data)
+            return UserData(decodable: responseObject)
+        } catch {
+            throw error
+        }
     }
 
     // MARK: User

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct VerifyEmailView: View {
+    @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject private var viewModel: AuthViewModel
 
     var body: some View {
@@ -19,7 +20,9 @@ struct VerifyEmailView: View {
             Spacer()
 
             Button("Verify") {
-                viewModel.verifyEmail()
+                stateHelper.performWithProgress {
+                    try await viewModel.verifyEmail()
+                }
             }
             .buttonStyle(.largeProminent)
         }

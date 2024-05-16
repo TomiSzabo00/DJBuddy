@@ -48,6 +48,7 @@ enum FormError: Error, CaseIterable {
     case artistNameMissing
     case firstNameMissing
     case lastNameMissing
+    case codeMissing
 
     var title: String {
         if self == .acceptMissing {
@@ -81,6 +82,8 @@ enum FormError: Error, CaseIterable {
                 return "First name"
             case .lastNameMissing:
                 return "Last name"
+            case .codeMissing:
+                return "Token or code"
             }
         }()
 

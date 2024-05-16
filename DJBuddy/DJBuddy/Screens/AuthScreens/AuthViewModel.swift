@@ -122,21 +122,18 @@ final class AuthViewModel: ObservableObject {
     }
 
     @MainActor
-    func verifyEmail() {
-        guard !verificationCode.isEmpty,
-              let verifyableUserId
-        else { return }
+    func verifyEmail() async throws {
+        guard let verifyableUserId else { return }
 
-        API.verifyEmail(for: verifyableUserId, with: verificationCode) { [weak self] result in
-            guard let self else { return }
+        if verificationCode.isEmpty {
+            throw FormError.codeMissing
+        }
 
-            switch result {
-            case .success(let user):
-                currentUser = user
-                authState = .loggedIn
-            case .failure(_):
-                break
-            }
+        do {
+            currentUser = try await API.verifyEmail(for: verifyableUserId, with: verificationCode)
+            authState = .loggedIn
+        } catch {
+            throw error
         }
     }
 
