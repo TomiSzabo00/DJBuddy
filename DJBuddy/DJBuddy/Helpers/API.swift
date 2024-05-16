@@ -282,72 +282,18 @@ final class API {
         }
     }
 
-    static func like(dj: UserData, by user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/users/\(user.id)/like/\(dj.id)")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "PUT"
-//
-//        let task = URLSession.shared.dataTask(with: request) { _, _, error in
-//            guard error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        let msg = decodeCustomResponse(from: error)
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: msg)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            DispatchQueue.main.async {
-//                completion(.success(()))
-//            }
-//        }
-//
-//        task.resume()
+    static func like(dj: UserData, by user: UserData) async throws {
+        let url = URL(string: "\(apiAddress)/users/like/\(dj.id)")!
+        let request = API.putRequest(url: url)
+
+        let _ = try await URLSession.shared.fetchData(with: request)
     }
 
-    static func unlike(dj: UserData, by user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/users/\(user.id)/unlike/\(dj.id)")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "PUT"
-//
-//        let task = URLSession.shared.dataTask(with: request) { _, _, error in
-//            guard error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        let msg = decodeCustomResponse(from: error)
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: msg)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            DispatchQueue.main.async {
-//                completion(.success(()))
-//            }
-//        }
-//
-//        task.resume()
+    static func unlike(dj: UserData, by user: UserData) async throws {
+        let url = URL(string: "\(apiAddress)/users/unlike/\(dj.id)")!
+        let request = API.putRequest(url: url)
+
+        let _ = try await URLSession.shared.fetchData(with: request)
     }
 
     static func getAllLiked(by user: UserData, completion: @escaping (Result<[(dj: UserData, like: Int)], APIError>) -> Void) {

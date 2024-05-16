@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LikedDJsView: View {
+    @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject private var navigator: Navigator
     @EnvironmentObject private var user: UserData
 
@@ -19,7 +20,9 @@ struct LikedDJsView: View {
                 ForEach(viewModel.likedDJs, id: \.0) { dj, likeText in
                     LikedDJRow(dj: dj, likeText: likeText)
                         .discardable {
-                            viewModel.dislike(dj: dj, by: user)
+                            stateHelper.performWithProgress {
+                                try await viewModel.dislike(dj: dj, by: user)
+                            }
                         }
                 }
             } header: {

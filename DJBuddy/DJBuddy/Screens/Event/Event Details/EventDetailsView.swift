@@ -38,7 +38,9 @@ struct EventDetailsView: View {
                     .foregroundStyle(.secondary)
                     .font(.subheadline)
                 DJRow(dj: event.dj, isLiked: user.isDj ? .constant(nil) : $viewModel.isDJLiked) {
-                    viewModel.toggleLike(on: event.dj, by: user)
+                    stateHelper.performWithProgress {
+                        try await viewModel.toggleLike(on: event.dj, by: user)
+                    }
                 }
             }
 

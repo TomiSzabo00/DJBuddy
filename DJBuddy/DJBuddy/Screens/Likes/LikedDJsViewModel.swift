@@ -56,21 +56,15 @@ final class LikedDJsViewModel: ObservableObject {
         }
     }
 
-    func dislike(dj: UserData, by user: UserData) {
-        API.unlike(dj: dj, by: user) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success():
-                if let index = likedDJs.firstIndex(where: { $0.dj == dj }) {
-                    DispatchQueue.main.async {
-                        self.likedDJs.remove(at: index)
-                    }
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self.error = failure
-                }
+    @MainActor
+    func dislike(dj: UserData, by user: UserData) async throws {
+        do {
+            try await API.unlike(dj: dj, by: user)
+            if let index = likedDJs.firstIndex(where: { $0.dj == dj }) {
+                likedDJs.remove(at: index)
             }
+        } catch {
+            throw error
         }
     }
 }

@@ -75,25 +75,19 @@ final class EventDetailsViewModel: ObservableObject {
         isDJLiked = try await API.isDJLikedByUser(dj: dj, user: user)
     }
 
-    func toggleLike(on dj: UserData, by user: UserData) {
+    @MainActor
+    func toggleLike(on dj: UserData, by user: UserData) async throws {
         guard let isDJLiked else { return }
-        let completion: (Result<Void, APIError>) -> Void = { [weak self] result in
-            switch result {
-            case .success():
-                DispatchQueue.main.async {
-                    self?.isDJLiked = !isDJLiked
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self?.error = failure
-                }
-            }
-        }
 
-        if isDJLiked {
-            API.unlike(dj: dj, by: user, completion: completion)
-        } else {
-            API.like(dj: dj, by: user, completion: completion)
+        do {
+            if isDJLiked {
+                try await API.unlike(dj: dj, by: user)
+            } else {
+                try await API.like(dj: dj, by: user)
+            }
+            self.isDJLiked = !isDJLiked
+        } catch {
+            throw error
         }
     }
 }
