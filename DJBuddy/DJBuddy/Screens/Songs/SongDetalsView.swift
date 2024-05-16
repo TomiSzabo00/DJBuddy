@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SongDetalsView: View {
+    @EnvironmentObject var stateHelper: StateHelper
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var user: UserData
     let song: SongData
@@ -49,12 +50,12 @@ struct SongDetalsView: View {
 
                         if user.type == .dj {
                             Button("Accept") {
-                                viewModel.accept(song: song, dj: user) { result in
-                                    switch result {
-                                    case .success(_):
+                                stateHelper.performWithProgress {
+                                    do {
+                                        try await viewModel.accept(song: song, dj: user)
                                         navigator.back()
-                                    case .failure(let error):
-                                        self.error = error
+                                    } catch {
+                                        throw error
                                     }
                                 }
                             }

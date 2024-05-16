@@ -39,7 +39,9 @@ final class StripePaymentHelper: ObservableObject {
     func onPaymentCompletion(result: PaymentSheetResult) {
         switch result {
         case .completed:
-            addFundsToUser()
+            Task {
+                try await addFundsToUser()
+            }
         case .canceled:
             // This is not an error so don't treat it like one
             print("Payment cancelled")
@@ -49,14 +51,13 @@ final class StripePaymentHelper: ObservableObject {
         }
     }
 
-    func addFundsToUser() {
-        isLoading = true
+    func addFundsToUser() async throws {
         guard amount > 0, let user else { return }
-        API.addToUserBalance(amount: amount, user: user) { [weak self] result in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                self?.paymentResult = result
-            }
+        do {
+            try await API.addToUserBalance(amount: amount, user: user)
+            paymentResult = .success(())
+        } catch {
+            throw error
         }
     }
 }
