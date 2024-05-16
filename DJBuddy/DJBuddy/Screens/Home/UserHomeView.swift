@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct UserHomeView: View {
+    @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject private var user: UserData
 
@@ -42,7 +43,9 @@ struct UserHomeView: View {
             }
         }
         .refreshable {
-            await viewModel.refreshEvents(for: user)
+            stateHelper.performWithProgress {
+                try await viewModel.refreshEvents(for: user)
+            }
         }
         .animation(.default, value: events)
     }

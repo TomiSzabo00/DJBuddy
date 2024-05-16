@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PastEventsView: View {
+    @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject private var navigator: Navigator
     @EnvironmentObject private var user: UserData
 
@@ -35,7 +36,9 @@ struct PastEventsView: View {
         .scrollContentBackground(.hidden)
         .navBarWithTitle(title: "Past events", navigator: navigator, leadingButton: .back)
         .onAppear {
-            viewModel.getPastEvents(for: user)
+            stateHelper.performWithProgress {
+                try await viewModel.getPastEvents(for: user)
+            }
         }
     }
 }

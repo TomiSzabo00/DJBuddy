@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 
 struct MainMenu: View {
+    @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject private var navigator: Navigator
     @EnvironmentObject private var user: UserData
 
@@ -48,10 +49,12 @@ struct MainMenu: View {
             }
 
             MapView(viewModel: mapViewModel,
-                    isLoading: $viewModel.isLoading,
+                    isLoading: .constant(false),
                     annotationItems: (viewModel.yourEvents[.yourEvents] ?? []) + (viewModel.yourEvents[.nearYou] ?? [])
             ) {
-                viewModel.fetchEvents(for: user)
+                stateHelper.performWithProgress {
+                    try await viewModel.fetchEvents(for: user)
+                }
                 if let currentLocation = mapViewModel.currentLocation {
                     viewModel.currentLocation = currentLocation
                     viewModel.fetchNearEvents(for: user)
@@ -64,9 +67,14 @@ struct MainMenu: View {
             mapViewModel.getLocation()
 
             if viewModel.yourEvents.isEmpty {
-                viewModel.fetchEvents(for: user)
+                stateHelper.performWithProgress {
+                    try await viewModel.fetchEvents(for: user)
+                }
             } else {
-                viewModel.fetchEvents(for: user, isQuiet: true)
+                // TODO: quiet task
+                stateHelper.performWithProgress {
+                    try await viewModel.fetchEvents(for: user)
+                }
             }
         }
         .overlay(alignment: .bottom) {

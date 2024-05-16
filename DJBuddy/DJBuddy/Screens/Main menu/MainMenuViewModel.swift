@@ -24,46 +24,27 @@ enum EventDataType: String {
 
 final class MainMenuViewModel: ObservableObject {
     @Published private(set) var yourEvents: [EventDataType : [EventData]] = [:]
-    @Published var error: Error? = nil
-    @Published var isLoading = false
     @Published var currentLocation: CLLocationCoordinate2D? = nil
-    private var isLoadingQuietly = false
 
-    func fetchEvents(for user: UserData, isQuiet: Bool = false) {
-        guard !isLoading, !isLoadingQuietly else { return }
-            
-        isLoading = !isQuiet
-        isLoadingQuietly = isQuiet
+    @MainActor
+    func fetchEvents(for user: UserData) async throws {
 
-        API.getEvents(from: user) { [weak self] result in
-            guard let self else { return }
-            isLoading = false
-            isLoadingQuietly = false
-            switch result {
-            case .success(let events):
-                DispatchQueue.main.async {
-                    self.yourEvents[.yourEvents] = events.filter { !$0.isInThePast }
-                    self.sortEventsByDate(&self.yourEvents[.yourEvents]!)
-                }
-            case .failure(let error):
-                if !isQuiet {
-                    DispatchQueue.main.async {
-                        self.error = error
-                    }
-                } else {
-                    print(error.localizedDescription)
-                }
-            }
+        do {
+            let events = try await API.getEvents(for: user)
+            yourEvents[.yourEvents] = events.filter { !$0.isInThePast }
+            sortEventsByDate(&self.yourEvents[.yourEvents]!)
+        } catch {
+            throw error
         }
     }
 
     func fetchNearEvents(for user: UserData) {
         guard let location = currentLocation else { return }
-        isLoading = true
+//        isLoading = true
 
         API.getAllEvents(nearTo: location) { [weak self] result in
             guard let self else { return }
-            isLoading = false
+//            isLoading = false
             switch result {
             case .success(let events):
                 DispatchQueue.main.async {
@@ -76,19 +57,21 @@ final class MainMenuViewModel: ObservableObject {
                     self.sortEventsByDate(&self.yourEvents[.nearYou]!)
                 }
             case .failure(let failure):
-                self.error = failure
+                break
+//                self.error = failure
             }
         }
     }
 
-    func refreshEvents(for user: UserData) async {
-        let newEvents = await API.getEventsAsync(from: user)
-        print("Events refreshed")
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
+    @MainActor
+    func refreshEvents(for user: UserData) async throws {
+        do {
+            let newEvents = try await API.getEvents(for: user)
             yourEvents[.yourEvents] = newEvents.filter { !$0.isInThePast }
             sortEventsByDate(&yourEvents[.yourEvents]!)
             self.objectWillChange.send()
+        } catch {
+            throw error
         }
     }
 
@@ -99,11 +82,11 @@ final class MainMenuViewModel: ObservableObject {
     func join(event: EventData, user: UserData) {
         guard !(yourEvents[.yourEvents] ?? []).contains(event) else { return }
 
-        isLoading = true
+//        isLoading = true
 
         API.joinEvent(event, user: user) { [weak self] result in
             guard let self else { return }
-            isLoading = false
+//            isLoading = false
 
             switch result {
             case .success():
@@ -116,17 +99,17 @@ final class MainMenuViewModel: ObservableObject {
                 }
             case .failure(let failure):
                 DispatchQueue.main.async {
-                    self.error = failure
+//                    self.error = failure
                 }
             }
         }
     }
 
     func leave(event: EventData, user: UserData) {
-        isLoading = true
+//        isLoading = true
 
         API.leaveEvent(event, user: user) { [weak self] result in
-            self?.isLoading = false
+//            self?.isLoading = false
             switch result {
             case .success():
                 DispatchQueue.main.async {
@@ -137,7 +120,7 @@ final class MainMenuViewModel: ObservableObject {
                 self?.fetchNearEvents(for: user)
             case .failure(let failure):
                 DispatchQueue.main.async {
-                    self?.error = failure
+//                    self?.error = failure
                 }
             }
         }

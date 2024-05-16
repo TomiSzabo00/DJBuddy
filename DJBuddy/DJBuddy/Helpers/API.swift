@@ -885,71 +885,20 @@ final class API {
 //        task.resume()
     }
 
-    static func getEvents(from user: UserData, completion: @escaping (Result<[EventData], APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/users/\(user.id)/events")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "GET"
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, _, error in
-//            guard
-//                let data = data,
-//                error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: error.localizedDescription)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            do {
-//                let responseObject = try JSONDecoder().decode([EventData_Database].self, from: data)
-//                let events = responseObject.map { EventData(decodable: $0) }
-//                DispatchQueue.main.async {
-//                    completion(.success(events))
-//                }
-//            } catch {
-//                print(error) // parsing error
-//
-//                if let responseString = String(data: data, encoding: .utf8) {
-//                    print("responseString = \(responseString)")
-//                    DispatchQueue.main.async {
-//                        completion(.failure(.general(desc: responseString)))
-//                    }
-//                } else {
-//                    print("unable to parse error response as string")
-//                }
-//            }
-//        }
-//
-//        task.resume()
-    }
+    static func getEvents(for user: UserData) async throws -> [EventData] {
+        let url = URL(string: "\(apiAddress)/users/events")!
 
-    static func getEventsAsync(from user: UserData) async -> [EventData] {
-//        let url = URL(string: "\(apiAddress)/users/\(user.id)/events")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "GET"
-//
-//        do {
-//            let (data, _) = try await URLSession.shared.data(for: request)
-//            let responseObject = try JSONDecoder().decode([EventData_Database].self, from: data)
-//            let events = responseObject.map { EventData(decodable: $0) }
-//            return events
-//        } catch {
-//            print(error.localizedDescription)
-            return []
-//        }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue(API.userToken, forHTTPHeaderField: "user_token")
+
+        do {
+            let data = try await URLSession.shared.fetchData(with: request)
+            let responseObject = try JSONDecoder().decode([EventData_Database].self, from: data)
+            return responseObject.map { EventData(decodable: $0) }
+        } catch {
+            throw error
+        }
     }
 
     static func getEventTheme(for event: EventData, completion: @escaping (Result<SongTheme?, APIError>) -> Void) {

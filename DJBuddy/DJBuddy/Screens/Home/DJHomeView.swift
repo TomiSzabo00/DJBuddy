@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DJHomeView: View {
+    @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject private var user: UserData
 
@@ -33,7 +34,9 @@ struct DJHomeView: View {
             }
         }
         .refreshable {
-            await viewModel.refreshEvents(for: user)
+            stateHelper.performWithProgress {
+                try await viewModel.refreshEvents(for: user)
+            }
         }
     }
 }
