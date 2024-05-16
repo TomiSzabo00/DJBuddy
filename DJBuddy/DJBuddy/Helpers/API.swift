@@ -246,64 +246,28 @@ final class API {
         let _ = try await URLSession.shared.fetchData(with: request)
     }
 
-    static func uploadProfilePic(for user: UserData, image: UIImage, completion: @escaping (Result<Void, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/users/\(user.id)/profile_pic/upload")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "PUT"
-//
-//        let boundary = "Boundary-\(UUID().uuidString)"
-//        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-//
-//        var body = Data()
-//
-//        // Append the image data
-//        body.append("--\(boundary)\r\n".data(using: .utf8)!)
-//        body.append("Content-Disposition: form-data; name=\"pic\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
-//        body.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
-//        body.append(image.jpegData(compressionQuality: 1.0)!)
-//        body.append("\r\n".data(using: .utf8)!)
-//
-//        // Finish with the boundary
-//        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
-//
-//        request.httpBody = body
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//            guard let data, error == nil, let response = response as? HTTPURLResponse
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: error.localizedDescription)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            guard response.statusCode == 200 else {
-//                if didDecodeCustomResponse(from: data, completion: completion) {
-//                    return
-//                }
-//                DispatchQueue.main.async {
-//                    completion(.failure(.general(desc: response.debugDescription)))
-//                }
-//                return
-//            }
-//
-//            DispatchQueue.main.async {
-//                completion(.success(()))
-//            }
-//        }
-//
-//        task.resume()
+    static func uploadProfilePic(for user: UserData, image: UIImage) async throws {
+        let url = URL(string: "\(apiAddress)/users/\(user.id)/profile_pic/upload")!
+        var request = API.putRequest(url: url)
+
+        let boundary = "Boundary-\(UUID().uuidString)"
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+
+        var body = Data()
+
+        // Append the image data
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"pic\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
+        body.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
+        body.append(image.jpegData(compressionQuality: 1.0)!)
+        body.append("\r\n".data(using: .utf8)!)
+
+        // Finish with the boundary
+        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+
+        request.httpBody = body
+
+        let _ = try await URLSession.shared.fetchData(with: request)
     }
 
     static func isDJLikedByUser(dj: UserData, user: UserData, completion: @escaping (Result<Bool, APIError>) -> Void) {
