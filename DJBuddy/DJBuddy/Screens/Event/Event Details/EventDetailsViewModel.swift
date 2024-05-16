@@ -70,22 +70,9 @@ final class EventDetailsViewModel: ObservableObject {
         }
     }
 
-    func getLikeStatus(on dj: UserData, by user: UserData) {
-        isLoading = true
-
-        API.isDJLikedByUser(dj: dj, user: user) { [weak self] result in
-            self?.isLoading = false
-            switch result {
-            case let .success(isLiked):
-                DispatchQueue.main.async {
-                    self?.isDJLiked = isLiked
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self?.error = failure
-                }
-            }
-        }
+    @MainActor
+    func getLikeStatus(on dj: UserData, by user: UserData) async throws {
+        isDJLiked = try await API.isDJLikedByUser(dj: dj, user: user)
     }
 
     func toggleLike(on dj: UserData, by user: UserData) {

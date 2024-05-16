@@ -9,6 +9,7 @@ import SwiftUI
 import MapKit
 
 struct EventDetailsView: View {
+    @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject private var navigator: Navigator
     @EnvironmentObject private var user: UserData
 
@@ -78,7 +79,9 @@ struct EventDetailsView: View {
         .onAppear {
             viewModel.isJoined = isJoined
             viewModel.getNumberOfJoined(to: event)
-            viewModel.getLikeStatus(on: event.dj, by: user)
+            stateHelper.performWithProgress {
+                try await viewModel.getLikeStatus(on: event.dj, by: user)
+            }
 
             dateFormatter.allowedUnits = [.day]
             dateFormatter.unitsStyle = .full
