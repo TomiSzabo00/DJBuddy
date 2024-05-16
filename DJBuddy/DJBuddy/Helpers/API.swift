@@ -200,54 +200,17 @@ final class API {
 
     // MARK: User
 
-    static func getUserData(_ user: UserData, completion: @escaping (Result<UserData, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/users/\(user.id)")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "GET"
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, _, error in
-//            guard
-//                let data = data,
-//                error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: error.localizedDescription)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            do {
-//                let responseObject = try JSONDecoder().decode(UserData_Database.self, from: data)
-//                let user = UserData(decodable: responseObject)
-//                DispatchQueue.main.async {
-//                    completion(.success(user))
-//                }
-//            } catch {
-//                print(error) // parsing error
-//
-//                if let responseString = String(data: data, encoding: .utf8) {
-//                    print("responseString = \(responseString)")
-//                    DispatchQueue.main.async {
-//                        completion(.failure(.general(desc: responseString)))
-//                    }
-//                } else {
-//                    print("unable to parse error response as string")
-//                }
-//            }
-//        }
-//
-//        task.resume()
+    static func getUserData(_ user: UserData) async throws -> UserData {
+        let url = URL(string: "\(apiAddress)/users")!
+        let request = API.getRequest(url: url)
+
+        do {
+            let data = try await URLSession.shared.fetchData(with: request)
+            let responseObject = try JSONDecoder().decode(UserData_Database.self, from: data)
+            return UserData(decodable: responseObject)
+        } catch {
+            throw error
+        }
     }
 
     static func addToUserBalance(amount: Double, user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {

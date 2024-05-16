@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @EnvironmentObject var stateHelper: StateHelper
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var viewModel: AuthViewModel
 
@@ -88,7 +89,9 @@ struct ProfileView: View {
                         isLoading = false
                         switch result {
                         case .success():
-                            refreshUser()
+                            stateHelper.performWithProgress {
+                                try await viewModel.refreshUser()
+                            }
                         case .failure(let error):
                             self.error = error
                         }
@@ -99,10 +102,14 @@ struct ProfileView: View {
             .padding()
         }
         .onAppear {
-            refreshUser()
+            stateHelper.performWithProgress {
+                try await viewModel.refreshUser()
+            }
         }
         .sheet(isPresented: $isPhotoSelectShowing) {
-            refreshUser()
+            stateHelper.performWithProgress {
+                try await viewModel.refreshUser()
+            }
         } content: {
             NavigationView {
                 PhotoPickerView(isShowing: $isPhotoSelectShowing)
@@ -112,24 +119,6 @@ struct ProfileView: View {
         .ignoresSafeArea(edges: .horizontal)
         .navBarWithTitle(title: "Profile", navigator: navigator, leadingButton: .back)
         .backgroundColor(.asset.background)
-    }
-
-    private func refreshUser() {
-        isLoading = true
-        viewModel.refreshUser { result in
-            isLoading = false
-            switch result {
-            case .success():
-                DispatchQueue.main.async {
-                    if let currentUser = viewModel.currentUser {
-                        user = currentUser
-                        id = UUID()
-                    }
-                }
-            case .failure(let failure):
-                error = failure
-            }
-        }
     }
 }
 

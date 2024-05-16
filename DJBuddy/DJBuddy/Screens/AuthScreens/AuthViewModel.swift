@@ -185,20 +185,11 @@ final class AuthViewModel: ObservableObject {
         return true
     }
 
-    func refreshUser(completion: @escaping (Result<Void, APIError>) -> Void) {
+    @MainActor
+    func refreshUser() async throws {
         guard let currentUser else { return }
 
-        API.getUserData(currentUser) { [weak self] result in
-            switch result {
-            case .success(let success):
-                DispatchQueue.main.async {
-                    self?.currentUser = success
-                    self?.objectWillChange.send()
-                    completion(.success(()))
-                }
-            case .failure(let failure):
-                completion(.failure(failure))
-            }
-        }
+        // Warning: here was an objectWillChange. maybe now its broken?
+        self.currentUser = try await API.getUserData(currentUser)
     }
 }
