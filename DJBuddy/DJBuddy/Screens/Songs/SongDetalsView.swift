@@ -63,12 +63,12 @@ struct SongDetalsView: View {
                             .padding(.vertical)
 
                             Button("Decline") {
-                                viewModel.decline(song: song) { result in
-                                    switch result {
-                                    case .success(_):
+                                stateHelper.performWithProgress {
+                                    do {
+                                        try await viewModel.decline(song: song)
                                         navigator.back()
-                                    case .failure(let error):
-                                        self.error = error
+                                    } catch {
+                                        throw error
                                     }
                                 }
                             }

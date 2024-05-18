@@ -223,24 +223,18 @@ final class EventControlViewModel: ObservableObject, Hashable {
         selectedSong.id = try await API.requestSong(selectedSong, for: event, by: user)
     }
 
-    func removeSong(_ song: SongData, completion: @escaping (Result<Void, APIError>) -> Void) {
-        isLoading = true
-        API.removeSong(song) { [weak self] result in
-            self?.isLoading = false
-            completion(result)
-        }
+    func removeSong(_ song: SongData) async throws {
+        try await API.removeSong(song)
     }
 
-    func decline(song: SongData, completion: @escaping (Result<Void, APIError>) -> Void) {
-        removeSong(song) { result in
-            completion(result)
-        }
+    func decline(song: SongData) async throws {
+        try await removeSong(song)
     }
 
     func accept(song: SongData, dj: UserData) async throws {
         do {
             try await API.addToUserBalance(amount: song.amount, user: dj)
-            removeSong(song) { _ in }
+            try await removeSong(song)
         } catch let error {
             throw error
         }
