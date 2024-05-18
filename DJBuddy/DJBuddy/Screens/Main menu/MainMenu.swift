@@ -43,7 +43,9 @@ struct MainMenu: View {
                     self.cancellable = throttledPublisher
                         .sink { newValue in
                             viewModel.currentLocation = newValue
-                            viewModel.fetchNearEvents(for: user)
+                            stateHelper.performWithProgress {
+                                try await viewModel.fetchNearEvents(for: user)
+                            }
                         }
                 }
             }
@@ -57,7 +59,9 @@ struct MainMenu: View {
                 }
                 if let currentLocation = mapViewModel.currentLocation {
                     viewModel.currentLocation = currentLocation
-                    viewModel.fetchNearEvents(for: user)
+                    stateHelper.performWithProgress {
+                        try await viewModel.fetchNearEvents(for: user)
+                    }
                 }
             }
             .tag(1)

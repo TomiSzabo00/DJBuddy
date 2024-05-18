@@ -38,28 +38,21 @@ final class MainMenuViewModel: ObservableObject {
         }
     }
 
-    func fetchNearEvents(for user: UserData) {
+    @MainActor
+    func fetchNearEvents(for user: UserData) async throws {
         guard let location = currentLocation else { return }
-//        isLoading = true
 
-        API.getAllEvents(nearTo: location) { [weak self] result in
-            guard let self else { return }
-//            isLoading = false
-            switch result {
-            case .success(let events):
-                DispatchQueue.main.async {
-                    let currentEvents = events.filter { !$0.isInThePast }
-                    var nearYou = currentEvents
-                    if let joined = self.yourEvents[.yourEvents] {
-                        nearYou = currentEvents.filter { !joined.contains($0) }
-                    }
-                    self.yourEvents[.nearYou] = nearYou
-                    self.sortEventsByDate(&self.yourEvents[.nearYou]!)
-                }
-            case .failure(let failure):
-                break
-//                self.error = failure
+        do {
+            let events = try await API.getAllEvents(nearTo: location)
+            let currentEvents = events.filter { !$0.isInThePast }
+            var nearYou = currentEvents
+            if let joined = yourEvents[.yourEvents] {
+                nearYou = currentEvents.filter { !joined.contains($0) }
             }
+            yourEvents[.nearYou] = nearYou
+            sortEventsByDate(&yourEvents[.nearYou]!)
+        } catch {
+            throw error
         }
     }
 
@@ -105,24 +98,16 @@ final class MainMenuViewModel: ObservableObject {
         }
     }
 
-    func leave(event: EventData, user: UserData) {
-//        isLoading = true
-
-        API.leaveEvent(event, user: user) { [weak self] result in
-//            self?.isLoading = false
-            switch result {
-            case .success():
-                DispatchQueue.main.async {
-                    if self?.yourEvents[.yourEvents]?.contains(event) == true {
-                        self?.yourEvents[.yourEvents]?.remove(event)
-                    }
-                }
-                self?.fetchNearEvents(for: user)
-            case .failure(let failure):
-                DispatchQueue.main.async {
-//                    self?.error = failure
-                }
+    @MainActor
+    func leave(event: EventData, user: UserData) async throws {
+        do {
+            try await API.leaveEvent(event, user: user)
+            if yourEvents[.yourEvents]?.contains(event) == true {
+                yourEvents[.yourEvents]?.remove(event)
             }
+            try await fetchNearEvents(for: user)
+        } catch {
+            throw error
         }
     }
 }

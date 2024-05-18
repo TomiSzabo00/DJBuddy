@@ -111,7 +111,9 @@ struct EventDetailsView: View {
                     .buttonStyle(.largeProminent)
 
                     Button("Leave event") {
-                        viewModel.leave(event: event, user: user)
+                        stateHelper.performWithProgress {
+                            try await viewModel.leave(event: event, user: user)
+                        }
                     }
                     .buttonStyle(.largeSecondary)
                 } else {

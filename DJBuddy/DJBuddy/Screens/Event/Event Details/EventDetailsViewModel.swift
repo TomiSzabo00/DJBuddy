@@ -33,22 +33,14 @@ final class EventDetailsViewModel: ObservableObject {
         }
     }
 
-    func leave(event: EventData, user: UserData) {
-        isLoading = true
-
-        API.leaveEvent(event, user: user) { [weak self] result in
-            self?.isLoading = false
-            switch result {
-            case .success():
-                DispatchQueue.main.async {
-                    self?.isJoined = false
-                    self?.numberOfJoined -= 1
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self?.error = failure
-                }
-            }
+    @MainActor
+    func leave(event: EventData, user: UserData) async throws {
+        do {
+            try await API.leaveEvent(event, user: user)
+            isJoined = false
+            numberOfJoined -= 1
+        } catch {
+            throw error
         }
     }
 

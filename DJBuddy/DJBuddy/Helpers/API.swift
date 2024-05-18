@@ -90,13 +90,6 @@ final class API {
         return request
     }
 
-    static func putRequest(components: URLComponents) -> URLRequest {
-        var request = URLRequest(url: components.url!)
-        request.httpMethod = "PUT"
-        request.addValue(API.userToken, forHTTPHeaderField: "user_token")
-        return request
-    }
-
     static func putRequest(url: URL) -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
@@ -242,7 +235,7 @@ final class API {
             ]
         }
 
-        let request = API.putRequest(components: components)
+        let request = API.putRequest(url: components.url!)
         let _ = try await URLSession.shared.fetchData(with: request)
     }
 
@@ -337,145 +330,29 @@ final class API {
         let _ = try await URLSession.shared.fetchData(with: request)
     }
 
-    static func getAllEvents(limit: Int? = nil, completion: @escaping (Result<[EventData], APIError>) -> Void) {
-//        var components = URLComponents(string: "\(apiAddress)/events/all/")!
-//
-//        if let limit {
-//            components.queryItems = [
-//                URLQueryItem(name: "limit", value: "\(limit)")
-//            ]
-//        }
-//
-//        var request = URLRequest(url: components.url!)
-//        request.httpMethod = "GET"
-//
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//            guard
-//                let data = data,
-//                let response = response as? HTTPURLResponse,
-//                error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: error.localizedDescription)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            guard response.statusCode == 200 else {
-//                if didDecodeCustomResponse(from: data, completion: completion) {
-//                    return
-//                }
-//                DispatchQueue.main.async {
-//                    completion(.failure(.general(desc: response.debugDescription)))
-//                }
-//                return
-//            }
-//
-//            do {
-//                let responseObject = try JSONDecoder().decode([EventData_Database].self, from: data)
-//                let events = responseObject.map { EventData(decodable: $0) }
-//                DispatchQueue.main.async {
-//                    completion(.success(events))
-//                }
-//            } catch {
-//                print(error) // parsing error
-//
-//                if let responseString = String(data: data, encoding: .utf8) {
-//                    print("responseString = \(responseString)")
-//                    DispatchQueue.main.async {
-//                        completion(.failure(.general(desc: responseString)))
-//                    }
-//                } else {
-//                    print("unable to parse error response as string")
-//                }
-//            }
-//        }
-//
-//        task.resume()
-    }
+    static func getAllEvents(nearTo location: CLLocationCoordinate2D, maxDistance: Double? = nil) async throws -> [EventData] {
+        var components = URLComponents(string: "\(apiAddress)/events/near_me/")!
 
-    static func getAllEvents(nearTo location: CLLocationCoordinate2D, maxDistance: Double? = nil, completion: @escaping (Result<[EventData], APIError>) -> Void) {
-//        var components = URLComponents(string: "\(apiAddress)/events/near_me/")!
-//
-//        components.queryItems = [
-//            URLQueryItem(name: "latitude", value: "\(location.latitude)"),
-//            URLQueryItem(name: "longitude", value: "\(location.longitude)")
-//        ]
-//
-//        if let maxDistance {
-//            components.queryItems?.append(
-//                URLQueryItem(name: "distance", value: "\(maxDistance)")
-//            )
-//        }
-//
-//        var request = URLRequest(url: components.url!)
-//        request.httpMethod = "GET"
-//
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//            guard
-//                let data = data,
-//                let response = response as? HTTPURLResponse,
-//                error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: error.localizedDescription)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            guard response.statusCode == 200 else {
-//                if didDecodeCustomResponse(from: data, completion: completion) {
-//                    return
-//                }
-//                DispatchQueue.main.async {
-//                    completion(.failure(.general(desc: response.debugDescription)))
-//                }
-//                return
-//            }
-//
-//            do {
-//                let responseObject = try JSONDecoder().decode([EventData_Database].self, from: data)
-//                let events = responseObject.map { EventData(decodable: $0) }
-//                DispatchQueue.main.async {
-//                    completion(.success(events))
-//                }
-//            } catch {
-//                print(error) // parsing error
-//
-//                if let responseString = String(data: data, encoding: .utf8) {
-//                    print("responseString = \(responseString)")
-//                    DispatchQueue.main.async {
-//                        completion(.failure(.general(desc: responseString)))
-//                    }
-//                } else {
-//                    print("unable to parse error response as string")
-//                }
-//            }
-//        }
-//
-//        task.resume()
+        components.queryItems = [
+            URLQueryItem(name: "latitude", value: "\(location.latitude)"),
+            URLQueryItem(name: "longitude", value: "\(location.longitude)")
+        ]
+
+        if let maxDistance {
+            components.queryItems?.append(
+                URLQueryItem(name: "distance", value: "\(maxDistance)")
+            )
+        }
+
+        let request = API.getRequest(url: components.url!)
+
+        do {
+            let data = try await URLSession.shared.fetchData(with: request)
+            let responseObject = try JSONDecoder().decode([EventData_Database].self, from: data)
+            return responseObject.map { EventData(decodable: $0) }
+        } catch {
+            throw error
+        }
     }
 
     static func getEvents(for user: UserData) async throws -> [EventData] {
@@ -872,49 +749,11 @@ final class API {
 //        task.resume()
     }
 
-    static func leaveEvent(_ event: EventData, user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/events/\(event.id)/leave/\(user.id)")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "PUT"
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//            guard
-//                let response = response as? HTTPURLResponse,
-//                error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: error.localizedDescription)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            guard response.statusCode == 200 else {
-//                if didDecodeCustomResponse(from: data, completion: completion) {
-//                    return
-//                }
-//                DispatchQueue.main.async {
-//                    completion(.failure(.general(desc: response.debugDescription)))
-//                }
-//                return
-//            }
-//
-//            DispatchQueue.main.async {
-//                completion(.success(()))
-//            }
-//        }
-//
-//        task.resume()
+    static func leaveEvent(_ event: EventData, user: UserData) async throws {
+        let url = URL(string: "\(apiAddress)/events/\(event.id)/leave")!
+        let request = API.putRequest(url: url)
+
+        let _ = try await URLSession.shared.fetchData(with: request)
     }
 
     static func getnumberOfJoined(to event: EventData, completion: @escaping (Result<Int, APIError>) -> Void) {

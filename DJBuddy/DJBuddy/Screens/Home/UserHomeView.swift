@@ -54,7 +54,9 @@ struct UserHomeView: View {
         VStack {
             if eventType == .yourEvents {
                 Button {
-                    viewModel.leave(event: event, user: user)
+                    stateHelper.performWithProgress {
+                        try await viewModel.leave(event: event, user: user)
+                    }
                 } label: {
                     Label("Leave event", systemImage: "rectangle.portrait.and.arrow.forward")
                 }
