@@ -76,7 +76,9 @@ struct PlaylistDetailsView: View {
         .background(Color.asset.background)
         .navBarWithTitle(title: playList.title, navigator: navigator, leadingButton: .back, trailingButton: .add($isNewSongShowing))
         .onAppear {
-            viewModel.getPlaylists(of: user)
+            stateHelper.performWithProgress {
+                try await viewModel.getPlaylists(of: user)
+            }
         }
         .sheet(isPresented: $isNewSongShowing) {
             SongSelectionView(isShowing: $isNewSongShowing) { selectedSong in

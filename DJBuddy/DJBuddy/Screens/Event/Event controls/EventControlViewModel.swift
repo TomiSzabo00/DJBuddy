@@ -187,16 +187,13 @@ final class EventControlViewModel: ObservableObject, Hashable {
         }
     }
 
-    func getAvailablePlaylists(for user: UserData) {
-        API.getAllPlaylists(of: user) { [weak self] result in
-            switch result {
-            case .success(let allPlaylists):
-                DispatchQueue.main.async {
-                    self?.availablePlaylists = allPlaylists.filter({ $0.hasEnoughSongs })
-                }
-            case .failure(let error):
-                self?.error = error
-            }
+    @MainActor
+    func getAvailablePlaylists(for user: UserData) async throws {
+        do {
+            let allPlaylists = try await API.getAllPlaylists(of: user)
+            availablePlaylists = allPlaylists.filter({ $0.hasEnoughSongs })
+        } catch {
+            throw error
         }
     }
 

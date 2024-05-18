@@ -60,7 +60,9 @@ struct PlaylistsView: View {
         .background(Color.asset.background)
         .navBarWithTitle(title: "Playlists", navigator: navigator, leadingButton: .back, trailingButton: .add($isNewPlaylistShowing))
         .onAppear {
-            viewModel.getPlaylists(of: user)
+            stateHelper.performWithProgress {
+                try await viewModel.getPlaylists(of: user)
+            }
         }
         .alert("Create new playlist", isPresented: $isNewPlaylistShowing) {
             TextField("Name", text: $newPlaylistName)

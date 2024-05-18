@@ -93,8 +93,8 @@ struct EventControlView: View {
             viewModel.initWebSocketForEventThemeChanges()
             stateHelper.performWithProgress {
                 try await viewModel.getCurrentEvent()
+                try await viewModel.getAvailablePlaylists(for: user)
             }
-            viewModel.getAvailablePlaylists(for: user)
         }
         .onDisappear {
             viewModel.closeWebSockets()

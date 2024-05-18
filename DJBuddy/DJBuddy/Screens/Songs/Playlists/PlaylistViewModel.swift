@@ -9,27 +9,10 @@ import Foundation
 
 final class PlaylistViewModel: ObservableObject {
     @Published private(set) var playlists: [Playlist] = []
-    @Published var isLoading = false
-    @Published var error: Error? = nil
 
-    func getPlaylists(of user: UserData) {
-        isLoading = true
-
-        API.getAllPlaylists(of: user) { [weak self] result in
-            self?.isLoading = false
-
-            switch result {
-            case .success(let success):
-                DispatchQueue.main.async {
-                    self?.playlists = success
-                    self?.objectWillChange.send()
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self?.error = failure
-                }
-            }
-        }
+    @MainActor
+    func getPlaylists(of user: UserData) async throws {
+        playlists = try await API.getAllPlaylists(of: user)
     }
 
     @MainActor
