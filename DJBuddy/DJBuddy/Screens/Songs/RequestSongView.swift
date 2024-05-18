@@ -38,12 +38,12 @@ struct RequestSongView: View {
             .buttonStyle(.checkmark(isOn: $viewModel.didAgree))
 
             Button("Request") {
-                viewModel.requestSong(by: user) { result in
-                    switch result {
-                    case .success(_):
+                stateHelper.performWithProgress {
+                    do {
+                        try await viewModel.requestSong(by: user)
                         navigator.back()
-                    case .failure(let error):
-                        self.error = error
+                    } catch {
+                        throw error
                     }
                 }
             }

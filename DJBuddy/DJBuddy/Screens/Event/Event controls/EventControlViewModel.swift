@@ -205,36 +205,22 @@ final class EventControlViewModel: ObservableObject, Hashable {
         currentPlaylist = try await API.getEventPlaylist(for: event)
     }
 
-    func requestSong(by user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
+    @MainActor
+    func requestSong(by user: UserData) async throws {
         guard let selectedSong else {
-            formError = FormError.songMissing
-            return
+            throw FormError.songMissing
         }
 
         guard didAgree else {
-            formError = FormError.acceptMissing
-            return
+            throw FormError.acceptMissing
         }
 
         guard selectedPrice >= 1 else {
-            formError = FormError.priceMissing
-            return
+            throw FormError.priceMissing
         }
-
-        isLoading = true
 
         selectedSong.amount = selectedPrice
-
-        API.requestSong(selectedSong, for: self.event, by: user) { result in
-            self.isLoading = false
-            switch result {
-            case .success(let id):
-                selectedSong.id = id
-                completion(.success(()))
-            case .failure(let failure):
-                completion(.failure(failure))
-            }
-        }
+        selectedSong.id = try await API.requestSong(selectedSong, for: event, by: user)
     }
 
     func removeSong(_ song: SongData, completion: @escaping (Result<Void, APIError>) -> Void) {
