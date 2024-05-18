@@ -72,29 +72,19 @@ final class MainMenuViewModel: ObservableObject {
         events.sort(by: { $0.date < $1.date })
     }
 
-    func join(event: EventData, user: UserData) {
+    @MainActor
+    func join(event: EventData, user: UserData) async throws {
         guard !(yourEvents[.yourEvents] ?? []).contains(event) else { return }
 
-//        isLoading = true
-
-        API.joinEvent(event, user: user) { [weak self] result in
-            guard let self else { return }
-//            isLoading = false
-
-            switch result {
-            case .success():
-                DispatchQueue.main.async {
-                    if self.yourEvents[.nearYou]?.contains(event) == true {
-                        self.yourEvents[.nearYou]?.remove(event)
-                    }
-                    self.yourEvents[.yourEvents]?.append(event)
-                    self.sortEventsByDate(&self.yourEvents[.yourEvents]!)
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-//                    self.error = failure
-                }
+        do {
+            try await API.joinEvent(event, user: user)
+            if yourEvents[.nearYou]?.contains(event) == true {
+                yourEvents[.nearYou]?.remove(event)
             }
+            yourEvents[.yourEvents]?.append(event)
+            sortEventsByDate(&yourEvents[.yourEvents]!)
+        } catch {
+            throw error
         }
     }
 

@@ -118,7 +118,9 @@ struct EventDetailsView: View {
                     .buttonStyle(.largeSecondary)
                 } else {
                     Button("Join event") {
-                        viewModel.join(event: event, user: user)
+                        stateHelper.performWithProgress {
+                            try await viewModel.join(event: event, user: user)
+                        }
                     }
                     .buttonStyle(.largeProminent)
                 }

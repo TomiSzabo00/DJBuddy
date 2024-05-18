@@ -62,7 +62,9 @@ struct UserHomeView: View {
                 }
             } else if eventType == .nearYou {
                 Button {
-                    viewModel.join(event: event, user: user)
+                    stateHelper.performWithProgress {
+                        try await viewModel.join(event: event, user: user)
+                    }
                 } label: {
                     Label("Join event", systemImage: "person.badge.plus")
                 }

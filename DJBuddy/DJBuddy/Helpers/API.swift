@@ -433,49 +433,11 @@ final class API {
         }
     }
 
-    static func joinEvent(_ event: EventData, user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/events/\(event.id)/join/\(user.id)")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "PUT"
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//            guard
-//                let response = response as? HTTPURLResponse,
-//                error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: error.localizedDescription)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            guard response.statusCode == 200 else {
-//                if didDecodeCustomResponse(from: data, completion: completion) {
-//                    return
-//                }
-//                DispatchQueue.main.async {
-//                    completion(.failure(.general(desc: response.debugDescription)))
-//                }
-//                return
-//            }
-//
-//            DispatchQueue.main.async {
-//                completion(.success(()))
-//            }
-//        }
-//
-//        task.resume()
+    static func joinEvent(_ event: EventData, user: UserData) async throws {
+        let url = URL(string: "\(apiAddress)/events/\(event.id)/join")!
+        let request = API.putRequest(url: url)
+
+        try await URLSession.shared.fetchData(with: request)
     }
 
     static func leaveEvent(_ event: EventData, user: UserData) async throws {

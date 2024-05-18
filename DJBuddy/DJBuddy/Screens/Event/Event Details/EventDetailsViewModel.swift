@@ -14,22 +14,14 @@ final class EventDetailsViewModel: ObservableObject {
     @Published var numberOfJoined: Int = 0
     @Published var isDJLiked: Bool? = false
 
-    func join(event: EventData, user: UserData) {
-        isLoading = true
-
-        API.joinEvent(event, user: user) { [weak self] result in
-            self?.isLoading = false
-            switch result {
-            case .success():
-                DispatchQueue.main.async {
-                    self?.isJoined = true
-                    self?.numberOfJoined += 1
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self?.error = failure
-                }
-            }
+    @MainActor
+    func join(event: EventData, user: UserData) async throws {
+        do {
+            try await API.joinEvent(event, user: user)
+            isJoined = true
+            numberOfJoined += 1
+        } catch {
+            throw error
         }
     }
 
