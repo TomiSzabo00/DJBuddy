@@ -52,19 +52,14 @@ final class PlaylistViewModel: ObservableObject {
         }
     }
 
-    func add(song: SongData, to playlist: Playlist) {
-        API.addSong(to: playlist, song: song) { [weak self] result in
-            switch result {
-            case .success():
-                DispatchQueue.main.async {
-                    playlist.songs.append(song)
-                    self?.objectWillChange.send()
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self?.error = failure
-                }
-            }
+    @MainActor
+    func add(song: SongData, to playlist: Playlist) async throws {
+        do {
+            try await API.addSong(to: playlist, song: song)
+            playlist.songs.append(song)
+            objectWillChange.send()
+        } catch {
+            throw error
         }
     }
 

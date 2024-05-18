@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PlaylistDetailsView: View {
+    @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject private var navigator: Navigator
     @EnvironmentObject private var user: UserData
 
@@ -77,7 +78,9 @@ struct PlaylistDetailsView: View {
         }
         .sheet(isPresented: $isNewSongShowing) {
             SongSelectionView(isShowing: $isNewSongShowing) { selectedSong in
-                viewModel.add(song: selectedSong, to: playList)
+                stateHelper.performWithProgress {
+                    try await viewModel.add(song: selectedSong, to: playList)
+                }
             }
         }
     }
