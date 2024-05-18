@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct CreateEventView: View {
+    @EnvironmentObject var stateHelper: StateHelper
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var user: UserData
 
     @StateObject var viewModel = CreateEventViewModel()
     @State var isAddressSheetShowing = false
     @State var isDatePickerShowing = false
-    @State var error: Error? = nil
 
     var body: some View {
         VStack(spacing: 40) {
@@ -23,13 +23,8 @@ struct CreateEventView: View {
             dateSelectionButton()
             Spacer()
             Button("Create event") {
-                viewModel.createEvent(by: user) { result in
-                    switch result {
-                    case .success():
-                        navigator.back()
-                    case .failure(let error):
-                        self.error = error
-                    }
+                stateHelper.performWithProgress {
+                    try await viewModel.createEvent(by: user)
                 }
             }
             .buttonStyle(.largeProminent)
