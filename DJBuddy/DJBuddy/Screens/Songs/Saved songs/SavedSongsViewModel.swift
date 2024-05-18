@@ -31,23 +31,13 @@ final class SavedSongsViewModel: ObservableObject {
         }
     }
 
-    func like(song: SongData, by user: UserData) {
-        isLoading = true
-
-        API.save(song: song, by: user) { [weak self] result in
-            self?.isLoading = false
-
-            switch result {
-            case .success(let songId):
-                DispatchQueue.main.async {
-                    song.id = songId
-                    self?.likedSongs.append(song)
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self?.error = failure
-                }
-            }
+    @MainActor
+    func like(song: SongData, by user: UserData) async throws {
+        do {
+            song.id = try await API.save(song: song, by: user)
+            likedSongs.append(song)
+        } catch {
+            throw error
         }
     }
 

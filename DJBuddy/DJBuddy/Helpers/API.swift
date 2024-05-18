@@ -476,7 +476,7 @@ final class API {
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
         } catch {
-            throw APIError.somethingWentWrong
+            throw error
         }
 
         do {
@@ -507,77 +507,31 @@ final class API {
         try await URLSession.shared.fetchData(with: request)
     }
 
-    static func save(song: SongData, by user: UserData, completion: @escaping (Result<Int, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/users/\(user.id)/save")!
-//
-//        var request = URLRequest(url: url)
-//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//        request.httpMethod = "POST"
-//
-//        let parameters: [String: Any] = [
-//            "title": song.title,
-//            "artist": song.artist,
-//            "amount": song.amount,
-//            "albumArtUrl": song.albumArtUrl,
-//            "event_id": ""
-//        ]
-//
-//        do {
-//            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-//        } catch let error {
-//            print(error.localizedDescription)
-//            return
-//        }
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//            guard let data,
-//                  let response = response as? HTTPURLResponse,
-//                  error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: error.localizedDescription)))
-//                        }
-//                    }
-//                }
-//                return
-//            }
-//
-//            guard response.statusCode == 201 else {
-//                if didDecodeCustomResponse(from: data, completion: completion) {
-//                    return
-//                }
-//                DispatchQueue.main.async {
-//                    completion(.failure(.general(desc: response.debugDescription)))
-//                }
-//                return
-//            }
-//
-//            do {
-//                let song = try JSONDecoder().decode(SongData.self, from: data)
-//                DispatchQueue.main.async {
-//                    completion(.success(song.id))
-//                }
-//            } catch {
-//                print(error) // parsing error
-//
-//                if let responseString = String(data: data, encoding: .utf8) {
-//                    print("responseString = \(responseString)")
-//                    DispatchQueue.main.async {
-//                        completion(.failure(.general(desc: responseString)))
-//                    }
-//                } else {
-//                    print("unable to parse error response as string")
-//                }
-//            }
-//        }
-//
-//        task.resume()
+    static func save(song: SongData, by user: UserData) async throws -> Int {
+        let url = URL(string: "\(apiAddress)/users/save")!
+        var request = API.postRequest(url: url)
+
+        let parameters: [String: Any] = [
+            "title": song.title,
+            "artist": song.artist,
+            "amount": song.amount,
+            "albumArtUrl": song.albumArtUrl,
+            "event_id": ""
+        ]
+
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        } catch {
+            throw error
+        }
+
+        do {
+            let data = try await URLSession.shared.fetchData(with: request)
+            let song = try JSONDecoder().decode(SongData.self, from: data)
+            return song.id
+        } catch {
+            throw error
+        }
     }
 
     static func unsave(song: SongData, by user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {

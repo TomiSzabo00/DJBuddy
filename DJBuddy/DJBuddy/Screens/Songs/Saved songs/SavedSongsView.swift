@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SavedSongsView: View {
+    @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject private var navigator: Navigator
     @EnvironmentObject private var user: UserData
 
@@ -53,7 +54,9 @@ struct SavedSongsView: View {
         }
         .sheet(isPresented: $isSongSelectionShowing) {
             SongSelectionView(isShowing: $isSongSelectionShowing) { selectedSong in
-                viewModel.like(song: selectedSong, by: user)
+                stateHelper.performWithProgress {
+                    try await viewModel.like(song: selectedSong, by: user)
+                }
             }
         }
     }
