@@ -661,38 +661,11 @@ final class API {
         try await URLSession.shared.fetchData(with: request)
     }
 
-    static func removeSong(from playlist: Playlist, song: SongData, completion: @escaping (Result<Void, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/playlists/\(playlist.id)/remove_song/\(song.id)")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "POST"
-//
-//        let task = URLSession.shared.dataTask(with: request) { _, _, error in
-//            guard error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        let msg = decodeCustomResponse(from: error)
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: msg)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            DispatchQueue.main.async {
-//                completion(.success(()))
-//            }
-//        }
-//
-//        task.resume()
+    static func removeSong(from playlist: Playlist, song: SongData) async throws {
+        let url = URL(string: "\(apiAddress)/playlists/\(playlist.id)/remove_song/\(song.id)")!
+        let request = API.postRequest(url: url)
+
+        try await URLSession.shared.fetchData(with: request)
     }
 
     static func getAllSongs(from playlist: Playlist, completion: @escaping (Result<[SongData], APIError>) -> Void) {

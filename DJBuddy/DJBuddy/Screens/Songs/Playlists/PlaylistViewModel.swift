@@ -63,19 +63,14 @@ final class PlaylistViewModel: ObservableObject {
         }
     }
 
-    func remove(song: SongData, from playlist: Playlist) {
-        API.removeSong(from: playlist, song: song) { [weak self] result in
-            switch result {
-            case .success():
-                DispatchQueue.main.async {
-                    playlist.songs.remove(song)
-                    self?.objectWillChange.send()
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self?.error = failure
-                }
-            }
+    @MainActor
+    func remove(song: SongData, from playlist: Playlist) async throws {
+        do {
+            try await API.removeSong(from: playlist, song: song)
+            playlist.songs.remove(song)
+            objectWillChange.send()
+        } catch {
+            throw error
         }
     }
 }

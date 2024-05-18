@@ -42,7 +42,9 @@ struct PlaylistDetailsView: View {
                             )
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                             .discardable {
-                                viewModel.remove(song: song, from: playList)
+                                stateHelper.performWithProgress {
+                                    try await viewModel.remove(song: song, from: playList)
+                                }
                             }
                     }
                 } header: {
