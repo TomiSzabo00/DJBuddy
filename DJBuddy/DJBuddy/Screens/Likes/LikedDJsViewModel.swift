@@ -9,27 +9,16 @@ import Foundation
 
 final class LikedDJsViewModel: ObservableObject {
     @Published private(set) var likedDJs: [(dj: UserData, likeText: String)] = []
-    @Published var isLoading = false
-    @Published var error: Error? = nil
 
-    func getLikedDjs(for user: UserData) {
-        isLoading = true
-
-        API.getAllLiked(by: user) { [weak self] result in
-            self?.isLoading = false
-            switch result {
-            case .success(let success):
-                let likedData = success.map {
-                    (dj: $0.dj, likeText: self?.transformLikeCount(from: $0.like) ?? "" )
-                }
-                DispatchQueue.main.async {
-                    self?.likedDJs = likedData
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self?.error = failure
-                }
+    @MainActor
+    func getLikedDjs(for user: UserData) async throws {
+        do {
+            let likedData = try await API.getAllLiked(by: user)
+            likedDJs = likedData.map {
+                (dj: $0.dj, likeText: transformLikeCount(from: $0.like))
             }
+        } catch {
+            throw error
         }
     }
 

@@ -296,53 +296,17 @@ final class API {
         let _ = try await URLSession.shared.fetchData(with: request)
     }
 
-    static func getAllLiked(by user: UserData, completion: @escaping (Result<[(dj: UserData, like: Int)], APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/users/\(user.id)/likes")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "GET"
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, _, error in
-//            guard let data, error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        let msg = decodeCustomResponse(from: error)
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: msg)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            do {
-//                let responseObject = try JSONDecoder().decode([LikedDJData].self, from: data)
-//                let returnData = responseObject.map { (dj: UserData(decodable: $0), like: $0.likeCount) }
-//                DispatchQueue.main.async {
-//                    completion(.success(returnData))
-//                }
-//            } catch {
-//                print(error) // parsing error
-//
-//                if let responseString = String(data: data, encoding: .utf8) {
-//                    print("responseString = \(responseString)")
-//                    DispatchQueue.main.async {
-//                        completion(.failure(.general(desc: responseString)))
-//                    }
-//                } else {
-//                    print("unable to parse error response as string")
-//                }
-//            }
-//        }
-//
-//        task.resume()
+    static func getAllLiked(by user: UserData) async throws -> [(dj: UserData, like: Int)] {
+        let url = URL(string: "\(apiAddress)/users/likes")!
+        let request = API.getRequest(url: url)
+
+        do {
+            let data = try await URLSession.shared.fetchData(with: request)
+            let responseObject = try JSONDecoder().decode([LikedDJData].self, from: data)
+            return responseObject.map { (dj: UserData(decodable: $0), like: $0.likeCount) }
+        } catch {
+            throw error
+        }
     }
 
     static func getLikeCount(for dj: UserData, completion: @escaping (Result<Int, APIError>) -> Void) {

@@ -38,7 +38,9 @@ struct LikedDJsView: View {
         .scrollContentBackground(.hidden)
         .navBarWithTitle(title: "Liked DJs", navigator: navigator, leadingButton: .back)
         .onAppear {
-            viewModel.getLikedDjs(for: user)
+            stateHelper.performWithProgress {
+                try await viewModel.getLikedDjs(for: user)
+            }
         }
     }
 }
