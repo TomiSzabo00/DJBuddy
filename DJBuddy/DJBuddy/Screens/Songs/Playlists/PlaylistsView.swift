@@ -34,7 +34,9 @@ struct PlaylistsView: View {
                                 navigator.navigate(to: .playlistDetails(playlist))
                             }
                             .discardable {
-                                viewModel.delete(playlist: playlist)
+                                stateHelper.performWithProgress {
+                                    try await viewModel.delete(playlist: playlist)
+                                }
                             }
                             .id("\(id)\(playlist.id)\(playlist.songs.count)")
                     }

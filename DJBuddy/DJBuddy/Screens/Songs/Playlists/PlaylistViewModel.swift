@@ -42,18 +42,13 @@ final class PlaylistViewModel: ObservableObject {
         }
     }
 
-    func delete(playlist: Playlist) {
-        API.deletePlaylist(id: playlist.id) { [weak self] result in
-            switch result {
-            case .success():
-                DispatchQueue.main.async {
-                    self?.playlists.removeAll(where: { $0.id == playlist.id })
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self?.error = failure
-                }
-            }
+    @MainActor
+    func delete(playlist: Playlist) async throws {
+        do {
+            try await API.deletePlaylist(id: playlist.id)
+            playlists.removeAll(where: { $0.id == playlist.id })
+        } catch {
+            throw error
         }
     }
 

@@ -535,14 +535,14 @@ final class API {
     }
 
     static func unsave(song: SongData, by user: UserData) async throws {
-        let url = URL(string: "\(apiAddress)/users/\(user.id)/unsave/\(song.id)")!
+        let url = URL(string: "\(apiAddress)/users/unsave/\(song.id)")!
         let request = API.putRequest(url: url)
 
         try await URLSession.shared.fetchData(with: request)
     }
 
     static func getAllSavedSongs(by user: UserData) async throws -> [SongData] {
-        let url = URL(string: "\(apiAddress)/users/\(user.id)/saved_songs")!
+        let url = URL(string: "\(apiAddress)/users/saved_songs")!
         let request = API.getRequest(url: url)
 
         do {
@@ -633,38 +633,11 @@ final class API {
         }
     }
 
-    static func deletePlaylist(id: Int, completion: @escaping (Result<Void, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/playlists/\(id)/remove")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "POST"
-//
-//        let task = URLSession.shared.dataTask(with: request) { _, _, error in
-//            guard error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        let msg = decodeCustomResponse(from: error)
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: msg)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            DispatchQueue.main.async {
-//                completion(.success(()))
-//            }
-//        }
-//
-//        task.resume()
+    static func deletePlaylist(id: Int) async throws {
+        let url = URL(string: "\(apiAddress)/playlists/\(id)/remove")!
+        let request = API.postRequest(url: url)
+
+        try await URLSession.shared.fetchData(with: request)
     }
 
     static func addSong(to playlist: Playlist, song: SongData, completion: @escaping (Result<Void, APIError>) -> Void) {
