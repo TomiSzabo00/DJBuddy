@@ -39,8 +39,8 @@ struct EventControlView: View {
                     Button("Remove filter") {
                         stateHelper.performWithProgress {
                             try await viewModel.setTheme(to: nil)
+                            try await viewModel.setPlaylist(to: nil)
                         }
-                        viewModel.setPlaylist(to: nil)
                     }
                 }
                 if viewModel.event.state == .inProgress {
@@ -72,17 +72,17 @@ struct EventControlView: View {
                 SetThemeView(playlists: viewModel.availablePlaylists) { newTheme in
                     isSongFiltersShowing = false
                     
-                    viewModel.setPlaylist(to: nil)
                     stateHelper.performWithProgress {
                         try await viewModel.setTheme(to: newTheme)
+                        try await viewModel.setPlaylist(to: nil)
                     }
                 } playlistSelection: { newPlaylist in
                     isSongFiltersShowing = false
 
                     stateHelper.performWithProgress {
                         try await viewModel.setTheme(to: nil)
+                        try await viewModel.setPlaylist(to: newPlaylist)
                     }
-                    viewModel.setPlaylist(to: newPlaylist)
                 } cancel: {
                     isSongFiltersShowing = false
                 }

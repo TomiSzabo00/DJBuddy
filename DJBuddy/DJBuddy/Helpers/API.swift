@@ -409,96 +409,18 @@ final class API {
         try await URLSession.shared.fetchData(with: request)
     }
 
-    static func setEventPlaylist(to playlist: Playlist, in event: EventData, completion: @escaping (Result<Void, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/events/\(event.id)/playlist/\(playlist.id)")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "PUT"
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//            guard
-//                let response = response as? HTTPURLResponse,
-//                error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        let msg = decodeCustomResponse(from: error)
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: msg)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            guard response.statusCode == 200 else {
-//                if didDecodeCustomResponse(from: data, completion: completion) {
-//                    return
-//                }
-//                DispatchQueue.main.async {
-//                    completion(.failure(.general(desc: response.debugDescription)))
-//                }
-//                return
-//            }
-//
-//            DispatchQueue.main.async {
-//                completion(.success(()))
-//            }
-//        }
-//
-//        task.resume()
+    static func setEventPlaylist(to playlist: Playlist, in event: EventData) async throws {
+        let url = URL(string: "\(apiAddress)/events/\(event.id)/playlist/\(playlist.id)")!
+        let request = API.putRequest(url: url)
+
+        try await URLSession.shared.fetchData(with: request)
     }
 
-    static func removeEventPlaylist(from event: EventData, completion: @escaping (Result<Void, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/events/\(event.id)/remove_playlist")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "POST"
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//            guard
-//                let response = response as? HTTPURLResponse,
-//                error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        let msg = decodeCustomResponse(from: error)
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: msg)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            guard response.statusCode == 200 else {
-//                if didDecodeCustomResponse(from: data, completion: completion) {
-//                    return
-//                }
-//                DispatchQueue.main.async {
-//                    completion(.failure(.general(desc: response.debugDescription)))
-//                }
-//                return
-//            }
-//
-//            DispatchQueue.main.async {
-//                completion(.success(()))
-//            }
-//        }
-//
-//        task.resume()
+    static func removeEventPlaylist(from event: EventData) async throws {
+        let url = URL(string: "\(apiAddress)/events/\(event.id)/remove_playlist")!
+        let request = API.postRequest(url: url)
+
+        try await URLSession.shared.fetchData(with: request)
     }
 
     static func getEventPlaylist(for event: EventData, completion: @escaping (Result<Playlist?, APIError>) -> Void) {

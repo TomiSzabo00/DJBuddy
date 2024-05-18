@@ -171,27 +171,19 @@ final class EventControlViewModel: ObservableObject, Hashable {
         try await API.setEventState(to: state, in: event)
     }
 
-    func setPlaylist(to playlist: Playlist?) {
+    @MainActor
+    func setPlaylist(to playlist: Playlist?) async throws {
         guard playlist?.id != event.playlistId else { return }
 
-        isLoading = true
-
-        let completion: (Result<Void, APIError>) -> Void = { [weak self] result in
-            self?.isLoading = false
-            switch result {
-            case .success(_):
-                DispatchQueue.main.async {
-                    self?.currentPlaylist = playlist
-                }
-            case .failure(let error):
-                self?.error = error
+        do {
+            if let playlist {
+                try await API.setEventPlaylist(to: playlist, in: event)
+            } else {
+                try await API.removeEventPlaylist(from: event)
             }
-        }
-
-        if let playlist {
-            API.setEventPlaylist(to: playlist, in: event, completion: completion)
-        } else {
-            API.removeEventPlaylist(from: event, completion: completion)
+            currentPlaylist = playlist
+        } catch {
+            throw error
         }
     }
 
