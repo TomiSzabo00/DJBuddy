@@ -253,18 +253,8 @@ final class EventControlViewModel: ObservableObject, Hashable {
 
         do {
             try await API.removeFromUserBalance(amount: selectedPrice, user: user)
-            API.increasePrice(of: currentSong, by: selectedPrice) { [weak self] result in
-                self?.isLoading = false
-                switch result {
-                case .success(let newAmount):
-                    DispatchQueue.main.async {
-                        self?.event.requestedSongs[idx].amount = newAmount
-                        self?.objectWillChange.send()
-                    }
-                case .failure(let failure):
-                    break
-                }
-            }
+            event.requestedSongs[idx].amount = try await API.increasePrice(of: currentSong, by: selectedPrice)
+            objectWillChange.send()
         } catch {
             throw error
         }
