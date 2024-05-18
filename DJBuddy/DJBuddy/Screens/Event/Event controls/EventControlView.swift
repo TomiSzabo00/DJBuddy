@@ -89,8 +89,8 @@ struct EventControlView: View {
             }
         }
         .onAppear {
-            viewModel.initWebSocketForGeneralEventChanges()
-            viewModel.initWebSocketForEventThemeChanges()
+            viewModel.initWebSocketForGeneralEventChanges(with: stateHelper)
+            viewModel.initWebSocketForEventThemeChanges(with: stateHelper)
             stateHelper.performWithProgress {
                 try await viewModel.getCurrentEvent()
                 try await viewModel.getAvailablePlaylists(for: user)

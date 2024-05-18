@@ -33,7 +33,7 @@ struct UserEventView: View {
         .backgroundColor(.asset.background)
         .navBarWithTitle(title: viewModel.event.name, navigator: navigator, leadingButton: .back)
         .onAppear {
-            viewModel.initWebSocketForGeneralEventChanges()
+            viewModel.initWebSocketForGeneralEventChanges(with: stateHelper)
             stateHelper.performWithProgress {
                 try await viewModel.getCurrentEvent()
             }

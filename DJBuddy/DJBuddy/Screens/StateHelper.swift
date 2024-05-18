@@ -36,20 +36,24 @@ final class StateHelper: ObservableObject {
             do {
                 try await task()
                 isLoading = false
-            } catch let error as APIError {
-                isLoading = false
-                alertContent = AlertContent(title: error.title, message: error.message) { [weak self] in
-                    if error.isFatal {
-                        self?.signoutAction()
-                    }
-                }
-            } catch let error as FormError {
-                isLoading = false
-                alertContent = AlertContent(title: error.title, message: error.message)
             } catch {
                 isLoading = false
-                alertContent = AlertContent(title: error.localizedDescription)
+                showError(from: error)
             }
+        }
+    }
+
+    func showError(from error: Error) {
+        if let apiError = error as? APIError {
+            alertContent = AlertContent(title: apiError.title, message: apiError.message) { [weak self] in
+                if apiError.isFatal {
+                    self?.signoutAction()
+                }
+            }
+        } else if let formError = error as? FormError {
+            alertContent = AlertContent(title: formError.title, message: formError.message)
+        } else {
+            alertContent = AlertContent(title: error.localizedDescription)
         }
     }
 }

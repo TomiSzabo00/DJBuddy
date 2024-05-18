@@ -13,9 +13,6 @@ final class EventControlViewModel: ObservableObject, Hashable {
     @Published var selectedSong: SongData? = nil
     @Published var didAgree = false
     @Published var selectedPrice: Double = 1
-    @Published var isLoading = false
-    @Published var formError: Error? = nil
-    @Published var error: Error? = nil
     @Published var availablePlaylists: [Playlist] = []
     @Published var currentPlaylist: Playlist? = nil
     var currentSong: SongData? = nil
@@ -23,25 +20,25 @@ final class EventControlViewModel: ObservableObject, Hashable {
     private var webSocketTasks = Set<URLSessionWebSocketTask?>()
 
 
-    func initWebSocketForGeneralEventChanges() {
+    func initWebSocketForGeneralEventChanges(with stateHelper: StateHelper) {
         print("Opening websocket for general event changes...")
         let task = API.connectToEventWebSocket(id: event.id)
         task?.resume()
-        listenForEventChanges(in: task)
+        listenForEventChanges(in: task, with: stateHelper)
 
         webSocketTasks.insert(task)
     }
 
-    func initWebSocketForEventThemeChanges() {
+    func initWebSocketForEventThemeChanges(with stateHelper: StateHelper) {
         print("Opening websocket for event theme changes...")
         let task = API.connectToEventWebSocket(id: event.id, pathSuffix: "themes")
         task?.resume()
-        listenForThemeChanges(in: task)
+        listenForThemeChanges(in: task, with: stateHelper)
 
         webSocketTasks.insert(task)
     }
 
-    private func listenForThemeChanges(in task: URLSessionWebSocketTask?) {
+    private func listenForThemeChanges(in task: URLSessionWebSocketTask?, with stateHelper: StateHelper) {
         task?.receive { [weak self] result in
             guard let self else { return }
 
@@ -65,16 +62,14 @@ final class EventControlViewModel: ObservableObject, Hashable {
                 default:
                     print("Unhandled websocket result.")
                 }
-                self.listenForThemeChanges(in: task)
+                self.listenForThemeChanges(in: task, with: stateHelper)
             case .failure(let failure):
-                DispatchQueue.main.async {
-                    self.formError = failure
-                }
+                stateHelper.showError(from: failure)
             }
         }
     }
 
-    private func listenForEventChanges(in task: URLSessionWebSocketTask?) {
+    private func listenForEventChanges(in task: URLSessionWebSocketTask?, with stateHelper: StateHelper) {
         task?.receive { [weak self] result in
             guard let self else { return }
 
@@ -100,11 +95,9 @@ final class EventControlViewModel: ObservableObject, Hashable {
                 default:
                     print("Unhandled websocket result.")
                 }
-                self.listenForEventChanges(in: task)
+                self.listenForEventChanges(in: task, with: stateHelper)
             case .failure(let failure):
-                DispatchQueue.main.async {
-                    self.formError = failure
-                }
+                stateHelper.showError(from: failure)
             }
         }
     }

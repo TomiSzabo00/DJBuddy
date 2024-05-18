@@ -72,7 +72,7 @@ struct RequestSongView: View {
                     try await viewModel.getCurrentPlaylist()
                 }
             }
-            viewModel.initWebSocketForEventThemeChanges()
+            viewModel.initWebSocketForEventThemeChanges(with: stateHelper)
         }
         .onDisappear {
             viewModel.closeWebSockets()
