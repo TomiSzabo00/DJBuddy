@@ -572,59 +572,40 @@ final class API {
 
     // MARK: Payment
 
-    static func preparePayment(forAmount amount: Double, completion: @escaping (Result<PaymentSheet, APIError>) -> Void) {
+    static func preparePayment(forAmount amount: Double) async throws -> PaymentSheet {
         var components = URLComponents(string: "\(apiAddress)/payment/create/")!
-
         components.queryItems = [
             URLQueryItem(name: "amount", value: "\(amount)")
         ]
+        
+        let request = API.getRequest(url: components.url!)
 
-        var request = URLRequest(url: components.url!)
-        request.httpMethod = "GET"
+        do {
+            let data = try await URLSession.shared.fetchData(with: request)
+            let response = try JSONDecoder().decode(PaymentResponse.self, from: data)
 
-        let task = URLSession.shared.dataTask(with: request) { data, _, error in
-            guard let data, error == nil
-            else {
-                DispatchQueue.main.async {
-                    completion(.failure(APIError(message: error!.localizedDescription)))
-                }
-                return
-            }
+            STPAPIClient.shared.publishableKey = response.publishableKey
 
-            do {
-                let response = try JSONDecoder().decode(PaymentResponse.self, from: data)
+            // Create a PaymentSheet instance
+            var configuration = PaymentSheet.Configuration()
+            configuration.merchantDisplayName = "DJBuddy, Inc."
+            configuration.customer = .init(id: response.customer, ephemeralKeySecret: response.ephemeralKey)
+            configuration.style = .alwaysDark
+            configuration.defaultBillingDetails.address.country = "HU"
 
-                STPAPIClient.shared.publishableKey = response.publishableKey
+            var appearance = PaymentSheet.Appearance()
+            appearance.cornerRadius = 12
+            appearance.colors.primary = .systemRed
+            appearance.colors.textSecondary = .white
+            appearance.colors.componentText = .white
+            appearance.colors.componentPlaceholderText = .white
 
-                // Create a PaymentSheet instance
-                var configuration = PaymentSheet.Configuration()
-                configuration.merchantDisplayName = "DJBuddy, Inc."
-                configuration.customer = .init(id: response.customer, ephemeralKeySecret: response.ephemeralKey)
-                configuration.style = .alwaysDark
-                configuration.defaultBillingDetails.address.country = "HU"
+            configuration.appearance = appearance
 
-                var appearance = PaymentSheet.Appearance()
-                appearance.cornerRadius = 12
-                appearance.colors.primary = .systemRed
-                appearance.colors.textSecondary = .white
-                appearance.colors.componentText = .white
-                appearance.colors.componentPlaceholderText = .white
-
-                configuration.appearance = appearance
-
-                let paymentSheet = PaymentSheet(paymentIntentClientSecret: response.paymentIntent, configuration: configuration)
-                DispatchQueue.main.async {
-                    completion(.success(paymentSheet))
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    completion(.failure(APIError(message: error.localizedDescription)))
-                    print(String.init(data: data, encoding: .utf8) ?? "")
-                }
-            }
+            return PaymentSheet(paymentIntentClientSecret: response.paymentIntent, configuration: configuration)
+        } catch {
+            throw error
         }
-
-        task.resume()
     }
 
     // MARK: Playlists

@@ -16,39 +16,29 @@ final class StripePaymentHelper: ObservableObject {
     @Published var isLoading = false
     private var user: UserData?
 
-    func preparePaymentSheet(price: Double, for user: UserData) {
+    @MainActor
+    func preparePaymentSheet(price: Double, for user: UserData) async throws {
         paymentSheet = nil
         amount = 0
         self.user = user
-
-        API.preparePayment(forAmount: price) { [weak self] result in
-            switch result {
-            case .success(let paymentSheet):
-                DispatchQueue.main.async {
-                    self?.amount = price
-                    self?.paymentSheet = paymentSheet
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self?.error = failure
-                }
-            }
+        do {
+            amount = price
+            paymentSheet = try await API.preparePayment(forAmount: price)
+        } catch {
+            throw error
         }
     }
 
-    func onPaymentCompletion(result: PaymentSheetResult) {
+    func onPaymentCompletion(result: PaymentSheetResult) -> (() async throws -> Void)? {
         switch result {
         case .completed:
-            Task {
-                try await addFundsToUser()
-            }
+            return addFundsToUser
         case .canceled:
-            // This is not an error so don't treat it like one
-            print("Payment cancelled")
+            break
         case .failed(_):
-//            self.error = APIError.general(desc: error.localizedDescription)
             self.paymentSheet = nil
         }
+        return nil
     }
 
     func addFundsToUser() async throws {

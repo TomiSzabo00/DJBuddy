@@ -9,6 +9,7 @@ import SwiftUI
 import StripePaymentSheet
 
 struct BalanceTopUpView: View {
+    @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject var user: UserData
     @EnvironmentObject var navigator: Navigator
 
@@ -27,10 +28,13 @@ struct BalanceTopUpView: View {
             Spacer()
 
             if let paymentSheet = paymentHelper.paymentSheet {
-                PaymentSheet.PaymentButton(
-                    paymentSheet: paymentSheet,
-                    onCompletion: paymentHelper.onPaymentCompletion
-                ) {
+                PaymentSheet.PaymentButton(paymentSheet: paymentSheet) { result in
+                    if let task = paymentHelper.onPaymentCompletion(result: result) {
+                        stateHelper.performWithProgress {
+                            try await task()
+                        }
+                    }
+                } content: {
                     Text("Go to payment")
                         .font(.system(size: 16, weight: .medium))
                         .foregroundColor(.white)
@@ -51,10 +55,14 @@ struct BalanceTopUpView: View {
 
         }
         .onAppear {
-            paymentHelper.preparePaymentSheet(price: selectedAmount, for: user)
+            stateHelper.performWithProgress {
+                try await paymentHelper.preparePaymentSheet(price: selectedAmount, for: user)
+            }
         }
         .onChange(of: selectedAmount) { _, newValue in
-            paymentHelper.preparePaymentSheet(price: newValue, for: user)
+            stateHelper.performWithProgress {
+                try await paymentHelper.preparePaymentSheet(price: newValue, for: user)
+            }
         }
         .onReceive(paymentHelper.$paymentResult) { result in
             switch result {
