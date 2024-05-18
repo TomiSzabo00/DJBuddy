@@ -27,7 +27,9 @@ struct SavedSongsView: View {
                                     .fill(.white)
                             )
                             .discardable {
-                                viewModel.dislike(song: song, by: user)
+                                stateHelper.performWithProgress {
+                                    try await viewModel.dislike(song: song, by: user)
+                                }
                             }
                     }
                 } header: {

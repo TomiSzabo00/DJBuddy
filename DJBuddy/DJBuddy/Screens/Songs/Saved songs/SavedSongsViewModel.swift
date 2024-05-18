@@ -41,22 +41,13 @@ final class SavedSongsViewModel: ObservableObject {
         }
     }
 
-    func dislike(song: SongData, by user: UserData) {
-        isLoading = true
-
-        API.unsave(song: song, by: user) { [weak self] result in
-            self?.isLoading = false
-
-            switch result {
-            case .success():
-                DispatchQueue.main.async {
-                    self?.likedSongs.remove(song)
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self?.error = failure
-                }
-            }
+    @MainActor
+    func dislike(song: SongData, by user: UserData) async throws {
+        do {
+            try await API.unsave(song: song, by: user)
+            likedSongs.remove(song)
+        } catch {
+            throw error
         }
     }
 }
