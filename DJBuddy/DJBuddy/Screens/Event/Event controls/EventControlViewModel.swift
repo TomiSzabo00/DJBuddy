@@ -200,22 +200,9 @@ final class EventControlViewModel: ObservableObject, Hashable {
         }
     }
 
-    func getCurrentPlaylist() {
-        isLoading = true
-
-        API.getEventPlaylist(for: event) { [weak self] playlistResult in
-            self?.isLoading = false
-            switch playlistResult {
-            case .success(let playlist):
-                DispatchQueue.main.async {
-                    self?.currentPlaylist = playlist
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self?.formError = failure
-                }
-            }
-        }
+    @MainActor
+    func getCurrentPlaylist() async throws {
+        currentPlaylist = try await API.getEventPlaylist(for: event)
     }
 
     func requestSong(by user: UserData, completion: @escaping (Result<Void, APIError>) -> Void) {

@@ -65,12 +65,12 @@ struct RequestSongView: View {
             }
         }
         .onAppear {
-            if viewModel.event.playlistId == nil {
-                stateHelper.performWithProgress {
+            stateHelper.performWithProgress {
+                if viewModel.event.playlistId == nil {
                     try await viewModel.getCurrentTheme()
+                } else {
+                    try await viewModel.getCurrentPlaylist()
                 }
-            } else {
-                viewModel.getCurrentPlaylist()
             }
             viewModel.initWebSocketForEventThemeChanges()
         }
