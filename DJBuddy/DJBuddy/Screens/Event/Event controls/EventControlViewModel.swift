@@ -135,24 +135,10 @@ final class EventControlViewModel: ObservableObject, Hashable {
         objectWillChange.send()
     }
 
-    func getCurrentEvent() {
-        isLoading = true
-
-        API.getEvent(id: event.id) { [weak self] result in
-            self?.isLoading = false
-
-            switch result {
-            case .success(let newEvent):
-                DispatchQueue.main.async {
-                    self?.event = newEvent
-                    self?.objectWillChange.send()
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    self?.formError = error
-                }
-            }
-        }
+    @MainActor
+    func getCurrentEvent() async throws {
+        event = try await API.getEvent(id: event.id)
+        objectWillChange.send()
     }
 
     var shouldSHowPriceWarining: Bool {

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct UserEventView: View {
+    @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject var navigator: Navigator
     @ObservedObject var viewModel: EventControlViewModel
 
@@ -33,7 +34,9 @@ struct UserEventView: View {
         .navBarWithTitle(title: viewModel.event.name, navigator: navigator, leadingButton: .back)
         .onAppear {
             viewModel.initWebSocketForGeneralEventChanges()
-            viewModel.getCurrentEvent()
+            stateHelper.performWithProgress {
+                try await viewModel.getCurrentEvent()
+            }
         }
         .onDisappear {
             viewModel.closeWebSockets()
