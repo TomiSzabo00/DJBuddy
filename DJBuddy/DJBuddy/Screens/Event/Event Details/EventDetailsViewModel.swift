@@ -9,8 +9,6 @@ import Foundation
 
 final class EventDetailsViewModel: ObservableObject {
     @Published var isJoined = false
-    @Published var isLoading = false
-    @Published var error: Error? = nil
     @Published var numberOfJoined: Int = 0
     @Published var isDJLiked: Bool? = false
 
@@ -36,22 +34,9 @@ final class EventDetailsViewModel: ObservableObject {
         }
     }
 
-    func getNumberOfJoined(to event: EventData) {
-        isLoading = true
-
-        API.getnumberOfJoined(to: event) { [weak self] result in
-            self?.isLoading = false
-            switch result {
-            case let .success(num):
-                DispatchQueue.main.async {
-                    self?.numberOfJoined = num
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self?.error = failure
-                }
-            }
-        }
+    @MainActor
+    func getNumberOfJoined(to event: EventData) async throws {
+        numberOfJoined = try await API.getnumberOfJoined(to: event)
     }
 
     @MainActor

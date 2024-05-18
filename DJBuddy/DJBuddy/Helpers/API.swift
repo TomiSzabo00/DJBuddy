@@ -447,55 +447,16 @@ final class API {
         try await URLSession.shared.fetchData(with: request)
     }
 
-    static func getnumberOfJoined(to event: EventData, completion: @escaping (Result<Int, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/events/\(event.id)/users/count")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "GET"
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, _, error in
-//            guard
-//                let data = data,
-//                error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        let msg = decodeCustomResponse(from: error)
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: msg)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            do {
-//                let responseObject = try JSONDecoder().decode(Int.self, from: data)
-//                DispatchQueue.main.async {
-//                    completion(.success(responseObject))
-//                }
-//            } catch {
-//                print(error) // parsing error
-//
-//                if let responseString = String(data: data, encoding: .utf8) {
-//                    print("responseString = \(responseString)")
-//                    let msg = decodeCustomResponse(from: responseString)
-//                    DispatchQueue.main.async {
-//                        completion(.failure(.general(desc: msg)))
-//                    }
-//                } else {
-//                    print("unable to parse error response as string")
-//                }
-//            }
-//        }
-//
-//        task.resume()
+    static func getnumberOfJoined(to event: EventData) async throws -> Int {
+        let url = URL(string: "\(apiAddress)/events/\(event.id)/users/count")!
+        let request = API.getRequest(url: url)
+
+        do {
+            let data = try await URLSession.shared.fetchData(with: request)
+            return try JSONDecoder().decode(Int.self, from: data)
+        } catch {
+            throw error
+        }
     }
 
     // MARK: Song

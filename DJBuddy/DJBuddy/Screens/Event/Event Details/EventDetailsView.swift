@@ -80,8 +80,8 @@ struct EventDetailsView: View {
         }
         .onAppear {
             viewModel.isJoined = isJoined
-            viewModel.getNumberOfJoined(to: event)
             stateHelper.performWithProgress {
+                try await viewModel.getNumberOfJoined(to: event)
                 try await viewModel.getLikeStatus(on: event.dj, by: user)
             }
 
