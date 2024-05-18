@@ -368,54 +368,15 @@ final class API {
         }
     }
 
-    static func getEventTheme(for event: EventData, completion: @escaping (Result<SongTheme?, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/events/\(event.id)/theme")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "GET"
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, _, error in
-//            guard
-//                let data = data,
-//                error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: error.localizedDescription)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            do {
-//                let responseObject = try JSONDecoder().decode(String.self, from: data)
-//                let theme = SongTheme(rawValue: responseObject)
-//                DispatchQueue.main.async {
-//                    completion(.success(theme))
-//                }
-//            } catch {
-//                print(error) // parsing error
-//
-//                if let responseString = String(data: data, encoding: .utf8) {
-//                    print("responseString = \(responseString)")
-//                    DispatchQueue.main.async {
-//                        completion(.failure(.general(desc: responseString)))
-//                    }
-//                } else {
-//                    print("unable to parse error response as string")
-//                }
-//            }
-//        }
-//
-//        task.resume()
+    static func getEventTheme(for event: EventData) async throws -> SongTheme? {
+        let url = URL(string: "\(apiAddress)/events/\(event.id)/theme")!
+        let request = API.getRequest(url: url)
+
+        do {
+            let data = try await URLSession.shared.fetchData(with: request)
+            let responseObject = try JSONDecoder().decode(String.self, from: data)
+            return SongTheme(rawValue: responseObject)
+        }
     }
 
     static func getEvent(id: String, completion: @escaping (Result<EventData, APIError>) -> Void) {

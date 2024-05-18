@@ -129,23 +129,10 @@ final class EventControlViewModel: ObservableObject, Hashable {
         }
     }
 
-    func getCurrentTheme() {
-        isLoading = true
-
-        API.getEventTheme(for: event) { [weak self] result in
-            self?.isLoading = false
-            switch result {
-            case .success(let newTheme):
-                DispatchQueue.main.async {
-                    self?.event.theme = newTheme
-                    self?.objectWillChange.send()
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self?.formError = failure
-                }
-            }
-        }
+    @MainActor
+    func getCurrentTheme() async throws {
+        event.theme = try await API.getEventTheme(for: event)
+        objectWillChange.send()
     }
 
     func getCurrentEvent() {

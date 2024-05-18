@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RequestSongView: View {
+    @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject var user: UserData
     @EnvironmentObject var navigator: Navigator
     @ObservedObject var viewModel: EventControlViewModel
@@ -65,7 +66,9 @@ struct RequestSongView: View {
         }
         .onAppear {
             if viewModel.event.playlistId == nil {
-                viewModel.getCurrentTheme()
+                stateHelper.performWithProgress {
+                    try await viewModel.getCurrentTheme()
+                }
             } else {
                 viewModel.getCurrentPlaylist()
             }
