@@ -32,18 +32,13 @@ final class PlaylistViewModel: ObservableObject {
         }
     }
 
-    func createPlaylist(name: String, by user: UserData) {
-        API.createPlaylist(by: user, name: name) { [weak self] result in
-            switch result {
-            case .success(let success):
-                DispatchQueue.main.async {
-                    self?.playlists.append(Playlist(id: success, title: name))
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self?.error = failure
-                }
-            }
+    @MainActor
+    func createPlaylist(name: String, by user: UserData) async throws {
+        do {
+            let newId = try await API.createPlaylist(by: user, name: name)
+            playlists.append(Playlist(id: newId, title: name))
+        } catch {
+            throw error
         }
     }
 

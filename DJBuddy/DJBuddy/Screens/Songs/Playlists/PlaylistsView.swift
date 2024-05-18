@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PlaylistsView: View {
+    @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject private var navigator: Navigator
     @EnvironmentObject private var user: UserData
 
@@ -62,7 +63,9 @@ struct PlaylistsView: View {
         .alert("Create new playlist", isPresented: $isNewPlaylistShowing) {
             TextField("Name", text: $newPlaylistName)
             Button("OK") {
-                viewModel.createPlaylist(name: newPlaylistName, by: user)
+                stateHelper.performWithProgress {
+                    try await viewModel.createPlaylist(name: newPlaylistName, by: user)
+                }
             }
             Button("Cancel", role: .cancel) {}
         } message: {
