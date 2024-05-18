@@ -9,7 +9,6 @@ import SwiftUI
 
 struct EventControlView: View {
     @EnvironmentObject private var stateHelper: StateHelper
-    @EnvironmentObject private var user: UserData
     @EnvironmentObject var navigator: Navigator
     @ObservedObject var viewModel: EventControlViewModel
 
@@ -93,7 +92,7 @@ struct EventControlView: View {
             viewModel.initWebSocketForEventThemeChanges(with: stateHelper)
             stateHelper.performWithProgress {
                 try await viewModel.getCurrentEvent()
-                try await viewModel.getAvailablePlaylists(for: user)
+                try await viewModel.getAvailablePlaylists()
             }
         }
         .onDisappear {
@@ -112,6 +111,5 @@ struct EventControlView: View {
     NavigationView {
         EventControlView(event: EventData.PreviewData)
             .environmentObject(Navigator())
-            .environmentObject(UserData.PreviewUser)
     }
 }

@@ -35,7 +35,7 @@ struct DJHomeView: View {
         }
         .refreshable {
             stateHelper.performWithProgress {
-                try await viewModel.refreshEvents(for: user)
+                try await viewModel.refreshEvents()
             }
         }
     }

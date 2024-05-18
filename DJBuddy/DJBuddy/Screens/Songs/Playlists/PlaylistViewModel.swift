@@ -11,8 +11,8 @@ final class PlaylistViewModel: ObservableObject {
     @Published private(set) var playlists: [Playlist] = []
 
     @MainActor
-    func getPlaylists(of user: UserData) async throws {
-        playlists = try await API.getAllPlaylists(of: user)
+    func getPlaylists() async throws {
+        playlists = try await API.getAllPlaylists()
     }
 
     @MainActor

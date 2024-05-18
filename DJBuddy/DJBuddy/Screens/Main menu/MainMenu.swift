@@ -44,7 +44,7 @@ struct MainMenu: View {
                         .sink { newValue in
                             viewModel.currentLocation = newValue
                             stateHelper.performWithProgress {
-                                try await viewModel.fetchNearEvents(for: user)
+                                try await viewModel.fetchNearEvents()
                             }
                         }
                 }
@@ -55,12 +55,12 @@ struct MainMenu: View {
                     annotationItems: (viewModel.yourEvents[.yourEvents] ?? []) + (viewModel.yourEvents[.nearYou] ?? [])
             ) {
                 stateHelper.performWithProgress {
-                    try await viewModel.fetchEvents(for: user)
+                    try await viewModel.fetchEvents()
                 }
                 if let currentLocation = mapViewModel.currentLocation {
                     viewModel.currentLocation = currentLocation
                     stateHelper.performWithProgress {
-                        try await viewModel.fetchNearEvents(for: user)
+                        try await viewModel.fetchNearEvents()
                     }
                 }
             }
@@ -72,12 +72,12 @@ struct MainMenu: View {
 
             if viewModel.yourEvents.isEmpty {
                 stateHelper.performWithProgress {
-                    try await viewModel.fetchEvents(for: user)
+                    try await viewModel.fetchEvents()
                 }
             } else {
                 // TODO: quiet task
                 stateHelper.performWithProgress {
-                    try await viewModel.fetchEvents(for: user)
+                    try await viewModel.fetchEvents()
                 }
             }
         }

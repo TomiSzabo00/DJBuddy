@@ -9,7 +9,6 @@ import SwiftUI
 
 struct RequestSongView: View {
     @EnvironmentObject private var stateHelper: StateHelper
-    @EnvironmentObject var user: UserData
     @EnvironmentObject var navigator: Navigator
     @ObservedObject var viewModel: EventControlViewModel
 
@@ -40,7 +39,7 @@ struct RequestSongView: View {
             Button("Request") {
                 stateHelper.performWithProgress {
                     do {
-                        try await viewModel.requestSong(by: user)
+                        try await viewModel.requestSong()
                         navigator.back()
                     } catch {
                         throw error
@@ -117,6 +116,5 @@ struct RequestSongView: View {
     NavigationView {
         RequestSongView(viewModel: EventControlViewModel(event: EventData.PreviewData))
             .environmentObject(Navigator())
-            .environmentObject(UserData.EmptyUser)
     }
 }

@@ -11,14 +11,14 @@ final class SavedSongsViewModel: ObservableObject {
     @Published private(set) var likedSongs: [SongData] = []
 
     @MainActor
-    func getLikedSongs(for user: UserData) async throws {
-        likedSongs = try await API.getAllSavedSongs(by: user)
+    func getLikedSongs() async throws {
+        likedSongs = try await API.getAllSavedSongs()
     }
 
     @MainActor
-    func like(song: SongData, by user: UserData) async throws {
+    func like(song: SongData) async throws {
         do {
-            song.id = try await API.save(song: song, by: user)
+            song.id = try await API.save(song: song)
             likedSongs.append(song)
         } catch {
             throw error
@@ -26,9 +26,9 @@ final class SavedSongsViewModel: ObservableObject {
     }
 
     @MainActor
-    func dislike(song: SongData, by user: UserData) async throws {
+    func dislike(song: SongData) async throws {
         do {
-            try await API.unsave(song: song, by: user)
+            try await API.unsave(song: song)
             likedSongs.remove(song)
         } catch {
             throw error

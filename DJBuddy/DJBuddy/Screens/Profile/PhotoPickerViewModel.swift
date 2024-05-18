@@ -13,8 +13,8 @@ final class PhotoPickerViewModel: ObservableObject {
     @Published var selectedImage: UIImage?
 
     @MainActor
-    func uploadImage(user: UserData) async throws {
-        try await API.uploadProfilePic(for: user, image: selectedImage!)
+    func uploadImage() async throws {
+        try await API.uploadProfilePic(selectedImage!)
     }
 }
 

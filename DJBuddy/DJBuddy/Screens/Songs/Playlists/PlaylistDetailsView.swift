@@ -10,7 +10,6 @@ import SwiftUI
 struct PlaylistDetailsView: View {
     @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject private var navigator: Navigator
-    @EnvironmentObject private var user: UserData
 
     let playList: Playlist
     @ObservedObject var viewModel: PlaylistViewModel = .init()
@@ -77,7 +76,7 @@ struct PlaylistDetailsView: View {
         .navBarWithTitle(title: playList.title, navigator: navigator, leadingButton: .back, trailingButton: .add($isNewSongShowing))
         .onAppear {
             stateHelper.performWithProgress {
-                try await viewModel.getPlaylists(of: user)
+                try await viewModel.getPlaylists()
             }
         }
         .sheet(isPresented: $isNewSongShowing) {
@@ -94,6 +93,5 @@ struct PlaylistDetailsView: View {
     NavigationView {
         PlaylistDetailsView(playList: Playlist.PreviewData)
             .environmentObject(Navigator())
-            .environmentObject(UserData.PreviewUser)
     }
 }

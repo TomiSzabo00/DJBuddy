@@ -10,7 +10,6 @@ import StripePaymentSheet
 
 struct BalanceTopUpView: View {
     @EnvironmentObject private var stateHelper: StateHelper
-    @EnvironmentObject var user: UserData
     @EnvironmentObject var navigator: Navigator
 
     @StateObject private var paymentHelper = StripePaymentHelper()
@@ -56,12 +55,12 @@ struct BalanceTopUpView: View {
         }
         .onAppear {
             stateHelper.performWithProgress {
-                try await paymentHelper.preparePaymentSheet(price: selectedAmount, for: user)
+                try await paymentHelper.preparePaymentSheet(price: selectedAmount)
             }
         }
         .onChange(of: selectedAmount) { _, newValue in
             stateHelper.performWithProgress {
-                try await paymentHelper.preparePaymentSheet(price: newValue, for: user)
+                try await paymentHelper.preparePaymentSheet(price: newValue)
             }
         }
         .onReceive(paymentHelper.$paymentResult) { result in
@@ -84,7 +83,6 @@ struct BalanceTopUpView: View {
 #Preview {
     NavigationView {
         BalanceTopUpView()
-            .environmentObject(UserData.EmptyUser)
             .environmentObject(Navigator())
     }
 }

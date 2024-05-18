@@ -11,9 +11,9 @@ final class PastEventsViewModel: ObservableObject {
     @Published private(set) var pastEvents: [EventData] = []
 
     @MainActor
-    func getPastEvents(for user: UserData) async throws {
+    func getPastEvents() async throws {
         do {
-            let events = try await API.getEvents(for: user)
+            let events = try await API.getEvents()
             pastEvents = events.filter { $0.isInThePast }
         } catch {
             throw error

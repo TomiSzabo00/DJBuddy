@@ -52,7 +52,7 @@ struct SongDetalsView: View {
                             Button("Accept") {
                                 stateHelper.performWithProgress {
                                     do {
-                                        try await viewModel.accept(song: song, dj: user)
+                                        try await viewModel.accept(song: song)
                                         navigator.back()
                                     } catch {
                                         throw error
@@ -95,7 +95,6 @@ struct SongDetalsView: View {
         .navBarWithTitle(title: "Song", navigator: navigator, leadingButton: .back)
         .sheet(isPresented: $isIncPriceShowing) {
             IncreasePriceView(song: song, viewModel: viewModel, isShowing: $isIncPriceShowing)
-                .environmentObject(user)
         }
     }
 }

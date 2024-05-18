@@ -10,7 +10,6 @@ import PhotosUI
 
 struct PhotoPickerView: View {
     @EnvironmentObject private var stateHelper: StateHelper
-    @EnvironmentObject var user: UserData
 
     @Binding var isShowing: Bool
 
@@ -52,7 +51,7 @@ struct PhotoPickerView: View {
             Button("Upload image") {
                 stateHelper.performWithProgress {
                     do {
-                        try await viewModel.uploadImage(user: user)
+                        try await viewModel.uploadImage()
                         isShowing = false
                     } catch {
                         throw error
@@ -83,5 +82,4 @@ struct PhotoPickerView: View {
 
 #Preview {
     PhotoPickerView(isShowing: .constant(true))
-        .environmentObject(UserData.EmptyUser)
 }

@@ -10,7 +10,6 @@ import SwiftUI
 struct SavedSongsView: View {
     @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject private var navigator: Navigator
-    @EnvironmentObject private var user: UserData
 
     @StateObject private var viewModel = SavedSongsViewModel()
     @State private var isSongSelectionShowing = false
@@ -28,7 +27,7 @@ struct SavedSongsView: View {
                             )
                             .discardable {
                                 stateHelper.performWithProgress {
-                                    try await viewModel.dislike(song: song, by: user)
+                                    try await viewModel.dislike(song: song)
                                 }
                             }
                     }
@@ -53,13 +52,13 @@ struct SavedSongsView: View {
         .navBarWithTitle(title: "Saved Songs", navigator: navigator, leadingButton: .back)
         .onAppear {
             stateHelper.performWithProgress {
-                try await viewModel.getLikedSongs(for: user)
+                try await viewModel.getLikedSongs()
             }
         }
         .sheet(isPresented: $isSongSelectionShowing) {
             SongSelectionView(isShowing: $isSongSelectionShowing) { selectedSong in
                 stateHelper.performWithProgress {
-                    try await viewModel.like(song: selectedSong, by: user)
+                    try await viewModel.like(song: selectedSong)
                 }
             }
         }
@@ -70,6 +69,5 @@ struct SavedSongsView: View {
     NavigationView {
         SavedSongsView()
             .environmentObject(Navigator())
-            .environmentObject(UserData.PreviewUser)
     }
 }

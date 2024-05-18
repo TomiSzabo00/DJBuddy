@@ -14,13 +14,12 @@ final class StripePaymentHelper: ObservableObject {
     @Published var error: Error?
     @Published var amount: Double = 0
     @Published var isLoading = false
-    private var user: UserData?
 
     @MainActor
-    func preparePaymentSheet(price: Double, for user: UserData) async throws {
+    func preparePaymentSheet(price: Double) async throws {
         paymentSheet = nil
         amount = 0
-        self.user = user
+
         do {
             amount = price
             paymentSheet = try await API.preparePayment(forAmount: price)
@@ -42,9 +41,9 @@ final class StripePaymentHelper: ObservableObject {
     }
 
     func addFundsToUser() async throws {
-        guard amount > 0, let user else { return }
+        guard amount > 0 else { return }
         do {
-            try await API.addToUserBalance(amount: amount, user: user)
+            try await API.addToUserBalance(amount: amount)
             paymentResult = .success(())
         } catch {
             throw error

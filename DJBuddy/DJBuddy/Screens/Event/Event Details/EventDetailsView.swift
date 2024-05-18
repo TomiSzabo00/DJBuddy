@@ -46,7 +46,7 @@ struct EventDetailsView: View {
                     .font(.subheadline)
                 DJRow(dj: event.dj, isLiked: user.isDj ? .constant(nil) : $viewModel.isDJLiked) {
                     stateHelper.performWithProgress {
-                        try await viewModel.toggleLike(on: event.dj, by: user)
+                        try await viewModel.toggleLike(on: event.dj)
                     }
                 }
             }
@@ -89,7 +89,7 @@ struct EventDetailsView: View {
             viewModel.isJoined = isJoined
             stateHelper.performWithProgress {
                 try await viewModel.getNumberOfJoined(to: event)
-                try await viewModel.getLikeStatus(on: event.dj, by: user)
+                try await viewModel.getLikeStatus(on: event.dj)
             }
         }
         .animation(.default, value: viewModel.isJoined)
@@ -118,14 +118,14 @@ struct EventDetailsView: View {
 
                     Button("Leave event") {
                         stateHelper.performWithProgress {
-                            try await viewModel.leave(event: event, user: user)
+                            try await viewModel.leave(event: event)
                         }
                     }
                     .buttonStyle(.largeSecondary)
                 } else {
                     Button("Join event") {
                         stateHelper.performWithProgress {
-                            try await viewModel.join(event: event, user: user)
+                            try await viewModel.join(event: event)
                         }
                     }
                     .buttonStyle(.largeProminent)

@@ -27,10 +27,10 @@ final class MainMenuViewModel: ObservableObject {
     @Published var currentLocation: CLLocationCoordinate2D? = nil
 
     @MainActor
-    func fetchEvents(for user: UserData) async throws {
+    func fetchEvents() async throws {
 
         do {
-            let events = try await API.getEvents(for: user)
+            let events = try await API.getEvents()
             yourEvents[.yourEvents] = events.filter { !$0.isInThePast }
             sortEventsByDate(&self.yourEvents[.yourEvents]!)
         } catch {
@@ -39,7 +39,7 @@ final class MainMenuViewModel: ObservableObject {
     }
 
     @MainActor
-    func fetchNearEvents(for user: UserData) async throws {
+    func fetchNearEvents() async throws {
         guard let location = currentLocation else { return }
 
         do {
@@ -57,9 +57,9 @@ final class MainMenuViewModel: ObservableObject {
     }
 
     @MainActor
-    func refreshEvents(for user: UserData) async throws {
+    func refreshEvents() async throws {
         do {
-            let newEvents = try await API.getEvents(for: user)
+            let newEvents = try await API.getEvents()
             yourEvents[.yourEvents] = newEvents.filter { !$0.isInThePast }
             sortEventsByDate(&yourEvents[.yourEvents]!)
             self.objectWillChange.send()
@@ -73,11 +73,11 @@ final class MainMenuViewModel: ObservableObject {
     }
 
     @MainActor
-    func join(event: EventData, user: UserData) async throws {
+    func join(event: EventData) async throws {
         guard !(yourEvents[.yourEvents] ?? []).contains(event) else { return }
 
         do {
-            try await API.joinEvent(event, user: user)
+            try await API.joinEvent(event)
             if yourEvents[.nearYou]?.contains(event) == true {
                 yourEvents[.nearYou]?.remove(event)
             }
@@ -89,13 +89,13 @@ final class MainMenuViewModel: ObservableObject {
     }
 
     @MainActor
-    func leave(event: EventData, user: UserData) async throws {
+    func leave(event: EventData) async throws {
         do {
-            try await API.leaveEvent(event, user: user)
+            try await API.leaveEvent(event)
             if yourEvents[.yourEvents]?.contains(event) == true {
                 yourEvents[.yourEvents]?.remove(event)
             }
-            try await fetchNearEvents(for: user)
+            try await fetchNearEvents()
         } catch {
             throw error
         }

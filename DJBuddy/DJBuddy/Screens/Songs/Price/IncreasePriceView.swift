@@ -9,7 +9,6 @@ import SwiftUI
 
 struct IncreasePriceView: View {
     @EnvironmentObject private var stateHelper: StateHelper
-    @EnvironmentObject var user: UserData
 
     let song: SongData
     @StateObject var viewModel: EventControlViewModel
@@ -30,7 +29,7 @@ struct IncreasePriceView: View {
                 Button("Increase") {
                     isShowing = false
                     stateHelper.performWithProgress {
-                        try await viewModel.increasePrice(by: user)
+                        try await viewModel.increasePrice()
                     }
                 }
                 .buttonStyle(.largeProminent)
@@ -50,6 +49,5 @@ struct IncreasePriceView: View {
 #Preview {
     NavigationView {
         IncreasePriceView(song: SongData.PreviewData, viewModel: EventControlViewModel(event: EventData.PreviewData), isShowing: .constant(true))
-            .environmentObject(UserData.EmptyUser)
     }
 }

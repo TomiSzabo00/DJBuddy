@@ -10,7 +10,6 @@ import SwiftUI
 struct UserHomeView: View {
     @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject var navigator: Navigator
-    @EnvironmentObject private var user: UserData
 
     @StateObject var viewModel: MainMenuViewModel
 
@@ -44,7 +43,7 @@ struct UserHomeView: View {
         }
         .refreshable {
             stateHelper.performWithProgress {
-                try await viewModel.refreshEvents(for: user)
+                try await viewModel.refreshEvents()
             }
         }
         .animation(.default, value: events)
@@ -55,7 +54,7 @@ struct UserHomeView: View {
             if eventType == .yourEvents {
                 Button {
                     stateHelper.performWithProgress {
-                        try await viewModel.leave(event: event, user: user)
+                        try await viewModel.leave(event: event)
                     }
                 } label: {
                     Label("Leave event", systemImage: "rectangle.portrait.and.arrow.forward")
@@ -63,7 +62,7 @@ struct UserHomeView: View {
             } else if eventType == .nearYou {
                 Button {
                     stateHelper.performWithProgress {
-                        try await viewModel.join(event: event, user: user)
+                        try await viewModel.join(event: event)
                     }
                 } label: {
                     Label("Join event", systemImage: "person.badge.plus")

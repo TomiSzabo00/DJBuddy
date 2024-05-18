@@ -10,7 +10,6 @@ import SwiftUI
 struct LikedDJsView: View {
     @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject private var navigator: Navigator
-    @EnvironmentObject private var user: UserData
 
     @StateObject private var viewModel = LikedDJsViewModel()
 
@@ -21,7 +20,7 @@ struct LikedDJsView: View {
                     LikedDJRow(dj: dj, likeText: likeText)
                         .discardable {
                             stateHelper.performWithProgress {
-                                try await viewModel.dislike(dj: dj, by: user)
+                                try await viewModel.dislike(dj: dj)
                             }
                         }
                 }
@@ -39,7 +38,7 @@ struct LikedDJsView: View {
         .navBarWithTitle(title: "Liked DJs", navigator: navigator, leadingButton: .back)
         .onAppear {
             stateHelper.performWithProgress {
-                try await viewModel.getLikedDjs(for: user)
+                try await viewModel.getLikedDjs()
             }
         }
     }
@@ -49,6 +48,5 @@ struct LikedDJsView: View {
     NavigationView {
         LikedDJsView()
             .environmentObject(Navigator())
-            .environmentObject(UserData.PreviewUser)
     }
 }

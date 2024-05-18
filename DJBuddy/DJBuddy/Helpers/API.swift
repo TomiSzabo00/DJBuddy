@@ -201,7 +201,7 @@ final class API {
 
     // MARK: User
 
-    static func getUserData(_ user: UserData) async throws -> UserData {
+    static func getUserData() async throws -> UserData {
         let url = URL(string: "\(apiAddress)/users")!
         let request = API.getRequest(url: url)
 
@@ -214,21 +214,21 @@ final class API {
         }
     }
 
-    static func addToUserBalance(amount: Double, user: UserData) async throws {
+    static func addToUserBalance(amount: Double) async throws {
         let url = URL(string: "\(apiAddress)/users/balance/\(amount)")!
         let request = API.putRequest(url: url)
 
         try await URLSession.shared.fetchData(with: request)
     }
 
-    static func removeFromUserBalance(amount: Double, user: UserData) async throws {
+    static func removeFromUserBalance(amount: Double) async throws {
         let url = URL(string: "\(apiAddress)/users/balance/remove/\(amount)")!
         let request = API.putRequest(url: url)
         
         try await URLSession.shared.fetchData(with: request)
     }
 
-    static func withdrawFromBalance(of user: UserData, amount: Double? = nil) async throws {
+    static func withdrawFromBalance(amount: Double? = nil) async throws {
         var components = URLComponents(string: "\(apiAddress)/users/withdraw/")!
 
         if let amount {
@@ -241,7 +241,7 @@ final class API {
         try await URLSession.shared.fetchData(with: request)
     }
 
-    static func uploadProfilePic(for user: UserData, image: UIImage) async throws {
+    static func uploadProfilePic(_ image: UIImage) async throws {
         let url = URL(string: "\(apiAddress)/users/profile_pic/upload")!
         var request = API.putRequest(url: url)
 
@@ -265,7 +265,7 @@ final class API {
         try await URLSession.shared.fetchData(with: request)
     }
 
-    static func isDJLikedByUser(dj: UserData, user: UserData) async throws -> Bool {
+    static func isDJLikedByUser(dj: UserData) async throws -> Bool {
         let url = URL(string: "\(apiAddress)/users/likes/\(dj.id)")!
         let request = API.getRequest(url: url)
 
@@ -277,21 +277,21 @@ final class API {
         }
     }
 
-    static func like(dj: UserData, by user: UserData) async throws {
+    static func like(dj: UserData) async throws {
         let url = URL(string: "\(apiAddress)/users/like/\(dj.id)")!
         let request = API.putRequest(url: url)
 
         try await URLSession.shared.fetchData(with: request)
     }
 
-    static func unlike(dj: UserData, by user: UserData) async throws {
+    static func unlike(dj: UserData) async throws {
         let url = URL(string: "\(apiAddress)/users/unlike/\(dj.id)")!
         let request = API.putRequest(url: url)
 
         try await URLSession.shared.fetchData(with: request)
     }
 
-    static func getAllLiked(by user: UserData) async throws -> [(dj: UserData, like: Int)] {
+    static func getAllLiked() async throws -> [(dj: UserData, like: Int)] {
         let url = URL(string: "\(apiAddress)/users/likes")!
         let request = API.getRequest(url: url)
 
@@ -357,7 +357,7 @@ final class API {
         }
     }
 
-    static func getEvents(for user: UserData) async throws -> [EventData] {
+    static func getEvents() async throws -> [EventData] {
         let url = URL(string: "\(apiAddress)/users/events")!
         let request = API.getRequest(url: url)
 
@@ -434,14 +434,14 @@ final class API {
         }
     }
 
-    static func joinEvent(_ event: EventData, user: UserData) async throws {
+    static func joinEvent(_ event: EventData) async throws {
         let url = URL(string: "\(apiAddress)/events/\(event.id)/join")!
         let request = API.putRequest(url: url)
 
         try await URLSession.shared.fetchData(with: request)
     }
 
-    static func leaveEvent(_ event: EventData, user: UserData) async throws {
+    static func leaveEvent(_ event: EventData) async throws {
         let url = URL(string: "\(apiAddress)/events/\(event.id)/leave")!
         let request = API.putRequest(url: url)
 
@@ -462,7 +462,7 @@ final class API {
 
     // MARK: Song
 
-    static func requestSong(_ song: SongData, for event: EventData, by user: UserData) async throws -> Int {
+    static func requestSong(_ song: SongData, for event: EventData) async throws -> Int {
         let url = URL(string: "\(apiAddress)/songs/request")!
         var request = API.postRequest(url: url)
 
@@ -508,7 +508,7 @@ final class API {
         try await URLSession.shared.fetchData(with: request)
     }
 
-    static func save(song: SongData, by user: UserData) async throws -> Int {
+    static func save(song: SongData) async throws -> Int {
         let url = URL(string: "\(apiAddress)/users/save")!
         var request = API.postRequest(url: url)
 
@@ -535,14 +535,14 @@ final class API {
         }
     }
 
-    static func unsave(song: SongData, by user: UserData) async throws {
+    static func unsave(song: SongData) async throws {
         let url = URL(string: "\(apiAddress)/users/unsave/\(song.id)")!
         let request = API.putRequest(url: url)
 
         try await URLSession.shared.fetchData(with: request)
     }
 
-    static func getAllSavedSongs(by user: UserData) async throws -> [SongData] {
+    static func getAllSavedSongs() async throws -> [SongData] {
         let url = URL(string: "\(apiAddress)/users/saved_songs")!
         let request = API.getRequest(url: url)
 
@@ -669,7 +669,7 @@ final class API {
         try await URLSession.shared.fetchData(with: request)
     }
 
-    static func getAllPlaylists(of user: UserData) async throws -> [Playlist] {
+    static func getAllPlaylists() async throws -> [Playlist] {
         let url = URL(string: "\(apiAddress)/users/playlists")!
         let request = API.getRequest(url: url)
 

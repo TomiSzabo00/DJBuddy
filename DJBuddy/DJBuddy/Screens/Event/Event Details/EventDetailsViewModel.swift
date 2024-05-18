@@ -13,9 +13,9 @@ final class EventDetailsViewModel: ObservableObject {
     @Published var isDJLiked: Bool? = false
 
     @MainActor
-    func join(event: EventData, user: UserData) async throws {
+    func join(event: EventData) async throws {
         do {
-            try await API.joinEvent(event, user: user)
+            try await API.joinEvent(event)
             isJoined = true
             numberOfJoined += 1
         } catch {
@@ -24,9 +24,9 @@ final class EventDetailsViewModel: ObservableObject {
     }
 
     @MainActor
-    func leave(event: EventData, user: UserData) async throws {
+    func leave(event: EventData) async throws {
         do {
-            try await API.leaveEvent(event, user: user)
+            try await API.leaveEvent(event)
             isJoined = false
             numberOfJoined -= 1
         } catch {
@@ -40,19 +40,19 @@ final class EventDetailsViewModel: ObservableObject {
     }
 
     @MainActor
-    func getLikeStatus(on dj: UserData, by user: UserData) async throws {
-        isDJLiked = try await API.isDJLikedByUser(dj: dj, user: user)
+    func getLikeStatus(on dj: UserData) async throws {
+        isDJLiked = try await API.isDJLikedByUser(dj: dj)
     }
 
     @MainActor
-    func toggleLike(on dj: UserData, by user: UserData) async throws {
+    func toggleLike(on dj: UserData) async throws {
         guard let isDJLiked else { return }
 
         do {
             if isDJLiked {
-                try await API.unlike(dj: dj, by: user)
+                try await API.unlike(dj: dj)
             } else {
-                try await API.like(dj: dj, by: user)
+                try await API.like(dj: dj)
             }
             self.isDJLiked = !isDJLiked
         } catch {

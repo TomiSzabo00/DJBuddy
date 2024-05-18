@@ -188,9 +188,6 @@ final class AuthViewModel: ObservableObject {
 
     @MainActor
     func refreshUser() async throws {
-        guard let currentUser else { return }
-
-        // Warning: here was an objectWillChange. maybe now its broken?
-        self.currentUser = try await API.getUserData(currentUser)
+        currentUser = try await API.getUserData()
     }
 }

@@ -61,7 +61,7 @@ struct PlaylistsView: View {
         .navBarWithTitle(title: "Playlists", navigator: navigator, leadingButton: .back, trailingButton: .add($isNewPlaylistShowing))
         .onAppear {
             stateHelper.performWithProgress {
-                try await viewModel.getPlaylists(of: user)
+                try await viewModel.getPlaylists()
             }
         }
         .alert("Create new playlist", isPresented: $isNewPlaylistShowing) {

@@ -11,9 +11,9 @@ final class LikedDJsViewModel: ObservableObject {
     @Published private(set) var likedDJs: [(dj: UserData, likeText: String)] = []
 
     @MainActor
-    func getLikedDjs(for user: UserData) async throws {
+    func getLikedDjs() async throws {
         do {
-            let likedData = try await API.getAllLiked(by: user)
+            let likedData = try await API.getAllLiked()
             likedDJs = likedData.map {
                 (dj: $0.dj, likeText: transformLikeCount(from: $0.like))
             }
@@ -46,9 +46,9 @@ final class LikedDJsViewModel: ObservableObject {
     }
 
     @MainActor
-    func dislike(dj: UserData, by user: UserData) async throws {
+    func dislike(dj: UserData) async throws {
         do {
-            try await API.unlike(dj: dj, by: user)
+            try await API.unlike(dj: dj)
             if let index = likedDJs.firstIndex(where: { $0.dj == dj }) {
                 likedDJs.remove(at: index)
             }

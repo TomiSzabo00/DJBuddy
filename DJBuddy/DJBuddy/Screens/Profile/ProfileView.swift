@@ -84,7 +84,7 @@ struct ProfileView: View {
                 } else {
                     stateHelper.performWithProgress {
                         do {
-                            try await API.withdrawFromBalance(of: user)
+                            try await API.withdrawFromBalance()
                             try await viewModel.refreshUser()
                         } catch {
                             throw error

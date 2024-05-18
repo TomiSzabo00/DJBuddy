@@ -212,9 +212,9 @@ final class EventControlViewModel: ObservableObject, Hashable {
     }
 
     @MainActor
-    func getAvailablePlaylists(for user: UserData) async throws {
+    func getAvailablePlaylists() async throws {
         do {
-            let allPlaylists = try await API.getAllPlaylists(of: user)
+            let allPlaylists = try await API.getAllPlaylists()
             availablePlaylists = allPlaylists.filter({ $0.hasEnoughSongs })
         } catch {
             throw error
@@ -227,7 +227,7 @@ final class EventControlViewModel: ObservableObject, Hashable {
     }
 
     @MainActor
-    func requestSong(by user: UserData) async throws {
+    func requestSong() async throws {
         guard let selectedSong else {
             throw FormError.songMissing
         }
@@ -241,7 +241,7 @@ final class EventControlViewModel: ObservableObject, Hashable {
         }
 
         selectedSong.amount = selectedPrice
-        selectedSong.id = try await API.requestSong(selectedSong, for: event, by: user)
+        selectedSong.id = try await API.requestSong(selectedSong, for: event)
     }
 
     func removeSong(_ song: SongData) async throws {
@@ -252,22 +252,22 @@ final class EventControlViewModel: ObservableObject, Hashable {
         try await removeSong(song)
     }
 
-    func accept(song: SongData, dj: UserData) async throws {
+    func accept(song: SongData) async throws {
         do {
-            try await API.addToUserBalance(amount: song.amount, user: dj)
+            try await API.addToUserBalance(amount: song.amount)
             try await removeSong(song)
         } catch let error {
             throw error
         }
     }
 
-    func increasePrice(by user: UserData) async throws {
+    func increasePrice() async throws {
         guard let currentSong,
         let idx = event.requestedSongs.firstIndex(of: currentSong)
         else { return }
 
         do {
-            try await API.removeFromUserBalance(amount: selectedPrice, user: user)
+            try await API.removeFromUserBalance(amount: selectedPrice)
             event.requestedSongs[idx].amount = try await API.increasePrice(of: currentSong, by: selectedPrice)
             objectWillChange.send()
         } catch {
