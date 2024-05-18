@@ -165,20 +165,10 @@ final class EventControlViewModel: ObservableObject, Hashable {
         try await API.setEventTheme(to: theme, in: event)
     }
 
-    func setState(to state: EventState) {
+    func setState(to state: EventState) async throws {
         guard event.state != state else { return }
 
-        isLoading = true
-
-        API.setEventState(to: state, in: event) { [weak self] result in
-            self?.isLoading = false
-            switch result {
-            case .success(_):
-                break
-            case .failure(let error):
-                self?.error = error
-            }
-        }
+        try await API.setEventState(to: state, in: event)
     }
 
     func setPlaylist(to playlist: Playlist?) {

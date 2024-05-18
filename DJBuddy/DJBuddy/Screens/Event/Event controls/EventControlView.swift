@@ -45,16 +45,22 @@ struct EventControlView: View {
                 }
                 if viewModel.event.state == .inProgress {
                     Button("Pause requests") {
-                        viewModel.setState(to: .paused)
+                        stateHelper.performWithProgress {
+                            try await viewModel.setState(to: .paused)
+                        }
                     }
                 }
                 if viewModel.event.pausedButNotEnded {
                     Button("Resume requests") {
-                        viewModel.setState(to: .inProgress)
+                        stateHelper.performWithProgress {
+                            try await viewModel.setState(to: .inProgress)
+                        }
                     }
                 }
                 Button(role: .destructive) {
-                    viewModel.setState(to: .ended)
+                    stateHelper.performWithProgress {
+                        try await viewModel.setState(to: .ended)
+                    }
                 } label: {
                     Text("End event")
                 }

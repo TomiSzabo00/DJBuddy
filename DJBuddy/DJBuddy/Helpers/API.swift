@@ -18,6 +18,7 @@ extension HTTPURLResponse {
 }
 
 extension URLSession {
+    @discardableResult
     func fetchData(with request: URLRequest) async throws -> Data {
         do {
             let (data, response) = try await data(for: request)
@@ -216,14 +217,14 @@ final class API {
         let url = URL(string: "\(apiAddress)/users/balance/\(amount)")!
         let request = API.putRequest(url: url)
 
-        let _ = try await URLSession.shared.fetchData(with: request)
+        try await URLSession.shared.fetchData(with: request)
     }
 
     static func removeFromUserBalance(amount: Double, user: UserData) async throws {
         let url = URL(string: "\(apiAddress)/users/balance/remove/\(amount)")!
         let request = API.putRequest(url: url)
         
-        let _ = try await URLSession.shared.fetchData(with: request)
+        try await URLSession.shared.fetchData(with: request)
     }
 
     static func withdrawFromBalance(of user: UserData, amount: Double? = nil) async throws {
@@ -236,7 +237,7 @@ final class API {
         }
 
         let request = API.putRequest(url: components.url!)
-        let _ = try await URLSession.shared.fetchData(with: request)
+        try await URLSession.shared.fetchData(with: request)
     }
 
     static func uploadProfilePic(for user: UserData, image: UIImage) async throws {
@@ -260,7 +261,7 @@ final class API {
 
         request.httpBody = body
 
-        let _ = try await URLSession.shared.fetchData(with: request)
+        try await URLSession.shared.fetchData(with: request)
     }
 
     static func isDJLikedByUser(dj: UserData, user: UserData) async throws -> Bool {
@@ -279,14 +280,14 @@ final class API {
         let url = URL(string: "\(apiAddress)/users/like/\(dj.id)")!
         let request = API.putRequest(url: url)
 
-        let _ = try await URLSession.shared.fetchData(with: request)
+        try await URLSession.shared.fetchData(with: request)
     }
 
     static func unlike(dj: UserData, by user: UserData) async throws {
         let url = URL(string: "\(apiAddress)/users/unlike/\(dj.id)")!
         let request = API.putRequest(url: url)
 
-        let _ = try await URLSession.shared.fetchData(with: request)
+        try await URLSession.shared.fetchData(with: request)
     }
 
     static func getAllLiked(by user: UserData) async throws -> [(dj: UserData, like: Int)] {
@@ -327,7 +328,7 @@ final class API {
             return
         }
 
-        let _ = try await URLSession.shared.fetchData(with: request)
+        try await URLSession.shared.fetchData(with: request)
     }
 
     static func getAllEvents(nearTo location: CLLocationCoordinate2D, maxDistance: Double? = nil) async throws -> [EventData] {
@@ -398,52 +399,14 @@ final class API {
         let url = URL(string: "\(apiAddress)/events/\(event.id)/theme/\(theme?.rawValue ?? "none")")!
         let request = API.postRequest(url: url)
 
-        let _ = try await URLSession.shared.fetchData(with: request)
+        try await URLSession.shared.fetchData(with: request)
     }
 
-    static func setEventState(to state: EventState, in event: EventData, completion: @escaping (Result<Void, APIError>) -> Void) {
-//        let url = URL(string: "\(apiAddress)/events/\(event.id)/state/\(state.rawValue)")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "POST"
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//            guard
-//                let response = response as? HTTPURLResponse,
-//                error == nil
-//            else {
-//                if let error {
-//                    if (error as NSError).code == -1004 {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.unreachable))
-//                        }
-//                    } else {
-//                        DispatchQueue.main.async {
-//                            completion(.failure(.general(desc: error.localizedDescription)))
-//                        }
-//                    }
-//                } else {
-//                    print("Error occured but it is nil")
-//                }
-//                return
-//            }
-//
-//            guard response.statusCode == 200 else {
-//                if didDecodeCustomResponse(from: data, completion: completion) {
-//                    return
-//                }
-//                DispatchQueue.main.async {
-//                    completion(.failure(.general(desc: response.debugDescription)))
-//                }
-//                return
-//            }
-//
-//            DispatchQueue.main.async {
-//                completion(.success(()))
-//            }
-//        }
-//
-//        task.resume()
+    static func setEventState(to state: EventState, in event: EventData) async throws {
+        let url = URL(string: "\(apiAddress)/events/\(event.id)/state/\(state.rawValue)")!
+        let request = API.postRequest(url: url)
+
+        try await URLSession.shared.fetchData(with: request)
     }
 
     static func setEventPlaylist(to playlist: Playlist, in event: EventData, completion: @escaping (Result<Void, APIError>) -> Void) {
@@ -641,7 +604,7 @@ final class API {
         let url = URL(string: "\(apiAddress)/events/\(event.id)/leave")!
         let request = API.putRequest(url: url)
 
-        let _ = try await URLSession.shared.fetchData(with: request)
+        try await URLSession.shared.fetchData(with: request)
     }
 
     static func getnumberOfJoined(to event: EventData, completion: @escaping (Result<Int, APIError>) -> Void) {
