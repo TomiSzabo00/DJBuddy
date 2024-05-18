@@ -52,7 +52,9 @@ struct SavedSongsView: View {
         .background(Color.asset.background)
         .navBarWithTitle(title: "Saved Songs", navigator: navigator, leadingButton: .back)
         .onAppear {
-            viewModel.getLikedSongs(for: user)
+            stateHelper.performWithProgress {
+                try await viewModel.getLikedSongs(for: user)
+            }
         }
         .sheet(isPresented: $isSongSelectionShowing) {
             SongSelectionView(isShowing: $isSongSelectionShowing) { selectedSong in

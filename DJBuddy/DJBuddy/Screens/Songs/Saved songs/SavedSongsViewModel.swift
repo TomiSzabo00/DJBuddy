@@ -9,26 +9,10 @@ import Foundation
 
 final class SavedSongsViewModel: ObservableObject {
     @Published private(set) var likedSongs: [SongData] = []
-    @Published var isLoading = false
-    @Published var error: Error? = nil
 
-    func getLikedSongs(for user: UserData) {
-        isLoading = true
-
-        API.getAllSavedSongs(by: user) { [weak self] result in
-            self?.isLoading = false
-
-            switch result {
-            case .success(let success):
-                DispatchQueue.main.async {
-                    self?.likedSongs = success
-                }
-            case .failure(let failure):
-                DispatchQueue.main.async {
-                    self?.error = failure
-                }
-            }
-        }
+    @MainActor
+    func getLikedSongs(for user: UserData) async throws {
+        likedSongs = try await API.getAllSavedSongs(by: user)
     }
 
     @MainActor
