@@ -35,6 +35,7 @@ struct SimpleSongRow: View {
             .padding(.vertical)
         }
         .foregroundStyle(textColor)
+        .frame(height: height)
     }
 }
 

@@ -44,7 +44,7 @@ struct InfoView: View {
             Image(systemName: imageName)
                 .font(.title2)
                 .padding(.leading, 10)
-            Text(text)
+            Text(.init(text))
         }
         .foregroundStyle(.white.opacity(0.8))
         .padding()

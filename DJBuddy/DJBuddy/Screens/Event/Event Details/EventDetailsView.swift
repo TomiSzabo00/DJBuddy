@@ -8,6 +8,15 @@
 import SwiftUI
 import MapKit
 
+extension TimeInterval {
+    var formatted: String? {
+        let dateFormatter = DateComponentsFormatter()
+        dateFormatter.allowedUnits = [.day]
+        dateFormatter.unitsStyle = .full
+        return dateFormatter.string(from: self)
+    }
+}
+
 struct EventDetailsView: View {
     @EnvironmentObject private var stateHelper: StateHelper
     @EnvironmentObject private var navigator: Navigator
@@ -18,8 +27,6 @@ struct EventDetailsView: View {
     let event: EventData
     let isJoined: Bool
     @State private var isShareShowing = false
-
-    private let dateFormatter = DateComponentsFormatter()
 
     private var region: MKCoordinateRegion {
         MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: event.location.latitude, longitude: event.location.longitude), span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005))
@@ -55,7 +62,7 @@ struct EventDetailsView: View {
             .clipShape(.rect(cornerRadius: 12))
             .disabled(true)
 
-            if let timeUntil = dateFormatter.string(from: event.date.timeIntervalSinceNow) {
+            if let timeUntil = event.date.timeIntervalSinceNow.formatted {
                 if timeUntil.starts(with: "-") {
                     Text(timeUntil.dropFirst() + " ago.")
                 } else {
@@ -84,9 +91,6 @@ struct EventDetailsView: View {
                 try await viewModel.getNumberOfJoined(to: event)
                 try await viewModel.getLikeStatus(on: event.dj, by: user)
             }
-
-            dateFormatter.allowedUnits = [.day]
-            dateFormatter.unitsStyle = .full
         }
         .animation(.default, value: viewModel.isJoined)
     }
@@ -105,10 +109,12 @@ struct EventDetailsView: View {
                 .buttonStyle(.largeSecondary)
             } else {
                 if viewModel.isJoined {
-                    Button("Request songs") {
-                        navigator.navigate(to: .requestSong(event))
+                    if event.state == .inProgress {
+                        Button("Request songs") {
+                            navigator.navigate(to: .requestSong(event))
+                        }
+                        .buttonStyle(.largeProminent)
                     }
-                    .buttonStyle(.largeProminent)
 
                     Button("Leave event") {
                         stateHelper.performWithProgress {

@@ -24,7 +24,12 @@ struct CreateEventView: View {
             Spacer()
             Button("Create event") {
                 stateHelper.performWithProgress {
-                    try await viewModel.createEvent(by: user)
+                    do {
+                        try await viewModel.createEvent(by: user)
+                        navigator.back()
+                    } catch {
+                        throw error
+                    }
                 }
             }
             .buttonStyle(.largeProminent)

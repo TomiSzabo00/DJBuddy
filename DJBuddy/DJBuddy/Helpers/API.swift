@@ -66,7 +66,8 @@ final class API {
     // MARK: Constants
 //    static let apiAddress = "https://djbuddy.online/api"
     static let apiAddress = "http://127.0.0.1:9000/api"
-    private static let apiWebSocketAddress = "wss://djbuddy.online"
+//    private static let apiWebSocketAddress = "wss://djbuddy.online"
+    private static let apiWebSocketAddress = "ws://127.0.0.1:9000"
     private static let eventWebSocketUrl = "\(apiWebSocketAddress)/ws/events"
 
     static private var userToken: String = ""
@@ -669,7 +670,7 @@ final class API {
     }
 
     static func getAllPlaylists(of user: UserData) async throws -> [Playlist] {
-        let url = URL(string: "\(apiAddress)/users/playlists/\(user.id)")!
+        let url = URL(string: "\(apiAddress)/users/playlists")!
         let request = API.getRequest(url: url)
 
         do {

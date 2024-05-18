@@ -19,7 +19,7 @@ final class EventControlViewModel: ObservableObject, Hashable {
 
     private var webSocketTasks = Set<URLSessionWebSocketTask?>()
 
-
+    @MainActor
     func initWebSocketForGeneralEventChanges(with stateHelper: StateHelper) {
         print("Opening websocket for general event changes...")
         let task = API.connectToEventWebSocket(id: event.id)
@@ -29,6 +29,7 @@ final class EventControlViewModel: ObservableObject, Hashable {
         webSocketTasks.insert(task)
     }
 
+    @MainActor
     func initWebSocketForEventThemeChanges(with stateHelper: StateHelper) {
         print("Opening websocket for event theme changes...")
         let task = API.connectToEventWebSocket(id: event.id, pathSuffix: "themes")
@@ -38,6 +39,7 @@ final class EventControlViewModel: ObservableObject, Hashable {
         webSocketTasks.insert(task)
     }
 
+    @MainActor
     private func listenForThemeChanges(in task: URLSessionWebSocketTask?, with stateHelper: StateHelper) {
         task?.receive { [weak self] result in
             guard let self else { return }
@@ -64,11 +66,14 @@ final class EventControlViewModel: ObservableObject, Hashable {
                 }
                 self.listenForThemeChanges(in: task, with: stateHelper)
             case .failure(let failure):
+                guard let task else { return }
+                if task.closeCode == .normalClosure || task.state == .completed { return }
                 stateHelper.showError(from: failure)
             }
         }
     }
 
+    @MainActor
     private func listenForEventChanges(in task: URLSessionWebSocketTask?, with stateHelper: StateHelper) {
         task?.receive { [weak self] result in
             guard let self else { return }
@@ -78,16 +83,34 @@ final class EventControlViewModel: ObservableObject, Hashable {
                 print("Got new data from websocket. Decoding...")
                 switch success {
                 case .data(let data):
-                    DispatchQueue.main.async {
-                        if let newEvent = self.decodeEventData(data) {
+                    if let newEvent = self.decodeEventData(data) {
+                        if newEvent.playlistId != nil {
+                            Task {
+                                do {
+                                    try await self.getCurrentPlaylist()
+                                } catch {
+                                    stateHelper.showError(from: error)
+                                }
+                            }
+                        }
+                        DispatchQueue.main.async {
                             self.event = newEvent
                             self.objectWillChange.send()
                         }
                     }
                 case .string(let string):
-                    DispatchQueue.main.async {
-                        if let data = string.data(using: .utf8, allowLossyConversion: false),
-                           let newEvent = self.decodeEventData(data) {
+                    if let data = string.data(using: .utf8, allowLossyConversion: false),
+                       let newEvent = self.decodeEventData(data) {
+                        if newEvent.playlistId != nil {
+                            Task {
+                                do {
+                                    try await self.getCurrentPlaylist()
+                                } catch {
+                                    stateHelper.showError(from: error)
+                                }
+                            }
+                        }
+                        DispatchQueue.main.async {
                             self.event = newEvent
                             self.objectWillChange.send()
                         }
@@ -97,6 +120,8 @@ final class EventControlViewModel: ObservableObject, Hashable {
                 }
                 self.listenForEventChanges(in: task, with: stateHelper)
             case .failure(let failure):
+                guard let task else { return }
+                if task.closeCode == .normalClosure || task.state == .completed { return }
                 stateHelper.showError(from: failure)
             }
         }
@@ -130,8 +155,14 @@ final class EventControlViewModel: ObservableObject, Hashable {
 
     @MainActor
     func getCurrentEvent() async throws {
-        event = try await API.getEvent(id: event.id)
-        objectWillChange.send()
+        do {
+            event = try await API.getEvent(id: event.id)
+            if event.playlistId != nil {
+                try await getCurrentPlaylist()
+            }
+        } catch {
+            throw error
+        }
     }
 
     var shouldSHowPriceWarining: Bool {

@@ -73,6 +73,7 @@ struct RequestSongView: View {
                 }
             }
             viewModel.initWebSocketForEventThemeChanges(with: stateHelper)
+            viewModel.initWebSocketForGeneralEventChanges(with: stateHelper)
         }
         .onDisappear {
             viewModel.closeWebSockets()

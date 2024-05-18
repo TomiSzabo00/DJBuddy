@@ -141,6 +141,7 @@ final class AuthViewModel: ObservableObject {
         removeLoginDataFromPresistentData()
         currentUser = nil
         resetTextFields()
+        authState = .loggedOut
     }
 
     func checkAllLoginFieldsAreValid() throws -> Bool {
