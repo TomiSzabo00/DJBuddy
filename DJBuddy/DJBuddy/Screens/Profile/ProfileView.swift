@@ -23,7 +23,7 @@ struct ProfileView: View {
         VStack {
             GeometryReader { geo in
                 VStack(spacing: 0) {
-                    AsyncImage(url: URL(string: "\(API.apiAddress)/\(user.profilePicUrl)")) { image in
+                    AsyncImage(url: URL(string: user.parsedPicUrl)) { image in
                         image.resizable()
                             .scaledToFill()
                             .frame(width: geo.size.width, height: geo.size.width, alignment: .center)

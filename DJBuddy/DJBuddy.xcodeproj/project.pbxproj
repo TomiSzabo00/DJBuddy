@@ -74,6 +74,8 @@
 		5584D4252AC2128800BC61F6 /* LandingPageEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4242AC2128800BC61F6 /* LandingPageEnum.swift */; };
 		5584D4272AC2132600BC61F6 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4262AC2132600BC61F6 /* AuthViewModel.swift */; };
 		5584D42A2AC21B2D00BC61F6 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584D4292AC21B2D00BC61F6 /* InputView.swift */; };
+		558E74CB2BFA59C8006D0F35 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558E74CA2BFA59C8006D0F35 /* WebView.swift */; };
+		558E74CD2BFA5C46006D0F35 /* SocialButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558E74CC2BFA5C46006D0F35 /* SocialButtonStyle.swift */; };
 		5594F7412B9A115F00DDD80A /* PlaylistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5594F7402B9A115F00DDD80A /* PlaylistsView.swift */; };
 		5594F7432B9A130200DDD80A /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5594F7422B9A130200DDD80A /* PlaylistViewModel.swift */; };
 		5594F7452B9A49BD00DDD80A /* PlaylistRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5594F7442B9A49BD00DDD80A /* PlaylistRow.swift */; };
@@ -176,6 +178,8 @@
 		5584D4242AC2128800BC61F6 /* LandingPageEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageEnum.swift; sourceTree = "<group>"; };
 		5584D4262AC2132600BC61F6 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		5584D4292AC21B2D00BC61F6 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		558E74CA2BFA59C8006D0F35 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		558E74CC2BFA5C46006D0F35 /* SocialButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialButtonStyle.swift; sourceTree = "<group>"; };
 		5594F7402B9A115F00DDD80A /* PlaylistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsView.swift; sourceTree = "<group>"; };
 		5594F7422B9A130200DDD80A /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
 		5594F7442B9A49BD00DDD80A /* PlaylistRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistRow.swift; sourceTree = "<group>"; };
@@ -430,6 +434,7 @@
 				5584D4192AC1AEB700BC61F6 /* LargeSecondaryButtonStyle.swift */,
 				5584D41F2AC1DA0B00BC61F6 /* UnderlinedButtonStyle.swift */,
 				5573DC792AE42D750025751F /* CheckmarkButtonStyle.swift */,
+				558E74CC2BFA5C46006D0F35 /* SocialButtonStyle.swift */,
 			);
 			path = ButtonStyles;
 			sourceTree = "<group>";
@@ -482,6 +487,7 @@
 				555934B32B96419E009FFF02 /* DJRow.swift */,
 				555934B82B9662AE009FFF02 /* LikedDJRow.swift */,
 				5594F7442B9A49BD00DDD80A /* PlaylistRow.swift */,
+				558E74CA2BFA59C8006D0F35 /* WebView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -668,6 +674,7 @@
 				55FB42EC2AF7F66C00ED9197 /* PhotoPickerView.swift in Sources */,
 				55CF4A692B9F5E6700116154 /* Playlist.swift in Sources */,
 				552E85F02AD3F85C006D5E86 /* MenuButtonType.swift in Sources */,
+				558E74CD2BFA5C46006D0F35 /* SocialButtonStyle.swift in Sources */,
 				5573DC882AE6CB9C0025751F /* Errors.swift in Sources */,
 				55A583A52AE1531E00438049 /* MapSelectionView.swift in Sources */,
 				555934BD2B9715CC009FFF02 /* LikedDJsViewModel.swift in Sources */,
@@ -687,6 +694,7 @@
 				5573DC7C2AE46AFC0025751F /* PriceSelectionView.swift in Sources */,
 				552E85EB2AD3EFF1006D5E86 /* EventListTile.swift in Sources */,
 				5594F7432B9A130200DDD80A /* PlaylistViewModel.swift in Sources */,
+				558E74CB2BFA59C8006D0F35 /* WebView.swift in Sources */,
 				5573DC6B2AE2F4AA0025751F /* LoadingOverlayViewModifier.swift in Sources */,
 				552E85F42AD3FAC9006D5E86 /* SideMenuModifier.swift in Sources */,
 				55FB42EA2AF6A5F900ED9197 /* BalanceTopUpView.swift in Sources */,

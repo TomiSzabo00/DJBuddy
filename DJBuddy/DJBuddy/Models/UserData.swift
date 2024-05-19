@@ -42,6 +42,14 @@ final class UserData: Identifiable, ObservableObject, Hashable {
         type == .dj
     }
 
+    var parsedPicUrl: String {
+        if profilePicUrl.contains("http") {
+            return profilePicUrl
+        } else {
+            return "\(API.apiAddress)/\(profilePicUrl)"
+        }
+    }
+
     init(id: String, username: String, email: String, firstName: String, lastName: String, type: UserTypeEnum, profilePicUrl: String, balance: Double) {
         self.id = id
         self.username = username

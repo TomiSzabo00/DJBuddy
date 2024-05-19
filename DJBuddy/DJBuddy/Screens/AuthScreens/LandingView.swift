@@ -11,6 +11,8 @@ struct LandingView: View {
     @EnvironmentObject private var viewModel: AuthViewModel
     @EnvironmentObject private var stateHelper: StateHelper
 
+    @State private var isFirstPublish = true
+
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .topLeading) {
@@ -28,6 +30,24 @@ struct LandingView: View {
             }
             .background(Color.black)
             .animation(.interpolatingSpring(stiffness: 110, damping: 10), value: viewModel.pageState)
+        }
+        .sheet(isPresented: $viewModel.isWebViewShowing) {
+            NavigationStack {
+                WebView(url: URL(string: "\(API.apiAddress)/login/\(viewModel.selectedSocialProvider.lowercased())")!) { authData in
+                    stateHelper.performWithProgress {
+                        try await viewModel.handleSocialAuthToken(token: authData.token, email: authData.email)
+                    }
+                }
+                .navBarWithTitle(title: "Continue with \(viewModel.selectedSocialProvider)", leadingButton: .close($viewModel.isWebViewShowing))
+            }
+        }
+        .onReceive(viewModel.$isWebViewShowing) { isShowing in
+            guard !isShowing else { return }
+
+            if !isFirstPublish && !viewModel.didSocialAuthSucceed {
+                stateHelper.showError(from: APIError(message: "Authentication interrupted"))
+            }
+            isFirstPublish = false
         }
     }
 
@@ -89,8 +109,33 @@ struct LandingView: View {
                     // TODO: Forgot pw
                 }
                 .buttonStyle(.underlined)
+
+                HStack(spacing: 20) {
+                    VStack {
+                        Divider()
+                            .background(.white)
+                    }
+                    Text("or")
+                    VStack {
+                        Divider()
+                            .background(.white)
+                    }
+                }
+                .foregroundStyle(.white)
+
+                HStack {
+                    Button("") {
+                        viewModel.startSocialAuth(for: .google)
+                    }
+                    .buttonStyle(.social(for: .google, size: .compact))
+
+                    Button("") {
+                        viewModel.startSocialAuth(for: .facebook)
+                    }
+                    .buttonStyle(.social(for: .facebook, size: .compact))
+                }
             }
-            .padding(.bottom, 50)
+            .padding(.bottom, 20)
         }
         .padding()
         .foregroundStyle(Color.white)
@@ -134,8 +179,31 @@ struct LandingView: View {
                         }
                     }
                     .buttonStyle(.largeProminent)
+
+                    HStack(spacing: 20) {
+                        VStack {
+                            Divider()
+                                .background(.white)
+                        }
+                        Text("or")
+                        VStack {
+                            Divider()
+                                .background(.white)
+                        }
+                    }
+                    .foregroundStyle(.white)
+
+                    Button("") {
+                        viewModel.startSocialAuth(for: .google)
+                    }
+                    .buttonStyle(.social(for: .google))
+
+                    Button("") {
+                        viewModel.startSocialAuth(for: .facebook)
+                    }
+                    .buttonStyle(.social(for: .facebook))
                 }
-                .padding(.bottom, 50)
+                .padding(.bottom, 20)
             }
             .frame(maxHeight: 400)
             .scrollIndicators(.hidden)
@@ -166,4 +234,6 @@ struct LandingView: View {
 
 #Preview {
     LandingView()
+        .environmentObject(AuthViewModel())
+        .environmentObject(StateHelper() {})
 }

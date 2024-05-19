@@ -32,6 +32,10 @@ final class AuthViewModel: ObservableObject {
     @Published var verificationCode = ""
     @Published var isVerifyAlertShowing = false
 
+    @Published var selectedSocialProvider = ""
+    @Published var isWebViewShowing = false
+    @Published private(set) var didSocialAuthSucceed = false
+
     private var context: ModelContext?
 
     @MainActor
@@ -189,5 +193,27 @@ final class AuthViewModel: ObservableObject {
     @MainActor
     func refreshUser() async throws {
         currentUser = try await API.getUserData()
+    }
+
+    func startSocialAuth(for company: SocialButtonStyle.Company) {
+        selectedSocialProvider = company.rawValue
+        isWebViewShowing = true
+    }
+
+    @MainActor
+    func handleSocialAuthToken(token: String?, email: String?) async throws {
+        didSocialAuthSucceed = token != nil && email != nil
+        isWebViewShowing = false
+
+        if didSocialAuthSucceed {
+            guard let email, let token else { return } // this should never fail but better than force unwrap
+            do {
+                currentUser = try await API.login(with: email, token: token)
+                saveLoginDataToPersistentData(email: email, token: token)
+                authState = .loggedIn
+            } catch {
+                throw error
+            }
+        }
     }
 }
