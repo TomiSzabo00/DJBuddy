@@ -28,6 +28,7 @@ extension URLSession {
             }
 
             if httpResponse.isSuccess {
+                httpResponse.allHeaderFields.map { print($0) }
                 let token = httpResponse.allHeaderFields["user_token"] as? String
                 API.setUserToken(token)
                 return data
@@ -64,10 +65,10 @@ struct CustomResponse: Decodable {
 
 final class API {
     // MARK: Constants
-//    static let apiAddress = "https://djbuddy.online/api"
-    static let apiAddress = "http://127.0.0.1:9000/api"
-//    private static let apiWebSocketAddress = "wss://djbuddy.online"
-    private static let apiWebSocketAddress = "ws://127.0.0.1:9000"
+    static let apiAddress = "https://djbuddy.online/api"
+//    static let apiAddress = "http://127.0.0.1:9000/api"
+    private static let apiWebSocketAddress = "wss://djbuddy.online"
+//    private static let apiWebSocketAddress = "ws://127.0.0.1:9000"
     private static let eventWebSocketUrl = "\(apiWebSocketAddress)/ws/events"
 
     static private var userToken: String = ""
