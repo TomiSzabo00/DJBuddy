@@ -99,6 +99,7 @@ struct MainMenu: View {
     NavigationView {
         MainMenu(viewModel: MainMenuViewModel()) {}
             .environmentObject(Navigator())
-            .environmentObject(UserData.EmptyUser)
+            .environmentObject(StateHelper(signoutAction: {}))
+            .environmentObject(UserData.PreviewUser)
     }
 }

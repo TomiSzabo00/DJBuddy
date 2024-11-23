@@ -208,7 +208,7 @@ final class AuthViewModel: ObservableObject {
         if didSocialAuthSucceed {
             guard let email, let token else { return } // this should never fail but better than force unwrap
             do {
-                currentUser = try await API.login(with: email, token: token)
+                currentUser = try await API.login(with: email, token: token, isSocial: true)
                 saveLoginDataToPersistentData(email: email, token: token)
                 authState = .loggedIn
             } catch {

@@ -96,7 +96,7 @@ struct FloatingTextModifier: ViewModifier {
             .background(placeholderView, alignment: .leading)
             .overlay(secureView, alignment: .trailing)
             .padding(.leading)
-            .frame(height: 66)
+            .frame(height: 60)
             .background(backgroundView)
     }
 }

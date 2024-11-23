@@ -43,4 +43,5 @@ struct DJHomeView: View {
 
 #Preview {
     DJHomeView(viewModel: MainMenuViewModel())
+        .environmentObject(UserData.PreviewUser)
 }
