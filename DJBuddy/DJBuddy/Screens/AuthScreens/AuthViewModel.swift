@@ -5,6 +5,10 @@
 //  Created by Szabó Tamás on 2023. 09. 25..
 //
 
+
+// Hello Diploma!
+
+
 import Foundation
 import SwiftUI
 import SwiftData
