@@ -106,7 +106,7 @@ struct InputView: View {
 
     var body: some View {
         VStack {
-            PlaceholderTextField(placeholder: "placeholder", text: $text)
+            PlaceholderTextField(placeholder: "Placeholder", text: $text)
             PlaceholderTextField(placeholder: "Passsword", text: $text, isPassword: true)
         }
     }
@@ -116,5 +116,6 @@ struct InputView: View {
     ZStack {
         WavyBackgroundView(height: 800, userType: .user)
         InputView()
+            .padding()
     }
 }

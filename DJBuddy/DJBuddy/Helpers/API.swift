@@ -65,10 +65,10 @@ struct CustomResponse: Decodable {
 
 final class API {
     // MARK: Constants
-    static let apiAddress = "https://djbuddy.online/api"
-//    static let apiAddress = "http://127.0.0.1:9000/api"
-    private static let apiWebSocketAddress = "wss://djbuddy.online"
-//    private static let apiWebSocketAddress = "ws://127.0.0.1:9000"
+//    static let apiAddress = "https://djbuddy.online/api"
+    static let apiAddress = "http://127.0.0.1:9000/api"
+//    private static let apiWebSocketAddress = "wss://djbuddy.online"
+    private static let apiWebSocketAddress = "ws://127.0.0.1:9000"
     private static let eventWebSocketUrl = "\(apiWebSocketAddress)/ws/events"
 
     static private var userToken: String = ""
@@ -128,10 +128,16 @@ final class API {
         }
     }
 
-    static func login(with email: String, token: String) async throws -> UserData {
-        let url = URL(string: "\(apiAddress)/users/login")!
+    static func login(with email: String, token: String, isSocial: Bool = false) async throws -> UserData {
+        var components = URLComponents(string: "\(apiAddress)/users/login/")!
 
-        var request = API.postRequest(url: url)
+        components.queryItems = [
+            URLQueryItem(name: "is_social", value: String(isSocial)),
+        ]
+
+        let url = URL(string: "\(apiAddress)/users/login/")!
+
+        var request = API.postRequest(url: components.url!)
 
         let parameters: [String: Any] = [
             "email": email,

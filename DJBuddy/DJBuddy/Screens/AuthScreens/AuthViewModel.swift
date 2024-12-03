@@ -45,7 +45,10 @@ final class AuthViewModel: ObservableObject {
     @MainActor
     func tryLoginFromStoredData(context: ModelContext) async throws {
         self.context = context
-        guard let loginData = fetchStoredLoginData() else { print("No previous login data found."); return }
+        guard let loginData = fetchStoredLoginData() else {
+            print("No previous login data found.")
+            return
+        }
 
         do {
             currentUser = try await API.login(with: loginData.email, token: loginData.token)
